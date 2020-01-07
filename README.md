@@ -4,4 +4,4 @@
      1. Using google form user can login  
      2. Using the student login option directly available.
      3. google login 
-     the Option we choose - 1.
+   the Option we choose - 1.

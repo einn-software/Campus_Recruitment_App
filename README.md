@@ -11,5 +11,5 @@
             *email id
             *phone no.
             *roll no.
-    *the Option we choose - 1.
+    
       

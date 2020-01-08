@@ -7,9 +7,9 @@
      3. google login
      4. login is done by the roll no. of the student
      5. only four data we will take from the user
-* name
-* email id
-* phone no.
-* roll no.
+       * name
+       * email id
+       * phone no.
+       * roll no.
     
       

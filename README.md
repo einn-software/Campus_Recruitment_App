@@ -22,6 +22,7 @@
        4- Test will be submitted automaticly after time finished.
        5- you can directly jump to any question you want.
        6- once you submitted the test you can not access the questions or solve the question
-       7- user agreement:- check button agree or not agree   
+       7- user agreement:- check button agree or not agree 
+       7- strat test button with another confrimation with yes or no button/
        
   

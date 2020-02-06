@@ -7,11 +7,11 @@ var studentSchema = mongoose.Schema({
         require: true
     },
     roll:{
-        type: Number,
+        type: String,
         require: true
     },
     mobile:{
-        type: Number,
+        type: String,
         require: true
     },
     email:{
@@ -21,13 +21,19 @@ var studentSchema = mongoose.Schema({
     branch:{
         type: String,
         require: true
+    },
+    college:{
+        type: String,
+        require: true
     }
 });
 
 
-var submit = module.exports = mongoose.model('submit',studentSchema,"students");
+var adminModel = module.exports = mongoose.model('admin',studentSchema,"students");
 
 //add entery to database
-module.exports.addsubmit = function(students,callback){
-    submit.create(students,callback);
+module.exports.addAdmin = function(data){
+    //adminModel.create(data,callback);
+    var admin = new adminModel(data);
+    return admin.save()
 }

@@ -31,11 +31,12 @@
                 <!-- Table head -->
                 <thead id="" class="">
                     <tr>
-                        <th id="name">Name</th>
+                        <th id="name">Student's Name</th>
                         <th id="roll">Roll No</th>
                         <th id="mobile">Mobile No</th>
                         <th id="email">Email Id</th>
                         <th id="branch">Branch</th>
+                        <th id="college">College Name</th>
                     </tr>
 
                 </thead>
@@ -84,6 +85,14 @@
                                     </div>
                                 </div>
                             </th>
+                            <th>
+                                <div class="form-row">
+                                    <div class="col-9">
+                                        <input id="collegeform" type="text" class="form-control" id=""
+                                            placeholder="College Name" required>
+                                    </div>
+                                </div>
+                            </th>
 
                         </tr>
 
@@ -128,6 +137,7 @@
         var roll_form = document.getElementById("rollform");
         var mobile_form = document.getElementById("mobileform");
         var branch_form = document.getElementById("branchform");
+        var college_form = document.getElementById("collegeform");
 
         admin_form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -139,10 +149,11 @@
                 email: email_form.value,
                 roll: roll_form.value,
                 mobile: mobile_form.value,
-                branch: branch_form.value
+                branch: branch_form.value,
+                college: college_form.value
             }
             console.log("form data", form_body);
-            var url = "http://localhost:5000/create_admin";
+            var url = "http://localhost:5000/create_users";
 
             var header_obj = {
                 method: "POST",

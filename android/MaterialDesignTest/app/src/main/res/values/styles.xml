@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseMaterialTheme" parent="SuperMaterialTheme">
+        <!-- Theme supported by API > 21 -->
+
+
+    </style>
+    <style name="SuperMaterialTheme" parent="Theme.AppCompat.Light">
+        <!-- Parent theme for all API Levels///. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlActivated">#873334</item>
+        <item name="colorButtonNormal">#4CAF50</item>
+        <item name="colorControlHighlight">#a4c383</item>
+    </style>
+
+</resources>

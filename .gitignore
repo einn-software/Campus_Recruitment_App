@@ -1,2 +1,4 @@
 backend/node_modules/
-frontend/.vscode
+frontend/node_modules
+frontend/public
+frontend/src

@@ -1,97 +1,176 @@
-var mongoose = require('mongoose');
-var  adminsSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const adminsSchema = new mongoose.Schema({
 
-   name :String,
-   email : String,
-   password : String,
-   phone : Number
+   name :
+   { type:String,
+    required:true,
+    min:6,
+    max:255,
+   
+   },
+   email :
+   { type:String,
+      required:true,
+      min:15,
+      max:255,
+     
+   },
+   password :
+   { 
+      type:String,
+      required:true,
+      min:6,
+      max:1024,
+   },
+   phone : 
+   {
+      type:Number,
+      required:true,
+      
+   }
 
 });
 
-var  collegesSchema = new mongoose.Schema({
+const collegesSchema = new mongoose.Schema({
 
-    name :String,
-    email : String,
-    password : String,
-    phone : Number,
-    code : Number,
-    address : String
+    name :
+    { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    email : 
+    { type:String,
+      required:true,
+      min:15,
+      max:255,
+     
+    },
+    password : 
+    { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    phone :
+    { type:String,
+      required:true,
+     
+     },
+    code : 
+    { type:Number,
+      required:true,
+      min:6,
+     
+     },
+    address :
+    { type:String,
+      required:true,
+      min:13,
+      max:255,
+     
+     }
  
  });
 
- var  tposSchema = new mongoose.Schema({
+ const  tposSchema = new mongoose.Schema({
 
-    name :String,
-    email : String,
-    password : String,
-    phone : Number,
-    designation: String,
-    college: String
+    name :
+    { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    email :
+     { type:String,
+      required:true,
+      min:15,
+      max:255,
+     
+     },
+    password : 
+    { type:String,
+      required:true,
+      min:6,
+      max:1024,
+     
+     },
+    phone : 
+    { type:Number,
+      required:true,
+      
+     
+     },
+    designation: 
+    { type:String,
+      required:true,
+      max:23,
+        
+     },
+    college: 
+    { type:String,
+      required:true,
+      max:40,
+     
+     }
  
  });
 
- var  studentsSchema = new mongoose.Schema({
+ const  studentsSchema = new mongoose.Schema({
 
-    name :String,
-    email : String,
-    password : String,
-    phone : Number,
-    roll: Number,
-    branch: String,
-    college: String
+    name :{ type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    email :{ type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    password :{ type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    phone :{ type:Number,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    roll: { type:Number,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    branch: { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+    college: { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     }
  
  });
 
 
 
-var adminsModel = mongoose.model('admins',adminsSchema);
-var admins = new adminsModel({
-   name : "XYZ",
-   email: "xyz@gmail.com",
-   password:"abc",
-   phone: 8099234431,
-
-});
 
 
-var collegesModel = mongoose.model('colleges',collegesSchema);
-var colleges = new collegesModel({
-   name : "XYZ",
-   email: "xyz@gmail.com",
-   password:"abc",
-   phone: 8099234431,
-   code: 1234,
-   address:"avantika"
-
-});
-
-
-var tposModel = mongoose.model('tpos',tposSchema);
-var tpos = new tposModel({
-   name : "XYZ",
-   email: "xyz@gmail.com",
-   password:"abc",
-   phone: 8099234431,
-   designation:"any",
-   college:"any"
-
-});
-
-
-
-var studentsModel = mongoose.model('students',studentsSchema);
-var students = new studentsModel({
-   name : "XYZ",
-   email: "xyz@gmail.com",
-   password:"abc",
-   phone: 8099234431,
-   roll:12,
-   branch:"cse",
-   college:"any"
-
-});
-
-console.log("Admins MOdel" + admins);
-console.log("colleges Model" + colleges);
-console.log("Tpos Model" + tpos);
-console.log("Students Model" + students);
+ module.exports = mongoose.model('Admins', adminsSchema);
+ module.exports = mongoose.model('Colleges', collegesSchema);
+ module.exports = mongoose.model('Tpos', tposSchema);
+ module.exports = mongoose.model('Students', studentsSchema);

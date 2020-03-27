@@ -1,20 +1,26 @@
-var mongoose = require('mongoose');
-var testinstructionsSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const testinstructionsSchema = new mongoose.Schema({
     
-   college: String,
-   data: String,
-   message: String,
+   college: { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+   date:{ type:Number,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
+   message: { type:String,
+      required:true,
+      min:6,
+      max:255,
+     
+     },
 
 });
 
-var testinstructionsModel = mongoose.model("instructions",testinstructionsSchema);
-var instructions = new testinstructionsModel({
+module.exports = mongoose.model('testinstructions',testinstructionsSchema);
 
-     college: "Any",
-     data : "class",
-     message: "Any",
-
-
-});
-
-console.log('TestinstructionModel' + instructions);

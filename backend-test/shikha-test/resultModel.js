@@ -30,4 +30,4 @@ const resultsSchema = new mongoose.Schema({
 
 });
 
-module.exports = mogoose.model('Results',resultsSchema);
+module.exports = mongoose.model('Results',resultsSchema);

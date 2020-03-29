@@ -1,9 +1,9 @@
 package com.testexample.materialdesigntest.ui.presenter
 
-import com.testexample.materialdesigntest.data.database.interactor.IUserModel
+import com.testexample.materialdesigntest.data.interactor.IUserRepository
+import com.testexample.materialdesigntest.services.ProjectApplication
 import com.testexample.materialdesigntest.ui.contract.LoginContract
 import io.mockk.clearAllMocks
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
@@ -13,7 +13,7 @@ class LoginPresenterTest {
 
     //mock setup
     private val view : LoginContract.View = mockk()
-    private val model : IUserModel = mockk(relaxed = true)
+    private val model : IUserRepository = mockk(relaxed = true)
     //init presenter object
     private val presenter : LoginPresenter =
         LoginPresenter(view)
@@ -35,8 +35,8 @@ class LoginPresenterTest {
         presenter.onLogin(userName,  password).toString()
 
         //checks to see whether the function is called
-        verify { model.isUserValid}
-        verify {view.onLoginResult("Welcome! "+userName)  }
+        verify { model.isUserValid(userName, password)}
+        verify {view.onLoginResult("Welcome! "+userName)   }
         //assertEquals(expected, output)
     }
 

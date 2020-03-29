@@ -31,7 +31,7 @@ class RegisterPresenterTest {
 
         val presenter: RegisterPresenter =
             RegisterPresenter(view)
-        output = presenter.validateCredentials(username, email, pass, cPass).toString()
+        output = presenter.onRegister().toString()
 
         assertEquals(expected, output)
     }

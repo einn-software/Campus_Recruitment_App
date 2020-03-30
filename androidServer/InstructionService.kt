@@ -1,6 +1,5 @@
-// import instruction service
-//import retrofit call
-// import retrofit http get service
+import retrofit2.call
+import retrofit2.http.GET
 
 
 interface InstructionService {

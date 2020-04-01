@@ -7,7 +7,7 @@ const testinstructionsSchema = new mongoose.Schema({
       max:255,
      
      },
-   date:{ type:Number,
+   date:{ type:Date,
       required:true,
       min:6,
       max:255,

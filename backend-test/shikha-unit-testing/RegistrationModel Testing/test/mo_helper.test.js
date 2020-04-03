@@ -1,10 +1,13 @@
+
+
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 before((done) =>{
 
 
-    mongoose.connect("mongodb://localhost/testinstructions", {useNewUrlParser: true});
+    mongoose.connect("mongodb://localhost/Registration", {useNewUrlParser: true});
 
     mongoose.connection
        .once('open', () => {
@@ -19,8 +22,9 @@ before((done) =>{
 });
 
 beforeEach((done) => {
-    mongoose.connection.collections.testinstructions.drop(() =>{
-        done();
+    mongoose.connection.db.dropCollection('reg', function(err, result) {
+        done()
     });
 });  
+
 

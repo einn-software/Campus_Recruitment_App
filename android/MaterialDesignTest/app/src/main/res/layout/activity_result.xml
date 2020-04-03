@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.ResultActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/sectionTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Result Section"
+        android:textColor="#090909"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="357dp"
+        android:layout_height="335dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sectionTitleText">
+
+
+        <TextView
+            android:id="@+id/totalMarksText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Total Marks"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalMarksValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalMarksValue"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:text="100"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalMarksText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/totalQuestionsText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Total Number of Questions"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalQuestionsValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalMarksText" />
+
+        <TextView
+            android:id="@+id/totalQuestionsValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="50"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalQuestionsText"
+            app:layout_constraintTop_toBottomOf="@+id/totalMarksValue" />
+
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Total Number of Attempted Questions"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsText" />
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="50"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalQuestionsAttemptedText"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsValue" />
+
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedRightText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Total Questions Attempted Right"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedRightValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedText" />
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedRightValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="50"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalQuestionsAttemptedRightText"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedValue" />
+
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedWrongText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Total Questions Attempted Wrong"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedWrongValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedRightText" />
+
+        <TextView
+            android:id="@+id/totalQuestionsAttemptedWrongValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="50"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalQuestionsAttemptedWrongText"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedRightValue" />
+
+
+        <TextView
+            android:id="@+id/totalMarksObtainedText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Total Marks Obtained"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/totalMarksObtainedValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedWrongText" />
+
+        <TextView
+            android:id="@+id/totalMarksObtainedValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="50"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/totalMarksObtainedText"
+            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsAttemptedWrongValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:text="NoTe :"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/noteText"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <TextView
+        android:id="@+id/noteText"
+        android:layout_width="256dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:text="a long text to show informationa long text to show informationa long text to show informationa long text to show information"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/note"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <TextView
+        android:id="@+id/greetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ALL THE BEST"
+        android:textColor="#2DB633"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

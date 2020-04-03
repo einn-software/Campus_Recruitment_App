@@ -1,30 +1,33 @@
 package com.testexample.materialdesigntest.data.room
 
-import com.testexample.materialdesigntest.data.database.User
-import com.testexample.materialdesigntest.data.interactor.IUserRepository
-import com.testexample.materialdesigntest.services.ProjectApplication
+import android.annotation.SuppressLint
+import com.testexample.materialdesigntest.data.database.Student
+import com.testexample.materialdesigntest.data.interactor.IRoomRepository
+import io.reactivex.Flowable
 
-class RoomRepository : IUserRepository {
+class RoomRepository() : IRoomRepository{
 
-    private val userDAO: UserDAO = ProjectApplication.database.userDAO()
+    private lateinit var studentDao: StudentDao
 
+    @SuppressLint("VisibleForTests")
     override fun isUserValid(userEmail: String,
                              password: String):
-            Boolean {
-        return userEmail == userDAO
+            Flowable<Student> {
+        return studentDao
             .getUserByEmailPassword(userEmail, password)
-            .uEmail
     }
 
+    @SuppressLint("VisibleForTests")
     override fun isExistingUser(userEmail: String): Boolean {
-        return userEmail == userDAO
+        return userEmail == studentDao
             .getUserByEmail(userEmail)
     }
 
+    @SuppressLint("VisibleForTests")
     override fun getUser(userEmail: String,
                          password: String):
-            User {
-        return  userDAO
+            Flowable<Student> {
+        return  studentDao
             .getUserByEmailPassword(userEmail, password)
     }
 }

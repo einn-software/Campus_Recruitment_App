@@ -3,12 +3,11 @@ package com.testexample.materialdesigntest.data.interactor
 import com.testexample.materialdesigntest.data.database.Student
 import io.reactivex.Flowable
 
-interface IUserRepository {
-
+interface IRoomRepository {
     fun isUserValid(
         userEmail: String,
         password: String
-    ): Boolean
+    ): Flowable<Student>
 
     fun isExistingUser(
         userEmail: String
@@ -19,6 +18,3 @@ interface IUserRepository {
         password: String
     ): Flowable<Student>
 }
-
-
-

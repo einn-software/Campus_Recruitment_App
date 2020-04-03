@@ -1,7 +1,6 @@
 package com.testexample.materialdesigntest.ui.presenter
 
 import com.testexample.materialdesigntest.data.interactor.IUserRepository
-import com.testexample.materialdesigntest.services.ProjectApplication
 import com.testexample.materialdesigntest.ui.contract.LoginContract
 import io.mockk.clearAllMocks
 import io.mockk.mockk

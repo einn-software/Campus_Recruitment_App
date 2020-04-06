@@ -18,8 +18,8 @@ before((done) =>{
 });
 
 beforeEach((done) => {
-    mongoose.connection.db.dropCollection('Results', function(err, result) {
-        done()
+    mongoose.connection.collections.results.drop(() =>{
+        done();
     });
 });  
 

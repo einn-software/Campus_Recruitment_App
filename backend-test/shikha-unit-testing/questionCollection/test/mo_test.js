@@ -70,23 +70,21 @@ it('set and save', ()=>{
  //All delete tests
  
  describe("Delete Tests", ()=>{
-    let questionCollection;
+    let deleter;
   
   beforeEach((done)=> {
-     questionCollection = new questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6})
-     questionCollection.save().then(()=> done());
+     deleter = new questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6})
+     deleter.save().then(()=> done());
   });
       it('Delete' ,(done)=>{
   
-        questionCollections.findByIdAndDelete(Tpos._id)
-        .then(()=> questionCollections.findOne({name:"Shikha" }))
-          .then(()=>{
-            assert(questionCollections== null);
-           done();
-        })
-        .catch((error),()=>{
-             console.log("error",error);
+        questionCollections.findByIdAndDelete(deleter._id)
+        .then(()=> questionCollections.findOne({question:12 }))
+        .then((Results)=>{
+         assert(Results == null);
+        done();
         });
+        
   
      });
   });

@@ -58,7 +58,7 @@ it('set and save', ()=>{
  updater.set({name:"ria" ,email:"ria@gmail.com", password:"rrrr44", phone:4878787878, roll:2010021 , branch:"CS" , college:"KITE"});
  updater.save()
    .then(() => Student.find({}))
-   .then(Students => {
+   .then((Students) => {
       assert(Student[0].name !== 'Shikha');
    });
 
@@ -71,24 +71,23 @@ it('set and save', ()=>{
  //All delete tests
  
  describe("Delete Tests", ()=>{
-   let Students;
+   let deleter;
  
  beforeEach((done)=> {
-    Students = new Student({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, roll:201002 , branch:"CS" , college:"nTC"})
-    Students.save().then(()=> done());
+    deleter = new Student({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, roll:201002 , branch:"CS" , college:"nTC"})
+    deleter.save().then(()=> done());
  });
      it('Delete' ,(done)=>{
  
-       Student.findByIdAndDelete(Students._id)
+       Student.findByIdAndDelete(deleter._id)
        .then(()=> Student.findOne({name:"Shikha" }))
-         .then(()=>{
-           assert(Student== null);
-          done();
-       })
-       .catch((error),()=>{
-            console.log("error",error);
+       .then((Student)=>{
+         assert(Student == null);
+        done();       
+     
+
        });
- 
+      
     });
  });
 

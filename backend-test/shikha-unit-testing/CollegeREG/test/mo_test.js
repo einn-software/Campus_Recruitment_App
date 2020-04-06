@@ -6,7 +6,7 @@ describe("Create Tests", () => {
     it("Create College", (done) => {
        // assert(true);
 
-       const Registration = new College({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"});
+       const Registration = new College({name:"NTc" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"});
        Registration.save()
              .then(() => {
                 assert( !Registration.isNew); //if instruct is saved to db then it is not new
@@ -51,13 +51,13 @@ describe("Read Tests", ()=>{
 describe("Update Tests",()=>{
    let updater;
    beforeEach((done) =>{
-     updater = new College({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
+     updater = new College({name:"NTC" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
      updater.save()
      .then(() =>done());
    });
 
 it('set and save', ()=>{
- updater.set({name:"ria" ,email:"ria@gmail.com", password:"sssses44", phone:7848787878, code:2010021 , address:"gzb"});
+ updater.set({name:"KITE" ,email:"ria@gmail.com", password:"sssses44", phone:7848787878, code:2010021 , address:"gzb"});
  updater.save()
    .then(() => College.find({}))
    .then(Colleges => {
@@ -71,23 +71,22 @@ it('set and save', ()=>{
  //All delete tests
  
  describe("Delete Tests", ()=>{
-   let Colleges;
+   let deleter;
  
  beforeEach((done)=> {
-    Colleges = new College({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
-    Colleges.save().then(()=> done());
+    deleter = new College({name:"NTC" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
+    deleter.save().then(()=> done());
  });
      it('Delete' ,(done)=>{
  
-       College.findByIdAndDelete(Colleges._id)
-       .then(()=> College.findOne({name:"Shikha" }))
-         .then(()=>{
-           assert(College== null);
-          done();
+       College.findByIdAndDelete(deleter._id)
+       .then(()=> College.findOne({name:"NTC" }))
+       .then((College)=>{
+         assert(College == null);
+        done();
+     
        })
-       .catch((error),()=>{
-            console.log("error",error);
-       });
+       
  
     });
  });

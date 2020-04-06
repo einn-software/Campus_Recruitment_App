@@ -1,4 +1,4 @@
-const Results = require('../app/resultModel');
+const Results = require('../app/Results');
 const assert = require('assert');
 
 
@@ -7,7 +7,7 @@ const assert = require('assert');
 describe("Create Tests", () => {
 
     it("Create Result", () => {
-       const student = new Results({student_id:12});
+       const student = new Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30});
        student.save()
          .then(() => {
             assert(!student.isNew);
@@ -15,47 +15,6 @@ describe("Create Tests", () => {
          .catch((error) => {
             console.log("error",error);
       });
-
-      const questionPaper = new Results({question_paper_id:12});
-      questionPaper.save()
-        .then(() => {
-           assert(!questionPaper.isNew);
-        })
-        .catch((error) => {
-           console.log("error",error);
-     });
-
-
-     const questionAttempt= new Results({question_attempt:12});
-     questionAttempt.save()
-       .then(() => {
-          assert(!questionAttempt.isNew);
-       })
-       .catch((error) => {
-          console.log("error",error);
-    });
-    
-
-    const correctAttempt= new Results({correct_attempt:12});
-    correctAttempt.save()
-      .then(() => {
-         assert(!correctAttempt.isNew);
-      })
-      .catch((error) => {
-         console.log("error",error);
-   });
-
-   const totalmarks= new Results({total_marks_scored:12});
-   totalmarks.save()
-     .then(() => {
-        assert(!totalmarks.isNew);
-     })
-     .catch((error) => {
-        console.log("error",error);
-  });
-  
-   
-
    }); 
 });
 
@@ -67,7 +26,7 @@ describe("Read Results", ()=>{
    let students;
  
  beforeEach((done)=> {
-    const students =new  Results({student_id:12})
+    const students =new  Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
     students.save()
     .then(()=> {
        done();
@@ -94,7 +53,7 @@ describe("Delete Results", ()=>{
    let deleteRes;
  
  beforeEach((done)=> {
-    deleteRes = Results({student_id:12})
+    deleteRes = Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
     deleteRes.save().then(()=> done());
  });
      it('Delete result ',(done)=>{
@@ -109,21 +68,22 @@ describe("Delete Results", ()=>{
     });
  });
 
+ //all update tests
  
 describe("Update Tests",()=>{
    let updater;
    beforeEach((done) =>{
-     updater = new Results({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
+     updater = new Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
      updater.save()
      .then(() =>done());
    });
 
 it('set and save', ()=>{
- updater.set({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"});
+ updater.set({student_id:15,question_paper_id:2272,question_attempt:8,correct_attempt:6,total_marks_scored:60});
  updater.save()
-   .then(() => College.find({}))
-   .then(Colleges => {
-      assert(College[0].name !== 'Shikha');
+   .then(() => Results.find({}))
+   .then(Results => {
+      assert(Results[0].student_id !== 12);
    });
 
 });

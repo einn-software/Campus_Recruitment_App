@@ -72,28 +72,20 @@ it('set and save', ()=>{
  //All delete tests
  
  describe("Delete Tests", ()=>{
-   let admins;
+   let deleter;
  
  beforeEach((done)=> {
-    admins = new Admin({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, })
-    admins.save().then(()=>{
-       done()
+    deleter = new Admin({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, })
+    deleter.save().then(()=>done());
       
-      })
-      .catch((error)=>{
-         console.log("error",error);
-      });
  });
      it('Delete' ,(done)=>{
  
-       Admin.findByIdAndDelete(admins._id)
+       Admin.findByIdAndDelete(deleter._id)
        .then(()=> Admin.findOne({name:"Shikha" }))
-         .then((admins)=>{
-           assert(admins=== null);
+         .then((Admin)=>{
+           assert(Admin== null);
           done();
-       })
-       .catch((error),()=>{
-            console.log("error",error);
        });
  
     });

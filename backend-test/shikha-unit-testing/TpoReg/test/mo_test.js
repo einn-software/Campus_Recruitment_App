@@ -69,24 +69,21 @@ it('set and save', ()=>{
  //All delete tests
  
  describe("Delete Tests", ()=>{
-    let Tpos;
+    let deleter;
   
   beforeEach((done)=> {
-     Tpos = new Tpo({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, designation:"CCC" , branch:"CS" , college:"nTC"})
-     Tpos.save().then(()=> done());
+     deleter = new Tpo({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, designation:"CCC" , branch:"CS" , college:"nTC"})
+     deleter.save().then(()=> done());
   });
       it('Delete' ,(done)=>{
   
-        Tpo.findByIdAndDelete(Tpos._id)
+        Tpo.findByIdAndDelete(deleter._id)
         .then(()=> Tpo.findOne({name:"Shikha" }))
-          .then(()=>{
-            assert(Tpo== null);
-           done();
-        })
-        .catch((error),()=>{
-             console.log("error",error);
+        .then((Tpo)=>{
+         assert(Tpo == null);
+        done();
         });
-  
+        
      });
   });
   

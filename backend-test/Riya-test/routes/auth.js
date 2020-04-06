@@ -3,6 +3,8 @@ const Admin = require('../model/Admin');
 const College = require('../model/College');
 const Tpo = require('../model/Tpo');
 const Student = require('../model/Student');
+const testinstructions = require('../model/instruction');
+const Results = require('../model/Results');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation} = require('../validation');
@@ -196,6 +198,64 @@ router.post('/adminlogin',async(req, res) => {
     const token = jwt.sign({_id: admin._id}, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send(token);
 });
+
+
+//testinstructions
+
+router.post('/testinstructions',async(req,res) => {
+
+    //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
+    const { error } = testinstructionsValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    
+    //Checking if the instructions is already in the database
+    const dateExist = await testinstructions.findOne({date: req.body.date});
+    if(dateExist) return res.status(400).send('This Date is booked by another test');
+
+    
+
+    // Create a new instruction
+    const instructions = new testinstructions({
+        college: req.body.college,
+        message: req.body.message,
+    });
+    try{
+        const savedinstructions = await instructions.save();
+        res.send({ instructions: instructions._id});
+        // res.send(savedinstructions);
+    }catch(err){
+        res.status(400).send(err);
+    }
+});
+
+
+//Results 
+
+
+router.post('/Results', async (req, res) => { 
+
+    // LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
+     const { error } = ResultsValidation(req.body);
+     if (error) return res.status(400).send(error.details[0].message);
+     
+    
+    // Create Result
+     const Result = new Results({
+         student_id: req.body.student_id,
+         question_paper_id: req.body.question_paper_id,
+         question_attempt: req.body.question_attempt,
+         correct_attempt: req.body.correct_attempt,
+         total_marks_scored: req.body.total_marks_scored,
+     });
+     try{
+         const savedResult = await Result.save();
+         res.send({Result: Result._id});
+     }catch(err){
+         res.status(400).send(err);
+     }
+ });
+
+
 
 
 module.exports = router;

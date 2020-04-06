@@ -117,9 +117,50 @@ const loginValidation = data => {
         .required()
     });
     return schema.validate(data);
+
+}
+
+    const testinstructionsValidation = data => {
+     const testinstructionsSchema = Joi.object({
+ 
+         college: Joi.string()
+              .min(6)
+              .required()
+              .max(255),
+         message: Joi.string()
+              
+              .required()
+              
+      });
+      return testinstructionsSchema.validate(data);
+     
+     }
+
+     
+const ResultsValidation = data => {
+     const ResultsSchema = Joi.object({
+ 
+         student_id: Joi.number()
+              
+              .required(),
+              
+         question_paper_id: Joi.number()
+              .required(),              
+         question_attempt: Joi.number()
+              .required(),
+         correct_attempt: Joi.number()
+              .required(),
+         total_marks_scored: Joi.number()
+              .required() 
+
+              
+      });
+      return ResultsSchema.validate(data);
 }
 module.exports.adminRegisterValidation = adminRegisterValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.testinstructionsValidation = testinstructionsValidation;
+module.exports.ResultsValidation = ResultsValidation;

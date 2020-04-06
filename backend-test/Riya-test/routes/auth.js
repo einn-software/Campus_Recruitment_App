@@ -7,7 +7,7 @@ const testinstructions = require('../model/instruction');
 const Results = require('../model/Results');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation} = require('../validation');
+const {ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
@@ -206,13 +206,7 @@ router.post('/testinstructions',async(req,res) => {
 
     //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
     const { error } = testinstructionsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    
-    //Checking if the instructions is already in the database
-    const dateExist = await testinstructions.findOne({date: req.body.date});
-    if(dateExist) return res.status(400).send('This Date is booked by another test');
-
-    
+    if (error) return res.status(400).send(error.details[0].message);   
 
     // Create a new instruction
     const instructions = new testinstructions({
@@ -232,7 +226,7 @@ router.post('/testinstructions',async(req,res) => {
 //Results 
 
 
-router.post('/Results', async (req, res) => { 
+router.post('/result', async (req, res) => { 
 
     // LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
      const { error } = ResultsValidation(req.body);

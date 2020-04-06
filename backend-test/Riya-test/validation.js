@@ -120,6 +120,7 @@ const loginValidation = data => {
 
 }
 
+// Test Instructio validation
     const testinstructionsValidation = data => {
      const testinstructionsSchema = Joi.object({
  
@@ -127,23 +128,20 @@ const loginValidation = data => {
               .min(6)
               .required()
               .max(255),
-         message: Joi.string()
-              
-              .required()
-              
+         message: Joi.string()       
+              .required()       
       });
       return testinstructionsSchema.validate(data);
      
      }
 
-     
+ 
+// Result Validation
 const ResultsValidation = data => {
      const ResultsSchema = Joi.object({
  
          student_id: Joi.number()
-              
-              .required(),
-              
+              .required(),       
          question_paper_id: Joi.number()
               .required(),              
          question_attempt: Joi.number()
@@ -151,9 +149,7 @@ const ResultsValidation = data => {
          correct_attempt: Joi.number()
               .required(),
          total_marks_scored: Joi.number()
-              .required() 
-
-              
+              .required()
       });
       return ResultsSchema.validate(data);
 }

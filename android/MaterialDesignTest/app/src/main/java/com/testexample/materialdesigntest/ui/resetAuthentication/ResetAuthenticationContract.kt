@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.contract
+package com.testexample.materialdesigntest.ui.resetAuthentication
 
 import com.testexample.materialdesigntest.ui.base.BaseContract
 

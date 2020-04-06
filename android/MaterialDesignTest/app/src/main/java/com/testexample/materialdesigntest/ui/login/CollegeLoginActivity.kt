@@ -1,27 +1,25 @@
-package com.testexample.materialdesigntest.ui.view
+package com.testexample.materialdesigntest.ui.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.contract.LoginContract
-import com.testexample.materialdesigntest.ui.presenter.LoginPresenter
-import kotlinx.android.synthetic.main.activity_login.*
+import com.testexample.materialdesigntest.ui.collegedashboard.CollegeDashboard
+import com.testexample.materialdesigntest.ui.register.RegisterActivity
+import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
+import kotlinx.android.synthetic.main.activity_college_login.*
 
-// LoginActivity extends AppCompactActivity and implements LoginContract.View
-
-class LoginActivity : AppCompatActivity(), LoginContract.View {
-
+class CollegeLoginActivity : AppCompatActivity(), LoginContract.View {
 
     // view needs presenter to invoke user initiated callback -- add a presenter property
     internal lateinit var presenter: LoginContract.Presenter
 
     //
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_college_login)
 
         //    init
         presenter =
@@ -41,25 +39,30 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
             startActivity(intent)
         }
 
-         /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // call material design here
-            }
-            else {
-                // call non-material design here
-            } */
+        /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                   // call material design here
+           }
+           else {
+               // call non-material design here
+           } */
     }
 
     override fun onLoginResult(message: String) {
-        welcomeTransition()
-        loginMessage.text = message
-        println(loginMessage.text)
+        if (message == "success") {
+            startActivity(Intent(this, CollegeDashboard::class.java))
+        }
+        else {
+            onErrorTransition()
+            loginMessage.text = message
+        }
+
     }
 
-    private fun welcomeTransition() {
-        loginMessage.visibility = VISIBLE
-        emailText.visibility = GONE
-        passwordText.visibility = GONE
-        loginButton.visibility = GONE
+    private fun onErrorTransition() {
+        loginMessage.visibility = View.VISIBLE
+        emailText.visibility = View.GONE
+        passwordText.visibility = View.GONE
+        loginButton.visibility = View.GONE
     }
 
     override fun setPresenter(presenter: LoginContract.Presenter) {
@@ -67,9 +70,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     }
 
-//  Notify
+    //  Notify
     override fun onDestroy() {
         presenter.onDestroy()
         super.onDestroy()
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.view
+package com.testexample.materialdesigntest.ui.result
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

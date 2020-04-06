@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.presenter
 
-import com.testexample.materialdesigntest.ui.contract.RegisterContract
+import com.testexample.materialdesigntest.ui.register.RegisterContract
+import com.testexample.materialdesigntest.ui.register.RegisterPresenter
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test

@@ -1,20 +1,22 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.repository
 
 import android.annotation.SuppressLint
-import com.testexample.materialdesigntest.data.database.Student
+import com.testexample.materialdesigntest.data.database.model.Student
 import com.testexample.materialdesigntest.data.interactor.IRoomRepository
+import com.testexample.materialdesigntest.data.room.StudentDao
 import io.reactivex.Flowable
+import io.reactivex.Single
 
-class RoomRepository() : IRoomRepository{
+class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
 
-    private lateinit var studentDao: StudentDao
 
     @SuppressLint("VisibleForTests")
     override fun isUserValid(userEmail: String,
                              password: String):
-            Flowable<Student> {
+            Single<Boolean> {
         return studentDao
             .getUserByEmailPassword(userEmail, password)
+            .contains(userEmail)
     }
 
     @SuppressLint("VisibleForTests")
@@ -27,10 +29,10 @@ class RoomRepository() : IRoomRepository{
     override fun getUser(userEmail: String,
                          password: String):
             Flowable<Student> {
-        return  studentDao
-            .getUserByEmailPassword(userEmail, password)
+            return studentDao.getUserByEmailPassword(userEmail, password)
     }
 }
+
 
 
 

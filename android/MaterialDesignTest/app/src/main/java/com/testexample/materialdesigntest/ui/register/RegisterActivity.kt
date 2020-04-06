@@ -1,9 +1,7 @@
-package com.testexample.materialdesigntest.ui.view
+package com.testexample.materialdesigntest.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.testexample.materialdesigntest.ui.contract.RegisterContract
-import com.testexample.materialdesigntest.ui.presenter.RegisterPresenter
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity(), RegisterContract.View {

@@ -1,8 +1,6 @@
-package com.testexample.materialdesigntest.ui.presenter
+package com.testexample.materialdesigntest.ui.resetAuthentication
 
-import android.view.View
-import com.testexample.materialdesigntest.data.model.UserRepository
-import com.testexample.materialdesigntest.ui.contract.ResetAuthenticationContract
+import com.testexample.materialdesigntest.data.repository.UserRepository
 
 class ResetAuthenticationPresenter(private  val view : ResetAuthenticationContract.View) :
     ResetAuthenticationContract.Presenter  {

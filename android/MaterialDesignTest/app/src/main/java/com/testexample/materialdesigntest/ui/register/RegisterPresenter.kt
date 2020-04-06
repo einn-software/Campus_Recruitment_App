@@ -1,6 +1,4 @@
-package com.testexample.materialdesigntest.ui.presenter
-
-import com.testexample.materialdesigntest.ui.contract.RegisterContract
+package com.testexample.materialdesigntest.ui.register
 
 class RegisterPresenter(private var view: RegisterContract.View) :
     RegisterContract.Presenter {

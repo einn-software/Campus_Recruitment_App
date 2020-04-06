@@ -1,37 +1,37 @@
 package com.testexample.materialdesigntest.data.room
 
-import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+//import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
-import com.testexample.materialdesigntest.data.database.Student
+import com.testexample.materialdesigntest.data.database.model.Student
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
+import org.junit.runners.JUnit4
 import java.io.IOException
 
-@RunWith(RobolectricTestRunner::class)
-@Config(maxSdk = 28)
+@RunWith(JUnit4::class)
+//@Config(maxSdk = 28)
 class StudentDatabaseTest {
 
-    private val user = Student(1,"sdg", "sdg@test.com",
-        "qwertyui", 545454545, 243,
-        "cse", "nitra")
+    private val user =
+        Student(
+            1, "sdg", "sdg@test.com",
+            "qwertyui", 545454545, 243,
+            "cse", "nitra"
+        )
 
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
+   // @get:Rule
+    //val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
 
     private  lateinit var studentDao: StudentDao    // DOA
     private  lateinit var database: StudentDatabase  // database instance
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
 
         database = Room.inMemoryDatabaseBuilder(context, StudentDatabase::class.java)
             .allowMainThreadQueries()       //only for testing

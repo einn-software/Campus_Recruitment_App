@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.data.interactor
 
-import com.testexample.materialdesigntest.data.database.Student
+import com.testexample.materialdesigntest.data.database.model.Student
 import io.reactivex.Flowable
 
 interface IUserRepository {

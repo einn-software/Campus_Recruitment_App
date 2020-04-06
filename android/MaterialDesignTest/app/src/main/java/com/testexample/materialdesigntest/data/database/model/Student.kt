@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.data.database
+package com.testexample.materialdesigntest.data.database.model
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo

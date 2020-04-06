@@ -27,7 +27,5 @@ app.use(express.json());
 //Route Middlewares
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
-const port = process.env.PORT || 3003;
-const listener = app.listen(port, () => {
-    console.log("server up and running " + listener.address().port);
-});
+
+module.exports = app;

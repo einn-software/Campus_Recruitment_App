@@ -4,22 +4,10 @@ const Joi = require('@hapi/joi');
 const adminRegisterValidation = data => {
     const adminSchema = Joi.object({
 
-        name: Joi.string()
-             .min(6)
-             .required()
-             .max(255),
-        email: Joi.string()
-             .min(6)
-             .required()
-             .max(255)
-             .email(),
-        password: Joi.string()
-             .min(6)
-             .max(255)
-             .required(),
-        phone: Joi.number()
-             .required()
-             .min(10),
+        name: Joi.string().min(6).required().max(255),
+        email: Joi.string().min(6).required().max(255).email(),
+        password: Joi.string().min(6).max(255).required(),
+        phone: Joi.number().required().min(10),
      });
      return adminSchema.validate(data);
 }

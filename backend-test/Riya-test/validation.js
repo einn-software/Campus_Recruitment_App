@@ -129,7 +129,7 @@ const loginValidation = data => {
               .required()
               .max(255),
          message: Joi.string()       
-              .required()       
+              .required().min(10)       
       });
       return testinstructionsSchema.validate(data);
      
@@ -140,15 +140,15 @@ const loginValidation = data => {
 const ResultsValidation = data => {
      const ResultsSchema = Joi.object({
  
-         student_id: Joi.number()
+         student_id: Joi.string().min(4).max(30)
               .required(),       
-         question_paper_id: Joi.number()
+         question_paper_id: Joi.string().min(4).max(30)
               .required(),              
-         question_attempt: Joi.number()
+         question_attempt: Joi.string().min(1).max(30)
               .required(),
-         correct_attempt: Joi.number()
+         correct_attempt: Joi.string().min(1).max(30)
               .required(),
-         total_marks_scored: Joi.number()
+         total_marks_scored: Joi.string().min(2).max(30)
               .required()
       });
       return ResultsSchema.validate(data);

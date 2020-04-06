@@ -216,7 +216,7 @@ describe('POST /auth  Student Register', () => {
         .post('/api/user/studentregister')
         .send(newStudent)
         .expect(400);
-      expect(response.body).toString({ student: '5e8ae96513b04611c00f033b"' });
+      expect(response.body).toString({ student: '5e8ae96513b04611c00f033b' });
     });
     beforeEach((done) => {
       mongoose.connection.db.dropCollection('Students', (err, result) => {
@@ -226,4 +226,67 @@ describe('POST /auth  Student Register', () => {
   });
 });
 
+//Test Instructions API Test case
+describe('POST /auth Test Instructions', () => {
+  describe('POST /auth/testinstructions', () => {
+    it('It should require college name.', async () => {
+      const response = await request(app)
+        .post('/api/user/testinstructions')
+        .send({ college:'' })
+        .expect(400);
+      expect(response.body.message).toString('"college" is not allowed to be empty');
+    });
+  });
+  describe('POST /auth/testinstructions', () => {
+    it('To Add a new instructions', async () => {
+      const newInstructions = {
+        college: 'Nitra Technical Campus',
+        message: 'You are not allowed to return back during the test'
+      };
+      const response = await request(app)
+        .post('/api/user/testinstructions')
+        .send(newInstructions)
+        .expect(200);
+      expect(response.body).toString({ instructions: '5e8b1f7d434e6a1de0a802eb' });
+    });
+    beforeEach((done) => {
+      mongoose.connection.db.dropCollection('testinstructions', (err, result) => {
+        done();
+      });
+    });
+  });
+});
 
+// Result API Test case
+describe('POST /auth Result', () => {
+  describe('POST /auth/result', () => {
+    it('It should require Student Id', async () => {
+      const response = await request(app)
+        .post('/api/user/result')
+        .send({ student_id:'' })
+        .expect(400);
+      expect(response.body.message).toString('"student_id" is not allowed to be empty');
+    });
+  });
+  describe('POST /auth/result', () => {
+    it('To Add a new result', async () => {
+      const newResult = {
+        student_id: "5e8ae96513b04611c00f033b",
+        question_paper_id: "1523",
+        question_attempt: "50",
+        correct_attempt: "48",
+        total_marks_scored: "98"
+      };
+      const response = await request(app)
+        .post('/api/user/result')
+        .send(newResult)
+        .expect(200);
+      expect(response.body).toString({ result: '5e8b24674e31de03d4eecb2e' });
+    });
+    beforeEach((done) => {
+      mongoose.connection.db.dropCollection('testinstructions', (err, result) => {
+        done();
+      });
+    });
+  });
+});

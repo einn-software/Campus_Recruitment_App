@@ -58,8 +58,8 @@ describe("Read Tests", ()=>{
 it('set and save', ()=>{
  updater.set({question:15 ,topic:"MongoDb mong", options:4, answer:8, weight:8});
  updater.save()
-   .then(() => questionCollection.find({}))
-   .then(questionCollections => {
+   .then(() => questionCollections.find({}))
+   .then(questionCollection => {
       assert(questionCollection[0].question !== '12');
    });
 
@@ -80,8 +80,8 @@ it('set and save', ()=>{
   
         questionCollections.findByIdAndDelete(deleter._id)
         .then(()=> questionCollections.findOne({question:12 }))
-        .then((Results)=>{
-         assert(Results == null);
+        .then((collection)=>{
+         assert(collection == null);
         done();
         });
         

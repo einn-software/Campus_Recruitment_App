@@ -59,7 +59,7 @@ it('set and save', ()=>{
  updater.save()
    .then(() => Student.find({}))
    .then((Students) => {
-      assert(Student[0].name !== 'Shikha');
+      assert(Students[0].name !== 'Shikha');
    });
 
 });

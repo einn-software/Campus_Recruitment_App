@@ -60,7 +60,7 @@ it('set and save', ()=>{
  updater.save()
    .then(() => Tpo.find({}))
    .then(Tpos => {
-      assert(Tpo[0].name !== 'Shikha');
+      assert(Tpos[0].name !== 'Shikha');
    });
 
 });

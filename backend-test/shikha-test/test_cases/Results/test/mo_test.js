@@ -23,11 +23,11 @@ describe("Create Tests", () => {
 //All read Tests
 
 describe("Read Results", ()=>{
-   let register;
+   let Register;
  
  beforeEach((done)=> {
-   register =new  Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
-    register.save()
+   Register = new  Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
+    Register.save()
     .then(()=> {
        done();
     });
@@ -37,7 +37,7 @@ describe("Read Results", ()=>{
        Results.find({student_id:12})
        .then((reg)=>{
  
-          assert(register._id.toString() === reg[0]._id.toString());
+          assert(Register._id.toString() === reg[0]._id.toString());
           done();
        });
  
@@ -60,8 +60,8 @@ describe("Delete Results", ()=>{
  
        Results.findByIdAndDelete(deleteRes._id)
        .then(()=> Results.findOne({student_id:12}))
-         .then((Results)=>{
-           assert(Results == null);
+         .then((Result)=>{
+           assert(Result == null);
           done();
        });
  

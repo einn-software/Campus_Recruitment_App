@@ -60,7 +60,7 @@ it('set and save', ()=>{
  updater.set({name:"KITE" ,email:"ria@gmail.com", password:"sssses44", phone:7848787878, code:2010021 , address:"gzb"});
  updater.save()
    .then(() => College.find({}))
-   .then(Colleges => {
+   .then(College => {
       assert(College[0].name !== 'Shikha');
    });
 
@@ -74,7 +74,7 @@ it('set and save', ()=>{
    let deleter;
  
  beforeEach((done)=> {
-    deleter = new College({name:"NTC" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika"})
+    deleter = new College({name:"NTC" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, code:201002 , address:"avantika",})
     deleter.save().then(()=> done());
  });
      it('Delete' ,(done)=>{

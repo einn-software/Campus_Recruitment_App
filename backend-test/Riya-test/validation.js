@@ -120,7 +120,7 @@ const loginValidation = data => {
 
 }
 
-// Test Instructio validation
+// Test POST Instructions validation
     const testinstructionsValidation = data => {
      const testinstructionsSchema = Joi.object({
  
@@ -132,6 +132,19 @@ const loginValidation = data => {
               .required().min(10)       
       });
       return testinstructionsSchema.validate(data);
+     
+     }
+// Test GET Instructions validation
+const getinstructionsValidation = data => {
+     const getinstructionsSchema = Joi.object({
+ 
+         college: Joi.string()
+              .min(6)
+              .required()
+              .max(255),
+      
+      });
+      return getinstructionsSchema.validate(data);
      
      }
 
@@ -153,10 +166,21 @@ const ResultsValidation = data => {
       });
       return ResultsSchema.validate(data);
 }
+//Get Result Validation
+const getResultsValidation = data => {
+     const getResultsSchema = Joi.object({
+ 
+         student_id: Joi.string().min(4).max(30)
+              .required(),       
+      });
+      return getResultsSchema.validate(data);
+}
 module.exports.adminRegisterValidation = adminRegisterValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.testinstructionsValidation = testinstructionsValidation;
+module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;
+module.exports.getResultsValidation = getResultsValidation;

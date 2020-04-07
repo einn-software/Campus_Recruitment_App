@@ -256,37 +256,106 @@ describe('POST /auth Test Instructions', () => {
     });
   });
 });
+// GET 
+describe('GET /auth GET Instructions', () => {
+  describe('GET /auth/getinstructions', () => {
+    it('It should not return anything.', async () => {
+      const response = await request(app)
+        .get('/api/user/getinstructions')
+        .send({ college:'' })
+        .expect(400);
+      expect(response.body.message).toString('"college" is not allowed to be empty');
+    });
+  });
+  describe('GET /auth/getinstructions', () => {
+    it('To Get the intructions', async () => {
+      const newInstructions = {
+        college: 'RKGIT Ghaziabad'
+      };
+      const response = await request(app)
+        .get('/api/user/getinstructions')
+        .send(newInstructions)
+        .expect(200);
+      expect(response.body).toString({   
+      _id: "5e8c5a7558b83d2a9c4e03b1",
+      college: "RKGIT Ghaziabad",
+      message: "You are not allowed to return back during the test, so please don't open any other tab during the test",
+      date: "2020-04-07T10:48:21.859Z",
+      __v: 0 });
+    });
+    });
+  });
 
 // Result API Test case
 describe('POST /auth Result', () => {
   describe('POST /auth/result', () => {
-    it('It should require Student Id', async () => {
+    it('It should give a message.', async () => {
+      const exist = {
+        student_id: "f033b",
+        question_paper_id: "2023",
+        question_attempt: "50",
+        correct_attempt: "30",
+        total_marks_scored: "20"
+      }
       const response = await request(app)
         .post('/api/user/result')
-        .send({ student_id:'' })
+        .send({ exist })
         .expect(400);
-      expect(response.body.message).toString('"student_id" is not allowed to be empty');
+      expect(response.body.message).toString('Student has already gave the test');
     });
   });
   describe('POST /auth/result', () => {
     it('To Add a new result', async () => {
       const newResult = {
-        student_id: "5e8ae96513b04611c00f033b",
-        question_paper_id: "1523",
-        question_attempt: "50",
-        correct_attempt: "48",
-        total_marks_scored: "98"
+        student_id: "6998",
+        question_paper_id: "2990",
+        question_attempt: "80",
+        correct_attempt: "50",
+        total_marks_scored: "79"
       };
       const response = await request(app)
         .post('/api/user/result')
         .send(newResult)
-        .expect(200);
-      expect(response.body).toString({ result: '5e8b24674e31de03d4eecb2e' });
+        .expect(400);
+      expect(response.body).toString({ Result: "5e8c6ec7a3bd4e0b5c00da50" });
     });
     beforeEach((done) => {
-      mongoose.connection.db.dropCollection('testinstructions', (err, result) => {
+      mongoose.connection.db.dropCollection('result', (err, result) => {
         done();
       });
     });
   });
+});
+// GET RESULT API TEST CASES
+describe('GET /auth GET Result', () => {
+  describe('GET /auth/getresult', () => {
+    it('It should require Student Id', async () => {
+      const response = await request(app)
+        .get('/api/user/getresult')
+        .send({ student_id:'' })
+        .expect(400);
+      expect(response.body.message).toString('"student_id" is not allowed to be empty');
+    });
+  });
+  describe('GET /auth/getresult', () => {
+    it('To Add a new result', async () => {
+      const newResult = {
+        student_id: "5e8ae96513b04611c00f033b"
+      };
+      const response = await request(app)
+        .get('/api/user/getresult')
+        .send(newResult)
+        .expect(200);
+      expect(response.body).toString({
+        _id: "5e8c55e12dab9a3a7c7e6cb9",
+        student_id: "f033b",
+        question_paper_id: "2023",
+        question_attempt: "50",
+        correct_attempt: "30",
+        total_marks_scored: "20",
+        date: "2020-04-07T10:28:49.944Z",
+        __v: 0
+      });
+      });
+    });
 });

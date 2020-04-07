@@ -1,13 +1,18 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
+const assert = require('assert');
+const mongo = require('mongodb');
 const Admin = require('../model/Admin');
+// const getResults = require('../model/getResult');
 const College = require('../model/College');
 const Tpo = require('../model/Tpo');
 const Student = require('../model/Student');
+// const getinstructions = require('../model/getinstructions');
 const testinstructions = require('../model/instruction');
 const Results = require('../model/Results');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {getResultsValidation, getinstructionsValidation, ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
@@ -207,7 +212,10 @@ router.post('/testinstructions',async(req,res) => {
     //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
     const { error } = testinstructionsValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);   
-
+         
+   //Checking if the college is already in the database
+   const collegeExist = await testinstructions.findOne({college: req.body.college});
+   if(collegeExist) return res.status(400).send('College already exist');
     // Create a new instruction
     const instructions = new testinstructions({
         college: req.body.college,
@@ -221,16 +229,26 @@ router.post('/testinstructions',async(req,res) => {
         res.status(400).send(err);
     }
 });
+router.get('/getinstructions',async(req,res) => {
+    const { error } = getinstructionsValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    testinstructions.findOne({college:req.body.college}, function(err,obj){
+        res.send(obj); 
+         if(err) return status(500).json({message:"No instructions found for the enterd college"});
+     });
+});
 
 
 //Results 
-
-
 router.post('/result', async (req, res) => { 
 
-    // LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
+    // LETS VALIDATE THE DATA BEFORE WE ADD A RESULT    
      const { error } = ResultsValidation(req.body);
      if (error) return res.status(400).send(error.details[0].message);
+          
+   //Checking if the studentid is already in the database
+   const studentExist = await Results.findOne({student_id: req.body.student_id});
+   if(studentExist) return res.status(400).send('Student has already gave the test');
      
     
     // Create Result
@@ -243,13 +261,19 @@ router.post('/result', async (req, res) => {
      });
      try{
          const savedResult = await Result.save();
-         res.send({Result: Result._id});
+         res.send({Result:Result._id});
      }catch(err){
          res.status(400).send(err);
      }
  });
-
-
-
+ router.get('/getresult', async(req, res) =>{
+    const { error } = getResultsValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     Results.findOne({student_id: req.body.student_id}, function(err,obj){
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"Result not found"});
+     });
+});
 
 module.exports = router;

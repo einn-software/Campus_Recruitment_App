@@ -12,7 +12,7 @@ dotenv.config();
 
 //Connect to DB
 mongoose.connect(
-    process.env.DB_CONNECT, 
+    process.env.TEST_DB_CONNECT, 
     {
         useNewUrlParser: true,
         useUnifiedTopology: true 

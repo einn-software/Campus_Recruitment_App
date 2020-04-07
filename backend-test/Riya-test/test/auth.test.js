@@ -359,3 +359,137 @@ describe('GET /auth GET Result', () => {
       });
     });
 });
+
+// ADMIN Login API TEST CASE
+describe('POST /api/user/collegelogin', () => {
+  it('should require a email', async () => {
+    const response = await request(app)
+      .post('/api/user/adminlogin')
+      .send({
+        email:"l@gmail.com",
+        password:"testtesttest"
+      })
+      .expect(400);
+    expect(response.body.message).toString('Email not found');
+  });
+  it('should require a valid email', async () => {
+    const response = await request(app)
+      .post('/api/user/adminlogin')
+      .send({ email: 'testuser' })
+      .expect(400);
+    expect(response.body.message).toString('"email" must be a valid email');
+  });
+  it('should not allow the user having wrong password', async () => {
+    const response = await request(app)
+      .post('/api/user/adminlogin')
+      .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
+      .expect(400);
+    expect(response.body.message).toString('Invalid password');
+  });
+  it('should only allow valid users to login', async () => {
+    const newUser = {
+      email:"rsinghal@gmail.com",
+      password:"15787851"
+    }
+    const response = await request(app)
+      .post('/api/user/adminlogin')
+      .send(newUser)
+      .expect(400);
+    expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjBjZGRlNDBiOTI3NGNhNWE5NTEiLCJpYXQiOjE1ODYyNzkyMDh9.wkorI7gdYsj8AXr-faWVy6WeLkKCCoFX9fNGO2orthk");
+  });
+}); 
+// College Login API TEST CASE
+describe('POST /api/user/collegelogin', () => {
+  it('should require a email', async () => {
+    const response = await request(app)
+      .post('/api/user/collegelogin')
+      .send({
+        email:"l@gmail.com",
+        password:"testtesttest"
+      })
+      .expect(400);
+    expect(response.body.message).toString('Email not found');
+  });
+  it('should not allow the user having wrong password', async () => {
+    const response = await request(app)
+      .post('/api/user/collegelogin')
+      .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
+      .expect(400);
+    expect(response.body.message).toString('Invalid password');
+  });
+  it('should only allow valid users to login', async () => {
+    const newUser = {
+      email:"rsinghal@gmail.com",
+      password:"15787851"
+    }
+    const response = await request(app)
+      .post('/api/user/collegelogin')
+      .send(newUser)
+      .expect(400);
+    expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjU2YmNiNjYyOTJlYTRjZjgwMTEiLCJpYXQiOjE1ODYyNzk4MjF9.o-C4Kp_zeQck-BDCFNssXwttzJ0xd7DkHfRQIgE3Wto");
+  });
+}); 
+
+// Tpo Login API TEST CASE
+describe('POST /api/user/tpologin', () => {
+  it('should require a email', async () => {
+    const response = await request(app)
+      .post('/api/user/tpologin')
+      .send({
+        email:"l@gmail.com",
+        password:"testtesttest"
+      })
+      .expect(400);
+    expect(response.body.message).toString('Email not found');
+  });
+  it('should not allow the user having wrong password', async () => {
+    const response = await request(app)
+      .post('/api/user/tpologin')
+      .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
+      .expect(400);
+    expect(response.body.message).toString('Invalid password');
+  });
+  it('should only allow valid users to login', async () => {
+    const newUser = {
+      email:"rsinghal@gmail.com",
+      password:"15787851"
+    }
+    const response = await request(app)
+      .post('/api/user/tpologin')
+      .send(newUser)
+      .expect(400);
+    expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjhjZmMyODhiMDE5NjQwZjVjY2MiLCJpYXQiOjE1ODYyODA3MTF9.sYtvVkXQXziguEjFx6BR-qEDvc9AQZYuOGJ0aMPvYpw");
+  });
+}); 
+
+// Student Login API TEST CASE
+describe('POST /api/user/studentlogin', () => {
+  it('should require a email', async () => {
+    const response = await request(app)
+      .post('/api/user/studentlogin')
+      .send({
+        email:"l@gmail.com",
+        password:"testtesttest"
+      })
+      .expect(400);
+    expect(response.body.message).toString('Email not found');
+  });
+  it('should not allow the user having wrong password', async () => {
+    const response = await request(app)
+      .post('/api/user/studentlogin')
+      .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
+      .expect(400);
+    expect(response.body.message).toString('Invalid password');
+  });
+  it('should only allow valid users to login', async () => {
+    const newUser = {
+      email:"rsinghal@gmail.com",
+      password:"15787851"
+    }
+    const response = await request(app)
+      .post('/api/user/studentlogin')
+      .send(newUser)
+      .expect(400);
+    expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjk4MmMyODhiMDE5NjQwZjVjY2QiLCJpYXQiOjE1ODYyODA5ODh9.WYjZOEpOd0Qw8OTavWrQmNwHTDCPSz3GQNyPRuRFlk8");
+  });
+}); 

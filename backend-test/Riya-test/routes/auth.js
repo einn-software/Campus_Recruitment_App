@@ -149,7 +149,7 @@ router.post('/studentregister', async (req, res) => {
      const { error } = loginValidation(req.body);
      if (error) return res.status(400).send(error.details[0].message);
      //Checking if the user is already in the database
-     const student = await student.findOne({email: req.body.email});
+     const student = await Student.findOne({email: req.body.email});
      if(!student) return res.status(400).send('Email not found');
      //Check if the password is correct
      const validPass = await bcrypt.compare(req.body.password, student.password);
@@ -171,7 +171,7 @@ router.post('/collegelogin',async(req, res) => {
     if(!validPass) return res.status(400).send('Invalid password');
     //Create and assign a token
     const token = jwt.sign({_id: college._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+    res.header('auth-token', token).send(token).status(200);
 });
 
 //LOGIN TPO
@@ -201,7 +201,7 @@ router.post('/adminlogin',async(req, res) => {
     if(!validPass) return res.status(400).send('Invalid password');
     //Create and assign a token
     const token = jwt.sign({_id: admin._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+    res.header('auth-token', token).send(token).status(200);
 });
 
 

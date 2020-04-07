@@ -23,21 +23,21 @@ describe("Create Tests", () => {
 //All read Tests
 
 describe("Read Results", ()=>{
-   let students;
+   let register;
  
  beforeEach((done)=> {
-    const students =new  Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
-    students.save()
+   register =new  Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
+    register.save()
     .then(()=> {
        done();
     });
  });
-     it('Read studentid ',(done)=>{
+     it('Read',(done)=>{
  
        Results.find({student_id:12})
-       .then((result)=>{
+       .then((reg)=>{
  
-          assert(students._id.toString() === result[0]._id.toString());
+          assert(register._id.toString() === reg[0]._id.toString());
           done();
        });
  

@@ -34,10 +34,10 @@ describe("Read Tests", ()=>{
  });
      it('Read',(done)=>{
  
-       questionCollections.find({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6})
+       questionCollections.find({question:12})
        .then((reg)=>{
  
-          assert(questionCollections._id.toString() === reg[0]._id.toString());
+          assert(Register._id.toString() === reg[0]._id.toString());
           done();
        });
  

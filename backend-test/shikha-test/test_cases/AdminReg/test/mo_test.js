@@ -34,10 +34,10 @@ describe("Read Tests", ()=>{
  });
      it('Read',(done)=>{
  
-       Admin.find({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, })
+       Admin.find({name:"Shikha" })
        .then((reg)=>{
  
-          assert(Admin._id === reg[0]._id);
+          assert(Register._id.toString() === reg[0]._id.toString());
           done();
        });
  

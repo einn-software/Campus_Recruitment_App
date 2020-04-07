@@ -34,10 +34,10 @@ describe("Read Tests", ()=>{
  });
      it('Read',(done)=>{
  
-       Tpo.find({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, designation:"CCC" , branch:"CS" , college:"nTC"})
+       Tpo.find({name:"Shikha"})
        .then((reg)=>{
  
-          assert(Tpo._id.toString() === reg[0]._id.toString());
+          assert(Register._id.toString() === reg[0]._id.toString());
           done();
        });
  

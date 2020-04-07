@@ -34,10 +34,10 @@ describe("Read Tests", ()=>{
  });
      it('Read',(done)=>{
  
-       Student.find({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, roll:201002 , branch:"CS" , college:"nTC"})
+       Student.find({name:"Shikha"})
        .then((reg)=>{
  
-          assert(Student._id.toString() === reg[0]._id.toString());
+          assert(Register._id.toString() === reg[0]._id.toString());
           done();
        });
  

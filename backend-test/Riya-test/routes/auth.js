@@ -10,9 +10,11 @@ const Student = require('../model/Student');
 // const getinstructions = require('../model/getinstructions');
 const testinstructions = require('../model/instruction');
 const Results = require('../model/Results');
+const questionCollections = require('../model/questionCollections');
+const questionPaper = require('../model/questionPaper')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {getResultsValidation, getinstructionsValidation, ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {getResultsValidation,getquestionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation, questionCollectionsValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
@@ -276,4 +278,76 @@ router.post('/result', async (req, res) => {
      });
 });
 
+//questionCollections 
+
+router.post('/questionCollections',async(req,res) => {
+
+    //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
+    const { error } = questionCollectionsValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);   
+         
+   
+    // Create a new questionCollection
+    const questionCollection = new questionCollections({
+        question: req.body.question,
+        topic: req.body.topic,
+        options: req.body.options,
+        answer: req.body.answer,
+        weight: req.body.weight,
+    });
+    try{
+        const savedCollections = await questionCollection.save();
+        res.send({ questionCollection: questionCollection._id});
+        // res.send(savedinstructions);
+    }catch(err){
+        res.status(400).send(err);
+    }
+});
+
+//get questionCollections
+router.get('/getquestionCollections', async(req, res) =>{
+    const { error } = getquestionCollectionsValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     questionCollections.findOne({topic: req.body.topic}, function(err,obj){
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"QuestionCollections not found"});
+     });
+});
+
+// questionPaper
+
+router.post('/questionPapers',async(req,res) => {
+
+    //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
+    const { error } = questionPaperValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);   
+         
+   
+    // Create a new questionPaper
+    const questionPapers = new questionPaper({
+        date: req.body.date,
+        max_marks: req.body.max_marks,
+        max_time: req.body.max_time,
+        college_id: req.body.college_id,
+    });
+    try{
+        const savedPapers = await questionPapers.save();
+        res.send({ questionPapers: questionPapers._id});
+    }catch(err){
+        res.status(400).send(err);
+    }
+});
+
+//Get questionPaper
+
+router.get('/getquestionPaper', async(req, res) =>{
+    const { error } = getquestionPaperValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     questionPaper.findOne({college_id: req.body.college_id}, function(err,obj){
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"Question Paper not found"});
+     });
+});
 module.exports = router;

@@ -19,7 +19,7 @@ before((done) =>{
 });
 
 beforeEach((done) => {
-    mongoose.connection.db.dropCollection('questionPaper', function(err, result) {
+    mongoose.connection.collections.questionPaper.drop(()=> {
         done();
     });
 });  

@@ -2,6 +2,15 @@ const request = require('supertest');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const Admin = require('../model/Admin');
+const College = require('../model/College');
+const Tpo = require('../model/Tpo');
+const Student = require('../model/Student');
+const testinstructions = require('../model/instruction');
+const Results = require('../model/Results');
+const questionCollections = require('../model/questionCollections');
+const questionPaper = require('../model/questionPaper')
+
 
 dotenv.config();
 const app = require('../index');
@@ -35,7 +44,7 @@ describe('POST /auth  College Register', () => {
           address: 'NITRA Technical Campus',
         })
         .expect(400);
-      expect(response.body.message).toString('Email already exist');
+      expect(response.body.message).toString('"email" must be a valid email');
     });
   });
   describe('POST /auth/collegeregister', () => {
@@ -51,16 +60,17 @@ describe('POST /auth  College Register', () => {
       const response = await request(app)
         .post('/api/user/collegeregister')
         .send(newCollege)
-        .expect(400);
+        .expect(200);
       expect(response.body).toString({ college: '5e8a3086b71f0a357c5baf29' });
     });
-    beforeEach((done) => {
-      mongoose.connection.db.dropCollection('Colleges', (err, result) => {
-        done();
+   beforeEach((done) => {
+    mongoose.connection.db.dropCollection('colleges', (err, result) => {
+      done();
       });
-    });
+       });
   });
 });
+
 
 // Admin Register Testing
 describe('POST /auth  Admin Register', () => {
@@ -79,17 +89,17 @@ describe('POST /auth  Admin Register', () => {
     });
   });
   describe('POST /auth/adminregister', () => {
-    it('To check if the email is already exist ', async () => {
+    it('To check if the email is valid or not ', async () => {
       const response = await request(app)
         .post('/api/user/adminregister')
         .send({
           name:"suchitra",
-          email:"singh@email.com",
+          email:"singhcom",
           password:"rsrsrs",
           phone:"9494949497"
         })
         .expect(400);
-      expect(response.body.message).toString('Email already exist');
+      expect(response.body.message).toString('"email" must be a valid email');
     });
   });
   describe('POST /auth/adminregister', () => {
@@ -135,14 +145,14 @@ describe('POST /auth  Tpo Register', () => {
         .post('/api/user/tporegister')
         .send({
           name: 'suchitra',
-          email: 'suchitra@email.com',
+          email: 'suchitra',
           password: 'rsrsrs',
           phone: '9494949497',
           designation:'Placement Officer',
           college: 'Nitra Technical Campus'
         })
         .expect(400);
-      expect(response.body.message).toString('Email already exist');
+      expect(response.body.message).toString('"email" must be a valid email');
     });
   });
   describe('POST /auth/tporegister', () => {
@@ -301,7 +311,7 @@ describe('POST /auth Result', () => {
         .post('/api/user/result')
         .send({ exist })
         .expect(400);
-      expect(response.body.message).toString('Student has already gave the test');
+      expect(response.body.message).toString('Student has already given the test');
     });
   });
   describe('POST /auth/result', () => {

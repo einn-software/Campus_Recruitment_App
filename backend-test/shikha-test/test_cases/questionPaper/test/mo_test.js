@@ -20,8 +20,9 @@ describe("Create Tests", () => {
 
 
 
-//All read Tests
 
+//All read Tests
+/*
 describe("Read tests", ()=>{
    let Register;
  
@@ -36,58 +37,49 @@ describe("Read tests", ()=>{
  
        questionPaper.find({college_id:23456})
        .then((reg)=>{
- 
           assert(Register._id.toString() === reg[0]._id.toString());
           done();
-       });
- 
+       }); 
     });
  });
- 
- 
- 
- 
+ */
 //All delete tests
-
-describe("Delete Results", ()=>{
-   let deleteRes;
- 
+describe("Delete", ()=>{
+   let deleteR;
  beforeEach((done)=> {
-    deleteRes = Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
-    deleteRes.save().then(()=> done());
+   deleteR = new questionPaper({date:"2020-12-02", max_marks:50,max_time:3,college_id:23456,section:[{marks:10},{numofQuestion:5},{questionIdList:4}]})
+   deleteR.save().then(()=> done());
  });
-     it('Delete result ',(done)=>{
- 
-       Results.findByIdAndDelete(deleteRes._id)
-       .then(()=> Results.findOne({student_id:12}))
-         .then((Result)=>{
-           assert(Result == null);
+     it('Delete ',(done)=>{
+        questionPaper.findByIdAndDelete(deleteR._id)
+       .then(()=> questionPaper.findOne({date:"2020-12-02"}))
+         .then((questionPaper)=>{
+           assert(questionPaper== null);
           done();
        });
- 
     });
  });
-
- //all update tests
- 
+//update all tests 
 describe("Update Tests",()=>{
    let updater;
-   beforeEach((done) =>{
-     updater = new Results({student_id:12,question_paper_id:2222,question_attempt:5,correct_attempt:6,total_marks_scored:30})
-     updater.save()
+ beforeEach((done) =>{
+   updater = new questionPaper({date:"2020-12-02", max_marks:50,max_time:3,college_id:23456,section:[{marks:10},{numofQuestion:5},{questionIdList:4}]})
+   updater.save()
      .then(() =>done());
    });
-
 it('set and save', ()=>{
- updater.set({student_id:15,question_paper_id:2272,question_attempt:8,correct_attempt:6,total_marks_scored:60});
+ updater.set({date:"2021-12-02", max_marks:150,max_time:3,college_id:23457,section:[{marks:20},{numofQuestion:7},{questionIdList:3}]});
  updater.save()
-   .then(() => Results.find({}))
-   .then(Results => {
-      assert(Results[0].student_id !== 12);
+   .then(() => questionPaper.find({}))
+   .then(questionPaper => {
+      assert(questionPaper[0].college_id !== "23456");
    });
-
 });
 });
 
+
+ 
+ 
+ 
 
 

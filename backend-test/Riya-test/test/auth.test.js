@@ -28,7 +28,7 @@ describe('POST /auth  College Register', () => {
         .post('/api/user/collegeregister')
         .send({
           name: 'suchitra',
-          email: 'suchitra@email.com',
+          email: 'suchit@com',
           password: 'rsrsrs',
           phone: '9494949497',
           code: '21004566',
@@ -394,7 +394,7 @@ describe('POST /api/user/collegelogin', () => {
     const response = await request(app)
       .post('/api/user/adminlogin')
       .send(newUser)
-      .expect(400);
+      .expect(200);
     expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjBjZGRlNDBiOTI3NGNhNWE5NTEiLCJpYXQiOjE1ODYyNzkyMDh9.wkorI7gdYsj8AXr-faWVy6WeLkKCCoFX9fNGO2orthk");
   });
 }); 
@@ -425,7 +425,7 @@ describe('POST /api/user/collegelogin', () => {
     const response = await request(app)
       .post('/api/user/collegelogin')
       .send(newUser)
-      .expect(400);
+      .expect(200);
     expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjU2YmNiNjYyOTJlYTRjZjgwMTEiLCJpYXQiOjE1ODYyNzk4MjF9.o-C4Kp_zeQck-BDCFNssXwttzJ0xd7DkHfRQIgE3Wto");
   });
 }); 
@@ -457,7 +457,7 @@ describe('POST /api/user/tpologin', () => {
     const response = await request(app)
       .post('/api/user/tpologin')
       .send(newUser)
-      .expect(400);
+      .expect(200);
     expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjhjZmMyODhiMDE5NjQwZjVjY2MiLCJpYXQiOjE1ODYyODA3MTF9.sYtvVkXQXziguEjFx6BR-qEDvc9AQZYuOGJ0aMPvYpw");
   });
 }); 
@@ -489,7 +489,74 @@ describe('POST /api/user/studentlogin', () => {
     const response = await request(app)
       .post('/api/user/studentlogin')
       .send(newUser)
-      .expect(400);
+      .expect(200);
     expect(response.body.message).toString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZThjYjk4MmMyODhiMDE5NjQwZjVjY2QiLCJpYXQiOjE1ODYyODA5ODh9.WYjZOEpOd0Qw8OTavWrQmNwHTDCPSz3GQNyPRuRFlk8");
   });
 }); 
+
+// Questions collection API Test case
+describe('POST /QuestionCollection', () => {
+  describe('POST /auth/questionCollections', () => {
+    it('It should give a message.', async () => {
+      const response = await request(app)
+        .post('/api/user/questionCollections')
+        .send({})
+        .expect(400);
+      expect(response.body.message).toString('"question" is required');
+    });
+  });
+  describe('POST /auth/result', () => {
+    it('To Add a new collection', async () => {
+      const newcollection = {
+        question:"5",
+        topic:"Science",
+        options:"4",
+        answer:"3",
+        weight:"2"
+      };
+      const response = await request(app)
+        .post('/api/user/result')
+        .send(newcollection)
+        .expect(400);
+      expect(response.body).toString({ questionCollection: "5e8cd171885de00cb0cc3aa8" });
+    });
+    beforeEach((done) => {
+      mongoose.connection.db.dropCollection('result', (err, result) => {
+        done();
+      });
+    });
+  });
+});
+
+// GET QUESTION COLLECTION API TEST CASES
+describe('GET questionCollections', () => {
+  describe('GET getquestionCollections', () => {
+    it('It should require Student Id', async () => {
+      const response = await request(app)
+        .get('/api/user/getquestionCollections')
+        .send({ topic:'' })
+        .expect(400);
+      expect(response.body.message).toString('"topic" is not allowed to be empty');
+    });
+  });
+  describe('GET questionCollections', () => {
+    it('To Add a new result', async () => {
+      const newcollection = {
+        topic:"Science"
+      };
+      const response = await request(app)
+        .get('/api/user/getquestionCollections')
+        .send(newcollection)
+        .expect(200);
+      expect(response.body).toString({
+        _id: "5e8cd171885de00cb0cc3aa8",
+        question: 5,
+        topic: "Science",
+        options: 4,
+        answer: 3,
+        weight: 2,
+        __v: 0
+      });
+      });
+    });
+});

@@ -285,6 +285,10 @@ router.post('/questionCollections',async(req,res) => {
     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
     const { error } = questionCollectionsValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);   
+ 
+    //Checking if the topic is already in the database
+   const topicExist = await Results.findOne({topic: req.body.topic});
+   if(topicExist) return res.status(400).send('This topic has already declared');
          
    
     // Create a new questionCollection
@@ -321,7 +325,11 @@ router.post('/questionPapers',async(req,res) => {
 
     //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
     const { error } = questionPaperValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);   
+    if (error) return res.status(400).send(error.details[0].message);  
+   
+    //Checking if the studentid is already in the database
+   const collegeExist = await Results.findOne({college: req.body.college});
+   if(collegeExist) return res.status(400).send('This college has already submitted the test'); 
          
    
     // Create a new questionPaper
@@ -329,7 +337,7 @@ router.post('/questionPapers',async(req,res) => {
         date: req.body.date,
         max_marks: req.body.max_marks,
         max_time: req.body.max_time,
-        college_id: req.body.college_id,
+        college: req.body.college,
     });
     try{
         const savedPapers = await questionPapers.save();
@@ -341,10 +349,10 @@ router.post('/questionPapers',async(req,res) => {
 
 //Get questionPaper
 
-router.get('/getquestionPaper', async(req, res) =>{
+router.get('/getquestionPapers', async(req, res) =>{
     const { error } = getquestionPaperValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-     questionPaper.findOne({college_id: req.body.college_id}, function(err,obj){
+     questionPaper.findOne({college: req.body.college}, function(err,obj){
          console.log(obj);
         res.send(obj); 
          if(err) return status(400).json({message:"Question Paper not found"});

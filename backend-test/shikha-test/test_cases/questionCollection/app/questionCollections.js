@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const questionCollectionsSchema = new mongoose.Schema({
     
-    question:{ type:Number,
+    question:{ type:String,
         required:true,
         
        
@@ -11,11 +11,9 @@ const questionCollectionsSchema = new mongoose.Schema({
         
        
        },
-    options:{ type:Number,
-        required:true,
-       
-       },
-    answer:{ type:Number,
+    options:[{option1:{ type:String,
+        required:true}},{option2:{ type:String, required:true}},{option3:{type:String, required:true}},{option4:{type:String, required:true}}],
+    answer:{ type:String,
         required:true,
     
        
@@ -27,5 +25,5 @@ const questionCollectionsSchema = new mongoose.Schema({
     
 
 });
- 
-module.exports =  mongoose.model('questionCollections',questionCollectionsSchema);
+
+module.exports = mongoose.model('questionCollections',questionCollectionsSchema);

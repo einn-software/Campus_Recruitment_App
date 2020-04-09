@@ -179,13 +179,13 @@ const getResultsValidation = data => {
 const questionCollectionsValidation = data => {
      const questionCollectionsSchema = Joi.object({
  
-         question: Joi.number()
+         question: Joi.string()
               .required(),       
          topic: Joi.string()
               .required(),              
-         options: Joi.number()
+         options: Joi.string()
               .required(),
-         answer: Joi.number()
+         answer: Joi.string()
               .required(),
          weight: Joi.number()
               .required()
@@ -206,7 +206,7 @@ const getquestionCollectionsValidation = data => {
 
 // POST questionPaper validation
 const questionPaperValidation = data => {
-     const questionPaperSchema = Joi.object({
+     const questionPaperSchema = Joi.object().keys({
  
          date: Joi.date()
               .required(),       
@@ -216,6 +216,7 @@ const questionPaperValidation = data => {
               .required(),
          college_id: Joi.number()
               .required(),
+         section:Joi.array({ marks:Joi.number().required(),numOfQuestion:Joi.number().required(),questionIdList:Joi.number().required()})
    });
       return questionPaperSchema.validate(data);
 }
@@ -228,11 +229,6 @@ const getquestionPaperValidation = data => {
       });
       return getquestionPaperSchema.validate(data);
 }
-
-
-
-
-
 
 module.exports.adminRegisterValidation = adminRegisterValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
@@ -247,4 +243,3 @@ module.exports.questionCollectionsValidation = questionCollectionsValidation;
 module.exports.getquestionCollectionsValidation = getquestionCollectionsValidation;
 module.exports.questionPaperValidation = questionPaperValidation;
 module.exports.getquestionPaperValidation = getquestionPaperValidation;
-

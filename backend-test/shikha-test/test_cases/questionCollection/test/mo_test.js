@@ -1,4 +1,4 @@
-const questionCollections = require('../app/questionCollections');
+const questionCollections = require('../app/questionCollections')
 const assert = require('assert');
 
 describe("Create Tests", () => {
@@ -6,7 +6,7 @@ describe("Create Tests", () => {
     it("Create", (done) => {
        // assert(true);
 
-       const Registration = new questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6});
+       const Registration = new questionCollections({question:"what is the capital of india?" ,topic:"G.K", options:[{option1:"Mumbai"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Delhi", weight:6});
        Registration.save()
              .then(() => {
                 assert( !Registration.isNew); //if instruct is saved to db then it is not new
@@ -26,7 +26,7 @@ describe("Read Tests", ()=>{
    let Register;
  
  beforeEach((done)=> {
-    Register = new questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6})
+    Register = new questionCollections({question:"what is the capital of India?" ,topic:"G.K", options:[{option1:"Mumbai"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Delhi", weight:6});
     Register.save()
     .then(()=> {
        done();
@@ -34,7 +34,7 @@ describe("Read Tests", ()=>{
  });
      it('Read',(done)=>{
  
-       questionCollections.find({question:12})
+       questionCollections.find({question:"what is the capital of India?"})
        .then((reg)=>{
  
           assert(Register._id.toString() === reg[0]._id.toString());
@@ -50,17 +50,17 @@ describe("Read Tests", ()=>{
   describe("Update Tests",()=>{
    let updater;
    beforeEach((done) =>{
-     updater = new  questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6});
+     updater = new  questionCollections({question:"what is the capital of India?" ,topic:"G.K", options:[{option1:"Mumbai"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Delhi", weight:6});
      updater.save()
      .then(() =>done());
    });
 
 it('set and save', ()=>{
- updater.set({question:15 ,topic:"MongoDb mong", options:4, answer:8, weight:8});
+ updater.set({question:"what is the capital of Japan?" ,topic:"G.K", options:[{option1:"Tokyo"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Tokyo", weight:6});
  updater.save()
    .then(() => questionCollections.find({}))
    .then(questionCollection => {
-      assert(questionCollection[0].question !== '12');
+      assert(questionCollection[0].question !== 'what is the capital of India?');
    });
 
 });
@@ -73,19 +73,17 @@ it('set and save', ()=>{
     let deleter;
   
   beforeEach((done)=> {
-     deleter = new questionCollections({question:12 ,topic:"MongoDb", options:4, answer:3, weight:6})
+     deleter = new questionCollections({question:"what is the capital of India?" ,topic:"G.K", options:[{option1:"Mumbai"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Delhi", weight:6})
      deleter.save().then(()=> done());
   });
       it('Delete' ,(done)=>{
   
         questionCollections.findByIdAndDelete(deleter._id)
-        .then(()=> questionCollections.findOne({question:12 }))
+        .then(()=> questionCollections.findOne({question:"what is the capital of India?"}))
         .then((collection)=>{
          assert(collection == null);
         done();
         });
-        
-  
      });
   });
   

@@ -3,15 +3,13 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 const mongo = require('mongodb');
 const Admin = require('../model/Admin');
-// const getResults = require('../model/getResult');
 const College = require('../model/College');
 const Tpo = require('../model/Tpo');
 const Student = require('../model/Student');
-// const getinstructions = require('../model/getinstructions');
 const testinstructions = require('../model/instruction');
 const Results = require('../model/Results');
 const questionCollections = require('../model/questionCollections');
-const questionPaper = require('../model/questionPaper')
+const questionPaper = require('../model/questionPaper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {getResultsValidation,getquestionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation, questionCollectionsValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
@@ -45,8 +43,24 @@ router.post('/adminregister', async (req, res) => {
         // res.send(savedUser);
     }catch(err){
         res.status(400).send(err);
-    }
+    };
 });
+    //Update user's info
+router.put('/adminupdate/:id', function(req, res, next){
+    Admin.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        Admin.findOne({_id: req.params.id}).then(function(admin){
+            res.send(admin);
+    });
+  }).catch(next);
+});
+   // delete a user from the db
+router.delete('/admindelete/:id', function(req, res, next){
+    Admin.findByIdAndRemove({_id: req.params.id}).then(function(admin){
+        res.send(admin);
+    }).catch(next);
+});
+
+
 
 //College Register
 router.post('/collegeregister', async (req, res) => {
@@ -78,6 +92,21 @@ router.post('/collegeregister', async (req, res) => {
     }catch(err){
         res.status(400).send(err);
     }
+});
+//Update user's info
+router.put('/collegeupdate/:id', function(req, res, next){
+    College.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        College.findOne({_id: req.params.id}).then(function(college){
+            res.send(college);
+        });
+    }).catch(next);
+});
+    
+// delete a user from the db
+router.delete('/collegedelete/:id', function(req, res, next){
+    College.findByIdAndRemove({_id: req.params.id}).then(function(college){
+        res.send(college);
+    }).catch(next);
 });
 
 //TPO Register
@@ -111,6 +140,21 @@ router.post('/tporegister', async (req, res) => {
         res.status(400).send(err);
     }
 });
+    //Update user's info
+router.put('/tpoupdate/:id', function(req, res, next){
+    Tpo.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        Tpo.findOne({_id: req.params.id}).then(function(tpo){
+            res.send(tpo);
+        });
+    }).catch(next);
+});
+
+    // delete a user from the db
+router.delete('/tpodelete/:id', function(req, res, next){
+    Tpo.findByIdAndRemove({_id: req.params.id}).then(function(tpos){
+        res.send(tpos);
+    }).catch(next);
+});
 
 //Student Register
 router.post('/studentregister', async (req, res) => { 
@@ -120,7 +164,7 @@ router.post('/studentregister', async (req, res) => {
      if (error) return res.status(400).send(error.details[0].message);
      
    //Checking if the user is already in the database
-     const emailExist = await Tpo.findOne({email: req.body.email});
+     const emailExist = await Student.findOne({email: req.body.email});
      if(emailExist) return res.status(400).send('Email already exist');
   
      //Hash password
@@ -144,7 +188,20 @@ router.post('/studentregister', async (req, res) => {
          res.status(400).send(err);
      }
  });
-
+    //Update user's info
+router.put('/studentupdate/:id', function(req, res, next){
+    Student.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        Student.findOne({_id: req.params.id}).then(function(student){
+            res.send(student);
+        });
+    }).catch(next);
+});
+    // delete a user from the db
+router.delete('/studentdelete/:id', function(req, res, next){
+    Student.findByIdAndRemove({_id: req.params.id}).then(function(student){
+        res.send(student);
+    }).catch(next);
+});
 
  //Student LOGIN
  router.post('/studentlogin',async(req, res) => {
@@ -231,6 +288,7 @@ router.post('/testinstructions',async(req,res) => {
         res.status(400).send(err);
     }
 });
+   //display test instructions
 router.get('/getinstructions',async(req,res) => {
     const { error } = getinstructionsValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -239,8 +297,12 @@ router.get('/getinstructions',async(req,res) => {
          if(err) return status(500).json({message:"No instructions found for the enterd college"});
      });
 });
-
-
+   // delete a instruction from the db
+router.delete('/testinstructionsdelete/:id', function(req, res, next){
+    testinstructions.findByIdAndRemove({_id: req.params.id}).then(function(instructions){
+        res.send(instructions);
+    }).catch(next);
+});
 //Results 
 router.post('/result', async (req, res) => { 
 
@@ -268,6 +330,7 @@ router.post('/result', async (req, res) => {
          res.status(400).send(err);
      }
  });
+    // display Results
  router.get('/getresult', async(req, res) =>{
     const { error } = getResultsValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -276,6 +339,12 @@ router.post('/result', async (req, res) => {
         res.send(obj); 
          if(err) return status(400).json({message:"Result not found"});
      });
+});
+    // delete a instruction from the db
+router.delete('/resultdelete/:id', function(req, res, next){
+    Results.findByIdAndRemove({_id: req.params.id}).then(function(Result){
+        res.send(Result);
+    }).catch(next);
 });
 
 //questionCollections 
@@ -328,7 +397,7 @@ router.post('/questionPapers',async(req,res) => {
     if (error) return res.status(400).send(error.details[0].message);  
    
     //Checking if the studentid is already in the database
-   const collegeExist = await Results.findOne({college: req.body.college});
+   const collegeExist = await Results.findOne({college_id: req.body.college_id});
    if(collegeExist) return res.status(400).send('This college has already submitted the test'); 
          
    
@@ -337,7 +406,8 @@ router.post('/questionPapers',async(req,res) => {
         date: req.body.date,
         max_marks: req.body.max_marks,
         max_time: req.body.max_time,
-        college: req.body.college,
+        college_id: req.body.college_id,
+        sections:[req.body.marks, req.body.numOfQuestion ,req.body.questionIdList]
     });
     try{
         const savedPapers = await questionPapers.save();
@@ -348,14 +418,14 @@ router.post('/questionPapers',async(req,res) => {
 });
 
 //Get questionPaper
-
 router.get('/getquestionPapers', async(req, res) =>{
     const { error } = getquestionPaperValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-     questionPaper.findOne({college: req.body.college}, function(err,obj){
+     questionPaper.findOne({college_id: req.body.college_id}, function(err,obj){
          console.log(obj);
         res.send(obj); 
          if(err) return status(400).json({message:"Question Paper not found"});
      });
 });
+
 module.exports = router;

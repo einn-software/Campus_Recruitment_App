@@ -10,18 +10,19 @@ const postRoute = require('./routes/posts');
 
 dotenv.config();
 
-//Connect to DB
+//Connect to MongoDB
 mongoose.connect(
-    process.env.DB_CONNECT, 
+    process.env.TEST_DB_CONNECT, 
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true 
+        useUnifiedTopology: true,
+        useFindAndModify:false
     },
     () => console.log('Connected to db!')
 );
 
 //Middleware
-app.use(express.json());
+app.use(bodyParser.json());
 
 
 //Route Middlewares

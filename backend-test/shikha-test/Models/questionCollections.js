@@ -11,10 +11,9 @@ const questionCollectionsSchema = new mongoose.Schema({
         
        
        },
-    options:{ type:Number,
-        required:true,
-       
-       },
+    options:[{option1:{ type:String,
+        required:true}},{option2:{ type:string, required:true}},{option3:{type:string, required:true}},{option4:{type:string}},{option5:{type:string}}    
+    ],
     answer:{ type:Number,
         required:true,
     
@@ -28,4 +27,4 @@ const questionCollectionsSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('QuestionCollection',questionCollectionsSchema);
+module.exports = mongoose.model('questionCollections',questionCollectionsSchema);

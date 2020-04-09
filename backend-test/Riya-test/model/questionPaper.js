@@ -18,8 +18,12 @@ const questionPaperSchema = new mongoose.Schema({
     college_id:{ type:Number,
         required:true,
     
-       
        },
+    sections : [{marks:{
+        
+        type:Number},numOfQuestion:{type:Number},questionIdList:{type:Number}
+       
+       }]
     
     
 

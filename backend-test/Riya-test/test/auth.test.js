@@ -10,6 +10,10 @@ const testinstructions = require('../model/instruction');
 const Results = require('../model/Results');
 const questionCollections = require('../model/questionCollections');
 const questionPaper = require('../model/questionPaper')
+<<<<<<< HEAD
+=======
+
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
 
 dotenv.config();
 const app = require('../index');
@@ -37,10 +41,30 @@ describe('POST College Register', () => {
 
     });
   });
+<<<<<<< HEAD
 
 
   describe('POST collegeregister', () => {
 
+=======
+  describe('POST /auth/collegeregister', () => {
+    it('To check if the email is already exist ', async () => {
+      const response = await request(app)
+        .post('/api/user/collegeregister')
+        .send({
+          name: 'suchitra',
+          email: 'suchit@com',
+          password: 'rsrsrs',
+          phone: '9494949497',
+          code: '21004566',
+          address: 'NITRA Technical Campus',
+        })
+        .expect(400);
+      expect(response.body.message).toString('"email" must be a valid email');
+    });
+  });
+  describe('POST /auth/collegeregister', () => {
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
     it('To Register a new College', async () => {
 
       const newCollege = {
@@ -55,15 +79,29 @@ describe('POST College Register', () => {
       const response = await request(app)
         .post('/api/user/collegeregister')
         .send(newCollege)
+<<<<<<< HEAD
         .expect(400);
       expect(response.body).to.have.property({ college });
 
     });
+=======
+        .expect(200);
+      expect(response.body).toString({ college: '5e8a3086b71f0a357c5baf29' });
+    });
+   beforeEach((done) => {
+    mongoose.connection.db.dropCollection('colleges', (err, result) => {
+      done();
+      });
+       });
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
   });
 });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
 // Admin Register Testing
 
 describe('POST Admin Register', () => {
@@ -86,11 +124,16 @@ describe('POST Admin Register', () => {
 
     });
   });
+<<<<<<< HEAD
 
   describe('POST adminregister', () => {
 
     it('To check if the email is valid or not ', async () => {
 
+=======
+  describe('POST /auth/adminregister', () => {
+    it('To check if the email is valid or not ', async () => {
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
       const response = await request(app)
         .post('/api/user/adminregister')
         .send({
@@ -101,7 +144,10 @@ describe('POST Admin Register', () => {
         })
         .expect(400);
       expect(response.body.message).toString('"email" must be a valid email');
+<<<<<<< HEAD
 
+=======
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
     });
   });
 
@@ -161,7 +207,11 @@ describe('POST Tpo Register', () => {
         .post('/api/user/tporegister')
         .send({
           name: 'suchitra',
+<<<<<<< HEAD
           email: 'suchitrcom',
+=======
+          email: 'suchitra',
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
           password: 'rsrsrs',
           phone: '9494949497',
           designation:'Placement Officer',
@@ -169,7 +219,10 @@ describe('POST Tpo Register', () => {
         })
         .expect(400);
       expect(response.body.message).toString('"email" must be a valid email');
+<<<<<<< HEAD
 
+=======
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
     });
   });
 
@@ -375,8 +428,12 @@ describe('POST Result', () => {
         .post('/api/user/result')
         .send({ exist })
         .expect(400);
+<<<<<<< HEAD
       expect(response.body.message).toString('Student has already gave the test');
 
+=======
+      expect(response.body.message).toString('Student has already given the test');
+>>>>>>> f3a229d5d3af323918227544f287203a9e33746d
     });
   });
 

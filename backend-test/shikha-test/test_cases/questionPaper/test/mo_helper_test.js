@@ -18,9 +18,8 @@ before((done) =>{
 
 });
 
-beforeEach((done) => {
-    mongoose.connection.collections.questionPaper.drop(()=> {
-        done();
-    });
-});  
-
+beforeEach((done)=>{
+   mongoose.connection.collections.questionpapers.drop(()=>{
+       done();
+   })
+})

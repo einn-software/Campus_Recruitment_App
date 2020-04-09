@@ -158,7 +158,7 @@ router.post('/studentregister', async (req, res) => {
      if(!validPass) return res.status(400).send('Invalid password');
      //Create and assign a token
      const token = jwt.sign({_id: student._id}, process.env.TOKEN_SECRET);
-     res.header('auth-token', token).send(token);
+     res.header('auth-token', token).send({token: token}).status(200);
  });
 
 //LOGIN COLLEGE
@@ -173,7 +173,7 @@ router.post('/collegelogin',async(req, res) => {
     if(!validPass) return res.status(400).send('Invalid password');
     //Create and assign a token
     const token = jwt.sign({_id: college._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token).status(200);
+    res.header('auth-token', token).send({token: token}).status(200);
 });
 
 //LOGIN TPO
@@ -188,7 +188,7 @@ router.post('/tpologin',async(req, res) => {
     if(!validPass) return res.status(400).send('Invalid password');
     //Create and assign a token
     const token = jwt.sign({_id: tpo._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+    res.header('auth-token', token).send({token: token}).status(200);
 });
 
 //LOGIN ADMIN
@@ -203,7 +203,7 @@ router.post('/adminlogin',async(req, res) => {
     if(!validPass) return res.status(400).send('Invalid password');
     //Create and assign a token
     const token = jwt.sign({_id: admin._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token).status(200);
+    res.header('auth-token', token).send({token: token}).status(200);
 });
 
 

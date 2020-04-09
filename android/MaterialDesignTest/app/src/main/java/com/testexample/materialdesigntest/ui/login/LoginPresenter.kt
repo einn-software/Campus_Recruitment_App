@@ -22,16 +22,16 @@ class LoginPresenter(private var view: View?,private val userRepository: IUserRe
     override fun onLogin(userEmail: String, password: String) {
 
 
-         val isLoginSuccess = userRepository
+         subscriptions.add(userRepository
              .isUserValid(userEmail, password).subscribeOn(Schedulers.io())
              .observeOn(AndroidSchedulers.mainThread())
              .subscribe(
                  {s -> view?.onLoginResult("success") },
                  {e -> view?.onLoginResult(e.localizedMessage!!)},
                  { }
-             )
+             ))
 
-        subscriptions.add(isLoginSuccess)
+
 
 
     }

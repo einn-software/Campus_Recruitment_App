@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.ui.presenter
 
+import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.interactor.IUserRepository
 import com.testexample.materialdesigntest.data.repository.UserRepository
 import com.testexample.materialdesigntest.ui.login.LoginContract
@@ -9,11 +10,21 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.Flowable
+import io.reactivex.android.plugins.RxAndroidPlugins
 import org.junit.Before
+import org.junit.ClassRule
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.internal.verification.VerificationModeFactory.times
 
 class LoginPresenterTest {
+
+    companion object {
+        @ClassRule
+        @JvmField
+        val schedulers = RxImmediateSchedulerRule()
+    }
+
 
     //mock setup
     private val view : LoginContract.View = mockk(relaxed = true)
@@ -38,7 +49,6 @@ class LoginPresenterTest {
         presenter.onLogin(user, pass)
 
 
-        model.isUserValid(user, pass).test().assertValue(true)
 
         //checks to see whether the function is called
         verify(exactly = 1) {

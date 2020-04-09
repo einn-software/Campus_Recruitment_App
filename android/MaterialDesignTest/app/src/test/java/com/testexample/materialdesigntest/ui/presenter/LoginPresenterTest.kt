@@ -1,11 +1,14 @@
 package com.testexample.materialdesigntest.ui.presenter
 
 import com.testexample.materialdesigntest.data.interactor.IUserRepository
+import com.testexample.materialdesigntest.data.repository.UserRepository
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
 import io.mockk.clearAllMocks
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
 
@@ -13,30 +16,28 @@ class LoginPresenterTest {
 
     //mock setup
     private val view : LoginContract.View = mockk()
-    private val model : IUserRepository = mockk(relaxed = true)
-    //init presenter object
-    private val presenter : LoginPresenter =
-        LoginPresenter(view)
+    private val model : UserRepository = mockk() {
+        every { isUserValid("testuser", "testpass") } returns Flowable.just(true)
+    }
 
+    //init presenter object
+    private val presenter = LoginPresenter(view, model)
     @Before
     fun setUp() {
-        clearAllMocks()
 
         //every {  }
     }
 
     @Test
     fun `To test the login process in presenter`() {
-        var userName : String = "testuser"
-        var password : String = "testpass"
-        val expected : String = "Welcome! "+userName
-        var output :String
-
-        presenter.onLogin(userName,  password).toString()
+        val user : String = "testuser"
+        val pass : String = "testpass"
+        val expected : String = "success"
+        presenter.onLogin(user,  pass)
 
         //checks to see whether the function is called
-        verify { model.isUserValid(userName, password)}
-        verify {view.onLoginResult("Welcome! "+userName)   }
+        verify { model.isUserValid(user, pass).test().assertValue(true)}
+        verify {view.onLoginResult(expected)   }
         //assertEquals(expected, output)
     }
 

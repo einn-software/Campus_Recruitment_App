@@ -8,7 +8,7 @@ interface IRoomRepository {
     fun isUserValid(
         userEmail: String,
         password: String
-    ): Single<Boolean>
+    ): Flowable<Boolean>
 
     fun isExistingUser(
         userEmail: String

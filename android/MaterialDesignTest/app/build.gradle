@@ -11,6 +11,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.testexample.materialdesigntest"
+        multiDexEnabled true
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
@@ -28,7 +29,9 @@ android {
     }
 }
 
-ext {
+ext{
+    anko_version = '0.10.0'
+    arc_lib_version = '1.1.1'
     supportLibVersion = '26.1.0'
     retrofitVersion = '2.3.0'
     rxAndroidVersion = '2.0.1'
@@ -46,7 +49,7 @@ dependencies {
 
     implementation "android.arch.lifecycle:runtime:$arc_lib_version"
     implementation "android.arch.lifecycle:extensions:$arc_lib_version"
-    kapt "android.arch.lifecycle:compiler:$arc_lib_version"
+    kapt  "android.arch.lifecycle:common-java8:1.1.1"
 
     // TDD
     testImplementation 'junit:junit:4.12'
@@ -105,15 +108,18 @@ dependencies {
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
 
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.0.0'
 
 
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.squareup.picasso:picasso:2.71828"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
 
 }

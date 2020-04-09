@@ -5,7 +5,6 @@ import com.testexample.materialdesigntest.data.database.model.Student
 import com.testexample.materialdesigntest.data.interactor.IRoomRepository
 import com.testexample.materialdesigntest.data.room.StudentDao
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
 
@@ -13,10 +12,10 @@ class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
     @SuppressLint("VisibleForTests")
     override fun isUserValid(userEmail: String,
                              password: String):
-            Single<Boolean> {
+            Flowable<Boolean> {
         return studentDao
             .getUserByEmailPassword(userEmail, password)
-            .contains(userEmail)
+            .map { it-> it.studentEmail == userEmail }
     }
 
     @SuppressLint("VisibleForTests")
@@ -30,6 +29,7 @@ class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
                          password: String):
             Flowable<Student> {
             return studentDao.getUserByEmailPassword(userEmail, password)
+
     }
 }
 

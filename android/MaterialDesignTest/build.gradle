@@ -3,10 +3,6 @@
 
 
 buildscript {
-    ext{
-        anko_version = '0.10.0'
-        arc_lib_version = '1.0.0-alpha6'
-    }
 
     repositories {
         google()

@@ -21,9 +21,6 @@ class CollegeLoginActivity : AppCompatActivity(), LoginContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_college_login)
 
-        //    init
-        presenter =
-            LoginPresenter(this)
 
         loginButton.setOnClickListener {
             presenter.onLogin(emailText.text.toString(), passwordText.text.toString())

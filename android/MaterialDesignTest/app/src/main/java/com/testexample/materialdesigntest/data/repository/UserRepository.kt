@@ -14,13 +14,13 @@ class UserRepository(private val roomRepository: IRoomRepository)
                              password: String):
             Flowable<Boolean> {
         return roomRepository
-            .isUserValid(userEmail, password)
-
+            .getUser(userEmail, password)
+            .map { it-> it.studentEmail == userEmail }
     }
 
-    override fun isExistingUser(userEmail: String): Boolean {
+    override fun isExistingUser(userEmail: String):
+            Boolean {
         return roomRepository.isExistingUser(userEmail)
-
     }
 
     override fun getUser(userEmail: String,

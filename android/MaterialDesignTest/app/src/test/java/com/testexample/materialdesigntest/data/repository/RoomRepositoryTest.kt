@@ -34,16 +34,7 @@ class RoomRepositoryTest {
     fun tearDown() {
     }
 
-    @Test
-    fun isUserValid() {
-        var output = roomRepository
-            .isUserValid(user.studentEmail.toString(),user.studentPassword)
-            .test()
 
-        output.assertValue(true)
-
-        output.dispose()
-    }
 
     @Test
     fun isExistingUser() {

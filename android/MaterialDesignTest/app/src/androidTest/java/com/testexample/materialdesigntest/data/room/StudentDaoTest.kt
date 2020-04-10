@@ -1,17 +1,17 @@
 package com.testexample.materialdesigntest.data.room
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.testexample.materialdesigntest.data.database.model.Student
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
-@Config(maxSdk = 28)
+
+@RunWith(AndroidJUnit4::class)
+
 class StudentDaoTest {
     private val user =
         Student(

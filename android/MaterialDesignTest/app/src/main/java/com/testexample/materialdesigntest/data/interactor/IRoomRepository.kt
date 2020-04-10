@@ -5,10 +5,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface IRoomRepository {
-    fun isUserValid(
-        userEmail: String,
-        password: String
-    ): Flowable<Boolean>
 
     fun isExistingUser(
         userEmail: String

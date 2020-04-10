@@ -10,15 +10,6 @@ class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
 
 
     @SuppressLint("VisibleForTests")
-    override fun isUserValid(userEmail: String,
-                             password: String):
-            Flowable<Boolean> {
-        return studentDao
-            .getUserByEmailPassword(userEmail, password)
-            .map { it-> it.studentEmail == userEmail }
-    }
-
-    @SuppressLint("VisibleForTests")
     override fun isExistingUser(userEmail: String): Boolean {
         return userEmail == studentDao
             .getUserByEmail(userEmail)

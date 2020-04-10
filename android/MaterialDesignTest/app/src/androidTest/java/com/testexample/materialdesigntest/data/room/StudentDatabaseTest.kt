@@ -1,10 +1,13 @@
 package com.testexample.materialdesigntest.data.room
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.testexample.materialdesigntest.data.database.model.Student
+import io.reactivex.Flowable
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -53,25 +56,18 @@ class StudentDatabaseITest {
 
 
         // getAllUsers must be annotated as @VisibleForTesting in DAO for accessing test()
-        studentDao.getAllUsers().test().assertValue { list ->
-            list.isEmpty()
-        }
+        val byEmail = studentDao.getUserByEmail("sdg@test.com")
+        assert(byEmail == "sdg@test.com")
     }
 
     @Test
     @Throws(Exception::class)
     fun test_for_fetching_user_when_email_and_password_given() {
 
-        studentDao.getUserByEmailPassword(
+        val test= studentDao.getUserByEmailPassword(
             user.studentEmail.toString(),
             user.studentPassword)
-            .test()
-            .assertValue {  gotUser ->
-                return@assertValue gotUser.studentId == user.studentId &&
-                        gotUser.studentName == user.studentName
-            }
-
-
+        assert(test == Flowable.just(user))
 
     }
 }

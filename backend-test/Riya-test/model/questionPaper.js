@@ -19,9 +19,9 @@ const questionPaperSchema = new mongoose.Schema({
         required:true,
     
        },
-    sections : [{marks:{
+    sections : [{marks:[{
         
-        type:Number},numOfQuestion:{type:Number},questionIdList:{type:Number}
+        type:Number,required:true}],numOfQuestion:[{type:Number,required:true}],questionIdList:[{type:Number,required:true}]
        
        }]
     

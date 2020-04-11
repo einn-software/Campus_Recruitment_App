@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const assert = require('assert');
 const mongo = require('mongodb');
 const Admin = require('../model/Admin');
 const College = require('../model/College');
@@ -12,11 +11,11 @@ const questionCollections = require('../model/questionCollections');
 const questionPaper = require('../model/questionPaper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {getResultsValidation,getquestionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation, questionCollectionsValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {getResultsValidation,getquestionCollectionsValidation,questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
-router.post('/adminregister', async (req, res) => {
+router.post('/adminregister', async(req, res) => {
     
     //LETS VALIDATE THE DATA BEFORE WE MAKE A USER
     const { error } = adminRegisterValidation(req.body);
@@ -297,12 +296,21 @@ router.get('/getinstructions',async(req,res) => {
          if(err) return status(500).json({message:"No instructions found for the enterd college"});
      });
 });
+    //Update instructions 
+    router.put('/testinstructionsupdate/:id', function(req, res, next){
+        testinstructions.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+            testinstructions.findOne({_id: req.params.id}).then(function(instructions){
+                res.send(instructions);
+            });
+        }).catch(next);
+    });
    // delete a instruction from the db
 router.delete('/testinstructionsdelete/:id', function(req, res, next){
     testinstructions.findByIdAndRemove({_id: req.params.id}).then(function(instructions){
         res.send(instructions);
     }).catch(next);
 });
+
 //Results 
 router.post('/result', async (req, res) => { 
 
@@ -312,7 +320,7 @@ router.post('/result', async (req, res) => {
           
    //Checking if the studentid is already in the database
    const studentExist = await Results.findOne({student_id: req.body.student_id});
-   if(studentExist) return res.status(400).send('Student has already gave the test');
+   if(studentExist) return res.status(400).send('Student has already given the test');
      
     
     // Create Result
@@ -340,7 +348,16 @@ router.post('/result', async (req, res) => {
          if(err) return status(400).json({message:"Result not found"});
      });
 });
-    // delete a instruction from the db
+
+    //Update result 
+    router.put('/resultupdate/:id', function(req, res, next){
+    Results.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        Results.findOne({_id: req.params.id}).then(function(Result){
+            res.send(Result);
+        });
+    }).catch(next);
+});
+    // delete result from the db
 router.delete('/resultdelete/:id', function(req, res, next){
     Results.findByIdAndRemove({_id: req.params.id}).then(function(Result){
         res.send(Result);
@@ -356,15 +373,15 @@ router.post('/questionCollections',async(req,res) => {
     if (error) return res.status(400).send(error.details[0].message);   
  
     //Checking if the topic is already in the database
-   const topicExist = await Results.findOne({topic: req.body.topic});
-   if(topicExist) return res.status(400).send('This topic has already declared');
+  // const topicExist = await questionCollections.findOne({topic: req.body.topic});
+   //if(topicExist) return res.status(400).send('This topic has already declared');
          
    
     // Create a new questionCollection
     const questionCollection = new questionCollections({
         question: req.body.question,
         topic: req.body.topic,
-        options: req.body.options,
+        options:req.body.options,
         answer: req.body.answer,
         weight: req.body.weight,
     });
@@ -388,6 +405,22 @@ router.get('/getquestionCollections', async(req, res) =>{
      });
 });
 
+//Update questioncollections
+router.put('/questionCollectionsupdate/:id', function(req, res, next){
+    questionCollections.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        questionCollections.findOne({_id: req.params.id}).then(function(questionCollection){
+            res.send(questionCollection);
+        });
+    }).catch(next);
+});
+
+ // delete questionCollections from the db
+ router.delete('/questionCollectionsdelete/:id', function(req, res, next){
+    questionCollections.findByIdAndRemove({_id: req.params.id}).then(function(questionCollection){
+        res.send(questionCollection);
+    }).catch(next);
+});
+
 // questionPaper
 
 router.post('/questionPapers',async(req,res) => {
@@ -407,7 +440,7 @@ router.post('/questionPapers',async(req,res) => {
         max_marks: req.body.max_marks,
         max_time: req.body.max_time,
         college_id: req.body.college_id,
-        sections:[req.body.marks, req.body.numOfQuestion ,req.body.questionIdList]
+        sections:req.body.sections,
     });
     try{
         const savedPapers = await questionPapers.save();
@@ -427,5 +460,22 @@ router.get('/getquestionPapers', async(req, res) =>{
          if(err) return status(400).json({message:"Question Paper not found"});
      });
 });
+
+//Update questionPapers
+router.put('/questionPapersupdate/:id', function(req, res, next){
+    questionPaper.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        questionPaper.findOne({_id: req.params.id}).then(function(questionPapers){
+            res.send(questionPapers);
+        });
+    }).catch(next);
+});
+
+ // delete questionPapers from the db
+ router.delete('/questionPapersdelete/:id', function(req, res, next){
+    questionPaper.findByIdAndRemove({_id: req.params.id}).then(function(questionPapers){
+        res.send(questionPapers);
+    }).catch(next);
+});
+
 
 module.exports = router;

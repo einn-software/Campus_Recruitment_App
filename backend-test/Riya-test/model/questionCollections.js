@@ -6,15 +6,15 @@ const questionCollectionsSchema = new mongoose.Schema({
     topic:{ type:String,required:true,},
 
 
-    options:{
-        option1:{ type:String,required:true},
-        option2:{ type:String, required:true},
-        option3:{type:String, required:true},
-        option4:{type:String},
-        option5:{type:String}
-    },
+    options:[{
+        option1:[{ type:String,required:true}],
+        option2:[{ type:String, required:true}],
+        option3:[{type:String, required:true}],
+        option4:[{type:String}],
+        option5:[{type:String}]
+     }],
 
-    answer:{ type:Number,required:true,},
+    answer:{ type:String,required:true,},
 
     weight:{ type:Number, required:true,}
     

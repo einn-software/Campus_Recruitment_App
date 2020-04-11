@@ -183,8 +183,13 @@ const questionCollectionsValidation = data => {
               .required(),       
          topic: Joi.string()
               .required(),              
-         options: Joi.string()
-              .required(),
+         options: Joi.array().items(Joi.object({
+          option1: Joi.string().required(),
+          option2: Joi.string().required(),
+          option3: Joi.string().required(),
+          option4: Joi.string(),
+          option5: Joi.string(),
+     })).required(),
          answer: Joi.string()
               .required(),
          weight: Joi.number()
@@ -206,7 +211,7 @@ const getquestionCollectionsValidation = data => {
 
 // POST questionPaper validation
 const questionPaperValidation = data => {
-     const questionPaperSchema = Joi.object().keys({
+     const questionPaperSchema = Joi.object({
  
          date: Joi.date()
               .required(),       
@@ -216,15 +221,19 @@ const questionPaperValidation = data => {
               .required(),
          college_id: Joi.number()
               .required(),
-         section:Joi.array({ marks:Joi.number().required(),numOfQuestion:Joi.number().required(),questionIdList:Joi.number().required()})
-   });
+         sections:Joi.array().items(Joi.object({
+         marks:Joi.number().required(),
+         numOfQuestion:Joi.number().required(),
+         questionIdList:Joi.number().required()
+    })).required(),
+ });
       return questionPaperSchema.validate(data);
 }
 // GET questionPaper validation
 const getquestionPaperValidation = data => {
      const getquestionPaperSchema = Joi.object({
  
-         college_id: Joi.number().min(4).max(30)
+         college_id: Joi.number()
               .required(),       
       });
       return getquestionPaperSchema.validate(data);

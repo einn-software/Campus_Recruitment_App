@@ -1,19 +1,26 @@
 const express = require('express')
-const bodyParser = require('body-parser'); 
-
 const app = express();
-const database = require('./db/connection');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
+
+//Connect to DB for Developement
+mongoose.connect(
+    process.env.DB_CONNECT, 
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true 
+    },
+    () => console.log('Connected to db!')
+);
 
 //Import Routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 
 
-
 //Middleware
-//app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 //Route Middlewares

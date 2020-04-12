@@ -39,7 +39,7 @@ router.post('/adminregister', async(req, res) => {
     try{
         const savedUser = await admin.save();
         res.send({ admin: admin._id});
-        // res.send(savedUser);
+        console.log(savedUser);
     }catch(err){
         res.status(400).send(err);
     };

@@ -23,7 +23,6 @@ const  studentSchema = new mongoose.Schema({
     branch: { type:String,
       required:true,
       min:6,
-
      },
     college: { type:String,
       required:true,

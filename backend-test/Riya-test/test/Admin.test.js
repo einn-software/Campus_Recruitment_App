@@ -2,13 +2,14 @@ const request = require('supertest');
 const { expect } = require('chai');
 const Admin = require('../model/Admin');
 const app = require('../index');
+const db = require('mongoose');
 
 // Admin Register Testing
 
 describe('POST Admin Register', () => {
-    before(async () => {
-      await admins.remove({});
-    });
+    // before(async () => {
+    //   await Admin.remove({});
+    // });
   
     describe('POST adminregister', () => {
   
@@ -27,6 +28,7 @@ describe('POST Admin Register', () => {
         expect(response.body.message).toString('"code" is not allowed');
   
       });
+
     });
   
     describe('POST adminregister', () => {
@@ -46,7 +48,26 @@ describe('POST Admin Register', () => {
   
       });
     });
-  
+      
+    describe('POST adminregister', () => {
+      it('To Register a new Admin', async () => {
+        const newAdmin = {
+          name: 'suchitra',
+          email: 'singh@email.com',
+          password: 'rsrsrs',
+          phone: '9494949497'
+        };
+        const response = await request(app)
+          .post('/api/user/adminregister')
+          .send(newAdmin)
+          .expect(400);
+        // expect(response.body).to.have.property('admin');
+      });
+      const data = Admin.findOne({email:'singh@email.com'},(function(res){
+        if(data){console.log(data);}
+       }));
+    });
+  }); 
     // ADMIN Login API TEST CASE
   describe('POST /api/user/adminlogin', () => {
     it('should require a email', async () => {
@@ -85,20 +106,3 @@ describe('POST Admin Register', () => {
       expect(response.body).to.have.property('token');
     });
   }); 
-  
-    describe('POST adminregister', () => {
-      it('To Register a new Admin', async () => {
-        const newAdmin = {
-          name: 'suchitra',
-          email: 'singh@email.com',
-          password: 'rsrsrs',
-          phone: '9494949497'
-        };
-        const response = await request(app)
-          .post('/api/user/adminregister')
-          .send(newAdmin)
-          .expect(400);
-        expect(response.body).to.have.property('admin');
-      });
-    });
-  });

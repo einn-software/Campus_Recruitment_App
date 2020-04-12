@@ -16,7 +16,7 @@ describe('POST Admin Register', () => {
       it('It should not require extra path code', async () => {
   
         const response = await request(app)
-          .post('/api/user/adminregister')
+          .post('/register/admin')
           .send({ 
             name:'suchitra',
             email:'singh@email.com',
@@ -36,7 +36,7 @@ describe('POST Admin Register', () => {
       it('To check if the email is valid or not ', async () => {
   
         const response = await request(app)
-          .post('/api/user/adminregister')
+          .post('/register/admin')
           .send({
             name:"suchitra",
             email:"singhcom",
@@ -58,7 +58,7 @@ describe('POST Admin Register', () => {
           phone: '9494949497'
         };
         const response = await request(app)
-          .post('/api/user/adminregister')
+          .post('/register/admin')
           .send(newAdmin)
           .expect(400);
         // expect(response.body).to.have.property('admin');
@@ -69,10 +69,10 @@ describe('POST Admin Register', () => {
     });
   }); 
     // ADMIN Login API TEST CASE
-  describe('POST /api/user/adminlogin', () => {
+  describe('POST /login/admin', () => {
     it('should require a email', async () => {
       const response = await request(app)
-        .post('/api/user/adminlogin')
+        .post('/login/admin')
         .send({
           email:"l@gmail.com",
           password:"testtesttest"
@@ -82,14 +82,14 @@ describe('POST Admin Register', () => {
     });
     it('should require a valid email', async () => {
       const response = await request(app)
-        .post('/api/user/adminlogin')
+        .post('/login/admin')
         .send({ email: 'testuser' })
         .expect(400);
       expect(response.body.message).toString('"email" must be a valid email');
     });
     it('should not allow the user having wrong password', async () => {
       const response = await request(app)
-        .post('/api/user/adminlogin')
+        .post('/login/admin')
         .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
         .expect(400);
       expect(response.body.message).toString('Invalid password');
@@ -100,7 +100,7 @@ describe('POST Admin Register', () => {
         password:"15787851"
       }
       const response = await request(app)
-        .post('/api/user/adminlogin')
+        .post('/login/admin')
         .send(newUser)
         .expect(200);
       expect(response.body).to.have.property('token');

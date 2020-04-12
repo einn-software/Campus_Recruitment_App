@@ -24,7 +24,7 @@ app.use(express.json());
 
 
 //Route Middlewares
-app.use('/api/user', authRoute);
-app.use('/api/posts', postRoute);
+app.use('/', authRoute);
+app.use('/posts', postRoute);
 
 module.exports = app;

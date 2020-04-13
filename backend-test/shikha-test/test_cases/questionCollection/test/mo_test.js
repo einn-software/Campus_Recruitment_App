@@ -59,8 +59,8 @@ it('set and save', ()=>{
  updater.set({question:"what is the capital of Japan?" ,topic:"G.K", options:[{option1:"Tokyo"},{option2:"Kerala"},{option3:"Delhi"},{option4:"Lucknow"}], answer:"Tokyo", weight:6});
  updater.save()
    .then(() => questionCollections.find({}))
-   .then(questionCollection => {
-      assert(questionCollection[0].question !== 'what is the capital of India?');
+   .then(questionCollections => {
+      assert(questionCollections[0].question !== 'what is the capital of India?');
    });
 
 });

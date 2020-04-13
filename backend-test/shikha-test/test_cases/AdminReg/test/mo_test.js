@@ -1,4 +1,4 @@
-const Admin = require('../app/Admin');
+const Admin = require('../app/Admin')
 const assert = require('assert');
 
 describe("Create Tests", () => {

@@ -10,7 +10,6 @@ before((done) =>{
     mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
     mongoose.connection
        .once('open', () => {
-          // console.log("connected"))
           done();  
        })    
        .on('error', (error) => {
@@ -37,22 +36,8 @@ describe("Create Tests", () => {
                 code: '56464'
             })
         .expect(400);
-        expect(response.body.message).toString('"code" is not allowed');
+        expect(response.text).to.equal('"code" is not allowed');
     });
-    it('To check if the email is valid or not ', async () => {
-  
-        const response = await request(app)
-          .post('/register/admin')
-          .send({
-            name:"suchitra",
-            email:"singhcom",
-            password:"rsrsrs",
-            phone:"9494949497"
-          })
-          .expect(400);
-        expect(response.body.message).toString('"email" must be a valid email');
-  
-      });
     it("Register a new Admin", () => {
        // assert(true);
        let reg = 0;
@@ -62,14 +47,19 @@ describe("Create Tests", () => {
                 .send(Registration)
                 .expect(200)
                 Registration.save();
-                Admin.find({email:"singhsuchi@gmail.com"})
-                  .then((reg = 0)=>{
-                   done();
+                Admin.findOne({email:"singhsuchi@gmail.com"},function(Registration){
+                     console.log(Registration);
                   })
                   .catch((error) => {
                     console.log("error",error);
                   });
     });
+    it('should update the admin phone', async() => {
+      const _id = Admin.findOne({email:"singhsuchi@gmail.com"})
+      const response = await request(app)
+      .post('/admin/:id')
+      .send()
+    })
   });
 
 describe('POST /login/admin', () => {
@@ -81,31 +71,33 @@ describe('POST /login/admin', () => {
           password:"testtesttest"
         })
         .expect(400);
-      expect(response.body.message).toString('Email not found');
+      expect(response.text).to.equal('Email not found');
     });
     it('should require a valid email', async () => {
       const response = await request(app)
         .post('/login/admin')
         .send({ email: 'testuser' })
         .expect(400);
-      expect(response.body.message).toString('"email" must be a valid email');
+      expect(response.text).to.equal('Unable to login - the email must be a valid email');
     });
     it('should not allow the user having wrong password', async () => {
       const response = await request(app)
         .post('/login/admin')
         .send({ email: 'singhsuchi@gmail.com', password: 'rgsfdgr' })
         .expect(400);
-      expect(response.body.message).toString('Invalid password');
+      expect(response.text).to.equal('Invalid password');
     });
     it('should only allow valid users to login', async () => {
       const newUser = {
         email:"singhsuchi@gmail.com",
         password:"ssssss44"
       }
+
       const response = await request(app)
         .post('/login/admin')
         .send(newUser)
-        //.expect(200);
-        // console.log(response)
+        .expect(200);
+    expect(response.text).to.equal('Unable to login - the email must be a valid email');
     });
   }); 
+

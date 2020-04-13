@@ -1,39 +1,45 @@
 const request = require('supertest');
 const { expect } = require('chai');
-const Admin = require('../model/Admin');
 const app = require('../index');
-const db = require('mongoose');
+const mongoose = require('mongoose');
+const Admin = require('../model/Admin');
+const assert = require('assert');
+mongoose.Promise = global.Promise;
 
-// Admin Register Testing
+before((done) =>{
+    mongoose.connect("mongodb://localhost/TestingModel", {useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connection
+       .once('open', () => {
+          // console.log("connected"))
+          done();  
+       })    
+       .on('error', (error) => {
+           console.log("your error" ,error);
+       });
+});
 
-describe('POST Admin Register', () => {
-    // before(async () => {
-    //   await Admin.remove({});
-    // });
-  
-    describe('POST adminregister', () => {
-  
-      it('It should not require extra path code', async () => {
+before((done) => {
+    mongoose.connection.collections.admins.findOneAndDelete({email:"singhsuchi@gmail.com"},() =>{
+        done();
+    });
+});  
+
+describe("Create Tests", () => {
+    it('It should not require extra path code', async () => {
   
         const response = await request(app)
-          .post('/register/admin')
-          .send({ 
-            name:'suchitra',
-            email:'singh@email.com',
-            password:'rsrsrs',
-            phone:'9494949497',
-            code: '56464'
-          })
-          .expect(400);
+        .post('/register/admin')
+        .send({ 
+                name:'suchitra',
+                email:'singh@email.com',
+                password:'rsrsrs',
+                phone:'9494949497',
+                code: '56464'
+            })
+        .expect(400);
         expect(response.body.message).toString('"code" is not allowed');
-  
-      });
-
     });
-  
-    describe('POST adminregister', () => {
-  
-      it('To check if the email is valid or not ', async () => {
+    it('To check if the email is valid or not ', async () => {
   
         const response = await request(app)
           .post('/register/admin')
@@ -47,29 +53,26 @@ describe('POST Admin Register', () => {
         expect(response.body.message).toString('"email" must be a valid email');
   
       });
+    it("Register a new Admin", () => {
+       // assert(true);
+       let reg = 0;
+       const Registration = new Admin({name:"Suchitra" ,email:"singhsuchi@gmail.com", password:"ssssss44", phone:7878787878,});
+                const response = request(app)
+                .post('/register/admin')
+                .send(Registration)
+                .expect(200)
+                Registration.save();
+                Admin.find({email:"singhsuchi@gmail.com"})
+                  .then((reg = 0)=>{
+                   done();
+                  })
+                  .catch((error) => {
+                    console.log("error",error);
+                  });
     });
-      
-    describe('POST adminregister', () => {
-      it('To Register a new Admin', async () => {
-        const newAdmin = {
-          name: 'suchitra',
-          email: 'singh@email.com',
-          password: 'rsrsrs',
-          phone: '9494949497'
-        };
-        const response = await request(app)
-          .post('/register/admin')
-          .send(newAdmin)
-          .expect(400);
-        // expect(response.body).to.have.property('admin');
-      });
-      const data = Admin.findOne({email:'singh@email.com'},(function(res){
-        if(data){console.log(data);}
-       }));
-    });
-  }); 
-    // ADMIN Login API TEST CASE
-  describe('POST /login/admin', () => {
+  });
+
+describe('POST /login/admin', () => {
     it('should require a email', async () => {
       const response = await request(app)
         .post('/login/admin')
@@ -90,19 +93,19 @@ describe('POST Admin Register', () => {
     it('should not allow the user having wrong password', async () => {
       const response = await request(app)
         .post('/login/admin')
-        .send({ email: 'rsinghal@gmail.com', password: 'rgsfdgr' })
+        .send({ email: 'singhsuchi@gmail.com', password: 'rgsfdgr' })
         .expect(400);
       expect(response.body.message).toString('Invalid password');
     });
     it('should only allow valid users to login', async () => {
       const newUser = {
-        email:"pragya@gmail.com",
-        password:"15787851"
+        email:"singhsuchi@gmail.com",
+        password:"ssssss44"
       }
       const response = await request(app)
         .post('/login/admin')
         .send(newUser)
-        .expect(200);
-      expect(response.body).to.have.property('token');
+        //.expect(200);
+        // console.log(response)
     });
   }); 

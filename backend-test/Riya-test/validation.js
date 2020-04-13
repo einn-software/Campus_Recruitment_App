@@ -137,15 +137,12 @@ const loginValidation = data => {
 // Test GET Instructions validation
 const getinstructionsValidation = data => {
      const getinstructionsSchema = Joi.object({
- 
          college: Joi.string()
               .min(6)
               .required()
-              .max(255),
-      
+              .max(255),   
       });
       return getinstructionsSchema.validate(data);
-     
      }
 
  
@@ -175,70 +172,6 @@ const getResultsValidation = data => {
       });
       return getResultsSchema.validate(data);
 }
-// POST questionCollections validation
-const questionCollectionsValidation = data => {
-     const questionCollectionsSchema = Joi.object({
- 
-         question: Joi.string()
-              .required(),       
-         topic: Joi.string()
-              .required(),              
-         options: Joi.array().items(Joi.object({
-          option1: Joi.string().required(),
-          option2: Joi.string().required(),
-          option3: Joi.string().required(),
-          option4: Joi.string(),
-          option5: Joi.string(),
-     })).required(),
-         answer: Joi.string()
-              .required(),
-         weight: Joi.number()
-              .required()
-      });
-      return questionCollectionsSchema.validate(data);
-}
-
-// GET questionCollections validation
-const getquestionCollectionsValidation = data => {
-     const getquestionCollectionsSchema = Joi.object({
- 
-         topic: Joi.string().min(4).max(30)
-              .required(),       
-      });
-      return getquestionCollectionsSchema.validate(data);
-}
-
-
-// POST questionPaper validation
-const questionPaperValidation = data => {
-     const questionPaperSchema = Joi.object({
- 
-         date: Joi.date()
-              .required(),       
-         max_marks: Joi.number()
-              .required(),              
-         max_time: Joi.string()
-              .required(),
-         college_id: Joi.number()
-              .required(),
-         sections:Joi.array().items(Joi.object({
-         marks:Joi.number().required(),
-         numOfQuestion:Joi.number().required(),
-         questionIdList:Joi.number().required()
-    })).required(),
- });
-      return questionPaperSchema.validate(data);
-}
-// GET questionPaper validation
-const getquestionPaperValidation = data => {
-     const getquestionPaperSchema = Joi.object({
- 
-         college_id: Joi.number()
-              .required(),       
-      });
-      return getquestionPaperSchema.validate(data);
-}
-
 module.exports.adminRegisterValidation = adminRegisterValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
@@ -248,7 +181,3 @@ module.exports.testinstructionsValidation = testinstructionsValidation;
 module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;
 module.exports.getResultsValidation = getResultsValidation;
-module.exports.questionCollectionsValidation = questionCollectionsValidation;
-module.exports.getquestionCollectionsValidation = getquestionCollectionsValidation;
-module.exports.questionPaperValidation = questionPaperValidation;
-module.exports.getquestionPaperValidation = getquestionPaperValidation;

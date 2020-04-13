@@ -15,7 +15,7 @@ const {getResultsValidation,getquestionCollectionsValidation,questionCollections
 
 
 //Admin Register
-router.post('/adminregister', async(req, res) => {
+router.post('/register/admin', async(req, res) => {
     
     //LETS VALIDATE THE DATA BEFORE WE MAKE A USER
     const { error } = adminRegisterValidation(req.body);
@@ -39,13 +39,13 @@ router.post('/adminregister', async(req, res) => {
     try{
         const savedUser = await admin.save();
         res.send({ admin: admin._id});
-        console.log(savedUser);
+        // console.log(savedUser);
     }catch(err){
         res.status(400).send(err);
     };
 });
     //Update user's info
-router.put('/adminupdate/:id', function(req, res, next){
+router.put('/admin/:id', function(req, res, next){
     Admin.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         Admin.findOne({_id: req.params.id}).then(function(admin){
             res.send(admin);
@@ -53,7 +53,7 @@ router.put('/adminupdate/:id', function(req, res, next){
   }).catch(next);
 });
    // delete a user from the db
-router.delete('/admindelete/:id', function(req, res, next){
+router.delete('/admin/:id', function(req, res, next){
     Admin.findByIdAndRemove({_id: req.params.id}).then(function(admin){
         res.send(admin);
     }).catch(next);
@@ -62,7 +62,7 @@ router.delete('/admindelete/:id', function(req, res, next){
 
 
 //College Register
-router.post('/collegeregister', async (req, res) => {
+router.post('/register/college', async (req, res) => {
     
     //LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
     const { error } = collegeRegisterValidation(req.body);
@@ -93,7 +93,7 @@ router.post('/collegeregister', async (req, res) => {
     }
 });
 //Update user's info
-router.put('/collegeupdate/:id', function(req, res, next){
+router.put('/college/:id', function(req, res, next){
     College.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         College.findOne({_id: req.params.id}).then(function(college){
             res.send(college);
@@ -102,14 +102,14 @@ router.put('/collegeupdate/:id', function(req, res, next){
 });
     
 // delete a user from the db
-router.delete('/collegedelete/:id', function(req, res, next){
+router.delete('/college/:id', function(req, res, next){
     College.findByIdAndRemove({_id: req.params.id}).then(function(college){
         res.send(college);
     }).catch(next);
 });
 
 //TPO Register
-router.post('/tporegister', async (req, res) => { 
+router.post('/register/tpo', async (req, res) => { 
 
    // LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
     const { error } = tpoRegisterValidation(req.body);
@@ -140,7 +140,7 @@ router.post('/tporegister', async (req, res) => {
     }
 });
     //Update user's info
-router.put('/tpoupdate/:id', function(req, res, next){
+router.put('/tpo/:id', function(req, res, next){
     Tpo.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         Tpo.findOne({_id: req.params.id}).then(function(tpo){
             res.send(tpo);
@@ -149,14 +149,14 @@ router.put('/tpoupdate/:id', function(req, res, next){
 });
 
     // delete a user from the db
-router.delete('/tpodelete/:id', function(req, res, next){
+router.delete('/tpo/:id', function(req, res, next){
     Tpo.findByIdAndRemove({_id: req.params.id}).then(function(tpos){
         res.send(tpos);
     }).catch(next);
 });
 
 //Student Register
-router.post('/studentregister', async (req, res) => { 
+router.post('/register/student', async (req, res) => { 
 
     // LETS VALIDATE THE DATA BEFORE WE MAKE A USER    
      const { error } = studentRegisterValidation(req.body);
@@ -188,7 +188,7 @@ router.post('/studentregister', async (req, res) => {
      }
  });
     //Update user's info
-router.put('/studentupdate/:id', function(req, res, next){
+router.put('/student/:id', function(req, res, next){
     Student.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         Student.findOne({_id: req.params.id}).then(function(student){
             res.send(student);
@@ -196,14 +196,14 @@ router.put('/studentupdate/:id', function(req, res, next){
     }).catch(next);
 });
     // delete a user from the db
-router.delete('/studentdelete/:id', function(req, res, next){
+router.delete('/student/:id', function(req, res, next){
     Student.findByIdAndRemove({_id: req.params.id}).then(function(student){
         res.send(student);
     }).catch(next);
 });
 
  //Student LOGIN
- router.post('/studentlogin',async(req, res) => {
+ router.post('/login/student',async(req, res) => {
      const { error } = loginValidation(req.body);
      if (error) return res.status(400).send(error.details[0].message);
      //Checking if the user is already in the database
@@ -218,7 +218,7 @@ router.delete('/studentdelete/:id', function(req, res, next){
  });
 
 //LOGIN COLLEGE
-router.post('/collegelogin',async(req, res) => {
+router.post('/login/college',async(req, res) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     //Checking if the user is already in the database
@@ -233,7 +233,7 @@ router.post('/collegelogin',async(req, res) => {
 });
 
 //LOGIN TPO
-router.post('/tpologin',async(req, res) => {
+router.post('/login/tpo',async(req, res) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     //Checking if the user is already in the database
@@ -248,7 +248,7 @@ router.post('/tpologin',async(req, res) => {
 });
 
 //LOGIN ADMIN
-router.post('/adminlogin',async(req, res) => {
+router.post('/login/admin',async(req, res) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     //Checking if the user is already in the database
@@ -257,9 +257,9 @@ router.post('/adminlogin',async(req, res) => {
     //Check if the password is correct
     const validPass = await bcrypt.compare(req.body.password, admin.password);
     if(!validPass) return res.status(400).send('Invalid password');
-    //Create and assign a token
-    const token = jwt.sign({_id: admin._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send({token: token}).status(200);
+    if(validPass){
+        res.send("Logged In").status(200);
+    }
 });
 
 

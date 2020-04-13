@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.instructions.InstructionActivity">
+
+    <include
+        android:id="@+id/include3"
+        layout="@layout/appbar" />
+
+    <TextView
+        android:id="@+id/guidelinesHeaderText"
+        android:layout_width="185dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="24dp"
+        android:text="Exam Guidelines:"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include3" />
+
+    <CheckBox
+        android:id="@+id/agreeToGuidelinesCheck"
+        android:layout_width="363dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:text="I have read and agree to the guidelines"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelinesText" />
+
+    <Button
+        android:id="@+id/startTestButton"
+        android:layout_width="109dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:enabled="false"
+        android:text="Start Test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agreeToGuidelinesCheck"
+        app:layout_constraintVertical_bias="0.517" />
+
+    <TextView
+        android:id="@+id/guidelinesText"
+        android:layout_width="362dp"
+        android:layout_height="421dp"
+        android:layout_marginTop="24dp"
+        android:gravity="top"
+        android:singleLine="false"
+        android:text="MultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteText
+        ViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteText
+        ViewMultiAutoCompleteTextViewMultiAutoCompleteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelinesHeaderText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

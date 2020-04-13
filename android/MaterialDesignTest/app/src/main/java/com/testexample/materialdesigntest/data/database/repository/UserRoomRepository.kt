@@ -1,12 +1,12 @@
-package com.testexample.materialdesigntest.data.repository
+package com.testexample.materialdesigntest.data.database.repository
 
 import android.annotation.SuppressLint
-import com.testexample.materialdesigntest.data.database.model.Student
-import com.testexample.materialdesigntest.data.interactor.IRoomRepository
-import com.testexample.materialdesigntest.data.room.StudentDao
+import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.database.room.StudentDao
 import io.reactivex.Flowable
 
-class RoomRepository(private val studentDao: StudentDao) : IRoomRepository{
+class RoomRepository(private val studentDao: StudentDao) :
+    IRoomRepository {
 
 
     @SuppressLint("VisibleForTests")

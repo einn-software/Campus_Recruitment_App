@@ -1,8 +1,7 @@
-package com.testexample.materialdesigntest.data.interactor
+package com.testexample.materialdesigntest.data.database.repository
 
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 interface IRoomRepository {
 

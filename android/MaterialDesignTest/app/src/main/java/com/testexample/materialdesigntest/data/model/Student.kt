@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "student_table")
 data class Student(
-    @NonNull @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "student_Id") val studentId: Long = 0,
+    @NonNull @PrimaryKey
+    @ColumnInfo(name = "student_Id") val studentId:String,
     @ColumnInfo(name = "student_name") val studentName: String?,
     @ColumnInfo(name = "student_email") val studentEmail: String?,
     @ColumnInfo(name = "student_password") val studentPassword: String,

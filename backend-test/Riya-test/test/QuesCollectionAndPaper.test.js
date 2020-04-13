@@ -1,37 +1,56 @@
-// const request = require('supertest');
-// const { expect } = require('chai');
-// const questionCollections = require('../model/questionCollections');
-// const questionPaper = require('../model/questionPaper');
-// const app = require('../index');
+ const request = require('supertest');
+ const { expect } = require('chai');
+ const questionCollections = require('../model/questionCollections');
+ const questionPaper = require('../model/questionPaper');
+ const app = require('../index');
 
-// // Questions collection API Test case
-// describe('POST /QuestionCollection', () => {
-//   describe('POST /auth/questionCollections', () => {
-//     it('It should give a message.', async () => {
-//       const response = await request(app)
-//         .post('/api/user/questionCollections')
-//         .send({})
-//         .expect(400);
-//       expect(response.body.message).toString('"question" is required');
-//     });
-//   });
-//   describe('POST /questionscollections', () => {
-//     it('To Add a new collection', async () => {
-//       const newcollection = {
-//         question:"5",
-//         topic:"Science",
-//         options:"4",
-//         answer:"3",
-//         weight:"2"
-//       };
-//       const response = await request(app)
-//         .post('/api/user/questionscollections')
-//         .send(newcollection)
-//         .expect(200);
-//       expect(response.body).toString({ questionCollection: "5e8cd171885de00cb0cc3aa8" });
-//     });
-//   });
-// });
+ before((done) =>{
+    mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connection
+       .once('open', () => {
+          // console.log("connected"))
+          done();  
+       })    
+       .on('error', (error) => {
+           console.log("your error" ,error);
+       });
+});
+
+before((done) => {
+    mongoose.connection.collections.questionCollections.findOneAndDelete({topic:"Science"},() =>{
+        done();
+    });
+});  
+
+
+ // Questions collection API Test case
+ describe('POST /QuestionCollection', () => {
+   describe('POST /auth/questionCollections', () => {
+     it('It should give a message.', async () => {
+       const response = await request(app)
+         .post('/api/user/questionCollections')
+         .send({})
+         .expect(400);
+       expect(response.body.message).toString('"question" is required');
+     });
+   });
+   describe('POST /questionscollections', () => {
+     it('To Add a new collection', async () => {
+       const newcollection = {
+         question:"5",
+         topic:"Science",
+         options:"4",
+         answer:"3",
+         weight:"2"
+       };
+       const response = await request(app)
+         .post('/api/user/questionscollections')
+         .send(newcollection)
+         .expect(200);
+       expect(response.body).toString({ questionCollection: "5e8cd171885de00cb0cc3aa8" });
+     });
+   });
+ });
 
 // // GET QUESTION COLLECTION API TEST CASES
 // describe('GET questionCollections', () => {

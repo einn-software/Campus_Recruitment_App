@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const questionPapersSchema = new mongoose.Schema({
+const questionPaperSchema = new mongoose.Schema({
     
     date:{ type:Date,
         required:true,
@@ -11,21 +11,25 @@ const questionPapersSchema = new mongoose.Schema({
     
        
        },
-    max_time:{ type:Number,
+    max_time:{ type:String,
         required:true,
        
        },
     college_id:{ type:Number,
         required:true,
     
-       
        },
-    sections : [{marks:{
-        
-         type:Number},numOfQuestion:{type:Number},questionIdList:{type:Number}
-        
-        }]
+    sections : [
+        {
+        name: {type:String},
+        marks:{type:Number},
+        numOfQuestion:{type:Number},
+        questionIdList:{type:Number}
+       
+       }]
+    
     
 
 });
-module.exports  = mongoose.model('questionPaper',questionPapersSchema);
+
+module.exports = mongoose.model('questionPaper',questionPaperSchema);

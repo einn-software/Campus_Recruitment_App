@@ -7,7 +7,7 @@ const assert = require('assert');
 mongoose.Promise = global.Promise;
 
 before((done) =>{
-    mongoose.connect("mongodb://localhost/TestingModel", {useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
     mongoose.connection
        .once('open', () => {
           // console.log("connected"))

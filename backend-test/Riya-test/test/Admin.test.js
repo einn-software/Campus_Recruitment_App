@@ -50,17 +50,11 @@ describe("Create Tests", () => {
                 Admin.findOne({email:"singhsuchi@gmail.com"},function(Registration){
                      console.log(Registration);
                   })
-                  .catch((error) => {
-                    console.log("error",error);
-                  });
+                  // .catch((error) => {
+                  //   console.log("error",error);
+                  // });
     });
-    it('should update the admin phone', async() => {
-      const _id = Admin.findOne({email:"singhsuchi@gmail.com"})
-      const response = await request(app)
-      .post('/admin/:id')
-      .send()
-    })
-  });
+
 
 describe('POST /login/admin', () => {
     it('should require a email', async () => {
@@ -100,4 +94,15 @@ describe('POST /login/admin', () => {
     expect(response.text).to.equal('Unable to login - the email must be a valid email');
     });
   }); 
+  it('should delete the user', async() => {
+    const response = await request(app)
+    .delete('/admin/:id')
+    .send({name:"Singh"})
+    Admin.findOne({email:"singhsuchi@gmail.com"},()=>{
+      
+    expect(200)
+    expect(response.text).to.equal('Your account has been succesfully deleted')
+  });
+  })
+});
 

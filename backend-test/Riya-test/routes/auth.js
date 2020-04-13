@@ -61,7 +61,7 @@ router.post('/login/admin',async(req, res) => {
 
 //Update admin's info
 
-router.put('/admin/:id', function(req, res, next){
+router.put('/admin/:id', function(req, res){
 
     Admin.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
 
@@ -69,17 +69,21 @@ router.put('/admin/:id', function(req, res, next){
             res.send(admin);
     });
   })
-  .catch(next);
+  .catch(err,()=>{
+    res.status(400).send('Please provide a valid id');
+});
 });
 
 // delete a admin from the db
 
-router.delete('/admin/:id', function(req, res, next){
+router.delete('/admin/:id', function(req, res){
 
     Admin.findByIdAndRemove({_id: req.params.id}).then(function(admin){
-        res.send(admin);
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 

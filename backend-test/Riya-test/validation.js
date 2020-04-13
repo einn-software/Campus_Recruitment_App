@@ -117,8 +117,21 @@ const loginValidation = data => {
         .required()
     });
     return schema.validate(data);
-
 }
+//STUDENT LOGIN VALIDATION 
+
+const studentloginValidation = data => {
+     const schema = Joi.object({
+         roll: Joi.number()
+             .min(6)
+             .required()
+             .roll(),
+         password: Joi.string()
+         .min(6)
+         .required()
+     });
+     return schema.validate(data);
+ }
 
 // Test POST Instructions validation
     const testinstructionsValidation = data => {
@@ -177,6 +190,7 @@ module.exports.collegeRegisterValidation = collegeRegisterValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.studentloginValidation = studentloginValidation;
 module.exports.testinstructionsValidation = testinstructionsValidation;
 module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;

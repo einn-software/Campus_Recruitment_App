@@ -11,6 +11,17 @@ const adminRegisterValidation = data => {
      });
      return adminSchema.validate(data);
 }
+
+//Get Validation for Admin
+const getAdminValidation = data => {
+     const adminSchema = Joi.object({
+ 
+        
+         email: Joi.string().min(6).required().max(255).email(),
+        
+      });
+      return adminSchema.validate(data);
+ }
 const collegeRegisterValidation = data => {    
     const collegeSchema = Joi.object({
     
@@ -40,7 +51,17 @@ const collegeRegisterValidation = data => {
      
      });
      return collegeSchema.validate(data);
-}
+};
+//Get Validation for College
+const getCollegeValidation = data => {
+     const collegeSchema = Joi.object({
+ 
+        
+         email: Joi.string().min(6).required().max(255).email(),
+        
+      });
+      return collegeSchema.validate(data);
+ };
 const tpoRegisterValidation = data => {    
     const  tpoSchema = Joi.object({
     
@@ -72,6 +93,18 @@ const tpoRegisterValidation = data => {
      });
      return tpoSchema.validate(data);
 }
+
+//Get Validation for College
+const getTpoValidation = data => {
+     const TpoSchema = Joi.object({
+ 
+        
+         email: Joi.string().min(6).required().max(255).email(),
+        
+      });
+      return TpoSchema.validate(data);
+ };
+
 const studentRegisterValidation = data => {     
       const studentSchema = Joi.object({
      
@@ -105,6 +138,19 @@ const studentRegisterValidation = data => {
       });
       return studentSchema.validate(data);
 }
+
+
+//Get Validation for Student
+const getStudentValidation = data => {
+     const StudentSchema = Joi.object({
+ 
+        
+         email: Joi.string().min(6).required().max(255).email(),
+        
+      });
+      return StudentSchema.validate(data);
+ };
+
 //Login Validation
 const loginValidation = data => {
     const schema = Joi.object({
@@ -185,13 +231,77 @@ const getResultsValidation = data => {
       });
       return getResultsSchema.validate(data);
 }
+
+// POST questionCollections validation
+const questionCollectionsValidation = data => {
+     const questionCollectionsSchema = Joi.object({
+
+         question: Joi.number()
+              .required(),       
+         topic: Joi.string()
+              .required(),              
+         options: Joi.number()
+              .required(),
+         answer: Joi.number()
+              .required(),
+         weight: Joi.number()
+              .required()
+      });
+      return questionCollectionsSchema.validate(data);
+}
+
+// GET questionCollections validation
+const getquestionCollectionsValidation = data => {
+     const getquestionCollectionsSchema = Joi.object({
+
+         topic: Joi.string().min(4).max(30)
+              .required(),       
+      });
+      return getquestionCollectionsSchema.validate(data);
+}
+
+
+// POST questionPaper validation
+const questionPaperValidation = data => {
+     const questionPaperSchema = Joi.object({
+
+         date: Joi.date()
+              .required(),       
+         max_marks: Joi.number()
+              .required(),              
+         max_time: Joi.string()
+              .required(),
+         college_id: Joi.number()
+              .required(),
+   });
+      return questionPaperSchema.validate(data);
+}
+// GET questionPaper validation
+const getquestionPaperValidation = data => {
+     const getquestionPaperSchema = Joi.object({
+
+         college_id: Joi.number().min(4).max(30)
+              .required(),       
+      });
+      return getquestionPaperSchema.validate(data);
+}
+
+
 module.exports.adminRegisterValidation = adminRegisterValidation;
+module.exports.getAdminValidation = getAdminValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
+module.exports.getCollegeValidation = getCollegeValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
+module.exports.getTpoValidation = getTpoValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
+module.exports.getStudentValidation = getStudentValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.studentloginValidation = studentloginValidation;
 module.exports.testinstructionsValidation = testinstructionsValidation;
 module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;
 module.exports.getResultsValidation = getResultsValidation;
+module.exports.questionCollectionsValidation = questionCollectionsValidation;
+module.exports.getquestionCollectionsValidation = getquestionCollectionsValidation;
+module.exports.questionPaperValidation = questionPaperValidation;
+module.exports.getquestionPaperValidation = getquestionPaperValidation;

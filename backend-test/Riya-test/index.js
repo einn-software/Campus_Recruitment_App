@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-//Connect to DB for Developement
+//Connect to DB for Developemen
 mongoose.connect(
     process.env.DB_CONNECT, 
     {

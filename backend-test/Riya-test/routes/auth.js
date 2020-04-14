@@ -11,7 +11,7 @@ const questionCollections = require('../model/questionCollections');
 const questionPaper = require('../model/questionPaper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {studentloginValidation, getResultsValidation,getquestionCollectionsValidation,questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {studentloginValidation, getResultsValidation,getCollegeValidation,getTpoValidation,getStudentValidation,getquestionCollectionsValidation,getAdminValidation,questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
@@ -59,6 +59,23 @@ router.post('/login/admin',async(req, res) => {
     res.header('auth-token', token).send({token: token}).status(200);
 });
 
+
+ // display Admin Data
+
+ router.get('/getAdmin', async(req, res) =>{
+
+    const { error } = getAdminValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     Admin.findOne({email: req.body.email}, function(err,obj){
+
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"Admin not found"});
+
+     });
+});
+
+
 //Update admin's info
 
 router.put('/admin/:id', function(req, res){
@@ -78,7 +95,7 @@ router.put('/admin/:id', function(req, res){
 
 router.delete('/admin/:id', function(req, res){
 
-    Admin.findByIdAndRemove({_id: req.params.id}).then(function(admin){
+    Admin.findByIdAndRemove({_id: req.params.id}).then(function(){
         res.send('Your account has been succesfully deleted').status(200);
     })
     .catch(()=>{
@@ -120,6 +137,21 @@ router.post('/register/college', async (req, res) => {
     }
 });
 
+ // display College Data
+
+ router.get('/getCollege', async(req, res) =>{
+
+    const { error } = getCollegeValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     College.findOne({email: req.body.email}, function(err,obj){
+
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"College not found"});
+
+     });
+});
+
 //LOGIN COLLEGE
 router.post('/login/college',async(req, res) => {
     const { error } = loginValidation(req.body);
@@ -145,17 +177,21 @@ router.put('/college/:id', function(req, res, next){
             res.send(college);
         });
     })
-    .catch(next);
+    .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
     
 // delete a college from the db
 
 router.delete('/college/:id', function(req, res, next){
 
-    College.findByIdAndRemove({_id: req.params.id}).then(function(college){
-        res.send(college);
+    College.findByIdAndRemove({_id: req.params.id}).then(function(){
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 //TPO Register
@@ -190,6 +226,21 @@ router.post('/register/tpo', async (req, res) => {
     }
 });
 
+// display Tpos Data
+
+router.get('/getTpos', async(req, res) =>{
+
+    const { error } = getTpoValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     Tpo.findOne({email: req.body.email}, function(err,obj){
+
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"Tpo not found"});
+
+     });
+});
+
 
 //Update tpo's info
 
@@ -201,7 +252,9 @@ router.put('/tpo/:id', function(req, res, next){
             res.send(tpo);
         });
     })
-    .catch(next);
+    .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 //LOGIN TPO
@@ -223,10 +276,12 @@ router.post('/login/tpo',async(req, res) => {
 
 router.delete('/tpo/:id', function(req, res, next){
 
-    Tpo.findByIdAndRemove({_id: req.params.id}).then(function(tpos){
-        res.send(tpos);
+    Tpo.findByIdAndRemove({_id: req.params.id}).then(function(){
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 //Student Register
@@ -262,26 +317,48 @@ router.post('/register/student', async (req, res) => {
      }
  });
 
+ // display students Data
+
+router.get('/getStudent', async(req, res) =>{
+
+    const { error } = getStudentValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+     Student.findOne({email: req.body.email}, function(err,obj){
+
+         console.log(obj);
+        res.send(obj); 
+         if(err) return status(400).json({message:"Student not found"});
+
+     });
+});
+
+
+
+
  //Update student's info
 
 router.put('/student/:id', function(req, res, next){
 
     Student.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
 
-        Student.findOne({_id: req.params.id}).then(function(student){
+        Student.findOne({_id: req.params.id}).then(function(){
             res.send(student);
         });
-    }).catch(next);
+    }) .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 // delete a student from the db
 
 router.delete('/student/:id', function(req, res, next){
 
-    Student.findByIdAndRemove({_id: req.params.id}).then(function(student){
-        res.send(student);
+    Student.findByIdAndRemove({_id: req.params.id}).then(function(){
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
  //Student LOGIN
@@ -347,18 +424,22 @@ router.get('/getinstructions',async(req,res) => {
                 res.send(instructions);
             });
         })
-        .catch(next);
+        .catch(err,()=>{
+            res.status(400).send('Please provide a valid id');
+        });
     });
 
 // delete a instruction from the db
 
 router.delete('/testinstructionsdelete/:id', function(req, res, next){
 
-    testinstructions.findByIdAndRemove({_id: req.params.id}).then(function(instructions){
+    testinstructions.findByIdAndRemove({_id: req.params.id}).then(function(){
 
-        res.send(instructions);
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 //Results 
@@ -412,15 +493,19 @@ router.post('/result', async (req, res) => {
         Results.findOne({_id: req.params.id}).then(function(Result){
             res.send(Result);
         });
-    }).catch(next);
+    }) .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 // delete result from the db
 
 router.delete('/resultdelete/:id', function(req, res, next){
-    Results.findByIdAndRemove({_id: req.params.id}).then(function(Result){
-        res.send(Result);
-    }).catch(next);
+    Results.findByIdAndRemove({_id: req.params.id}).then(function(){
+        res.send('Your account has been succesfully deleted').status(200);
+    }) .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 
@@ -474,18 +559,22 @@ router.put('/questionCollectionsupdate/:id', function(req, res, next){
             res.send(questionCollection);
         });
     })
-    .catch(next);
+    .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
  // delete questionCollections from the db
 
  router.delete('/questionCollectionsdelete/:id', function(req, res, next){
 
-    questionCollections.findByIdAndRemove({_id: req.params.id}).then(function(questionCollection){
+    questionCollections.findByIdAndRemove({_id: req.params.id}).then(function(){
 
-        res.send(questionCollection);
+        res.send('Your account has been succesfully deleted').status(200);
     })
-    .catch(next);
+    .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
 // questionPaper
@@ -539,15 +628,19 @@ router.put('/questionPapersupdate/:id', function(req, res, next){
         questionPaper.findOne({_id: req.params.id}).then(function(questionPapers){
             res.send(questionPapers);
         });
-    }).catch(next);
+    }) .catch(err,()=>{
+        res.status(400).send('Please provide a valid id');
+    });
 });
 
  // delete questionPapers from the db
 
  router.delete('/questionPapersdelete/:id', function(req, res, next){
-    questionPaper.findByIdAndRemove({_id: req.params.id}).then(function(questionPapers){
-        res.send(questionPapers);
-    }).catch(next);
+    questionPaper.findByIdAndRemove({_id: req.params.id}).then(function(){
+        res.send('Your account has been succesfully deleted').status(200);
+    }) .catch(()=>{
+        res.status(400).send('Please provide a valid id');
+    }); 
 });
 
 

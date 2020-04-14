@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
-const mongo = require('mongodb');
 const Admin = require('../model/Admin');
 const College = require('../model/College');
 const Tpo = require('../model/Tpo');
@@ -11,17 +9,17 @@ const questionCollections = require('../model/questionCollections');
 const questionPaper = require('../model/questionPaper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {studentloginValidation,getquestionCollectionsValidation, questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {studentloginValidation, questionCollectionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
 router.post('/register/admin', async(req, res) => {
     
-    //LETS VALIDATE THE DATA BEFORE WE MAKE A USER
+    //LETS VALIDATE THE DATA BEFORE WE MAKE A Admin
     const { error } = adminRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     
-    //Checking if the user is already in the database
+    //Checking if the admin is already in the database
     const emailExist = await Admin.findOne({email: req.body.email});
     if(emailExist) return res.status(400).send('Email already exist');
 
@@ -48,15 +46,19 @@ router.post('/register/admin', async(req, res) => {
 router.post('/login/admin',async(req, res) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send('Unable to login - the email must be a valid email');
+
     //Checking if the admin is already in the database
     const admin = await Admin.findOne({email: req.body.email});
     if(!admin) return res.status(400).send('Email not found');
+
     //Check if the password is correct
     const validPass = await bcrypt.compare(req.body.password, admin.password);
     if(!validPass) return res.status(400).send('Invalid password');
+
     //Create and assign a token
     const token = jwt.sign({_id: admin._id, name:admin.name, email:admin.email, phone:admin.phone}, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send({token: token}).status(200);
+
 });
 
 
@@ -67,7 +69,7 @@ router.post('/login/admin',async(req, res) => {
         res.send(admin); 
     })
     .catch(()=>{ 
-        res.status(400).send('Student id not found');
+        res.status(400).send('Admin Id id not found');
      });
 });
 
@@ -133,38 +135,40 @@ router.post('/register/college', async (req, res) => {
     }
 });
 
- // display College Data
+// LOGIN COLLEGE
+router.post('/login/college',async(req, res) => {
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(400).send('Unable to login - the email must be a valid email');
+
+    //Checking if the college is already in the database
+    const college = await College.findOne({email: req.body.email});
+    if(!college) return res.status(400).send('Email not found');
+
+    //Check if the password is correct
+    const validPass = await bcrypt.compare(req.body.password, college.password);
+    if(!validPass) return res.status(400).send('Invalid password');
+
+    //Create and assign a token
+    const token = jwt.sign({_id: college._id, name:college.name, email:college.email, phone:college.phone, code:college.code, address:college.address}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send({token: token}).status(200);
+
+});
+
+// display College Data
 
  router.get('/college/:id', async(req, res) =>{
     College.findOne({_id: req.params.id}).then(function(college){  
         res.send(college); 
     })
     .catch(()=>{ 
-        res.status(400).send('Student id not found');
+        res.status(400).send('College id not found');
      });
-});
-
-//LOGIN COLLEGE
-router.post('/login/college',async(req, res) => {
-    const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send('Unable to login - the email must be a valid email');
-    //Checking if the college is already in the database
-    const college = await College.findOne({email: req.body.email});
-    if(!college) return res.status(400).send('Email not found');
-    //Check if the password is correct
-    const validPass = await bcrypt.compare(req.body.password, college.password);
-    if(!validPass) return res.status(400).send('Invalid password');
-    //Create and assign a token
-    const token = jwt.sign({_id: college._id, name:college.name, email:college.email, phone:college.phone, code:college.code, address:college.address}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send({token: token}).status(200);
 });
 
 //Update college's info
 
 router.put('/college/:id', function(req, res, next){
-
     College.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
-
         College.findOne({_id: req.params.id}).then(function(college){
             res.send(college);
         });
@@ -177,7 +181,6 @@ router.put('/college/:id', function(req, res, next){
 // delete a college from the db
 
 router.delete('/college/:id', function(req, res, next){
-
     College.findByIdAndRemove({_id: req.params.id}).then(function(){
         res.send('Your account has been succesfully deleted').status(200);
     })
@@ -186,14 +189,15 @@ router.delete('/college/:id', function(req, res, next){
     });
 });
 
+
 //TPO Register
 router.post('/register/tpo', async (req, res) => { 
 
-   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo    
+    // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo    
     const { error } = tpoRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     
-  //Checking if the tpo is already in the database
+    //Checking if the tpo is already in the database
     const emailExist = await Tpo.findOne({email: req.body.email});
     if(emailExist) return res.status(400).send('Email already exist');
  
@@ -201,7 +205,7 @@ router.post('/register/tpo', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-   // Create a new tpo
+    // Create a new tpo
     const tpo = new Tpo({
         name: req.body.name,
         email: req.body.email,
@@ -216,6 +220,26 @@ router.post('/register/tpo', async (req, res) => {
     }catch(err){
         res.status(400).send(err);
     }
+});
+
+//LOGIN TPO
+
+router.post('/login/tpo',async(req, res) => {
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(400).send('Unable to login - the email must be a valid email');
+
+    //Checking if the tpo is already in the database
+    const tpo = await Tpo.findOne({email: req.body.email});
+    if(!tpo) return res.status(400).send('Email not found');
+
+    //Check if the password is correct
+    const validPass = await bcrypt.compare(req.body.password, tpo.password);
+    if(!validPass) return res.status(400).send('Invalid password');
+
+    //Create and assign a token
+    const token = jwt.sign({_id: tpo._id, name:tpo.name, email:tpo.email, phone:tpo.phone, designation:tpo.designation, college:tpo.college}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send({token: token}).status(200);
+
 });
 
 // display Tpos Data
@@ -233,9 +257,7 @@ router.get('/Tpo/:id', async(req, res) =>{
 //Update tpo's info
 
 router.put('/tpo/:id', function(req, res, next){
-
     Tpo.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
-
         Tpo.findOne({_id: req.params.id}).then(function(tpo){
             res.send(tpo);
         });
@@ -245,20 +267,6 @@ router.put('/tpo/:id', function(req, res, next){
     });
 });
 
-//LOGIN TPO
-router.post('/login/tpo',async(req, res) => {
-    const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send('Unable to login - the email must be a valid email');
-    //Checking if the tpo is already in the database
-    const tpo = await Tpo.findOne({email: req.body.email});
-    if(!tpo) return res.status(400).send('Email not found');
-    //Check if the password is correct
-    const validPass = await bcrypt.compare(req.body.password, tpo.password);
-    if(!validPass) return res.status(400).send('Invalid password');
-    //Create and assign a token
-    const token = jwt.sign({_id: tpo._id, name:tpo.name, email:tpo.email, phone:tpo.phone, designation:tpo.designation, college:tpo.college}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send({token: token}).status(200);
-});
 
 // delete a tpo from the db
 
@@ -304,11 +312,30 @@ router.post('/register/student', async (req, res) => {
          res.status(400).send(err);
      }
  });
+ 
+ //Student LOGIN
+
+ router.post('/login/student',async(req, res) => {
+    const { error } = studentloginValidation(req.body);
+    if (error) return res.status(400).send('Unable to login - the email must be a valid email');
+
+    //Checking if the student is already in the database
+    const student = await Student.findOne({roll:req.body.roll});
+    if(!student) return res.status(400).send('Roll number not found');
+
+    //Check if the password is correct
+    const validPass = await bcrypt.compare(req.body.password, student.password);
+    if(!validPass) return res.status(400).send('Invalid password');
+
+    //Create and assign a token
+    const token = jwt.sign({_id: student._id, name:student.name, email:student.email, phone:student.phone, roll:student.roll,branch:student.branch,college:student.college}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send({token: token}).status(200);
+    
+});
 
  // display students Data
 
 router.get('/student/:id', function(req, res){
-
     Student.findOne({_id: req.params.id}).then(function(student){  
         res.send(student); 
     })
@@ -317,15 +344,10 @@ router.get('/student/:id', function(req, res){
      });
 });
 
-
-
-
  //Update student's info
 
 router.put('/student/:id', function(req, res, next){
-
     Student.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
-
         Student.findOne({_id: req.params.id}).then(function(){
             res.send(student);
         });
@@ -337,7 +359,6 @@ router.put('/student/:id', function(req, res, next){
 // delete a student from the db
 
 router.delete('/student/:id', function(req, res, next){
-
     Student.findByIdAndRemove({_id: req.params.id}).then(function(){
         res.send('Your account has been succesfully deleted').status(200);
     })
@@ -346,25 +367,10 @@ router.delete('/student/:id', function(req, res, next){
     });
 });
 
- //Student LOGIN
- router.post('/login/student',async(req, res) => {
-     const { error } = studentloginValidation(req.body);
-     if (error) return res.status(400).send('Unable to login - the email must be a valid email');
-     //Checking if the student is already in the database
-     const student = await Student.findOne({roll:req.body.roll});
-     if(!student) return res.status(400).send('Roll number not found');
-     //Check if the password is correct
-     const validPass = await bcrypt.compare(req.body.password, student.password);
-     if(!validPass) return res.status(400).send('Invalid password');
-     //Create and assign a token
-     const token = jwt.sign({_id: student._id, name:student.name, email:student.email, phone:student.phone, roll:student.roll,branch:student.branch,college:student.college}, process.env.TOKEN_SECRET);
-     res.header('auth-token', token).send({token: token}).status(200);
- });
-
 
 //testinstructions
 
-router.post('/testinstructions',async(req,res) => {
+router.post('/instructions',async(req,res) => {
 
     //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
     const { error } = testinstructionsValidation(req.body);
@@ -373,6 +379,7 @@ router.post('/testinstructions',async(req,res) => {
    //Checking if the college is already in the database
    const collegeExist = await testinstructions.findOne({college: req.body.college});
    if(collegeExist) return res.status(400).send('College already exist');
+
     // Create a new instruction
     const instructions = new testinstructions({
         college: req.body.college,
@@ -387,24 +394,20 @@ router.post('/testinstructions',async(req,res) => {
 });
 
 //display test instructions
-router.get('/getinstructions',async(req,res) => {
+router.get('/instruction/:id',async(req,res) => {
 
-    const { error } = getinstructionsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    testinstructions.findOne({college:req.body.college}, function(err,obj){
-        res.send(obj); 
-         if(err) return status(500).json({message:"No instructions found for the enterd college"});
-    
-    });
+    testinstructions.findOne({_id: req.params.id}).then(function(instruction){  
+        res.send(instruction); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Instruction id not found');
+     });
 });
 
 //Update instructions 
 
-    router.put('/testinstructionsupdate/:id', function(req, res, next){
-
+    router.put('/instruction/:id', function(req, res, next){
         testinstructions.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
-
             testinstructions.findOne({_id: req.params.id}).then(function(instructions){
                 res.send(instructions);
             });
@@ -416,10 +419,8 @@ router.get('/getinstructions',async(req,res) => {
 
 // delete a instruction from the db
 
-router.delete('/testinstructionsdelete/:id', function(req, res, next){
-
+router.delete('/instruction/:id', function(req, res, next){
     testinstructions.findByIdAndRemove({_id: req.params.id}).then(function(){
-
         res.send('Your account has been succesfully deleted').status(200);
     })
     .catch(()=>{
@@ -435,11 +436,10 @@ router.post('/result', async (req, res) => {
      const { error } = ResultsValidation(req.body);
      if (error) return res.status(400).send(error.details[0].message);
           
-   //Checking if the studentid is already in the database
-   const studentExist = await Results.findOne({student_id: req.body.student_id});
-   if(studentExist) return res.status(400).send('Student has already given the test');
-     
-    
+    //Checking if the studentid is already in the database
+    const studentExist = await Results.findOne({student_id: req.body.student_id});
+    if(studentExist) return res.status(400).send('Student has already given the test');
+       
     // Create Result
      const Result = new Results({
          student_id: req.body.student_id,
@@ -493,7 +493,7 @@ router.delete('/result/:id', function(req, res, next){
 
 //questionCollections 
 
-router.post('/questionCollections',async(req,res) => {
+router.post('/questionCollection',async(req,res) => {
 
     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
     const { error } = questionCollectionsValidation(req.body);
@@ -517,23 +517,19 @@ router.post('/questionCollections',async(req,res) => {
 
 //get questionCollections
 
-router.get('/getquestionCollections', async(req, res) =>{
+router.get('/questionCollection/:id', async(req, res) =>{
 
-    const { error } = getquestionCollectionsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-     questionCollections.findOne({topic: req.body.topic}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"QuestionCollections not found"});
-
+    questionCollections.findOne({_id: req.params.id}).then(function(quescollection){  
+        res.send(quescollection); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('questionCollection id not found');
      });
 });
 
 //Update questioncollections
 
-router.put('/questionCollectionsupdate/:id', function(req, res, next){
+router.put('/questionCollection/:id', function(req, res, next){
     questionCollections.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
 
         questionCollections.findOne({_id: req.params.id}).then(function(questionCollection){
@@ -547,10 +543,8 @@ router.put('/questionCollectionsupdate/:id', function(req, res, next){
 
  // delete questionCollections from the db
 
- router.delete('/questionCollectionsdelete/:id', function(req, res, next){
-
+ router.delete('/questionCollection/:id', function(req, res, next){
     questionCollections.findByIdAndRemove({_id: req.params.id}).then(function(){
-
         res.send('Your account has been succesfully deleted').status(200);
     })
     .catch(()=>{
@@ -560,7 +554,7 @@ router.put('/questionCollectionsupdate/:id', function(req, res, next){
 
 // questionPaper
 
-router.post('/questionPapers',async(req,res) => {
+router.post('/questionPaper',async(req,res) => {
 
     //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
     const { error } = questionPaperValidation(req.body);
@@ -568,8 +562,7 @@ router.post('/questionPapers',async(req,res) => {
    
     //Checking if the studentid is already in the database
    const collegeExist = await Results.findOne({college_id: req.body.college_id});
-   if(collegeExist) return res.status(400).send('This college has already submitted the test'); 
-         
+   if(collegeExist) return res.status(400).send('This college has already submitted the test');       
    
     // Create a new questionPaper
     const questionPapers = new questionPaper({
@@ -589,22 +582,18 @@ router.post('/questionPapers',async(req,res) => {
 
 //Get questionPaper
 
-router.get('/getquestionPapers', async(req, res) =>{
-
-    const { error } = getquestionPaperValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     questionPaper.findOne({college_id: req.body.college_id}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"Question Paper not found"});
-
+router.get('/questionPaper/:id', async(req, res) =>{
+    questionPaper.findOne({_id: req.params.id}).then(function(papers){  
+        res.send(papers); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Paper id is not found');
      });
 });
 
 //Update questionPapers
 
-router.put('/questionPapersupdate/:id', function(req, res, next){
+router.put('/questionPaper/:id', function(req, res, next){
     questionPaper.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         questionPaper.findOne({_id: req.params.id}).then(function(questionPapers){
             res.send(questionPapers);
@@ -614,9 +603,9 @@ router.put('/questionPapersupdate/:id', function(req, res, next){
     });
 });
 
- // delete questionPapers from the db
+// delete questionPapers from the db
 
- router.delete('/questionPapersdelete/:id', function(req, res, next){
+ router.delete('/questionPaper/:id', function(req, res, next){
     questionPaper.findByIdAndRemove({_id: req.params.id}).then(function(){
         res.send('Your account has been succesfully deleted').status(200);
     }) .catch(()=>{

@@ -11,7 +11,7 @@ const questionCollections = require('../model/questionCollections');
 const questionPaper = require('../model/questionPaper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {studentloginValidation, getResultsValidation,getCollegeValidation,getTpoValidation,getStudentValidation,getquestionCollectionsValidation,getAdminValidation,questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
+const {studentloginValidation,getquestionCollectionsValidation, questionCollectionsValidation,getquestionPaperValidation, getinstructionsValidation,questionPaperValidation,ResultsValidation, testinstructionsValidation, adminRegisterValidation, studentRegisterValidation, collegeRegisterValidation, tpoRegisterValidation, loginValidation, } = require('../validation');
 
 
 //Admin Register
@@ -62,16 +62,12 @@ router.post('/login/admin',async(req, res) => {
 
  // display Admin Data
 
- router.get('/getAdmin', async(req, res) =>{
-
-    const { error } = getAdminValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     Admin.findOne({email: req.body.email}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"Admin not found"});
-
+ router.get('/admin/:id', async(req, res) =>{
+    Admin.findOne({_id: req.params.id}).then(function(admin){  
+        res.send(admin); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Student id not found');
      });
 });
 
@@ -139,16 +135,12 @@ router.post('/register/college', async (req, res) => {
 
  // display College Data
 
- router.get('/getCollege', async(req, res) =>{
-
-    const { error } = getCollegeValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     College.findOne({email: req.body.email}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"College not found"});
-
+ router.get('/college/:id', async(req, res) =>{
+    College.findOne({_id: req.params.id}).then(function(college){  
+        res.send(college); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Student id not found');
      });
 });
 
@@ -228,16 +220,12 @@ router.post('/register/tpo', async (req, res) => {
 
 // display Tpos Data
 
-router.get('/getTpos', async(req, res) =>{
-
-    const { error } = getTpoValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     Tpo.findOne({email: req.body.email}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"Tpo not found"});
-
+router.get('/Tpo/:id', async(req, res) =>{
+    Tpo.findOne({_id: req.params.id}).then(function(tpo){  
+        res.send(tpo); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Tpo id not found');
      });
 });
 
@@ -319,16 +307,13 @@ router.post('/register/student', async (req, res) => {
 
  // display students Data
 
-router.get('/getStudent', async(req, res) =>{
+router.get('/student/:id', function(req, res){
 
-    const { error } = getStudentValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     Student.findOne({email: req.body.email}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"Student not found"});
-
+    Student.findOne({_id: req.params.id}).then(function(student){  
+        res.send(student); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Student id not found');
      });
 });
 
@@ -473,22 +458,18 @@ router.post('/result', async (req, res) => {
  
  // display Results
 
- router.get('/getresult', async(req, res) =>{
-
-    const { error } = getResultsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-     Results.findOne({student_id: req.body.student_id}, function(err,obj){
-
-         console.log(obj);
-        res.send(obj); 
-         if(err) return status(400).json({message:"Result not found"});
-
+ router.get('/result/:id', async(req, res) =>{
+    Results.findOne({_id: req.params.id}).then(function(result){  
+        res.send(result); 
+    })
+    .catch(()=>{ 
+        res.status(400).send('Result id not found');
      });
 });
 
 //Update result 
 
-    router.put('/resultupdate/:id', function(req, res, next){
+    router.put('/result/:id', function(req, res, next){
     Results.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
         Results.findOne({_id: req.params.id}).then(function(Result){
             res.send(Result);
@@ -500,7 +481,7 @@ router.post('/result', async (req, res) => {
 
 // delete result from the db
 
-router.delete('/resultdelete/:id', function(req, res, next){
+router.delete('/result/:id', function(req, res, next){
     Results.findByIdAndRemove({_id: req.params.id}).then(function(){
         res.send('Your account has been succesfully deleted').status(200);
     }) .catch(()=>{

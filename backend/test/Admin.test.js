@@ -41,8 +41,6 @@ describe("Create Tests", () => {
     });
 
     it("Register a new Admin", () => {
-       // assert(true);
-       let reg = 0;
        const response = request(app)
        
         request(app)
@@ -79,19 +77,32 @@ describe('POST /login/admin', () => {
         .expect(400);
       expect(response.text).to.equal('Invalid password');
     });
-    it('should only allow valid users to login', async () => {
-      const newUser = {
-        email:"singhsuchi@gmail.com",
-        password:"ssssss44"
-      }
-      const response = await request(app)
-        .post('/login/admin')
-        .send(newUser)
-        .expect(200);
-    expect(response.text).to.contain.keys('token');
-    });
+    // it('should only allow valid users to login', async () => {
+    //   const newUser = {
+    //     email:"singhsuchi@gmail.com",
+    //     password:"ssssss44"
+    //   }
+    //   const response = await request(app)
+    //     .post('/login/admin')
+    //     .send(newUser)
+    //     .expect(200);
+    // expect(response.text).to.contain.keys('token');
+    // });
   }); 
 
+  describe('The GET method', async()=>{
+    it('should get the user', () => {
+      Registration.save().then((user)=>{
+          const id = Registration._id
+          const response = request(app)
+          .get(`/admin/${id}`)
+          .send()
+          Admin.findByIdAndDelete({_id:id}).then(()=>{
+            expect(200)
+          })
+      })
+    })
+  });
 
     describe('The DELETE method', async()=>{
       it('should delete the user', () => {

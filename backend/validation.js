@@ -140,16 +140,16 @@ const studentRegisterValidation = data => {
 }
 
 
-//Get Validation for Student
-const getStudentValidation = data => {
-     const StudentSchema = Joi.object({
+// //Get Validation for Student
+// const getStudentValidation = data => {
+//      const StudentSchema = Joi.object({
  
         
-         email: Joi.string().min(6).required().max(255).email(),
+//          email: Joi.string().min(6).required().max(255).email(),
         
-      });
-      return StudentSchema.validate(data);
- };
+//       });
+//       return StudentSchema.validate(data);
+//  };
 
 //Login Validation
 const loginValidation = data => {
@@ -170,8 +170,7 @@ const studentloginValidation = data => {
      const schema = Joi.object({
          roll: Joi.number()
              .min(6)
-             .required()
-             .roll(),
+             .required(),
          password: Joi.string()
          .min(6)
          .required()
@@ -294,7 +293,6 @@ module.exports.getCollegeValidation = getCollegeValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.getTpoValidation = getTpoValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
-module.exports.getStudentValidation = getStudentValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.studentloginValidation = studentloginValidation;
 module.exports.testinstructionsValidation = testinstructionsValidation;

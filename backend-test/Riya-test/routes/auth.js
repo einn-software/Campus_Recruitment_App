@@ -38,7 +38,7 @@ router.post('/register/admin', async(req, res) => {
     });
     try{
         const savedUser = await admin.save();
-        res.send(savedUser);
+        res.send(savedUser).status(200);
     }catch(err){
         res.status(400).send(err);
     };
@@ -82,7 +82,7 @@ router.delete('/admin/:id', function(req, res){
         res.send('Your account has been succesfully deleted').status(200);
     })
     .catch(()=>{
-        res.status(400).send('Please provide a valid id');
+        res.status(400).send('Please provide a valid email');
     });
 });
 

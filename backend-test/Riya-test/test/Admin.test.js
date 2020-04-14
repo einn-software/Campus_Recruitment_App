@@ -5,24 +5,25 @@ const mongoose = require('mongoose');
 const Admin = require('../model/Admin');
 const assert = require('assert');
 mongoose.Promise = global.Promise;
+const Registration = new Admin({name:"Suchitra" ,email:"singhsuchi@gmail.com", password:"ssssss44", phone:7878787878,});
 
 before((done) =>{
     mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
     mongoose.connection
        .once('open', () => {
+         console.log("started");
           done();  
        })    
        .on('error', (error) => {
+
            console.log("your error" ,error);
        });
 });
-
-before((done) => {
-    mongoose.connection.collections.admins.findOneAndDelete({email:"singhsuchi@gmail.com"},() =>{
-        done();
-    });
-});  
-
+before((done)=>{
+  mongoose.connection.collections.admins.drop(()=>{
+  done();
+})
+});
 describe("Create Tests", () => {
     it('It should not require extra path code', async () => {
   
@@ -38,22 +39,19 @@ describe("Create Tests", () => {
         .expect(400);
         expect(response.text).to.equal('"code" is not allowed');
     });
+
     it("Register a new Admin", () => {
        // assert(true);
        let reg = 0;
-       const Registration = new Admin({name:"Suchitra" ,email:"singhsuchi@gmail.com", password:"ssssss44", phone:7878787878,});
-                const response = request(app)
+       const response = request(app)
+       
+        request(app)
                 .post('/register/admin')
                 .send(Registration)
                 .expect(200)
-                Registration.save();
-                Admin.findOne({email:"singhsuchi@gmail.com"},function(Registration){
-                     console.log(Registration);
-                  })
-                  // .catch((error) => {
-                  //   console.log("error",error);
-                  // });
+              Registration.save();
     });
+})
 
 
 describe('POST /login/admin', () => {
@@ -86,23 +84,39 @@ describe('POST /login/admin', () => {
         email:"singhsuchi@gmail.com",
         password:"ssssss44"
       }
-
       const response = await request(app)
         .post('/login/admin')
         .send(newUser)
         .expect(200);
-    expect(response.text).to.equal('Unable to login - the email must be a valid email');
+    expect(response.text).to.contain.keys('token');
     });
   }); 
-  it('should delete the user', async() => {
-    const response = await request(app)
-    .delete('/admin/:id')
-    .send({name:"Singh"})
-    Admin.findOne({email:"singhsuchi@gmail.com"},()=>{
-      
-    expect(200)
-    expect(response.text).to.equal('Your account has been succesfully deleted')
-  });
-  })
-});
 
+
+    describe('The DELETE method', async()=>{
+      it('should delete the user', () => {
+        Registration.save().then((user)=>{
+            const id = Registration._id
+            const response = request(app)
+            .delete(`/admin/${id}`)
+            .send()
+            Admin.findByIdAndDelete({_id:id}).then(()=>{
+              expect(200)
+            })
+        })
+      })
+    });
+
+    describe('The Update method', async()=>{
+      it('should delete the user', () => {
+        Registration.save().then((user)=>{
+            const id = Registration._id
+            const response = request(app)
+            .put(`/admin/${id}`)
+            .send({name:"Riya"})
+              Registration.set({name:"riya"})
+              Registration.save()
+              expect(200)
+            })
+        })
+      })

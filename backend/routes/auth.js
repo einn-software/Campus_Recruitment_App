@@ -561,7 +561,7 @@ router.post('/questionPaper',async(req,res) => {
     if (error) return res.status(400).send(error.details[0].message);  
    
     //Checking if the studentid is already in the database
-   const collegeExist = await Results.findOne({college_id: req.body.college_id});
+   const collegeExist = await questionPaper.findOne({college_id: req.body.college_id});
    if(collegeExist) return res.status(400).send('This college has already submitted the test');       
    
     // Create a new questionPaper

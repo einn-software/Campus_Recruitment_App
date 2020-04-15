@@ -235,13 +235,17 @@ const getResultsValidation = data => {
 const questionCollectionsValidation = data => {
      const questionCollectionsSchema = Joi.object({
 
-         question: Joi.number()
+         question: Joi.string()
               .required(),       
          topic: Joi.string()
               .required(),              
-         options: Joi.number()
-              .required(),
-         answer: Joi.number()
+         options: Joi.array().items(Joi.object({
+         option1: Joi.string().required(),
+         option2: Joi.string().required(),
+         option3: Joi.string().required(),
+         option4: Joi.string().required(),
+          })).required(),
+         answer: Joi.string()
               .required(),
          weight: Joi.number()
               .required()
@@ -268,10 +272,16 @@ const questionPaperValidation = data => {
               .required(),       
          max_marks: Joi.number()
               .required(),              
-         max_time: Joi.string()
+         max_time: Joi.number()
               .required(),
          college_id: Joi.number()
               .required(),
+         sections:Joi.array().items(Joi.object({
+              name:Joi.string().required(),
+               marks:Joi.number().required(),
+               numOfQuestion:Joi.number().required(),
+               questionIdList:Joi.number().required()
+          })).required(),
    });
       return questionPaperSchema.validate(data);
 }

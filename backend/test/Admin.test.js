@@ -104,7 +104,7 @@ describe('POST /login/admin', () => {
     })
   });
 
-    describe('The DELETE method', async()=>{
+    describe('The DELETE method', ()=>{
       it('should delete the user', () => {
         Registration.save().then((user)=>{
             const id = Registration._id
@@ -118,8 +118,8 @@ describe('POST /login/admin', () => {
       })
     });
 
-    describe('The Update method', async()=>{
-      it('should delete the user', () => {
+    describe('The Update method', ()=>{
+      it('should update the user', () => {
         Registration.save().then((user)=>{
             const id = Registration._id
             const response = request(app)

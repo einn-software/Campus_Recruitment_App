@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const resultsSchema = new mongoose.Schema({
     
-    student_id:{ type:String,
+    student_id:{ type:Number,
         required:true, 
        },
-       question_paper_id:{ type:String,
+       question_paper_id:{ type:Number,
         min:4,
         max:30,
         required:true,  
@@ -19,7 +19,7 @@ const resultsSchema = new mongoose.Schema({
         max:30,
         required:true,   
        },
-    total_marks_scored:{ type:String,
+    total_marks_scored:{ type:Number,
         min:2,
         max:30,
         required:true, 

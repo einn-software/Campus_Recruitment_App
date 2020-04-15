@@ -2,9 +2,9 @@ const request = require('supertest');
 const { expect } = require('chai');
 const app = require('../index');
 const mongoose = require('mongoose');
-const testinstructions = require('../model/instruction');
+const questionPaper = require('../model/questionPaper');
 mongoose.Promise = global.Promise;
-const Registration = new testinstructions({college:"Nitra tech" ,message:"This is a test message" });
+const Registration = new questionPaper({date:"2020-12-02", max_marks:50,max_time:3,college_id:23456,section:[{name:"history"},{marks:10},{numofQuestion:5},{questionIdList:4}]});
 
 before((done) =>{
     mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
@@ -19,27 +19,30 @@ before((done) =>{
        });
 });
 before((done)=>{
-  mongoose.connection.collections.testinstructions.drop(()=>{
+  mongoose.connection.collections.questionpapers.drop(()=>{
   done();
 })
 });
 describe("Create Tests", () => {
-    it('It should not require extra path code', async () => {
+    it('It should not require extra path ', async () => {
   
         const response = await request(app)
-        .post('/instructions')
+        .post('/questionPaper')
         .send({ 
-            college:"Nitra tech" ,
-            message:"This is a test message",
-            designation:"TPO"
-        })
+            date:"2020-12-02", 
+            max_marks:50,
+            max_time:3,
+            college_id:23456,
+            sections:[{name:"history", marks:10, numOfQuestion:5, questionIdList:4}],
+            designation: "TPO"
+            })
         .expect(400);
         expect(response.text).to.equal('"designation" is not allowed');
     });
 
-    it("Result", () => {
+    it("QuestionPaper", () => {
              request(app)
-                .post('/instructions')
+                .post('/questionPaper')
                 .send(Registration)
                 .expect(200)
               Registration.save();
@@ -49,13 +52,13 @@ describe("Create Tests", () => {
 
 
   describe('The GET method', async()=>{
-    it('should get the test instructions', () => {
+    it('should get the questionPaper', () => {
       Registration.save().then((user)=>{
           const id = Registration._id
           request(app)
-          .get(`/instructions/${id}`)
+          .get(`/questionPaper/${id}`)
           .send()
-          testinstructions.findByIdAndDelete({_id:id}).then(()=>{
+          questionPaper.findByIdAndDelete({_id:id}).then(()=>{
             expect(200)
           })
       })
@@ -63,13 +66,13 @@ describe("Create Tests", () => {
   });
 
     describe('The DELETE method', async()=>{
-      it('should delete the test instructions', () => {
+      it('should delete the questionPaper', () => {
         Registration.save().then((user)=>{
             const id = Registration._id
             request(app)
-            .delete(`/instructions/${id}`)
+            .delete(`/questionCollection/${id}`)
             .send()
-            testinstructions.findByIdAndDelete({_id:id}).then(()=>{
+            questionPaper.findByIdAndDelete({_id:id}).then(()=>{
               expect(200)
             })
         })
@@ -77,13 +80,13 @@ describe("Create Tests", () => {
     });
 
     describe('The Update method', async()=>{
-      it('should update the test instructions', () => {
+      it('should update the questionPaper', () => {
         Registration.save().then((user)=>{
             const id = Registration._id
              request(app)
-            .put(`/instructions/${id}`)
-            .send({college:"Nitra Tech"})
-              Registration.set({college:"Nitra Tech"})
+            .put(`/questionPaper/${id}`)
+            .send({college_id:23456})
+              Registration.set({topic:23457})
               Registration.save()
               expect(200)
             })

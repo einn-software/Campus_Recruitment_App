@@ -20,12 +20,12 @@ const mongoose = require('mongoose');
        max:255,
       },
      phone :
-     { type:String,
+     { type:Number,
        required:true,
        min:10,
       },
      code : 
-     { type:String,
+     { type:Number,
        required:true,
        min:3,
       },

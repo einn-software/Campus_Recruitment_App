@@ -11,7 +11,7 @@ const questionPaperSchema = new mongoose.Schema({
     
        
        },
-    max_time:{ type:String,
+    max_time:{ type:Number,
         required:true,
        
        },

@@ -29,7 +29,7 @@ android {
     }
 }
 
-ext{
+ext {
     anko_version = '0.10.0'
     arc_lib_version = '1.1.1'
     supportLibVersion = '26.1.0'
@@ -46,10 +46,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation "android.arch.lifecycle:runtime:$arc_lib_version"
     implementation "android.arch.lifecycle:extensions:$arc_lib_version"
-    kapt  "android.arch.lifecycle:common-java8:1.1.1"
+    kapt "android.arch.lifecycle:common-java8:1.1.1"
 
     implementation 'androidx.arch.core:core-runtime:2.1.0'
 
@@ -118,10 +119,11 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.0.0'
 
 
-    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.google.code.gson:gson:2.8.6"
     implementation "com.squareup.picasso:picasso:2.71828"
 
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
 
 }

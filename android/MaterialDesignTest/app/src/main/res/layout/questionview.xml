@@ -19,13 +19,14 @@
             <TextView
                 android:id="@+id/questionText"
                 android:layout_width="359dp"
-                android:layout_height="390dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:text="This is a test question to get the idea of how along text behaves in a small screen space and wraps around in lines nicely
                 This is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question
                 to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how
                 along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a "
+                android:textSize="18sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.514"

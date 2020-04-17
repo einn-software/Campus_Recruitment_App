@@ -4,30 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.result.ResultActivity">
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
+    tools:context=".ui.studentdashboard.StudentResult">
 
     <TextView
         android:id="@+id/sectionTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Result Section"
         android:textColor="#090909"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/resultTable"
         android:layout_width="357dp"
         android:layout_height="335dp"
         android:layout_marginTop="32dp"
@@ -226,18 +220,18 @@
         app:layout_constraintEnd_toStartOf="@+id/noteText"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/resultTable" />
 
     <TextView
         android:id="@+id/noteText"
         android:layout_width="256dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="a long text to show informationa long text to show informationa long text to show informationa long text to show information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/note"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/resultTable" />
 
     <TextView
         android:id="@+id/greetText"
@@ -252,5 +246,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

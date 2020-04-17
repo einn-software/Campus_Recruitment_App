@@ -1,12 +1,10 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.database.room
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import io.reactivex.Flowable
 import org.junit.After
 import org.junit.Before

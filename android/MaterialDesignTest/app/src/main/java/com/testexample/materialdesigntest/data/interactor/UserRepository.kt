@@ -1,13 +1,11 @@
-package com.testexample.materialdesigntest.data.repository
+package com.testexample.materialdesigntest.data.interactor
 
-import com.testexample.materialdesigntest.data.database.model.Student
-import com.testexample.materialdesigntest.data.interactor.IRoomRepository
-import com.testexample.materialdesigntest.data.interactor.IUserRepository
-import com.testexample.materialdesigntest.data.room.StudentDao
+import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.database.repository.IUserRoomRepository
 import io.reactivex.Flowable
 
 // makes a singleton, has a single instance running at a time
-class UserRepository(private val roomRepository: IRoomRepository)
+class UserRepository(private val roomRepository: IUserRoomRepository)
     : IUserRepository {
 
     override fun isUserValid(userEmail: String,

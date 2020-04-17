@@ -9,5 +9,13 @@ class CollegeDashboard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_college_dashboard)
+
+//        setOnClickListener {
+//            supportFragmentManager.beginTransaction().apply {
+//                replace(R.id.loginFragment, studentLogin)
+//                addToBackStack("studentLogin")
+//                commit()
+//            }
+//        }
     }
 }

@@ -1,12 +1,11 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.database.room
 
 //import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -18,7 +17,7 @@ class StudentDatabaseTest {
 
     private val user =
         Student(
-            1, "sdg", "sdg@test.com",
+            "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
             "cse", "nitra"
         )

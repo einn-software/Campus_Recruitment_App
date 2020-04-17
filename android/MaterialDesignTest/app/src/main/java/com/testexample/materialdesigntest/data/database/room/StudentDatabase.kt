@@ -1,11 +1,11 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.database.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.testexample.materialdesigntest.data.database.model.Student
-import com.testexample.materialdesigntest.data.database.model.College
+import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.model.College
 
 @Database(entities = [Student::class, College::class], version = 1, exportSchema = false)
 abstract class StudentDatabase: RoomDatabase() {

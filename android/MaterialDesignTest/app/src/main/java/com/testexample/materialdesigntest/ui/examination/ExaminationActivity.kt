@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toolbar
 import com.testexample.materialdesigntest.R
+import kotlinx.android.synthetic.main.activity_examination.*
 import kotlinx.android.synthetic.main.appbar.*
 
 class ExaminationActivity : AppCompatActivity() {
@@ -13,6 +14,12 @@ class ExaminationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_examination)
 
         setSupportActionBar(appActionBar)
+
+//        selectsection.setOnClickListener {
+//            supportFragmentManager.beginTransaction().apply {
+//            replace(R.id.question_Fragment,)
+//            addToBackStack("studentLogin")
+//            commit() }
 
     }
 }

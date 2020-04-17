@@ -2,8 +2,6 @@ package com.testexample.materialdesigntest.ui.login
 
 import com.testexample.materialdesigntest.data.interactor.IUserRepository
 import com.testexample.materialdesigntest.ui.login.LoginContract.View
-import com.testexample.materialdesigntest.data.repository.UserRepository
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

@@ -1,8 +1,8 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.database.room
 
 import androidx.annotation.VisibleForTesting
 import androidx.room.*
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe

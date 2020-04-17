@@ -1,8 +1,8 @@
-package com.testexample.materialdesigntest.data.room
+package com.testexample.materialdesigntest.data.database.room
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule

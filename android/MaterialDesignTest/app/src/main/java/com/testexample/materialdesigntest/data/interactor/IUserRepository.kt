@@ -1,8 +1,7 @@
 package com.testexample.materialdesigntest.data.interactor
 
-import com.testexample.materialdesigntest.data.database.model.Student
+import com.testexample.materialdesigntest.data.model.Student
 import io.reactivex.Flowable
-import org.intellij.lang.annotations.Flow
 
 interface IUserRepository {
 

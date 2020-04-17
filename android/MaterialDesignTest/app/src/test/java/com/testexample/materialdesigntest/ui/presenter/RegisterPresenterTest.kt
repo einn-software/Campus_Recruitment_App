@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.presenter
 
-import com.testexample.materialdesigntest.ui.register.RegisterContract
-import com.testexample.materialdesigntest.ui.register.RegisterPresenter
+import com.testexample.materialdesigntest.ui.studentdashboard.RegisterContract
+import com.testexample.materialdesigntest.ui.studentdashboard.StudentDashboardPresenter
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
@@ -30,8 +30,8 @@ class RegisterPresenterTest {
         // mock setup
         val view : RegisterContract.View = mockk(relaxed = true)
 
-        val presenter: RegisterPresenter =
-            RegisterPresenter(view)
+        val presenter: StudentDashboardPresenter =
+            StudentDashboardPresenter(view)
         output = presenter.onRegister().toString()
 
         assertEquals(expected, output)

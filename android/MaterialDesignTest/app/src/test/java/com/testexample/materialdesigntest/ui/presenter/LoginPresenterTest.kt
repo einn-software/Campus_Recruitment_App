@@ -1,21 +1,16 @@
 package com.testexample.materialdesigntest.ui.presenter
 
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
-import com.testexample.materialdesigntest.data.interactor.IUserRepository
-import com.testexample.materialdesigntest.data.repository.UserRepository
+import com.testexample.materialdesigntest.data.interactor.UserRepository
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
-import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.Flowable
-import io.reactivex.android.plugins.RxAndroidPlugins
 import org.junit.Before
 import org.junit.ClassRule
-import org.junit.Rule
 import org.junit.Test
-import org.mockito.internal.verification.VerificationModeFactory.times
 
 class LoginPresenterTest {
 

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.collegedashboard.CollegeDashboard
-import com.testexample.materialdesigntest.ui.register.RegisterActivity
+import com.testexample.materialdesigntest.ui.studentdashboard.StudentDashboardActivity
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import kotlinx.android.synthetic.main.activity_college_login.*
 
@@ -32,7 +32,7 @@ class CollegeLoginActivity : AppCompatActivity(), LoginContract.View {
         }
 
         RegistrationLink.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, StudentDashboardActivity::class.java)
             startActivity(intent)
         }
 

@@ -6,4 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".ui.collegedashboard.CollegeDashboard">
 
+    <include
+        android:id="@+id/include4"
+        layout="@layout/appbar" />
+
+
+    <TextView
+        android:id="@+id/dashboardText"
+        android:layout_width="182dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="24dp"
+        android:text="Dashboard"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboardText"
+        app:layout_constraintVertical_bias="1.0"
+        android:padding="14dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignMargins">
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_gravity="center">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Result"/>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

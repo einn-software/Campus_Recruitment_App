@@ -4,7 +4,9 @@ import android.util.patterns
 class AdminLogin (override val email : string , override val password : string) : IAdmin {
 
     override fun isDatavalid() : int {
-        if(TextUtils.isEmpty(Email))
+        if(email_id == email)
+
+        else if(TextUtils.isEmpty(Email))
             return 0 // 0 error code is empty
         else if(!patterns.EMAIL_ADDRESS.matcher(email))
             return 1 //1 error code is wrong pattern. means email pattern missmatch

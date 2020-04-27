@@ -13,7 +13,7 @@ import java.io.IOException
 
 @RunWith(JUnit4::class)
 //@Config(maxSdk = 28)
-class StudentDatabaseTest {
+class ApplicationDatabaseTest {
 
     private val user =
         Student(
@@ -26,13 +26,13 @@ class StudentDatabaseTest {
     //val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
 
     private  lateinit var studentDao: StudentDao    // DOA
-    private  lateinit var database: StudentDatabase  // database instance
+    private  lateinit var database: ApplicationDatabase  // database instance
 
     @Before
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        database = Room.inMemoryDatabaseBuilder(context, StudentDatabase::class.java)
+        database = Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
             .allowMainThreadQueries()       //only for testing
             .build()
         studentDao = database.studentDAO()

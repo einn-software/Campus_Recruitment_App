@@ -3,10 +3,9 @@ package com.testexample.materialdesigntest.ui.studentdashboard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import androidx.fragment.app.FragmentTransaction
 import com.testexample.materialdesigntest.R
-import kotlinx.android.synthetic.main.activity_register.*
+import com.testexample.materialdesigntest.data.model.Result
 import kotlinx.android.synthetic.main.activity_student_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -20,17 +19,15 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_dashboard)
 
-
         //init
         presenter = StudentDashboardPresenter(this)
 
-
         setSupportActionBar(appActionBar)
 
-        studentResult = StudentResult.newInstance()
+        studentResult = StudentResult.newInstance(requestResult(15), 15)
 
         resultTab.setOnClickListener {
-            requestResult(15)
+            studentDashboardContainer.visibility = INVISIBLE
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.studentDashboardFragment, studentResult)
@@ -38,13 +35,12 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
         }
-
-
     }
 
-    override fun requestResult(studentRollNo: Long) {
-        studentDashboardContainer.visibility = INVISIBLE
-        presenter.fetchResult(studentRollNo)
+    override fun requestResult(studentRollNo: Long):
+            Result {
+
+        return presenter.fetchResult(studentRollNo)
 
     }
 

@@ -1,23 +1,34 @@
 package com.testexample.materialdesigntest.ui.collegedashboard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.view.View.VISIBLE
+import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
+import kotlinx.android.synthetic.main.activity_college_dashboard.*
 
 /**
- * A simple [Fragment] subclass.
+ * Data Upload [Fragment] subclass.
  */
-class DataUpload : Fragment() {
+class DataUpload : Fragment(R.layout.fragment_data_upload) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_data_upload, container, false)
+    private val TAG = "Data Upload"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate")
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "onViewCreated")
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDetach() {
+        Log.d(TAG, "onDetach")
+        super.onDetach()
+        collegeDashboardContainer.visibility = VISIBLE
     }
 
 }

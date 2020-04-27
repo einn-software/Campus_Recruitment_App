@@ -24,7 +24,7 @@ class StudentDaoTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
 
     private  lateinit var studentDao: StudentDao    // DOA
-    private  lateinit var database: StudentDatabase  // database instance
+    private  lateinit var database: ApplicationDatabase  // database instance
 
     @Before
     fun setUp() {

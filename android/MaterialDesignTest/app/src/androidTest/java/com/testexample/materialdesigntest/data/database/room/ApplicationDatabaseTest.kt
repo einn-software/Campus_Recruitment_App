@@ -14,11 +14,11 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class StudentDatabaseITest {
+class ApplicationDatabaseITest {
 
     private val user =
         Student(
-            1, "sdg", "sdg@test.com",
+            "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
             "cse", "nitra"
         )
@@ -27,13 +27,13 @@ class StudentDatabaseITest {
     val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
 
     private  lateinit var studentDao: StudentDao    // DOA
-    private  lateinit var database: StudentDatabase  // database instance
+    private  lateinit var database: ApplicationDatabase  // database instance
 
     @Before
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        database = Room.inMemoryDatabaseBuilder(context, StudentDatabase::class.java)
+        database = Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
             .allowMainThreadQueries()       //only for testing
             .build()
         studentDao = database.studentDAO()

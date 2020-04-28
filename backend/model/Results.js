@@ -4,7 +4,7 @@ const resultsSchema = new mongoose.Schema({
     student_id:{ type:Number,
         required:true, 
        },
-       question_paper_id:{ type:Number,
+    question_paper_id:{ type:Number,
         min:4,
         max:30,
         required:true,  

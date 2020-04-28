@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+const volleyball = require('volleyball');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -20,6 +21,7 @@ const authRoute = require('./routes/auth');
 const authPost = require('./routes/posts');
 
 //Middleware
+app.use(volleyball);
 app.use(express.json());
 
 

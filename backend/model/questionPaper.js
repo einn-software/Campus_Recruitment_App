@@ -3,22 +3,20 @@ const questionPaperSchema = new mongoose.Schema({
     
     date:{ type:Date,
         required:true,
-    
-       
        },
+       
     max_marks:{ type:Number,
         required:true,
-    
-       
        },
+
     max_time:{ type:Number,
         required:true,
-       
        },
+
     college_id:{ type:Number,
         required:true,
-    
        },
+
     sections : [
         {
         name: {type:String},
@@ -27,8 +25,6 @@ const questionPaperSchema = new mongoose.Schema({
         questionIdList:{type:Number}
        
        }]
-    
-    
 
 });
 

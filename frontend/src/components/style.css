@@ -1,64 +1,117 @@
-.navbar-custom{
-    background-color: #0c3c60;
-    height:90px;
-    position:fixed;
-    left:0px;
-    width:100%;
-    margin:0px;
-    padding:0px;
-}
-.head{
-  position: relative;
-  top:13px;
-  
-  
-}
-.logo{
-  position:relative;
-  top:10px;
-  border: 1px solid black;
-  height:90px;
-  width: 90px;
-  left: 55px;
-  background-color: white ;
-}
-.footer-custom{
+.navbar-custom {
   background-color: #0c3c60;
-  height:50px;
-  color:white;
-  position:fixed;
-  bottom:0px;
-  width:100%;
-  padding-top:20px;
-  font-family: sans-serif;
+  height: 90px;
+  position: fixed;
+  left: 0px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.head {
+  position: relative;
+  top: 13px;
+}
+.logo {
+  position: relative;
+  top: 10px;
+  border: 1px solid black;
+  height: 90px;
+  width: 90px;
+  left: 150px;
+  background-color: white;
+}
+.footer-custom {
+  background-color: #0c3c60;
+  height: 50px;
+  color: white;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  padding-top: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-.home-bottom{
-  background-color: rgb(155,177,198);
+.home-bottom {
+  background-color: rgb(155, 177, 198);
+}
+.container-index {
+  background-color: #ebf7f5;
+  position: relative;
+  top: 120px;
+  height: 610px;
+  width: 90%;
+  margin: auto;
+}
+.title {
+  position: relative;
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin: auto;
+  font-size: 50px;
+}
+.container-inside-index {
+  position: relative;
+  background: rgba(31, 78, 121, 0.2);
+  height: 300px;
+  width: 100%;
+  top: 55%;
+  margin: auto;
+}
+.first-text {
+  color: #1f4e79;
+  font-style: italic;
+  position: relative;
+  margin: auto;
+  top: 50px;
+}
+.second-text {
+  color: darkslategray;
+  position: relative;
+  margin: auto;
+  top: 52px;
+}
+.register-btn {
+  position: relative;
+  border: 1px solid #0c3c60;
+  color: #0c3c60;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: white;
+  width: 80px;
+  height: 30px;
+  margin: 100px 24px;
+}
+.login-btn {
+  position: relative;
+  background-color: #39729b;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  border: 1px;
+  width: 80px;
+  height: 30px;
+  margin: 100px 24px;
+}
+.text-style {
+  color: #0c3c60;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.text-style{
-  color:#0c3c60;
-  font-size:20px;
-  font-weight:bold;
+html,
+body {
+  position: relative;
+  height: 100%;
 }
 
-html,body{
-    position: relative;
-    height: 100%;
-  
-}
-
-.login-container{
-    position: fixed;
-    width: 320px;
-    height:430px;
-    margin: 180px auto;
-    padding: 20px 40px 40px;
-    text-align: center;
-    background: whitesmoke;
-    box-shadow: 8px 8px 8px 8px #d1e0eb;
-    border: 1px solid #ccc;
+.login-container {
+  position: fixed;
+  width: 320px;
+  height: 430px;
+  margin: 180px auto;
+  padding: 20px 40px 40px;
+  text-align: center;
+  background: whitesmoke;
+  box-shadow: 8px 8px 8px 8px #d1e0eb;
+  border: 1px solid #ccc;
 }
 /* 
 .login-container::before{
@@ -85,70 +138,64 @@ html,body{
     transform: rotateZ(-2deg); 
 } */
 
-.avatar{
-    width: 110px;
-    height: 110px;
-    margin: 10px auto 30px;
-    border-radius: 100%;
-    border: 2px solid  rgb(12,60,96);
-    background-size: cover;
-    background-color:white;
+.avatar {
+  width: 110px;
+  height: 110px;
+  margin: 10px auto 30px;
+  border-radius: 100%;
+  border: 2px solid rgb(12, 60, 96);
+  background-size: cover;
+  background-color: white;
 }
 
-.userimg{
-  border-radius:100%;
-
-  
+.userimg {
+  border-radius: 100%;
 }
-.text{
-  font-size:20px;
-  font-style:italic;
-  font-weight:bold;
-  color:#0c3c60;
-
+.text {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: bold;
+  color: #0c3c60;
 }
 
-.form-box input{
-    width: 100%;
-    padding: 10px;
-    text-align: center;
-    margin-top:20px;
-    height:40px;
-    border: 1px solid #ccc;;
-    background: #fafafa;
-    transition:0.2s ease-in-out;
-
+.form-box input {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  height: 40px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  transition: 0.2s ease-in-out;
 }
 
-.form-box input:focus{
-    outline: 0;
-  
+.form-box input:focus {
+  outline: 0;
 }
 
-.form-box input[type="text"]{
-    border-radius: 5px;
-    text-transform: lowercase;
+.form-box input[type="text"] {
+  border-radius: 5px;
+  text-transform: lowercase;
 }
 
-.form-box input[type="password"]{
-    border-radius:5px;
-    
+.form-box input[type="password"] {
+  border-radius: 5px;
 }
 
-.form-box button.login{
-    margin-top:15px;
-    padding: 10px 20px;
-    
-  }
-.btn-info, .btn-info:hover{
+.form-box button.login {
+  margin-top: 15px;
+  padding: 10px 20px;
+}
+.btn-info,
+.btn-info:hover {
   background-color: #0c3c60;
-  opacity:0.9;
+  opacity: 0.9;
 }
 
-div.anc, a.anc{
-  margin-top:7px;
-  color:#0c3c60;
-  font-size:17px;
-  text-decoration: none;;
+div.anc,
+a.anc {
+  margin-top: 7px;
+  color: #0c3c60;
+  font-size: 17px;
+  text-decoration: none;
 }
-

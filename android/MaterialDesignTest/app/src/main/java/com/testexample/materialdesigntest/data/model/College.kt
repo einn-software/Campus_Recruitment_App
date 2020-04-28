@@ -6,6 +6,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "college_table")
-data class College(@NonNull @PrimaryKey(autoGenerate = true)
-                   @ColumnInfo(name = "student_Id") val studentId: Long = 0) {
-}
+data class College(
+    @NonNull @PrimaryKey
+    @ColumnInfo(name = "college_Id") val collegeId: String,
+    @ColumnInfo(name = "college_name") val collegeName: String?,
+    @ColumnInfo(name = "college_email") val collegeEmail: String?,
+    @ColumnInfo(name = "college_password") val collegePassword: String,
+    @ColumnInfo(name = "college_phone") val collegePhone: Long,
+    @ColumnInfo(name = "code") val collegeCode: Long,
+    @ColumnInfo(name = "college_address") val collegeAddress: String
+)

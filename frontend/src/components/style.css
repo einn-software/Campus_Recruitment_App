@@ -10,6 +10,7 @@
 .head {
   position: relative;
   top: 13px;
+  
 }
 .logo {
   position: relative;
@@ -113,30 +114,7 @@ body {
   box-shadow: 8px 8px 8px 8px #d1e0eb;
   border: 1px solid #ccc;
 }
-/* 
-.login-container::before{
-    content: "";
-    position: absolute;
-    width: 100%;height: 100%;
-    top: 3.5px;left: 0;
-    background: white;
-    z-index: -1;
-    transform: rotateZ(4deg);
-    border: 1px solid #ccc;
 
-}
-
-.login-container::after{
-  content: "";
-  position: absolute;
-  width: 100%;height: 100%;
-  left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-    top: 5px;
-    z-index: -2;
-    transform: rotateZ(-2deg); 
-} */
 
 .avatar {
   width: 110px;

@@ -7,9 +7,12 @@
   margin: 0px;
   padding: 0px;
 }
+
 .head {
   position: relative;
   top: 13px;
+  width: 65%;
+  height: 65%;
 }
 .logo {
   position: relative;
@@ -36,18 +39,18 @@
 }
 .container-index {
   background-color: #ebf7f5;
-  position: relative;
+  position: fixed;
   top: 120px;
   height: 610px;
   width: 90%;
-  margin: auto;
+  margin: auto 80px;
 }
 .title {
   position: relative;
   color: white;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin: auto;
-  font-size: 50px;
+  font-size: 4vw;
 }
 .container-inside-index {
   position: relative;
@@ -94,6 +97,56 @@
   color: #0c3c60;
   font-size: 20px;
   font-weight: bold;
+}
+.container-inside {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  margin: auto 0px;
+  top: 150px;
+  background: rgba(31, 78, 121, 0.2);
+}
+
+.col-md-4 {
+  top: 20rem;
+}
+.text0 {
+  position: relative;
+  margin: 10px 50px;
+  /* margin: 0px 15px; */
+  top: 1rem;
+}
+.text1 {
+  position: relative;
+  margin: 10px 50px;
+  top: 1rem;
+}
+.text2 {
+  position: relative;
+  margin: 10px 50px;
+  top: 1rem;
+}
+.upload-btn,
+.manage-college-btn {
+  position: relative;
+  width: 240px;
+  height: 28px;
+  background-color: #39729b;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  border: 1px;
+  margin: 100px 0px;
+}
+
+.manage-student-btn {
+  position: relative;
+  border: 1px solid #0c3c60;
+  color: #0c3c60;
+  width: 240px;
+  height: 28px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: white;
+  margin: 100px 0px;
 }
 
 html,

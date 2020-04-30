@@ -7,7 +7,13 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-custom navbar-dark">
         <div className="logo">
-          <img src={image} className="head" width="60" height="60" alt="" />
+          <img
+            src={image}
+            className="text-center head"
+            width="60"
+            height="60"
+            alt=""
+          />
         </div>
         <div className="title">
           <p>Campus Recruitment</p>

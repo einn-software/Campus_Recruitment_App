@@ -11,8 +11,12 @@
 .head {
   position: relative;
   top: 13px;
+<<<<<<< HEAD
   width: 65%;
   height: 65%;
+=======
+  
+>>>>>>> 702626d9990f4554f2dfb0a5ce55050285833765
 }
 .logo {
   position: relative;
@@ -166,30 +170,7 @@ body {
   box-shadow: 8px 8px 8px 8px #d1e0eb;
   border: 1px solid #ccc;
 }
-/* 
-.login-container::before{
-    content: "";
-    position: absolute;
-    width: 100%;height: 100%;
-    top: 3.5px;left: 0;
-    background: white;
-    z-index: -1;
-    transform: rotateZ(4deg);
-    border: 1px solid #ccc;
 
-}
-
-.login-container::after{
-  content: "";
-  position: absolute;
-  width: 100%;height: 100%;
-  left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-    top: 5px;
-    z-index: -2;
-    transform: rotateZ(-2deg); 
-} */
 
 .avatar {
   width: 110px;

@@ -10,7 +10,7 @@ import Admin from "./components/Dashboard/admin";
 //import CollegeLogin from "./components/login/collegelogin";
 //import AdminRegister from './components/register/adminregister';
 //import CollegeRegister from './components/register/collegeregister';
-import TpoRegister from './components/register/tporegister';
+//import TpoRegister from './components/register/tporegister';
 //import StudentRegister from './components/register/studentregister';
 
 
@@ -18,9 +18,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <TpoRegister />
+     
         <Admin />
-        <StudentLogin />
+     
       </div>
     );
   }

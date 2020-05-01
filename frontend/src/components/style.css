@@ -12,15 +12,8 @@
 .head {
   position: relative;
   top: 13px;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
   width: 65%;
   height: 65%;
-=======
-  
->>>>>>> 702626d9990f4554f2dfb0a5ce55050285833765
->>>>>>> d56346c002361f1dc60ec0f7192a745e2664d7d9
 }
 
 .logo {
@@ -61,8 +54,6 @@
   height: 610px;
   width: 90%;
   margin: auto 80px;
-<<<<<<< HEAD
-=======
 }
 .title {
   position: relative;
@@ -70,7 +61,6 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin: auto;
   font-size: 4vw;
->>>>>>> d56346c002361f1dc60ec0f7192a745e2664d7d9
 }
 
 .container-inside-index {

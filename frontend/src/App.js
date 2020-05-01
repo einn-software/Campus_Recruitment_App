@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-<<<<<<< HEAD
+<
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 =======
 <<<<<<< HEAD
 // import Login from './components/login';
 // import Home from "./components/home";
 import Admin from "./components/Dashboard/admin";
-=======
->>>>>>> d56346c002361f1dc60ec0f7192a745e2664d7d9
 //import Home from "./components/home";
 //import AdminLogin from "./components/login/adminlogin";
 //import StudentLogin from "./components/login/studentlogin";

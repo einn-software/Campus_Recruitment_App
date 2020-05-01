@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-<
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-=======
-<<<<<<< HEAD
 // import Login from './components/login';
 // import Home from "./components/home";
 import Admin from "./components/Dashboard/admin";

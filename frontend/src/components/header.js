@@ -9,7 +9,11 @@ class Header extends Component {
         <div className="logo">
           <img
             src={image}
+<<<<<<< HEAD
             className="head"
+=======
+            className="text-center head"
+>>>>>>> d56346c002361f1dc60ec0f7192a745e2664d7d9
             width="60"
             height="60"
             alt=""

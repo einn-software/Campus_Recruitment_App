@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "../style.css";
 import Footer from "../footer";
 import Header from "../header";
+import image from "./result.jpg";
 
-class Admin extends Component {
+class College extends Component {
   render() {
     return (
       <div className="container-fluid">
@@ -15,8 +16,7 @@ class Admin extends Component {
             <aside className="col-md-4">
               <div className="text text0">
                 <h5>
-                  Click the button to upload test papers & answer keys over the
-                  server
+                  Click the button to upload the list of interested studnets
                 </h5>
               </div>
               <div className="btn">
@@ -24,19 +24,27 @@ class Admin extends Component {
               </div>
             </aside>
             <section className="col-md-4">
-              <div className="text text1">
-                <h5>Click the button to manage the Student data</h5>
+              <div className="img">
+                <img
+                  src={image}
+                  className="resultimg"
+                  width="300px"
+                  height="200px"
+                  alt=""
+                />
               </div>
               <div className="btn">
-                <button className="manage-student-btn">Manage Students</button>
+                <button className="manage-student-btn">Result</button>
               </div>
             </section>
             <aside className="col-md-4">
               <div className="text text2">
-                <h5>Click the button to manage the college data</h5>
+                <h5>Click the button to know about the appeared students</h5>
               </div>
               <div className="btn">
-                <button className="manage-college-btn">Manage Colleges</button>
+                <button className="manage-college-btn">
+                  appeared students
+                </button>
               </div>
             </aside>
           </div>
@@ -49,4 +57,4 @@ class Admin extends Component {
     );
   }
 }
-export default Admin;
+export default College;

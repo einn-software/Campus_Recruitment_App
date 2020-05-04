@@ -1,32 +1,29 @@
-const express = require('express')
+const express = require("express");
 const app = express();
-const volleyball = require('volleyball');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const volleyball = require("volleyball");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 dotenv.config();
 
 //Connect to DB for Developemen
 mongoose.connect(
-    process.env.DB_CONNECT, 
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    },
-    () => console.log('Connected to db!')
+  process.env.DB_CONNECT,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  },
+  () => console.log("Connected to db!")
 );
 
 //Import Routes
-const authRoute = require('./routes/auth');
-const authPost = require('./routes/posts');
+const authRoute = require("./routes/auth");
 
 //Middleware
 app.use(volleyball);
 app.use(express.json());
 
-
 //Route Middlewares
-app.use('/', authRoute);
-app.use('/posts', authPost);
+app.use("/", authRoute);
 
 module.exports = app;

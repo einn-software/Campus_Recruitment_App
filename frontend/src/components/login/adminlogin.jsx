@@ -8,10 +8,12 @@ class AdminLogin extends Component {
   render() {
     return (
       <div className='container-fluid'>
-         <div className='row'>
+        <div className='row'>
+         <div className='col-lg-12 col-sm-12 col-md-12'>
            <Header />
          </div>
-         <div className='row d-flex justify-content-center'>
+        </div>
+         <div className='row justify-content-center'>
            <div className='col-lg-3 col-sm-3 col-md-3'>
              <div className='login-container'>
                <div className='avatar'>
@@ -33,6 +35,7 @@ class AdminLogin extends Component {
          </div>
          <div className='row'>
            <Footer />
+          
          </div>
        </div>        
     );

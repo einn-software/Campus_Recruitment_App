@@ -60,7 +60,7 @@ router.post("/login/admin", async (req, res) => {
       .status(400)
       .send("Unable to login - the email must be a valid email");
 
-  //Checking if the admin is already in the database
+  //Checking if the admin is not in the database
   const admin = await Admin.findOne({ email: req.body.email });
   if (!admin) return res.status(400).send("Email not found");
 
@@ -75,10 +75,15 @@ router.post("/login/admin", async (req, res) => {
 
 // display Admin Data
 
-router.get("/login/admin", verify, async (req, res) => {
-  Admin.findOne({ email: req.body.email }).then(function (admin) {
-    res.send(admin);
-  });
+router.get("/admin", verify, async (req, res) => {
+  const id = req.user._id;
+  Admin.findOne({ _id: id })
+    .then(function (admin) {
+      res.send(admin);
+    })
+    .catch(() => {
+      res.status(400).send("Email not found");
+    });
 });
 
 //Update admin's info
@@ -146,7 +151,7 @@ router.post("/login/college", async (req, res) => {
       .status(400)
       .send("Unable to login - the email must be a valid email");
 
-  //Checking if the college is already in the database
+  //Checking if the college is not in the database
   const college = await College.findOne({ email: req.body.email });
   if (!college) return res.status(400).send("Email not found");
 
@@ -171,13 +176,14 @@ router.post("/login/college", async (req, res) => {
 
 // display College Data
 
-router.get("/college/:id", verify, async (req, res) => {
-  College.findOne({ _id: req.params.id })
+router.get("/college", verify, async (req, res) => {
+  const id = req.user._id;
+  College.findOne({ _id: id })
     .then(function (college) {
       res.send(college);
     })
     .catch(() => {
-      res.status(400).send("College id not found");
+      res.status(400).send("Email not found");
     });
 });
 
@@ -247,7 +253,7 @@ router.post("/login/tpo", async (req, res) => {
       .status(400)
       .send("Unable to login - the email must be a valid email");
 
-  //Checking if the tpo is already in the database
+  //Checking if the tpo is not in the database
   const tpo = await Tpo.findOne({ email: req.body.email });
   if (!tpo) return res.status(400).send("Email not found");
 
@@ -272,13 +278,14 @@ router.post("/login/tpo", async (req, res) => {
 
 // display Tpos Data
 
-router.get("/Tpo/:id", verify, async (req, res) => {
-  Tpo.findOne({ _id: req.params.id })
+router.get("/Tpo", verify, async (req, res) => {
+  const id = req.user._id;
+  Tpo.findOne({ _id: id })
     .then(function (tpo) {
       res.send(tpo);
     })
     .catch(() => {
-      res.status(400).send("Tpo id not found");
+      res.status(400).send("Email id not found");
     });
 });
 
@@ -377,13 +384,14 @@ router.post("/login/student", async (req, res) => {
 
 // display students Data
 
-router.get("/student/:id", verify, function (req, res) {
-  Student.findOne({ _id: req.params.id })
+router.get("/student", verify, function (req, res) {
+  const id = req.user._id;
+  Student.findOne({ _id: id })
     .then(function (student) {
       res.send(student);
     })
     .catch(() => {
-      res.status(400).send("Student id not found");
+      res.status(400).send("Email not found");
     });
 });
 

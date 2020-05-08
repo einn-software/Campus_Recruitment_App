@@ -132,7 +132,7 @@ router.post("/register/college", async (req, res) => {
     email: req.body.email,
     password: hashedPassword,
     phone: req.body.phone,
-    code: req.body.code,
+    college_code: req.body.college_code,
     address: req.body.address,
   });
   try {
@@ -166,7 +166,7 @@ router.post("/login/college", async (req, res) => {
       name: college.name,
       email: college.email,
       phone: college.phone,
-      code: college.code,
+      college_code: college.college_code,
       address: college.address,
     },
     process.env.TOKEN_SECRET
@@ -391,6 +391,7 @@ router.get("/student", verify, function (req, res) {
   Student.findOne({ _id: id })
     .then(function (student) {
       res.send(student);
+      console.log(student);
     })
     .catch(() => {
       res.status(400).send("Email not found");
@@ -432,13 +433,13 @@ router.post("/instructions", verify, async (req, res) => {
 
   //Checking if the college is already in the database
   const collegeExist = await testinstructions.findOne({
-    college: req.body.college,
+    college_code: req.body.college_code,
   });
   if (collegeExist) return res.status(400).send("College already exist");
 
   // Create a new instruction
   const instructions = new testinstructions({
-    college: req.body.college,
+    college_code: req.body.college_code,
     message: req.body.message,
   });
   try {

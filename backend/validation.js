@@ -24,7 +24,7 @@ const collegeRegisterValidation = (data) => {
     email: Joi.string().min(6).required().max(255).email(),
     password: Joi.string().min(6).max(255).required(),
     phone: Joi.number().required().min(10),
-    code: Joi.string().min(3).required(),
+    college_code: Joi.string().min(3).required(),
     address: Joi.string().min(6).required().max(255),
   });
   return collegeSchema.validate(data);
@@ -44,6 +44,7 @@ const tpoRegisterValidation = (data) => {
     phone: Joi.number().required().min(10),
     designation: Joi.string().min(6).required().max(23),
     college: Joi.string().min(6).required().max(40),
+    college_code: Joi.string().min(3).required(),
   });
   return tpoSchema.validate(data);
 };
@@ -65,6 +66,7 @@ const studentRegisterValidation = (data) => {
     roll: Joi.number().min(6).required(),
     branch: Joi.string().min(6).max(255).required(),
     college: Joi.string().min(6).required().max(255),
+    college_code: Joi.string().min(3).required(),
   });
   return studentSchema.validate(data);
 };
@@ -100,7 +102,7 @@ const studentloginValidation = (data) => {
 // Test POST Instructions validation
 const testinstructionsValidation = (data) => {
   const testinstructionsSchema = Joi.object({
-    college: Joi.string().min(6).required().max(255),
+    college_code: Joi.string().min(3).required(),
     message: Joi.string().required().min(10),
   });
   return testinstructionsSchema.validate(data);
@@ -108,7 +110,7 @@ const testinstructionsValidation = (data) => {
 // Test GET Instructions validation
 const getinstructionsValidation = (data) => {
   const getinstructionsSchema = Joi.object({
-    college: Joi.string().min(6).required().max(255),
+    college_code: Joi.string().min(3).required(),
   });
   return getinstructionsSchema.validate(data);
 };
@@ -116,7 +118,7 @@ const getinstructionsValidation = (data) => {
 // Result Validation
 const ResultsValidation = (data) => {
   const ResultsSchema = Joi.object({
-    student_id: Joi.string().min(4).max(30).required(),
+    roll: Joi.number().min(6).required(),
     question_paper_id: Joi.string().min(4).max(30).required(),
     question_attempt: Joi.string().min(1).max(30).required(),
     correct_attempt: Joi.string().min(1).max(30).required(),
@@ -127,7 +129,7 @@ const ResultsValidation = (data) => {
 //Get Result Validation
 const getResultsValidation = (data) => {
   const getResultsSchema = Joi.object({
-    student_id: Joi.string().min(4).max(30).required(),
+    roll: Joi.number().min(6).required(),
   });
   return getResultsSchema.validate(data);
 };
@@ -167,7 +169,7 @@ const questionPaperValidation = (data) => {
     date: Joi.date().required(),
     max_marks: Joi.number().required(),
     max_time: Joi.number().required(),
-    college_id: Joi.number().required(),
+    college_code: Joi.string().required().min(3),
     sections: Joi.array()
       .items(
         Joi.object({
@@ -184,7 +186,7 @@ const questionPaperValidation = (data) => {
 // GET questionPaper validation
 const getquestionPaperValidation = (data) => {
   const getquestionPaperSchema = Joi.object({
-    college_id: Joi.number().min(4).max(30).required(),
+    college_code: Joi.string().min(3).max(30).required(),
   });
   return getquestionPaperSchema.validate(data);
 };

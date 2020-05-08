@@ -7,9 +7,12 @@ const studentSchema = new mongoose.Schema({
   roll: { type: Number, required: true, unique: true, min: 6 },
   branch: { type: String, required: true, min: 6 },
   college: { type: String, required: true, min: 6, max: 255 },
+  college_code: { type: String, required: true, min: 3 },
   date: {
     type: Date,
-    default: Date.now,
+    default: () => {
+      return new Date();
+    },
   },
 });
 module.exports = mongoose.model("Student", studentSchema);

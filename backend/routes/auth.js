@@ -340,6 +340,7 @@ router.post("/register/student", async (req, res) => {
     roll: req.body.roll,
     branch: req.body.branch,
     college: req.body.college,
+    college_code: req.body.college_code,
   });
   try {
     const savedUser = await student.save();
@@ -376,6 +377,7 @@ router.post("/login/student", async (req, res) => {
       roll: student.roll,
       branch: student.branch,
       college: student.college,
+      college_code: student.college_code,
     },
     process.env.TOKEN_SECRET
   );

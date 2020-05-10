@@ -79,36 +79,52 @@ router.get("/admin", verify, async (req, res) => {
   const id = req.user._id;
   Admin.findOne({ _id: id })
     .then(function (admin) {
-      res.send(admin);
+      if (admin === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(admin);
+      }
     })
     .catch(() => {
-      res.status(400).send("Email not found");
+      res.status(400).send("Admin not found");
     });
 });
 
 //Update admin's info
 
-router.put("/login/admin/:id", verify, function (req, res) {
-  Admin.findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      Admin.findOne({ _id: req.params.id }).then(function (admin) {
-        res.send(admin);
-      });
+router.put("/admin", verify, function (req, res) {
+  const id = req.user._id;
+  Admin.findOneAndUpdate({ _id: id }, req.body)
+    .then((admin) => {
+      if (admin === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(admin);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete a admin from the db
 
-router.delete("/login/admin/:id", verify, function (req, res) {
-  Admin.findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+router.delete("/admin", verify, function (req, res) {
+  const id = req.user._id;
+  Admin.findByIdAndRemove({ _id: id })
+    .then(function (admin) {
+      if (admin === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid email");
+      res.status(400).send("Data not Found");
     });
 });
 
@@ -180,36 +196,52 @@ router.get("/college", verify, async (req, res) => {
   const id = req.user._id;
   College.findOne({ _id: id })
     .then(function (college) {
-      res.send(college);
+      if (college === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(college);
+      }
     })
     .catch(() => {
-      res.status(400).send("Email not found");
+      res.status(400).send("College not found");
     });
 });
 
 //Update college's info
 
-router.put("/college/:id", verify, function (req, res, next) {
-  College.findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      College.findOne({ _id: req.params.id }).then(function (college) {
-        res.send(college);
-      });
+router.put("/college", verify, function (req, res, next) {
+  const id = req.user._id;
+  College.findOneAndUpdate({ _id: id }, req.body)
+    .then((College) => {
+      if (College === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(College);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete a college from the db
 
-router.delete("/college/:id", verify, function (req, res, next) {
-  College.findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+router.delete("/college", verify, function (req, res, next) {
+  const id = req.user._id;
+  College.findOneAndRemove({ _id: id })
+    .then((College) => {
+      if (College === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 
@@ -282,36 +314,52 @@ router.get("/Tpo", verify, async (req, res) => {
   const id = req.user._id;
   Tpo.findOne({ _id: id })
     .then(function (tpo) {
-      res.send(tpo);
+      if (tpo === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(tpo);
+      }
     })
     .catch(() => {
-      res.status(400).send("Email id not found");
+      res.status(400).send("Tpo not found");
     });
 });
 
 //Update tpo's info
 
-router.put("/tpo/:id", verify, function (req, res, next) {
-  Tpo.findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      Tpo.findOne({ _id: req.params.id }).then(function (tpo) {
-        res.send(tpo);
-      });
+router.put("/tpo", verify, function (req, res, next) {
+  const id = req.user._id;
+  Tpo.findOneAndUpdate({ _id: id }, req.body)
+    .then((Tpo) => {
+      if (Tpo === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(Tpo);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete a tpo from the db
 
-router.delete("/tpo/:id", verify, function (req, res, next) {
-  Tpo.findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+router.delete("/tpo", verify, function (req, res, next) {
+  const id = req.user._id;
+  Tpo.findOneAndRemove({ _id: id })
+    .then((Tpo) => {
+      if (Tpo === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 
@@ -371,13 +419,6 @@ router.post("/login/student", async (req, res) => {
   const token = jwt.sign(
     {
       _id: student._id,
-      name: student.name,
-      email: student.email,
-      phone: student.phone,
-      roll: student.roll,
-      branch: student.branch,
-      college: student.college,
-      college_code: student.college_code,
     },
     process.env.TOKEN_SECRET
   );
@@ -390,43 +431,58 @@ router.get("/student", verify, function (req, res) {
   const id = req.user._id;
   Student.findOne({ _id: id })
     .then(function (student) {
-      res.send(student);
-      console.log(student);
+      if (student === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(student);
+      }
     })
     .catch(() => {
-      res.status(400).send("Email not found");
+      res.status(400).send("Student not found");
     });
 });
 
 //Update student's info
 
-router.put("/student/:id", verify, function (req, res, next) {
-  Student.findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      Student.findOne({ _id: req.params.id }).then(function () {
-        res.send(student);
-      });
+router.put("/student", verify, function (req, res, next) {
+  const id = req.user._id;
+  Student.findOneAndUpdate({ _id: id }, req.body)
+    .then((Student) => {
+      if (Student === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(Student);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete a student from the db
 
-router.delete("/student/:id", verify, function (req, res, next) {
-  Student.findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+router.delete("/student", verify, function (req, res, next) {
+  const id = req.user._id;
+  Student.findOneAndRemove({ _id: id })
+    .then((Student) => {
+      if (Student === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 
 //testinstructions
 
-router.post("/instructions", verify, async (req, res) => {
+router.post("/instruction", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
   const { error } = testinstructionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -451,44 +507,56 @@ router.post("/instructions", verify, async (req, res) => {
 });
 
 //display test instructions
-router.get("/instruction/:id", verify, async (req, res) => {
+router.get("/instruction", verify, async (req, res) => {
   testinstructions
-    .findOne({ _id: req.params.id })
-    .then(function (instruction) {
-      res.send(instruction);
+    .findOne({ college_code: req.body.college_code })
+    .then(function (instructions) {
+      if (instructions === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(instructions);
+      }
     })
     .catch(() => {
-      res.status(400).send("Instruction id not found");
+      res.status(400).send("Instructions not found");
     });
 });
 
 //Update instructions
 
-router.put("/instruction/:id", verify, function (req, res, next) {
+router.put("/instruction", verify, function (req, res, next) {
   testinstructions
-    .findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      testinstructions
-        .findOne({ _id: req.params.id })
-        .then(function (instructions) {
-          res.send(instructions);
+    .findOneAndUpdate({ college_code: req.body.college_code }, req.body)
+    .then((admin) => {
+      if (admin === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
         });
+      } else {
+        res.status(200).send(admin);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete a instruction from the db
 
-router.delete("/instruction/:id", verify, function (req, res, next) {
+router.delete("/instruction", verify, function (req, res, next) {
   testinstructions
-    .findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+    .findOneAndRemove({ college_code: req.body.college_code })
+    .then((admin) => {
+      if (admin === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 
@@ -524,39 +592,53 @@ router.post("/result", verify, async (req, res) => {
 
 // display Results
 
-router.get("/result/:id", verify, async (req, res) => {
-  Results.findOne({ _id: req.params.id })
+router.get("/result", verify, async (req, res) => {
+  Results.findOne({ roll: req.body.roll })
     .then(function (result) {
-      res.send(result);
+      if (result === null) {
+        return done(null, false, { message: "No data found" });
+      } else {
+        res.send(result);
+      }
     })
     .catch(() => {
-      res.status(400).send("Result id not found");
+      res.status(400).send("No Result Found");
     });
 });
 
 //Update result
 
-router.put("/result/:id", verify, function (req, res, next) {
-  Results.findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      Results.findOne({ _id: req.params.id }).then(function (Result) {
-        res.send(Result);
-      });
+router.put("/result", verify, function (req, res, next) {
+  Results.findOneAndUpdate({ roll: req.body.roll }, req.body)
+    .then((Result) => {
+      if (Result === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(Result);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete result from the db
 
-router.delete("/result/:id", verify, function (req, res, next) {
-  Results.findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+router.delete("/result", verify, function (req, res, next) {
+  Results.findOneAndRemove({ roll: req.body.roll })
+    .then((Result) => {
+      if (Result === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 
@@ -644,7 +726,7 @@ router.post("/questionPaper", verify, async (req, res) => {
     date: req.body.date,
     max_marks: req.body.max_marks,
     max_time: req.body.max_time,
-    college_id: req.body.college_id,
+    college_code: req.body.college_code,
     sections: req.body.sections,
   });
   try {
@@ -657,44 +739,58 @@ router.post("/questionPaper", verify, async (req, res) => {
 
 //Get questionPaper
 
-router.get("/questionPaper/:id", verify, async (req, res) => {
+router.get("/questionPaper", verify, async (req, res) => {
   questionPaper
-    .findOne({ _id: req.params.id })
-    .then(function (papers) {
-      res.send(papers);
+    .findOne({ college_code: req.body.college_code })
+    .then((Paper) => {
+      if (Paper === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send(Paper);
+      }
     })
     .catch(() => {
-      res.status(400).send("Paper id is not found");
+      res.status(400).send("Data not found");
     });
 });
 
 //Update questionPapers
 
-router.put("/questionPaper/:id", verify, function (req, res, next) {
+router.put("/questionPaper", verify, function (req, res, next) {
   questionPaper
-    .findByIdAndUpdate({ _id: req.params.id }, req.body)
-    .then(function () {
-      questionPaper
-        .findOne({ _id: req.params.id })
-        .then(function (questionPapers) {
-          res.send(questionPapers);
+    .findOneAndUpdate({ college_code: req.body.college_code }, req.body)
+    .then((Paper) => {
+      if (Paper === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
         });
+      } else {
+        res.status(200).send(Paper);
+      }
     })
-    .catch(err, () => {
-      res.status(400).send("Please provide a valid id");
+    .catch(() => {
+      res.status(400).send("Data not found");
     });
 });
 
 // delete questionPapers from the db
 
-router.delete("/questionPaper/:id", verify, function (req, res, next) {
+router.delete("/questionPaper", verify, function (req, res, next) {
   questionPaper
-    .findByIdAndRemove({ _id: req.params.id })
-    .then(function () {
-      res.send("Your account has been succesfully deleted").status(200);
+    .findOneAndRemove({ college_code: req.body.college_code })
+    .then((Paper) => {
+      if (Paper === null) {
+        return done(null, false, {
+          message: "Something went wrong , Please try again",
+        });
+      } else {
+        res.status(200).send("Successfully Deleted");
+      }
     })
     .catch(() => {
-      res.status(400).send("Please provide a valid id");
+      res.status(400).send("Data not found");
     });
 });
 

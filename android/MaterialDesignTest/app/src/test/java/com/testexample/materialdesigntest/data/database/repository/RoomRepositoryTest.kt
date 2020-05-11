@@ -16,12 +16,12 @@ class RoomRepositoryTest {
         Student(
             "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
-            "cse", "nitra"
+            "cse", "nitra","codes"
         )
 
 
     private var studentDao: StudentDao = mockk(relaxed = true){
-        every { getUserByEmailPassword(user.studentEmail.toString(), user.studentPassword) } returns Flowable.just(user)
+        every { getUserByEmailPassword(user.studentRollNo, user.studentPassword) } returns Flowable.just(user)
         every { getUserByEmail(user.studentEmail.toString()) } returns user.studentEmail.toString()
     }
     private var roomRepository = UserRoomRepository(studentDao)
@@ -51,7 +51,7 @@ class RoomRepositoryTest {
     fun getUser() {
 
         roomRepository
-            .getUser(user.studentEmail.toString(), user.studentPassword)
+            .getUser(user.studentRollNo, user.studentPassword)
             .test()
             .assertValue(user)
             .dispose()

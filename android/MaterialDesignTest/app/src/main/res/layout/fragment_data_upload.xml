@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:padding="20dp"
-    tools:context=".ui.collegedashboard.DataUpload">
+    tools:context=".ui.collegeDashboard.DataUpload">
 
 
     <ImageView

@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.presenter
 
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
-import com.testexample.materialdesigntest.data.interactor.UserRepository
+import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
 import io.mockk.every

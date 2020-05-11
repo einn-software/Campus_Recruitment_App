@@ -13,6 +13,6 @@ data class College(
     @ColumnInfo(name = "college_email") val collegeEmail: String?,
     @ColumnInfo(name = "college_password") val collegePassword: String,
     @ColumnInfo(name = "college_phone") val collegePhone: Long,
-    @ColumnInfo(name = "code") val collegeCode: Long,
+    @ColumnInfo(name = "college_code") val collegeCode: Long,
     @ColumnInfo(name = "college_address") val collegeAddress: String
 )

@@ -1,11 +1,10 @@
 <resources>
-    <string name="app_name">MaterialDesignTest</string>
+    <string name="app_name">Campus Recruiter</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
 
     <string name="action_settings">Settings</string>
     <string name="app_logo">app logo</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_file">Select File</string>
     <string name="title_activity_exam_sections">ExamSectionsActivity</string>
@@ -21,4 +20,13 @@
 
     <string name="home_second">Home Second</string>
     <string name="QuestionNum">Question: 1</string>
+
+    <string name="empty_email_error_message">Email cannot be blank</string>
+    <string name="empty_roll_no_error_message">Roll number cannot be blank</string>
+    <string name="invalid_email_error_message">Please Enter a valid email address</string>
+    <string name="invalid_roll_no_error_message">Please Enter a valid roll number</string>
+    <string name="empty_password_error_message">Password cannot be empty</string>
+    <string name="login_failure">Login failed</string>
+    <string name="welcome_message">WELCOME TO CAMPUS RECRUITMENT MOBILE APPLICATION. WE ARE THE ONE WHO PROVIDE THE BEST TECHNICAL SOLUTIONS TO THE BUSINESSES TO GROW FASTER</string>
+
 </resources>

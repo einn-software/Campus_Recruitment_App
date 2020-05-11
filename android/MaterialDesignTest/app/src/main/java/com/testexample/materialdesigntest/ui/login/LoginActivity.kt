@@ -27,11 +27,6 @@ class LoginActivity : AppCompatActivity() {
                 .add(R.id.loginFragment, loginPrompt)
                 .addToBackStack(loginPrompt.toString())
                 .commit()
-
         }
-
-
-
     }
-
 }

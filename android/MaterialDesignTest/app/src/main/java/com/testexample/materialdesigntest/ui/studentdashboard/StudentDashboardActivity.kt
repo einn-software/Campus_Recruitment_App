@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.ui.studentdashboard
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -46,5 +47,9 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
 
     override fun setPresenter(presenter: StudentDashboardContract.Presenter) {
         this.presenter = presenter
+    }
+
+    override fun setContext(): Context {
+        TODO("Not yet implemented")
     }
 }

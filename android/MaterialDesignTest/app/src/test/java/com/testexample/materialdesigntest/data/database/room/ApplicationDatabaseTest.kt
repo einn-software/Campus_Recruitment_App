@@ -19,7 +19,7 @@ class ApplicationDatabaseTest {
         Student(
             "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
-            "cse", "nitra"
+            "cse", "nitra","codes"
         )
 
    // @get:Rule
@@ -63,7 +63,7 @@ class ApplicationDatabaseTest {
     fun test_for_fetching_user_when_email_and_password_given() {
 
         studentDao.getUserByEmailPassword(
-            user.studentEmail.toString(),
+            user.studentRollNo,
             user.studentPassword)
             .test()
             .assertValue {  gotUser ->

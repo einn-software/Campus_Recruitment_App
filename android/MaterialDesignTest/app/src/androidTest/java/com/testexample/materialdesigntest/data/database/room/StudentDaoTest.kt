@@ -15,10 +15,9 @@ import org.junit.runner.RunWith
 class StudentDaoTest {
     private val user =
         Student(
-            1, "sdg", "sdg@test.com",
+            "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
-            "cse", "nitra"
-        )
+            "cse", "nitra","656")
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously

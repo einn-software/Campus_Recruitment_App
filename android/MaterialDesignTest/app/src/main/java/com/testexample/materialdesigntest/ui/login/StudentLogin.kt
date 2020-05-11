@@ -1,12 +1,15 @@
 package com.testexample.materialdesigntest.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.examination.ExaminationActivity
+import com.testexample.materialdesigntest.ui.instructions.InstructionActivity
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_student_login.*
 
 /**
@@ -19,12 +22,11 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //init your presenter here
-        //presenter = StudentLoginPresenter(activity)
-        //
+        presenter = LoginPresenter(this)
 
         studentLoginButton.setOnClickListener {
-            presenter.onLogin(rollNoText.toString(), studentPasswordText.toString())
+            presenter.onStudentLogin(rollNoText.text.toString(),
+                "15787851")
         }
 
         registrationLink.setOnClickListener {
@@ -32,18 +34,39 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
         }
     }
 
-    override fun onLoginResult(message: String) {
-        if (message == "success") {
-            startActivity(Intent(activity, ExaminationActivity::class.java))
+    override fun openMainActivity() {
+        startActivity(Intent(activity, InstructionActivity::class.java))
+    }
+
+    override fun onValidationMessage(errorCode: Int) {
+        when (errorCode) {
+            Constants.EMPTY_ROLL_NO_ERROR ->
+                Toast.makeText(activity, getString(R.string.empty_roll_no_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.INVALID_ROLL_NO_ERROR ->
+                Toast.makeText(activity, getString(R.string.invalid_roll_no_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.EMPTY_PASSWORD_ERROR ->
+                Toast.makeText(activity, getString(R.string.empty_password_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.LOGIN_FAILURE ->
+                Toast.makeText(activity, getString(R.string.login_failure),
+                    Toast.LENGTH_LONG).show()
         }
-        else{
-            println(message)
-        }
+    }
+
+    override fun showLoading(flag: Boolean) {
+        TODO("Not yet implemented")
     }
 
     override fun setPresenter(presenter: LoginContract.Presenter) {
         this.presenter = presenter
     }
+
+    override fun setContext(): Context {
+        return this.requireContext()
+    }
+
 
     override fun onDestroy() {
         presenter.onDestroy()

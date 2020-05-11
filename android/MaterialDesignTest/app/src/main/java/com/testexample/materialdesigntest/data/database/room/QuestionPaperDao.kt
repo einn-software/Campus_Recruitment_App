@@ -10,7 +10,7 @@ import java.sql.Date
 
 @Dao
 @VisibleForTesting
-interface ExaminationDao {
+interface QuestionPaperDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQuestionPaper(questionPaper: QuestionPaper)
@@ -21,6 +21,6 @@ interface ExaminationDao {
     @Delete
     fun deleteQuestionPaper(questionPaper: QuestionPaper)
 
-    @Query("SELECT * FROM question_paper_table WHERE college_Id = :collegeId AND date = :examDate")
-    fun getQuestionPaper(collegeId: String, examDate: Date): Flowable<QuestionPaper>
+    @Query("SELECT * FROM question_paper_table WHERE college_code = :collegeCode AND date = :examDate")
+    fun getQuestionPaper(collegeCode: Long, examDate: Date): Flowable<QuestionPaper>
 }

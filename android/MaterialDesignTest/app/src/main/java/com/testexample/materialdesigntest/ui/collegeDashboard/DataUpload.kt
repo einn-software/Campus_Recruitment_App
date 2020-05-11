@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.collegedashboard
+package com.testexample.materialdesigntest.ui.collegeDashboard
 
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +29,15 @@ class DataUpload : Fragment(R.layout.fragment_data_upload) {
         Log.d(TAG, "onDetach")
         super.onDetach()
         collegeDashboardContainer.visibility = VISIBLE
+    }
+
+    companion object {
+        fun newInstance():DataUpload {
+            val fragment = DataUpload()
+            val args = Bundle()
+
+            return fragment
+        }
     }
 
 }

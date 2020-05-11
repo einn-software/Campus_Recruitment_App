@@ -8,10 +8,24 @@ import com.testexample.materialdesigntest.ui.base.BaseContract
 
 interface LoginContract {
     interface View : BaseContract.BaseView<Presenter> {
-        fun onLoginResult(message: String)
+        fun openMainActivity()
+        fun onValidationMessage(errorCode: Int)
+        fun showLoading(flag: Boolean)
+
 
     }
     interface Presenter : BaseContract.BasePresenter {
-        fun onLogin(userEmail : String, password : String)
+        fun onStudentLogin(rollNo : String, password : String)
+    }
+
+    interface CollegeView : BaseContract.BaseView<CollegePresenter> {
+        fun openMainActivity()
+        fun onValidationMessage(errorCode: Int)
+        fun showLoading(flag: Boolean)
+
+
+    }
+    interface CollegePresenter : BaseContract.BasePresenter {
+        fun onCollegeLogin(email : String, password : String)
     }
 }

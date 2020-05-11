@@ -9,7 +9,6 @@ import io.reactivex.Maybe
 
 
 @Dao
-@VisibleForTesting
 interface StudentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,8 +21,8 @@ interface StudentDao {
     @Query("SELECT * FROM student_table")
     fun getAllUsers(): Flowable<List<Student>>
 
-    @Query("SELECT * FROM student_table WHERE student_email LIKE :userEmail AND student_password LIKE:password")
-    fun getUserByEmailPassword(userEmail: String,  password: String): Flowable<Student>
+    @Query("SELECT * FROM student_table WHERE student_roll_no LIKE :rollNo AND student_password LIKE:password")
+    fun getUserByRollNoPassword(rollNo: Long,  password: String): Flowable<Student>
 
     @Query("SELECT student_email FROM student_table WHERE student_email LIKE :userEmail")
     fun getUserByEmail(userEmail: String): String

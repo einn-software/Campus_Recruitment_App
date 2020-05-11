@@ -59,6 +59,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    implementation 'com.google.android.gms:play-services-safetynet:+'
+
     implementation "android.arch.lifecycle:runtime:$arc_lib_version"
     implementation "android.arch.lifecycle:extensions:$arc_lib_version"
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
@@ -110,6 +112,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit2RxJava2AdapterVersion}"
 
 

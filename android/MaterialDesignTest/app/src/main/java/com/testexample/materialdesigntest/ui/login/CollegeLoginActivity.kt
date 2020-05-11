@@ -1,29 +1,29 @@
 package com.testexample.materialdesigntest.ui.login
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.collegedashboard.CollegeDashboard
-import com.testexample.materialdesigntest.ui.studentdashboard.StudentDashboardActivity
+import com.testexample.materialdesigntest.ui.collegeDashboard.CollegeDashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_college_login.*
 
-class CollegeLoginActivity : AppCompatActivity(), LoginContract.View {
+class CollegeLoginActivity : AppCompatActivity(), LoginContract.CollegeView {
 
-    // view needs presenter to invoke user initiated callback -- add a presenter property
-    internal lateinit var presenter: LoginContract.Presenter
-
-    //
+    internal lateinit var presenter: LoginContract.CollegePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_college_login)
 
+        presenter = CollegeLoginPresenter(this)
 
         loginButton.setOnClickListener {
-            presenter.onLogin(emailText.text.toString(), passwordText.text.toString())
+            presenter.onCollegeLogin(emailText.text.toString(),
+                passwordText.text.toString())
         }
 
         ResetPasswordLink.setOnClickListener {
@@ -32,39 +32,42 @@ class CollegeLoginActivity : AppCompatActivity(), LoginContract.View {
         }
 
         RegistrationLink.setOnClickListener {
-            val intent = Intent(this, StudentDashboardActivity::class.java)
-            startActivity(intent)
+            //redirect to website
         }
-
-        /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                   // call material design here
-           }
-           else {
-               // call non-material design here
-           } */
     }
 
-    override fun onLoginResult(message: String) {
-        if (message == "success") {
-            startActivity(Intent(this, CollegeDashboard::class.java))
-        }
-        else {
-            onErrorTransition()
-            loginMessage.text = message
-        }
-
+    override fun openMainActivity() {
+        startActivity(Intent(this, CollegeDashboard::class.java))
     }
 
-    private fun onErrorTransition() {
-        loginMessage.visibility = View.VISIBLE
-        emailText.visibility = View.GONE
-        passwordText.visibility = View.GONE
-        loginButton.visibility = View.GONE
+    override fun onValidationMessage(errorCode: Int) {
+        when (errorCode) {
+            Constants.EMPTY_EMAIL_ERROR ->
+                Toast.makeText(this, getString(R.string.empty_email_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.INVALID_EMAIL_ERROR ->
+                Toast.makeText(this, getString(R.string.invalid_email_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.EMPTY_PASSWORD_ERROR ->
+                Toast.makeText(this, getString(R.string.empty_password_error_message),
+                    Toast.LENGTH_LONG).show()
+            Constants.LOGIN_FAILURE ->
+                Toast.makeText(this, getString(R.string.login_failure),
+                    Toast.LENGTH_LONG).show()
+        }
     }
 
-    override fun setPresenter(presenter: LoginContract.Presenter) {
+    override fun showLoading(flag: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPresenter(presenter: LoginContract.CollegePresenter) {
         this.presenter = presenter
 
+    }
+
+    override fun setContext(): Context {
+        return this.baseContext
     }
 
     //  Notify

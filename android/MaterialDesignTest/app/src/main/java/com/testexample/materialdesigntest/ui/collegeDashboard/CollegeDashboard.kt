@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.collegedashboard
+package com.testexample.materialdesigntest.ui.collegeDashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +14,7 @@ class CollegeDashboard : AppCompatActivity() {
         setContentView(R.layout.activity_college_dashboard)
         setSupportActionBar(appActionBar)
 
-        val dataUpload = DataUpload()
+        val dataUpload = DataUpload.newInstance()
 
         uploadDataTab.setOnClickListener {
             collegeDashboardContainer.visibility = INVISIBLE

@@ -1,0 +1,26 @@
+{"level":"info","message":"server up and running 80","timestamp":"2020-05-12T10:14:40.854Z"}
+{"level":"info","message":"server up and running 80","timestamp":"2020-05-12T10:19:32.774Z"}
+{"level":"info","message":"server up and running 80","timestamp":"2020-05-12T10:25:33.384Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:26:36.744Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:26:58.114Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:28:18.915Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:37:13.059Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:39:22.610Z"}
+{"level":"error","message":"server up and running 80","timestamp":"2020-05-12T10:42:09.916Z"}
+{"level":"info","timestamp":"2020-05-12T10:52:03.657Z"}
+{"level":"info","timestamp":"2020-05-12T10:52:56.513Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-12T10:52:56.589Z"}
+{"level":"info","timestamp":"2020-05-12T10:53:58.505Z"}
+{"message":{"_id":"5eb90899ff73a522d44ef4a2","name":"Shikha Gupta","email":"rsinghal231@gmail.com","password":"riyariya","phone":124789632,"date":"2020-05-11T08:11:05.163Z","__v":0},"level":"info","timestamp":"2020-05-12T10:53:58.522Z"}
+{"message":"{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"riyariya\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T10:53:58.523Z"}
+{"level":"info","timestamp":"2020-05-12T10:54:13.428Z"}
+{"message":{"_id":"5eba2739615d7a16d459c78a","roll":123456,"question_paper_id":456789,"question_attempt":"5","correct_attempt":"20","total_marks_scored":9,"date":"2020-05-12T04:34:01.908Z","__v":0},"level":"info","timestamp":"2020-05-12T10:54:13.438Z"}
+{"message":"{\"_id\":\"5eba2739615d7a16d459c78a\",\"roll\":123456,\"question_paper_id\":456789,\"question_attempt\":\"5\",\"correct_attempt\":\"20\",\"total_marks_scored\":9,\"date\":\"2020-05-12T04:34:01.908Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T10:54:13.439Z"}
+{"level":"info","timestamp":"2020-05-12T10:55:45.165Z"}
+{"level":"info","timestamp":"2020-05-12T10:57:54.210Z"}
+{"level":"info","timestamp":"2020-05-12T10:59:53.029Z"}
+{"level":"info","timestamp":"2020-05-12T11:01:11.878Z"}
+{"message":"\"Invalid password\"","level":"info","timestamp":"2020-05-12T11:01:11.948Z"}
+{"level":"info","timestamp":"2020-05-12T11:01:35.554Z"}
+{"message":"{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"riyariya\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T11:01:35.578Z"}
+{"message":"\"{\\\"_id\\\":\\\"5eb90899ff73a522d44ef4a2\\\",\\\"name\\\":\\\"Shikha Gupta\\\",\\\"email\\\":\\\"rsinghal231@gmail.com\\\",\\\"password\\\":\\\"riyariya\\\",\\\"phone\\\":124789632,\\\"date\\\":\\\"2020-05-11T08:11:05.163Z\\\",\\\"__v\\\":0}\"","level":"info","timestamp":"2020-05-12T11:01:35.579Z"}

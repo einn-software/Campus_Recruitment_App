@@ -1,6 +1,6 @@
 const express = require("express");
-
 const app = express();
+const logger = require("./config/logger");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -13,6 +13,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
+    useCreateIndex: true,
   },
   () => console.log("Connected to db!")
 );
@@ -22,6 +23,15 @@ const authRoute = require("./routes/auth");
 const resetPasswordRoute = require("./routes/ResetPassword");
 
 //Middleware
+app.use(function (req, res, next) {
+  logger.info(req.body);
+  let oldSend = res.send;
+  res.send = function (data) {
+    logger.info(data);
+    oldSend.apply(res, arguments);
+  };
+  next();
+});
 app.use(volleyball);
 app.use(express.json());
 

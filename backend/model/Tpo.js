@@ -7,9 +7,5 @@ const tpoSchema = new mongoose.Schema({
   designation: { type: String, required: true, max: 23, min: 6 },
   college: { type: String, required: true, max: 40, min: 6 },
   college_code: { type: String, required: true, min: 3 },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
 });
 module.exports = mongoose.model("Tpo", tpoSchema);

@@ -18,6 +18,7 @@ before((done) =>{
            console.log("your error" ,error);
        });
 });
+
 before((done)=>{
   mongoose.connection.collections.questionpapers.drop(()=>{
   done();
@@ -48,8 +49,6 @@ describe("Create Tests", () => {
               Registration.save();
     });
 })
-
-
 
   describe('The GET method', async()=>{
     it('should get the questionPaper', () => {
@@ -92,4 +91,3 @@ describe("Create Tests", () => {
             })
         })
       })
-      

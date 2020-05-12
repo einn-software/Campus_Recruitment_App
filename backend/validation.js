@@ -104,6 +104,7 @@ const testinstructionsValidation = (data) => {
   const testinstructionsSchema = Joi.object({
     college_code: Joi.string().min(3).required(),
     message: Joi.string().required().min(10),
+    date: Joi.string().required().min(10),
   });
   return testinstructionsSchema.validate(data);
 };
@@ -111,6 +112,7 @@ const testinstructionsValidation = (data) => {
 const getinstructionsValidation = (data) => {
   const getinstructionsSchema = Joi.object({
     college_code: Joi.string().min(3).required(),
+    date: Joi.string().required().min(10),
   });
   return getinstructionsSchema.validate(data);
 };
@@ -119,10 +121,10 @@ const getinstructionsValidation = (data) => {
 const ResultsValidation = (data) => {
   const ResultsSchema = Joi.object({
     roll: Joi.number().min(6).required(),
-    question_paper_id: Joi.string().min(4).max(30).required(),
+    question_paper_id: Joi.string().min(3).max(30).required(),
     question_attempt: Joi.string().min(1).max(30).required(),
     correct_attempt: Joi.string().min(1).max(30).required(),
-    total_marks_scored: Joi.string().min(2).max(30).required(),
+    total_marks_scored: Joi.string().min(1).max(30).required(),
   });
   return ResultsSchema.validate(data);
 };
@@ -158,7 +160,7 @@ const questionCollectionsValidation = (data) => {
 // GET questionCollections validation
 const getquestionCollectionsValidation = (data) => {
   const getquestionCollectionsSchema = Joi.object({
-    topic: Joi.string().min(4).max(30).required(),
+    topic: Joi.string().min(3).max(30).required(),
   });
   return getquestionCollectionsSchema.validate(data);
 };

@@ -94,7 +94,7 @@ router.get("/admin", verify, async (req, res) => {
 
 router.put("/admin", verify, function (req, res) {
   const id = req.user._id;
-  Admin.findOneAndUpdate({ _id: id }, req.body)
+  Admin.findOneAndUpdate({ _id: id }, req.body.hashedPassword)
     .then((admin) => {
       if (admin === null) {
         return done(null, false, {
@@ -497,6 +497,7 @@ router.post("/instruction", verify, async (req, res) => {
   const instructions = new testinstructions({
     college_code: req.body.college_code,
     message: req.body.message,
+    date: req.body.date,
   });
   try {
     const savedinstructions = await instructions.save();
@@ -507,9 +508,9 @@ router.post("/instruction", verify, async (req, res) => {
 });
 
 //display test instructions
-router.get("/instruction", verify, async (req, res) => {
+router.get("/instruction/:college_code/:date", verify, async (req, res) => {
   testinstructions
-    .findOne({ college_code: req.body.college_code })
+    .findOne({ college_code: req.params.college_code, date: req.params.date })
     .then(function (instructions) {
       if (instructions === null) {
         return done(null, false, { message: "No data found" });
@@ -524,7 +525,7 @@ router.get("/instruction", verify, async (req, res) => {
 
 //Update instructions
 
-router.put("/instruction", verify, function (req, res, next) {
+router.put("/instruction/:college_code", verify, function (req, res, next) {
   testinstructions
     .findOneAndUpdate({ college_code: req.body.college_code }, req.body)
     .then((admin) => {
@@ -543,9 +544,9 @@ router.put("/instruction", verify, function (req, res, next) {
 
 // delete a instruction from the db
 
-router.delete("/instruction", verify, function (req, res, next) {
+router.delete("/instruction/:college_code", verify, function (req, res, next) {
   testinstructions
-    .findOneAndRemove({ college_code: req.body.college_code })
+    .findOneAndRemove({ college_code: req.params.college_code })
     .then((admin) => {
       if (admin === null) {
         return done(null, false, {
@@ -576,7 +577,7 @@ router.post("/result", verify, async (req, res) => {
 
   // Create Result
   const Result = new Results({
-    student_id: req.body.student_id,
+    roll: req.body.roll,
     question_paper_id: req.body.question_paper_id,
     question_attempt: req.body.question_attempt,
     correct_attempt: req.body.correct_attempt,
@@ -592,8 +593,8 @@ router.post("/result", verify, async (req, res) => {
 
 // display Results
 
-router.get("/result", verify, async (req, res) => {
-  Results.findOne({ roll: req.body.roll })
+router.get("/result/:roll", verify, async (req, res) => {
+  Results.findOne({ roll: req.params.roll })
     .then(function (result) {
       if (result === null) {
         return done(null, false, { message: "No data found" });
@@ -608,8 +609,8 @@ router.get("/result", verify, async (req, res) => {
 
 //Update result
 
-router.put("/result", verify, function (req, res, next) {
-  Results.findOneAndUpdate({ roll: req.body.roll }, req.body)
+router.put("/result/:roll", verify, function (req, res, next) {
+  Results.findOneAndUpdate({ roll: req.params.roll }, req.body)
     .then((Result) => {
       if (Result === null) {
         return done(null, false, {
@@ -626,8 +627,8 @@ router.put("/result", verify, function (req, res, next) {
 
 // delete result from the db
 
-router.delete("/result", verify, function (req, res, next) {
-  Results.findOneAndRemove({ roll: req.body.roll })
+router.delete("/result/:roll", verify, function (req, res, next) {
+  Results.findOneAndRemove({ roll: req.params.roll })
     .then((Result) => {
       if (Result === null) {
         return done(null, false, {
@@ -739,9 +740,9 @@ router.post("/questionPaper", verify, async (req, res) => {
 
 //Get questionPaper
 
-router.get("/questionPaper", verify, async (req, res) => {
+router.get("/questionPaper/:college_code", verify, async (req, res) => {
   questionPaper
-    .findOne({ college_code: req.body.college_code })
+    .findOne({ college_code: req.params.college_code })
     .then((Paper) => {
       if (Paper === null) {
         return done(null, false, {
@@ -758,9 +759,9 @@ router.get("/questionPaper", verify, async (req, res) => {
 
 //Update questionPapers
 
-router.put("/questionPaper", verify, function (req, res, next) {
+router.put("/questionPaper/:college_code", verify, function (req, res, next) {
   questionPaper
-    .findOneAndUpdate({ college_code: req.body.college_code }, req.body)
+    .findOneAndUpdate({ college_code: req.params.college_code }, req.body)
     .then((Paper) => {
       if (Paper === null) {
         return done(null, false, {
@@ -777,9 +778,13 @@ router.put("/questionPaper", verify, function (req, res, next) {
 
 // delete questionPapers from the db
 
-router.delete("/questionPaper", verify, function (req, res, next) {
+router.delete("/questionPaper/:college_code", verify, function (
+  req,
+  res,
+  next
+) {
   questionPaper
-    .findOneAndRemove({ college_code: req.body.college_code })
+    .findOneAndRemove({ college_code: req.params.college_code })
     .then((Paper) => {
       if (Paper === null) {
         return done(null, false, {

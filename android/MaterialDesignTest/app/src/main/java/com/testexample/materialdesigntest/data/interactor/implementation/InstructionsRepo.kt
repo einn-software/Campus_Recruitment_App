@@ -5,7 +5,7 @@ import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.network.repository.IInstructionsRemoteRepo
 import com.testexample.materialdesigntest.data.network.repository.InstructionsRemoteRepo
 import io.reactivex.Flowable
-import java.util.*
+
 
 
 class InstructionsRepo:
@@ -13,9 +13,10 @@ class InstructionsRepo:
 
     private val remote : IInstructionsRemoteRepo = InstructionsRemoteRepo()
     override fun getInstructionsFromRemoteRepo(
+        token:String,
         code: String,
-        date: Date
+        date: String
     ): Flowable<Instructions> {
-        return remote.callInstructionsApi(code, date)
+        return remote.callInstructionsApi(token, code, date)
     }
 }

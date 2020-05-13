@@ -2,14 +2,15 @@ package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.data.model.Question
 import com.testexample.materialdesigntest.data.model.QuestionPaper
-import io.reactivex.Flowable
-import java.util.*
+import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
+import io.reactivex.Single
+
 
 interface IExaminationRemoteRepo {
 
-    fun callApiForQuestionPaper(code: String, date: Date):
-            Flowable<QuestionPaper>
+    fun callApiForQuestionPaper(code: String, date: String):
+            Single<QuestionPaperComplete>
 
     fun callApiForQuestion(questionId: String):
-            Flowable<Question>
+            Single<Question>
 }

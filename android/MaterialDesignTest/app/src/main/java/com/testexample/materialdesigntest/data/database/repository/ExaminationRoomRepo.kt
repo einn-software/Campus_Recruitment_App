@@ -1,27 +1,34 @@
 package com.testexample.materialdesigntest.data.database.repository
 
+import android.content.Context
+import com.testexample.materialdesigntest.data.database.room.ApplicationDatabase
 import com.testexample.materialdesigntest.data.database.room.QuestionPaperDao
 import com.testexample.materialdesigntest.data.model.Question
-import com.testexample.materialdesigntest.data.model.QuestionPaper
-import com.testexample.materialdesigntest.data.model.Section
+import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
 import io.reactivex.Single
-import java.sql.Date
 
-class ExaminationRoomRepo(private val questionPaperDao: QuestionPaperDao):IExaminationRoomRepo {
+
+class ExaminationRoomRepo(context: Context):IExaminationRoomRepo {
+
+    private val questionPaperDao: QuestionPaperDao =
+        ApplicationDatabase
+            .getInstance(context)
+            .questionPaperDAO()
+
     override fun fetchQuestion(id: String): Single<Question> {
-        TODO("Not yet implemented")
+        return questionPaperDao.getQuestion(id)
     }
 
-    override fun fetchQuestionPaper(code: String, date: Date): Single<QuestionPaper> {
-        TODO("Not yet implemented")
+    override fun fetchQuestionPaper(code: String, date: String): Single<QuestionPaperComplete> {
+        return questionPaperDao.getQuestionPaper(code, date)
     }
 
-    override fun addQuestionPaper(questionPaper: QuestionPaper) {
-        TODO("Not yet implemented")
+    override fun addQuestionPaper(questionPaper: QuestionPaperComplete) {
+        questionPaperDao.insertQuestionPaper(questionPaper)
     }
 
-    override fun addQuestion(question: Question) {
-        TODO("Not yet implemented")
+    override fun addQuestion(questions: List<Question>) {
+        questionPaperDao.insertQuestions(questions)
     }
 
 

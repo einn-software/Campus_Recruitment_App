@@ -3,13 +3,10 @@ package com.testexample.materialdesigntest.data.network.repository
 import android.util.Log
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.Student
-import com.testexample.materialdesigntest.data.network.GetDataServices
-import com.testexample.materialdesigntest.data.network.model.AuthResponse
+import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
-import kotlin.math.log
 
 class UserRemoteRepository: IUserRemoteRepository {
 

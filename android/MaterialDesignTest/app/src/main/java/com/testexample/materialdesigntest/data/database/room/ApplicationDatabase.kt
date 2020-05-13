@@ -4,13 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.testexample.materialdesigntest.data.model.Student
-import com.testexample.materialdesigntest.data.model.College
+import androidx.room.TypeConverters
+import com.testexample.materialdesigntest.data.model.*
 
-@Database(entities = [Student::class, College::class], version = 1, exportSchema = false)
+@Database(entities = [Student::class, College::class, QuestionPaper::class, Question::class, Section::class ], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class ApplicationDatabase: RoomDatabase() {
     abstract fun studentDAO(): StudentDao
     abstract fun collegeDAO(): CollegeDao
+    abstract fun questionPaperDAO(): QuestionPaperDao
 
     companion object{
 

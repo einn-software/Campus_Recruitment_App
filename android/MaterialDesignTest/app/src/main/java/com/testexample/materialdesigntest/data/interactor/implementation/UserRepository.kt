@@ -42,7 +42,7 @@ class UserRepository(context: Context)
                 { student ->
                     Log.d(TAG, "user data saved")
                     roomRepository.saveUser(student!!)
-                    println(student.studentBranch)
+                    println(student)
                 },
                 {error -> Log.d(TAG, error.toString())},
                 { println("fetch query completed ")}

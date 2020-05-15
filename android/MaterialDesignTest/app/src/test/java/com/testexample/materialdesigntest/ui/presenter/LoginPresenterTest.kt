@@ -8,6 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
@@ -24,7 +25,8 @@ class LoginPresenterTest {
     //mock setup
     private val view : LoginContract.View = mockk(relaxed = true)
     private val model : UserRepository = mockk() {
-        every { isUserValid("testuser", "testpass") } returns Flowable.just(true)
+        every { isStudentValid(
+            645454, "testpass") } returns Single.just("token")
     }
 
     //init presenter object
@@ -32,33 +34,32 @@ class LoginPresenterTest {
     @Before
     fun setUp() {
 
-        presenter = LoginPresenter(view, model)
+        presenter = LoginPresenter(view)
     }
 
     @Test
     fun `To test the login process in presenter`() {
-        val user : String = "testuser"
+        val user : String = "15545"
         val pass : String = "testpass"
         val expected : String = "success"
 
-        presenter.onLogin(user, pass)
+        presenter.onStudentLogin(user, pass)
 
 
 
         //checks to see whether the function is called
         verify(exactly = 1) {
 
-            model.isUserValid(user, pass)
-            view.onLoginResult(expected)
+            model.isStudentValid(user.toLong(), pass)
         }
     }
 
     @Test
     fun `To test the model call process in presenter`() {
-        val user: String = "testuser"
+        val user: String = "1545"
         val pass: String = "testpass"
 
-        model.isUserValid(user, pass).test().assertValue(true)
+        model.isStudentValid(user.toLong(), pass).test().assertValue("token")
 
     }
 

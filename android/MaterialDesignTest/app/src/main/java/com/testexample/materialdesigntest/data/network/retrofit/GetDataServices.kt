@@ -20,20 +20,20 @@ interface GetDataServices {
     @GET("student")
     fun getStudent(@Header("auth-token") token: String) : Flowable<Student>
 
-    @GET("")
+    @POST("login/college")
     fun authCollege(email:String, password: String): Single<String>
 
-    @GET("")
-    fun getCollege(token: String) : Flowable<College>
+    @GET("college")
+    fun getCollege(@Header("auth-token") token: String) : Flowable<College>
 
     @GET("instruction/{code}/{date}")
     fun getInstructions(@Header("auth-token") token: String , @Path("code") code: String, @Path("date") date: String): Flowable<Instructions>
 
-    @GET("exam")
-    fun getQuestionPaper(@Body questionPaperRequest: ExamRequest): Single<QuestionPaperComplete>
+    @GET("exam/{code}/{date}")
+    fun getQuestionPaper(@Header("auth-token") token: String , @Path("code") code: String, @Path("date") date: String): Single<QuestionPaperComplete>
 
-    @GET("question")
-    fun getQuestion(): Single<Question>
+    @GET("question/{id}")
+    fun getQuestion(@Header("auth-token") token: String, @Path("id") questionId: String): Single<Question>
 
 
 

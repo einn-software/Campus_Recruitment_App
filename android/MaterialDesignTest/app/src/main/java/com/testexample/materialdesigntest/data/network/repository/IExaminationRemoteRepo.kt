@@ -8,9 +8,9 @@ import io.reactivex.Single
 
 interface IExaminationRemoteRepo {
 
-    fun callApiForQuestionPaper(code: String, date: String):
+    fun callApiForQuestionPaper(token:String, code: String, date: String):
             Single<QuestionPaperComplete>
 
-    fun callApiForQuestion(questionId: String):
+    fun callApiForQuestion(token: String, questionId: String):
             Single<Question>
 }

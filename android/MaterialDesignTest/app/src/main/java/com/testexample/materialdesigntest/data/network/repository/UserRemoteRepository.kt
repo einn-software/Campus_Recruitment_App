@@ -14,7 +14,7 @@ class UserRemoteRepository: IUserRemoteRepository {
     private val api: GetDataServices = GetDataServices.create()
 
     override fun authStudent(rollNo: Long, password: String): Single<String> {
-        Log.d(TAG, "requesting token")
+        //Log.d(TAG, "requesting token")
         return api.authStudent(StudentLoginRequest(rollNo, password)).map { it ->
             it.token
         }

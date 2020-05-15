@@ -7,15 +7,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.testexample.materialdesigntest.data.model.*
 
-@Database(entities = [Student::class, College::class, QuestionPaper::class, Question::class, Section::class ], version = 1, exportSchema = false)
+@Database(entities = [Student::class, College::class, QuestionPaper::class,
+    Question::class, Section::class, Response::class],
+    version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ApplicationDatabase: RoomDatabase() {
     abstract fun studentDAO(): StudentDao
     abstract fun collegeDAO(): CollegeDao
     abstract fun questionPaperDAO(): QuestionPaperDao
+    abstract fun responseDAO(): ResponseDao
 
     companion object{
-
         //value is never cached and read/writes are done from main memory
         //value is up to date and is same for all execution threads
         @Volatile

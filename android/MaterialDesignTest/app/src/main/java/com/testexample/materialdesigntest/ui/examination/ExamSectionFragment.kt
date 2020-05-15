@@ -43,7 +43,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam) {
         super.onResume()
     }
 
-
     companion object {
         /**
          * Use this factory method to create a new instance of

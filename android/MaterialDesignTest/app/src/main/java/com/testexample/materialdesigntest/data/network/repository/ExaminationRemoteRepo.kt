@@ -13,13 +13,14 @@ class ExaminationRemoteRepo: IExaminationRemoteRepo {
 
     private val api: GetDataServices = GetDataServices.create()
     override fun callApiForQuestionPaper(
+        token: String,
         code: String,
         date: String
     ): Single<QuestionPaperComplete> {
-        return api.getQuestionPaper(ExamRequest(code, date))
+        return api.getQuestionPaper(token, code, date)
     }
 
-    override fun callApiForQuestion(questionId: String): Single<Question> {
-        return api.getQuestion()
+    override fun callApiForQuestion(token: String, questionId: String): Single<Question> {
+        return api.getQuestion(token, questionId)
     }
 }

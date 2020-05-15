@@ -4,7 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.*
 
 
-@Entity(tableName = "question_paper_table")
+@Entity
 data class QuestionPaper(
     @NonNull @PrimaryKey
     @ColumnInfo(name = "question_paper_Id") val questionPaperId:String,
@@ -14,15 +14,16 @@ data class QuestionPaper(
     @ColumnInfo(name = "date") val date: String
 )
 
-@Entity(tableName = "section")
+@Entity
 data class Section(
-    val id: String,
+    var id: String,
     @PrimaryKey val sectionName: String,
     val marks: Int,
     val noOfQuestion: Int,
     val questionIdList: List<String>
 )
 
+@Entity
 data class QuestionPaperComplete(
     @Embedded val questionPaper: QuestionPaper,
     @Relation(parentColumn = "question_paper_Id", entityColumn = "id" )

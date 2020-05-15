@@ -5,16 +5,18 @@ import com.testexample.materialdesigntest.data.model.Question
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Response
 import com.testexample.materialdesigntest.data.model.Result
+import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface ResponseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuestionPaper(response: Response)
+    fun insertResponse(response: Response): Completable
 
     @Delete
-    fun deleteQuestionPaper(response: Response)
+    fun deleteResponse(response: Response): Completable
 
     @Query("SELECT SUM(marksRewarded) FROM student_response_table WHERE isResponseCorrect = 1")
     fun getStudentScore(): Int

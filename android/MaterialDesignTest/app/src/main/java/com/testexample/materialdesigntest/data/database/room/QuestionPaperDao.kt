@@ -4,27 +4,38 @@ import androidx.room.*
 import com.testexample.materialdesigntest.data.model.Question
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
+import com.testexample.materialdesigntest.data.model.Section
 import io.reactivex.Single
 
 
 @Dao
-interface QuestionPaperDao {
+abstract class QuestionPaperDao {
+
+    fun insertSectionsForQuestionPaper(questionPaper: QuestionPaper, sections: List<Section>){
+        for (section in sections) {
+            section.id = questionPaper.questionPaperId
+        }
+        insertSections(sections)
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuestionPaper(questionPaper: QuestionPaperComplete)
+    abstract fun insertSections(sections: List<Section>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertQuestionPaper(questionPaper: QuestionPaper)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuestions(questions: List<Question>)
+    abstract fun insertQuestions(questions: List<Question>)
 
     @Delete
-    fun deleteQuestionPaper(questionPaper: QuestionPaper)
+    abstract fun deleteQuestionPaper(questionPaper: QuestionPaper)
 
     @Transaction
-    @Query("SELECT * FROM question_paper_table WHERE college_code = :collegeCode AND date = :examDate")
-    fun getQuestionPaper(collegeCode: String, examDate: String): Single<QuestionPaperComplete>
+    @Query("SELECT * FROM QuestionPaper WHERE college_code = :collegeCode AND date = :examDate")
+    abstract fun getQuestionPaper(collegeCode: String, examDate: String): Single<QuestionPaperComplete>
 
     @Query("SELECT * FROM questions_table WHERE questionId = :questionId")
-    fun getQuestion(questionId: String): Single<Question>
+    abstract fun getQuestion(questionId: String): Single<Question>
 
 
 }

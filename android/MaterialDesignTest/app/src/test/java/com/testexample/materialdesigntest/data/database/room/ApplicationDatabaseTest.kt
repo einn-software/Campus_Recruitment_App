@@ -20,7 +20,7 @@ class ApplicationDatabaseTest {
             "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
             "cse", "nitra","codes"
-        )
+        ,0)
 
    // @get:Rule
     //val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously
@@ -62,7 +62,7 @@ class ApplicationDatabaseTest {
     @Throws(Exception::class)
     fun test_for_fetching_user_when_email_and_password_given() {
 
-        studentDao.getUserByEmailPassword(
+        studentDao.getUserByRollNoPassword(
             user.studentRollNo,
             user.studentPassword)
             .test()

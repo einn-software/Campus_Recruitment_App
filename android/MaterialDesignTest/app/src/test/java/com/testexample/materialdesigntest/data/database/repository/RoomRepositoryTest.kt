@@ -1,5 +1,7 @@
 package com.testexample.materialdesigntest.data.database.repository
 
+import android.app.Application
+import android.content.Context
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.database.room.StudentDao
 import io.mockk.every
@@ -10,24 +12,27 @@ import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.mockito.Mockito.mock
 
 class RoomRepositoryTest {
+
+    private val context: Context = mock(Context::class.java)
     private val user =
         Student(
             "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
-            "cse", "nitra","codes"
-        )
+            "cse", "nitra","codes",0)
 
 
     private var studentDao: StudentDao = mockk(relaxed = true){
-        every { getUserByEmailPassword(user.studentRollNo, user.studentPassword) } returns Flowable.just(user)
+        every { getUserByRollNoPassword(user.studentRollNo, user.studentPassword) } returns Flowable.just(user)
         every { getUserByEmail(user.studentEmail.toString()) } returns user.studentEmail.toString()
     }
-    private var roomRepository = UserRoomRepository(studentDao)
+    private lateinit var roomRepository: IUserRoomRepository
 
     @Before
-    fun setUp() {
+    private fun setUp() {
+        roomRepository = UserRoomRepository(context)
     }
 
     @After

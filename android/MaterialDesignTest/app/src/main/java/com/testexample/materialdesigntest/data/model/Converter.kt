@@ -1,15 +1,31 @@
 package com.testexample.materialdesigntest.data.model
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
-class Converter {
+
+open class Converter {
     @TypeConverter
-    fun listToString(value: List<String>):String {
+    open fun listToString(value: List<String>):String {
         return value.joinToString(separator = ",")
     }
 
     @TypeConverter
-    fun stringToList(value: String): List<String> {
+    open fun stringToList(value: String): List<String> {
         return value.split(",").map { it }
     }
+
+//    @TypeConverter
+//    open fun stringFromObject(list: List<Section?>?): String? {
+//        val gson = Gson()
+//        return gson.toJson(list)
+//    }
+//
+//    @TypeConverter
+//    open fun getObjectFromString(jsonString: String?): List<Section?>? {
+//        val listType: Type = object : TypeToken<List<Section?>?>() {}.type
+//        return Gson().fromJson(jsonString, listType)
+//    }
 }

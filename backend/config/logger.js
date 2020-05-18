@@ -1,5 +1,5 @@
 const { createLogger, transports, format } = require("winston");
-require("winston-mongodb");
+// require("winston-mongodb");
 const logger = createLogger({
   transports: [
     new transports.File({
@@ -7,11 +7,9 @@ const logger = createLogger({
       level: "info",
       format: format.combine(format.timestamp(), format.json()),
     }),
-    new transports.MongoDB({
+    new transports.File({
+      filename: "info.log",
       level: "error",
-      db: "mongodb://localhost/logs",
-      options: { useUnifiedTopology: true },
-      collection: "logs",
       format: format.combine(format.timestamp(), format.json()),
     }),
   ],

@@ -24,3 +24,304 @@
 {"level":"info","timestamp":"2020-05-12T11:01:35.554Z"}
 {"message":"{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"riyariya\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T11:01:35.578Z"}
 {"message":"\"{\\\"_id\\\":\\\"5eb90899ff73a522d44ef4a2\\\",\\\"name\\\":\\\"Shikha Gupta\\\",\\\"email\\\":\\\"rsinghal231@gmail.com\\\",\\\"password\\\":\\\"riyariya\\\",\\\"phone\\\":124789632,\\\"date\\\":\\\"2020-05-11T08:11:05.163Z\\\",\\\"__v\\\":0}\"","level":"info","timestamp":"2020-05-12T11:01:35.579Z"}
+{"level":"info","timestamp":"2020-05-12T11:14:43.786Z"}
+{"level":"info","timestamp":"2020-05-12T11:15:39.813Z"}
+{"level":"info","timestamp":"2020-05-12T11:16:39.833Z"}
+{"level":"info","timestamp":"2020-05-12T11:17:19.344Z"}
+{"level":"info","timestamp":"2020-05-12T11:19:11.847Z"}
+{"level":"info","timestamp":"2020-05-12T11:19:49.081Z"}
+{"level":"info","timestamp":"2020-05-12T11:28:02.743Z"}
+{"level":"info","timestamp":"2020-05-12T11:29:22.334Z"}
+{"message":"{\"success\":1,\"data\":{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"riyariya\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-12T11:29:22.401Z"}
+{"level":"info","timestamp":"2020-05-12T11:30:16.012Z"}
+{"level":"info","timestamp":"2020-05-12T11:30:58.014Z"}
+{"level":"info","timestamp":"2020-05-12T11:32:23.228Z"}
+{"level":"info","timestamp":"2020-05-12T12:05:42.755Z"}
+{"level":"info","timestamp":"2020-05-12T12:09:44.403Z"}
+{"level":"info","timestamp":"2020-05-12T12:13:44.324Z"}
+{"level":"info","timestamp":"2020-05-12T12:15:02.422Z"}
+{"level":"info","timestamp":"2020-05-12T12:16:30.874Z"}
+{"message":{"_id":"5eb90899ff73a522d44ef4a2","name":"Shikha Gupta","email":"rsinghal231@gmail.com","password":"riyariya","phone":124789632,"date":"2020-05-11T08:11:05.163Z","__v":0},"level":"info","timestamp":"2020-05-12T12:16:31.018Z"}
+{"message":"{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"riyariya\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T12:16:31.019Z"}
+{"level":"info","timestamp":"2020-05-12T12:16:52.453Z"}
+{"message":{"_id":"5eb90899ff73a522d44ef4a2","name":"Shikha Gupta","email":"rsinghal231@gmail.com","password":"$2b$10$MeFiMUK1vshYnI29E//di.qfz0z1I4oGeeWAgE5ZwWn1fBKVs2JBO","phone":124789632,"date":"2020-05-11T08:11:05.163Z","__v":0},"level":"info","timestamp":"2020-05-12T12:16:52.585Z"}
+{"message":"{\"_id\":\"5eb90899ff73a522d44ef4a2\",\"name\":\"Shikha Gupta\",\"email\":\"rsinghal231@gmail.com\",\"password\":\"$2b$10$MeFiMUK1vshYnI29E//di.qfz0z1I4oGeeWAgE5ZwWn1fBKVs2JBO\",\"phone\":124789632,\"date\":\"2020-05-11T08:11:05.163Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T12:16:52.587Z"}
+{"level":"info","timestamp":"2020-05-12T12:17:21.926Z"}
+{"message":"{\"success\":1,\"message\":\"user deleted successfully\"}","level":"info","timestamp":"2020-05-12T12:17:21.946Z"}
+{"level":"info","timestamp":"2020-05-12T12:31:02.299Z"}
+{"message":"Email not found","level":"info","timestamp":"2020-05-12T12:31:02.320Z"}
+{"level":"info","timestamp":"2020-05-12T13:58:55.857Z"}
+{"message":"{\"success\":0,\"message\":\"Record Not Found\"}","level":"info","timestamp":"2020-05-12T13:58:55.935Z"}
+{"level":"info","timestamp":"2020-05-12T14:03:59.879Z"}
+{"message":"Email already exist","level":"info","timestamp":"2020-05-12T14:03:59.916Z"}
+{"level":"info","timestamp":"2020-05-12T14:05:14.847Z"}
+{"message":{"_id":"5ebaad1be1f4ff30344f2cd7","name":"Riya Singhal","email":"singhalr231@gmail.com","password":"$2a$10$ZsLVJlnliQex0OPvy1a5h.VpDjGLYa../U9Z2F9sEOnZzeIke6Kci","phone":1478965236,"date":"2020-05-12T14:05:15.058Z","__v":0},"level":"info","timestamp":"2020-05-12T14:05:15.075Z"}
+{"message":"{\"_id\":\"5ebaad1be1f4ff30344f2cd7\",\"name\":\"Riya Singhal\",\"email\":\"singhalr231@gmail.com\",\"password\":\"$2a$10$ZsLVJlnliQex0OPvy1a5h.VpDjGLYa../U9Z2F9sEOnZzeIke6Kci\",\"phone\":1478965236,\"date\":\"2020-05-12T14:05:15.058Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T14:05:15.076Z"}
+{"level":"info","timestamp":"2020-05-12T14:05:15.077Z"}
+{"message":"{\"level\":\"info\"}","level":"info","timestamp":"2020-05-12T14:05:15.077Z"}
+{"level":"info","timestamp":"2020-05-12T14:05:31.357Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhYWQxYmUxZjRmZjMwMzQ0ZjJjZDciLCJpYXQiOjE1ODkyOTIzMzF9.a5HG965H8R6srrgxRnI0d77BZHq1g0ZPoTvU4nrlN10"},"level":"info","timestamp":"2020-05-12T14:05:31.551Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhYWQxYmUxZjRmZjMwMzQ0ZjJjZDciLCJpYXQiOjE1ODkyOTIzMzF9.a5HG965H8R6srrgxRnI0d77BZHq1g0ZPoTvU4nrlN10\"}","level":"info","timestamp":"2020-05-12T14:05:31.552Z"}
+{"level":"info","timestamp":"2020-05-12T14:06:05.081Z"}
+{"level":"info","timestamp":"2020-05-12T14:06:54.041Z"}
+{"level":"info","timestamp":"2020-05-12T14:07:56.958Z"}
+{"level":"info","timestamp":"2020-05-12T14:08:15.207Z"}
+{"level":"info","timestamp":"2020-05-12T14:08:42.610Z"}
+{"level":"info","timestamp":"2020-05-12T14:09:43.511Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-12T14:09:43.728Z"}
+{"level":"info","timestamp":"2020-05-12T14:09:52.998Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhYWQxYmUxZjRmZjMwMzQ0ZjJjZDciLCJpYXQiOjE1ODkyOTI1OTN9.BF04vsHQISj65xIJOZa40Gu-QzVyWDEKLlyslQD0H4s"},"level":"info","timestamp":"2020-05-12T14:09:53.183Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJhYWQxYmUxZjRmZjMwMzQ0ZjJjZDciLCJpYXQiOjE1ODkyOTI1OTN9.BF04vsHQISj65xIJOZa40Gu-QzVyWDEKLlyslQD0H4s\"}","level":"info","timestamp":"2020-05-12T14:09:53.184Z"}
+{"level":"info","timestamp":"2020-05-12T14:12:25.148Z"}
+{"level":"info","timestamp":"2020-05-12T14:13:33.211Z"}
+{"level":"info","timestamp":"2020-05-12T14:14:12.861Z"}
+{"level":"info","timestamp":"2020-05-12T14:17:02.461Z"}
+{"message":{"_id":"5ebaad1be1f4ff30344f2cd7","name":"Riya Singhal","email":"singhalr231@gmail.com","password":"$2b$10$0wZnUkUkBKhmR.Ffa1AWAOJkaDmYbsn9bv6SMm8lqodqSTMuQAERC","phone":1478965236,"date":"2020-05-12T14:05:15.058Z","__v":0},"level":"info","timestamp":"2020-05-12T14:17:02.639Z"}
+{"message":"{\"_id\":\"5ebaad1be1f4ff30344f2cd7\",\"name\":\"Riya Singhal\",\"email\":\"singhalr231@gmail.com\",\"password\":\"$2b$10$0wZnUkUkBKhmR.Ffa1AWAOJkaDmYbsn9bv6SMm8lqodqSTMuQAERC\",\"phone\":1478965236,\"date\":\"2020-05-12T14:05:15.058Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T14:17:02.642Z"}
+{"level":"info","timestamp":"2020-05-12T14:17:39.551Z"}
+{"message":{"_id":"5ebaad1be1f4ff30344f2cd7","name":"Riya Singhal","email":"singhalr231@gmail.com","password":"$2b$10$pL4zFODgDiqQ3DSkJh5huurrdps2lzQ6SyLvGyvKsx5ldMQUudJne","phone":1478965236,"date":"2020-05-12T14:05:15.058Z","__v":0},"level":"info","timestamp":"2020-05-12T14:17:39.670Z"}
+{"message":"{\"_id\":\"5ebaad1be1f4ff30344f2cd7\",\"name\":\"Riya Singhal\",\"email\":\"singhalr231@gmail.com\",\"password\":\"$2b$10$pL4zFODgDiqQ3DSkJh5huurrdps2lzQ6SyLvGyvKsx5ldMQUudJne\",\"phone\":1478965236,\"date\":\"2020-05-12T14:05:15.058Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T14:17:39.671Z"}
+{"level":"info","timestamp":"2020-05-12T14:19:04.397Z"}
+{"message":{"_id":"5ebaad1be1f4ff30344f2cd7","name":"Riya Singhal","email":"singhalr231@gmail.com","password":"$2b$10$PxT2I7Hpv6fEmEx78n7PyeP2in9i1zohurfgQHcPy79thuk/49CXy","phone":1478965236,"date":"2020-05-12T14:05:15.058Z","__v":0},"level":"info","timestamp":"2020-05-12T14:19:04.599Z"}
+{"message":"{\"_id\":\"5ebaad1be1f4ff30344f2cd7\",\"name\":\"Riya Singhal\",\"email\":\"singhalr231@gmail.com\",\"password\":\"$2b$10$PxT2I7Hpv6fEmEx78n7PyeP2in9i1zohurfgQHcPy79thuk/49CXy\",\"phone\":1478965236,\"date\":\"2020-05-12T14:05:15.058Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T14:19:04.601Z"}
+{"level":"info","timestamp":"2020-05-12T14:19:27.553Z"}
+{"message":"{\"success\":1,\"message\":\"updated successfully\"}","level":"info","timestamp":"2020-05-12T14:19:27.756Z"}
+{"level":"info","timestamp":"2020-05-12T14:19:37.532Z"}
+{"message":"{\"success\":1,\"message\":\"updated successfully\"}","level":"info","timestamp":"2020-05-12T14:19:37.646Z"}
+{"level":"info","timestamp":"2020-05-12T15:35:17.824Z"}
+{"level":"info","timestamp":"2020-05-12T15:35:49.438Z"}
+{"level":"info","timestamp":"2020-05-12T15:36:26.207Z"}
+{"message":"{\"success\":1,\"message\":\"updated successfully\"}","level":"info","timestamp":"2020-05-12T15:36:26.343Z"}
+{"level":"info","timestamp":"2020-05-12T15:37:31.423Z"}
+{"level":"error","timestamp":"2020-05-12T15:40:23.656Z"}
+{"level":"error","timestamp":"2020-05-12T15:40:23.658Z"}
+{"level":"info","timestamp":"2020-05-12T15:40:23.658Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:17.257Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:17.259Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:17.259Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:34.058Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:34.059Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:34.059Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:34.239Z"}
+{"message":"{\"success\":1,\"message\":\"updated successfully\"}","level":"error","timestamp":"2020-05-12T15:41:34.240Z"}
+{"message":"{\"success\":1,\"message\":\"updated successfully\"}","level":"error","timestamp":"2020-05-12T15:41:34.240Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:43.655Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:43.655Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:43.655Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:43.932Z"}
+{"message":{"_id":"5ebac3b77ff722253c458a7f","name":"Riya Singhal","email":"singhalrc231@gmail.com","password":"$2a$10$0oqN9aFfLDcR8wYWPeP.2evs1ZaR0S8wxufc0f.//YUVAdEB2UMI.","phone":1478965236,"date":"2020-05-12T15:41:43.916Z","__v":0},"level":"error","timestamp":"2020-05-12T15:41:43.933Z"}
+{"message":{"_id":"5ebac3b77ff722253c458a7f","name":"Riya Singhal","email":"singhalrc231@gmail.com","password":"$2a$10$0oqN9aFfLDcR8wYWPeP.2evs1ZaR0S8wxufc0f.//YUVAdEB2UMI.","phone":1478965236,"date":"2020-05-12T15:41:43.916Z","__v":0},"level":"error","timestamp":"2020-05-12T15:41:43.933Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:43.934Z"}
+{"message":"{\"_id\":\"5ebac3b77ff722253c458a7f\",\"name\":\"Riya Singhal\",\"email\":\"singhalrc231@gmail.com\",\"password\":\"$2a$10$0oqN9aFfLDcR8wYWPeP.2evs1ZaR0S8wxufc0f.//YUVAdEB2UMI.\",\"phone\":1478965236,\"date\":\"2020-05-12T15:41:43.916Z\",\"__v\":0}","level":"error","timestamp":"2020-05-12T15:41:43.934Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:43.935Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:43.935Z"}
+{"level":"info","timestamp":"2020-05-12T15:41:43.936Z"}
+{"message":"{\"level\":\"error\"}","level":"error","timestamp":"2020-05-12T15:41:43.936Z"}
+{"message":"{\"_id\":\"5ebac3b77ff722253c458a7f\",\"name\":\"Riya Singhal\",\"email\":\"singhalrc231@gmail.com\",\"password\":\"$2a$10$0oqN9aFfLDcR8wYWPeP.2evs1ZaR0S8wxufc0f.//YUVAdEB2UMI.\",\"phone\":1478965236,\"date\":\"2020-05-12T15:41:43.916Z\",\"__v\":0}","level":"error","timestamp":"2020-05-12T15:41:43.934Z"}
+{"level":"error","timestamp":"2020-05-12T15:41:43.936Z"}
+{"message":"{\"level\":\"error\"}","level":"error","timestamp":"2020-05-12T15:41:43.936Z"}
+{"level":"info","timestamp":"2020-05-12T15:42:40.373Z"}
+{"message":"Email already exist","level":"info","timestamp":"2020-05-12T15:42:40.455Z"}
+{"level":"info","timestamp":"2020-05-12T17:20:07.215Z"}
+{"message":"Access Denied","level":"info","timestamp":"2020-05-12T17:20:07.586Z"}
+{"level":"info","timestamp":"2020-05-12T17:21:40.569Z"}
+{"message":"Email already exist","level":"info","timestamp":"2020-05-12T17:21:40.953Z"}
+{"level":"info","timestamp":"2020-05-12T17:21:53.102Z"}
+{"message":{"_id":"5ebadb324efc3b14c0fc1b2b","name":"Riya Singhal","email":"singhal231@gmail.com","password":"$2a$10$8uCM826/GXqHP3jDqJCrueGAU.MHIF4tHe1ulkPQtLw4HLeIg7A1O","phone":1478965236,"date":"2020-05-12T17:21:54.380Z","__v":0},"level":"info","timestamp":"2020-05-12T17:21:54.496Z"}
+{"message":"{\"_id\":\"5ebadb324efc3b14c0fc1b2b\",\"name\":\"Riya Singhal\",\"email\":\"singhal231@gmail.com\",\"password\":\"$2a$10$8uCM826/GXqHP3jDqJCrueGAU.MHIF4tHe1ulkPQtLw4HLeIg7A1O\",\"phone\":1478965236,\"date\":\"2020-05-12T17:21:54.380Z\",\"__v\":0}","level":"info","timestamp":"2020-05-12T17:21:54.510Z"}
+{"level":"info","timestamp":"2020-05-12T17:21:54.515Z"}
+{"message":"{\"level\":\"info\"}","level":"info","timestamp":"2020-05-12T17:21:54.516Z"}
+{"level":"info","timestamp":"2020-05-13T01:50:24.413Z"}
+{"message":{"_id":"5ebb52600bf9ce0a4ca3b2f6","name":"Riya Singhal","email":"riya.singhal@einn.in","password":"$2a$10$ATeu7nxAzQpqV4XikHKyHOMJ/T7DgzNpqI1H0IjWBopLRAUQ4XI9y","phone":1478965236,"date":"2020-05-13T01:50:24.821Z","__v":0},"level":"info","timestamp":"2020-05-13T01:50:25.109Z"}
+{"message":"{\"_id\":\"5ebb52600bf9ce0a4ca3b2f6\",\"name\":\"Riya Singhal\",\"email\":\"riya.singhal@einn.in\",\"password\":\"$2a$10$ATeu7nxAzQpqV4XikHKyHOMJ/T7DgzNpqI1H0IjWBopLRAUQ4XI9y\",\"phone\":1478965236,\"date\":\"2020-05-13T01:50:24.821Z\",\"__v\":0}","level":"info","timestamp":"2020-05-13T01:50:25.111Z"}
+{"level":"info","timestamp":"2020-05-13T01:50:25.117Z"}
+{"message":"{\"level\":\"info\"}","level":"info","timestamp":"2020-05-13T01:50:25.117Z"}
+{"level":"info","timestamp":"2020-05-13T01:55:48.216Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T01:55:48.410Z"}
+{"level":"info","timestamp":"2020-05-13T01:55:56.852Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzQ5NTZ9.7pGA4P9d5jVcUJJN3hg0zVG4V_C3JnsMSJ7rTlbtPUo"},"level":"info","timestamp":"2020-05-13T01:55:56.998Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzQ5NTZ9.7pGA4P9d5jVcUJJN3hg0zVG4V_C3JnsMSJ7rTlbtPUo\"}","level":"info","timestamp":"2020-05-13T01:55:56.998Z"}
+{"level":"info","timestamp":"2020-05-13T01:56:19.481Z"}
+{"level":"info","timestamp":"2020-05-13T02:03:38.950Z"}
+{"level":"info","timestamp":"2020-05-13T02:07:05.770Z"}
+{"level":"info","timestamp":"2020-05-13T02:07:58.736Z"}
+{"level":"info","timestamp":"2020-05-13T02:10:14.208Z"}
+{"level":"info","timestamp":"2020-05-13T02:10:48.483Z"}
+{"level":"info","timestamp":"2020-05-13T02:14:05.425Z"}
+{"level":"info","timestamp":"2020-05-13T02:14:51.115Z"}
+{"level":"info","timestamp":"2020-05-13T02:16:29.754Z"}
+{"level":"info","timestamp":"2020-05-13T02:16:51.599Z"}
+{"level":"info","timestamp":"2020-05-13T02:20:14.195Z"}
+{"level":"info","timestamp":"2020-05-13T02:21:07.786Z"}
+{"message":"{\"success\":1,\"data\":{\"_id\":\"5ebaad1be1f4ff30344f2cd7\",\"name\":\"Riya Singhal\",\"email\":\"singhalr231@gmail.com\",\"password\":\"$2b$10$RyNVf2k3yK2boDTUclZj6eqwAp3JTiKEoZ12FKKnGY9sNVutrzw5.\",\"phone\":1478965236,\"date\":\"2020-05-12T14:05:15.058Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-13T02:21:07.795Z"}
+{"level":"info","timestamp":"2020-05-13T02:24:58.018Z"}
+{"level":"info","timestamp":"2020-05-13T02:27:07.501Z"}
+{"level":"info","timestamp":"2020-05-13T02:27:38.599Z"}
+{"message":"Updated your password","level":"info","timestamp":"2020-05-13T02:27:38.866Z"}
+{"level":"info","timestamp":"2020-05-13T02:28:01.129Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T02:28:01.343Z"}
+{"level":"info","timestamp":"2020-05-13T02:28:07.961Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzY4ODh9.aM8UcGBCTdx2XqSN2FR1sWgGJiCxiwnRuTbPPSJ67N4"},"level":"info","timestamp":"2020-05-13T02:28:08.169Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzY4ODh9.aM8UcGBCTdx2XqSN2FR1sWgGJiCxiwnRuTbPPSJ67N4\"}","level":"info","timestamp":"2020-05-13T02:28:08.170Z"}
+{"level":"info","timestamp":"2020-05-13T02:29:49.649Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzY5ODl9.XqcGMwgRRJktN4uCMT211VT9ssjaZLaTsq65STjBTuo"},"level":"info","timestamp":"2020-05-13T02:29:49.969Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzMzY5ODl9.XqcGMwgRRJktN4uCMT211VT9ssjaZLaTsq65STjBTuo\"}","level":"info","timestamp":"2020-05-13T02:29:49.971Z"}
+{"level":"info","timestamp":"2020-05-13T02:32:53.641Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T02:32:53.739Z"}
+{"level":"info","timestamp":"2020-05-13T04:53:14.743Z"}
+{"level":"info","timestamp":"2020-05-13T04:54:51.569Z"}
+{"level":"info","timestamp":"2020-05-13T04:55:51.918Z"}
+{"level":"info","timestamp":"2020-05-13T04:56:07.684Z"}
+{"level":"info","timestamp":"2020-05-13T05:08:52.882Z"}
+{"level":"info","timestamp":"2020-05-13T05:11:56.617Z"}
+{"level":"info","timestamp":"2020-05-13T05:16:15.148Z"}
+{"level":"info","timestamp":"2020-05-13T05:19:45.766Z"}
+{"level":"info","timestamp":"2020-05-13T05:30:52.840Z"}
+{"level":"info","timestamp":"2020-05-13T05:35:56.305Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T05:35:59.894Z"}
+{"level":"info","timestamp":"2020-05-13T06:00:07.356Z"}
+{"message":"\"newPassword\" is required","level":"info","timestamp":"2020-05-13T06:00:07.364Z"}
+{"level":"info","timestamp":"2020-05-13T06:09:11.566Z"}
+{"level":"info","timestamp":"2020-05-13T06:09:33.289Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T06:09:33.364Z"}
+{"level":"info","timestamp":"2020-05-13T06:14:19.748Z"}
+{"level":"info","timestamp":"2020-05-13T06:21:30.187Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T06:21:33.753Z"}
+{"level":"info","timestamp":"2020-05-13T06:22:23.434Z"}
+{"level":"info","timestamp":"2020-05-13T06:23:11.797Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T06:23:11.811Z"}
+{"level":"info","timestamp":"2020-05-13T06:24:15.819Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T06:24:15.883Z"}
+{"level":"info","timestamp":"2020-05-13T06:32:48.640Z"}
+{"message":"Password for si@gamil.com successfully reset","level":"info","timestamp":"2020-05-13T06:32:48.850Z"}
+{"level":"info","timestamp":"2020-05-13T06:34:38.197Z"}
+{"message":"\"password\" is not allowed","level":"info","timestamp":"2020-05-13T06:34:38.205Z"}
+{"level":"info","timestamp":"2020-05-13T06:34:53.535Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T06:34:53.786Z"}
+{"level":"info","timestamp":"2020-05-13T06:35:00.347Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T06:35:00.552Z"}
+{"level":"info","timestamp":"2020-05-13T11:04:53.397Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T11:04:53.619Z"}
+{"level":"info","timestamp":"2020-05-13T11:05:05.154Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T11:05:05.320Z"}
+{"level":"info","timestamp":"2020-05-13T11:05:19.858Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T11:05:20.026Z"}
+{"level":"info","timestamp":"2020-05-13T11:13:44.313Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T11:13:44.591Z"}
+{"level":"info","timestamp":"2020-05-13T11:13:59.338Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T11:13:59.513Z"}
+{"level":"info","timestamp":"2020-05-13T11:24:21.441Z"}
+{"message":"Email already exist","level":"info","timestamp":"2020-05-13T11:24:21.458Z"}
+{"level":"info","timestamp":"2020-05-13T11:25:05.157Z"}
+{"level":"info","timestamp":"2020-05-13T11:26:06.196Z"}
+{"level":"info","timestamp":"2020-05-13T11:26:27.126Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T11:26:31.291Z"}
+{"level":"info","timestamp":"2020-05-13T11:26:56.747Z"}
+{"level":"info","timestamp":"2020-05-13T11:27:43.281Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T11:27:43.400Z"}
+{"level":"info","timestamp":"2020-05-13T11:59:31.339Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T11:59:35.273Z"}
+{"level":"info","timestamp":"2020-05-13T11:59:54.046Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T11:59:54.177Z"}
+{"level":"info","timestamp":"2020-05-13T12:01:15.784Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T12:01:21.257Z"}
+{"level":"info","timestamp":"2020-05-13T12:01:39.483Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T12:01:39.614Z"}
+{"level":"info","timestamp":"2020-05-13T12:02:02.135Z"}
+{"level":"info","timestamp":"2020-05-13T12:05:21.174Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T12:05:24.245Z"}
+{"level":"info","timestamp":"2020-05-13T12:06:02.756Z"}
+{"message":"Password for riya.singhal@einn.in successfully reset","level":"info","timestamp":"2020-05-13T12:06:02.923Z"}
+{"level":"info","timestamp":"2020-05-13T12:06:25.273Z"}
+{"message":"Invalid password","level":"info","timestamp":"2020-05-13T12:06:25.497Z"}
+{"level":"info","timestamp":"2020-05-13T12:06:41.355Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzNzE2MDF9.DnpJaFiyVmF7f2_mSl3p6k5Oux-voXQtUcvOB4WVdWQ"},"level":"info","timestamp":"2020-05-13T12:06:41.502Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODkzNzE2MDF9.DnpJaFiyVmF7f2_mSl3p6k5Oux-voXQtUcvOB4WVdWQ\"}","level":"info","timestamp":"2020-05-13T12:06:41.503Z"}
+{"level":"info","timestamp":"2020-05-13T16:46:44.697Z"}
+{"level":"info","timestamp":"2020-05-13T16:47:33.925Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T16:47:34.335Z"}
+{"level":"info","timestamp":"2020-05-13T16:48:13.063Z"}
+{"message":"Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-13T16:48:16.688Z"}
+{"level":"info","timestamp":"2020-05-13T16:48:35.151Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-13T16:48:35.236Z"}
+{"level":"info","timestamp":"2020-05-14T05:25:59.014Z"}
+{"level":"info","timestamp":"2020-05-14T05:26:12.818Z"}
+{"level":"info","timestamp":"2020-05-14T05:26:54.899Z"}
+{"level":"info","timestamp":"2020-05-14T05:28:08.991Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-14T05:28:12.570Z"}
+{"level":"info","timestamp":"2020-05-14T05:28:55.091Z"}
+{"level":"info","timestamp":"2020-05-14T05:30:28.482Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-14T05:30:31.936Z"}
+{"level":"info","timestamp":"2020-05-14T05:31:46.239Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-14T05:31:50.344Z"}
+{"level":"info","timestamp":"2020-05-14T05:32:26.766Z"}
+{"message":"\"resetPasswordToken\" is required","level":"info","timestamp":"2020-05-14T05:32:26.772Z"}
+{"level":"info","timestamp":"2020-05-14T05:33:27.908Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-14T05:33:31.240Z"}
+{"level":"info","timestamp":"2020-05-14T05:33:56.770Z"}
+{"level":"info","timestamp":"2020-05-14T05:34:57.274Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-14T05:35:00.612Z"}
+{"level":"info","timestamp":"2020-05-14T05:35:14.534Z"}
+{"level":"info","timestamp":"2020-05-15T08:44:15.278Z"}
+{"message":{"err":"Roll number not found"},"level":"info","timestamp":"2020-05-15T08:44:15.449Z"}
+{"message":"{\"err\":\"Roll number not found\"}","level":"info","timestamp":"2020-05-15T08:44:15.450Z"}
+{"level":"info","timestamp":"2020-05-17T15:26:13.991Z"}
+{"message":{"error":"${error}, Unable to login - the email must be a valid email","statusCode":400},"level":"info","timestamp":"2020-05-17T15:26:14.121Z"}
+{"message":"{\"error\":\"${error}, Unable to login - the email must be a valid email\",\"statusCode\":400}","level":"info","timestamp":"2020-05-17T15:26:14.123Z"}
+{"level":"info","timestamp":"2020-05-17T15:26:54.397Z"}
+{"message":{"error":"Unable to login - the email must be a valid email","statusCode":400},"level":"info","timestamp":"2020-05-17T15:26:54.450Z"}
+{"message":"{\"error\":\"Unable to login - the email must be a valid email\",\"statusCode\":400}","level":"info","timestamp":"2020-05-17T15:26:54.453Z"}
+{"level":"info","timestamp":"2020-05-17T15:27:11.192Z"}
+{"message":{"err":{"_original":{"roll":"12345679","password":"15787851"},"details":[{"message":"\"email\" is required","path":["email"],"type":"any.required","context":{"label":"email","key":"email"}}]},"error":"Unable to login - the email must be a valid email","statusCode":400},"level":"info","timestamp":"2020-05-17T15:27:11.225Z"}
+{"message":"{\"err\":{\"_original\":{\"roll\":\"12345679\",\"password\":\"15787851\"},\"details\":[{\"message\":\"\\\"email\\\" is required\",\"path\":[\"email\"],\"type\":\"any.required\",\"context\":{\"label\":\"email\",\"key\":\"email\"}}]},\"error\":\"Unable to login - the email must be a valid email\",\"statusCode\":400}","level":"info","timestamp":"2020-05-17T15:27:11.226Z"}
+{"level":"info","timestamp":"2020-05-17T15:27:55.119Z"}
+{"message":{"error":{"_original":{"roll":"12345679","password":"15787851"},"details":[{"message":"\"email\" is required","path":["email"],"type":"any.required","context":{"label":"email","key":"email"}}]},"statusCode":400},"level":"info","timestamp":"2020-05-17T15:27:55.165Z"}
+{"message":"{\"error\":{\"_original\":{\"roll\":\"12345679\",\"password\":\"15787851\"},\"details\":[{\"message\":\"\\\"email\\\" is required\",\"path\":[\"email\"],\"type\":\"any.required\",\"context\":{\"label\":\"email\",\"key\":\"email\"}}]},\"statusCode\":400}","level":"info","timestamp":"2020-05-17T15:27:55.167Z"}
+{"level":"info","timestamp":"2020-05-17T15:35:41.582Z"}
+{"level":"info","timestamp":"2020-05-17T15:36:26.659Z"}
+{"message":{"error":{"_original":{"roll":"12345679","password":"15787851"},"details":[{"message":"\"email\" is required","path":["email"],"type":"any.required","context":{"label":"email","key":"email"}}]},"statusCode":400},"level":"info","timestamp":"2020-05-17T15:36:26.706Z"}
+{"message":"{\"error\":{\"_original\":{\"roll\":\"12345679\",\"password\":\"15787851\"},\"details\":[{\"message\":\"\\\"email\\\" is required\",\"path\":[\"email\"],\"type\":\"any.required\",\"context\":{\"label\":\"email\",\"key\":\"email\"}}]},\"statusCode\":400}","level":"info","timestamp":"2020-05-17T15:36:26.709Z"}
+{"level":"info","timestamp":"2020-05-17T15:51:03.199Z"}
+{"message":"\"error\"","level":"info","timestamp":"2020-05-17T15:51:03.246Z"}
+{"level":"info","timestamp":"2020-05-18T01:18:28.355Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NjQ3MDh9.MXQul7mrvr7AmPx3wy3sEwk-2fxkeu9UgcAWJZlVHEs","statusCode":400},"level":"info","timestamp":"2020-05-18T01:18:28.949Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NjQ3MDh9.MXQul7mrvr7AmPx3wy3sEwk-2fxkeu9UgcAWJZlVHEs\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T01:18:28.951Z"}
+{"level":"info","timestamp":"2020-05-18T01:18:50.604Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T01:18:54.358Z"}
+{"level":"info","timestamp":"2020-05-18T01:19:24.472Z"}
+{"level":"info","timestamp":"2020-05-18T01:49:07.565Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T01:49:11.725Z"}
+{"level":"info","timestamp":"2020-05-18T01:49:29.351Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-18T01:49:29.359Z"}
+{"level":"info","timestamp":"2020-05-18T01:58:38.559Z"}
+{"level":"info","timestamp":"2020-05-18T01:58:50.475Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T01:58:54.192Z"}
+{"level":"info","timestamp":"2020-05-18T01:59:06.795Z"}
+{"level":"info","timestamp":"2020-05-18T01:59:34.209Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-18T01:59:34.243Z"}
+{"level":"info","timestamp":"2020-05-18T02:00:43.048Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NjcyNDN9.zYDmhyFeqh0QJYtEU_fLMDMa4ncWWM4YprFEHevGUeg","statusCode":400},"level":"info","timestamp":"2020-05-18T02:00:43.213Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NjcyNDN9.zYDmhyFeqh0QJYtEU_fLMDMa4ncWWM4YprFEHevGUeg\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T02:00:43.213Z"}
+{"level":"info","timestamp":"2020-05-18T02:01:32.139Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T02:01:35.072Z"}
+{"level":"info","timestamp":"2020-05-18T02:01:54.272Z"}
+{"message":"This password reset link is either expired or invalid","level":"info","timestamp":"2020-05-18T02:01:54.317Z"}
+{"level":"info","timestamp":"2020-05-18T03:16:15.239Z"}
+{"level":"info","timestamp":"2020-05-18T03:17:34.444Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T03:17:37.893Z"}
+{"level":"info","timestamp":"2020-05-18T03:20:50.525Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T03:20:53.177Z"}
+{"level":"info","timestamp":"2020-05-18T03:55:40.688Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T03:55:44.118Z"}
+{"level":"info","timestamp":"2020-05-18T03:58:53.315Z"}
+{"message":"Recovery email sent, Please check your email inbox and spam folder","level":"info","timestamp":"2020-05-18T03:58:56.843Z"}
+{"level":"info","timestamp":"2020-05-18T03:59:54.803Z"}
+{"message":"Password for riya.singhal@einn.in successfully reset","level":"info","timestamp":"2020-05-18T03:59:55.050Z"}
+{"level":"info","timestamp":"2020-05-18T04:00:05.064Z"}
+{"message":{"error":"Invalid password","statusCode":400},"level":"info","timestamp":"2020-05-18T04:00:05.238Z"}
+{"message":"{\"error\":\"Invalid password\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T04:00:05.239Z"}
+{"level":"info","timestamp":"2020-05-18T04:00:10.738Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzQ0MTB9.OKidgm1zj33JPq_JMsPXZ2AdPYg8-b1lQI7ccLA75rk","statusCode":400},"level":"info","timestamp":"2020-05-18T04:00:10.866Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzQ0MTB9.OKidgm1zj33JPq_JMsPXZ2AdPYg8-b1lQI7ccLA75rk\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T04:00:10.866Z"}
+{"level":"info","timestamp":"2020-05-18T04:27:24.217Z"}
+{"message":"{\"message\":\"Recovery email sent, Please check your email inbox and spam folder\",\"Status_code\":200}","level":"info","timestamp":"2020-05-18T04:27:27.376Z"}

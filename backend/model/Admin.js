@@ -22,15 +22,9 @@ const adminSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  resetToken: {
+  resetLink: {
     type: String,
-  },
-  expireToken: {
-    type: Date,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+    default: "",
+  }
 });
 module.exports = mongoose.model("Admin", adminSchema);

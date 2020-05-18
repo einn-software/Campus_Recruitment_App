@@ -1,25 +1,13 @@
-import React, { Component } from "react";
-<<<<<<< HEAD
-import Header from "./header";
-import Footer from "./footer";
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Footer />
-      </div>
-    );
-  }
-=======
+import React from 'react';
 import {Navbar ,NavbarBrand} from 'reactstrap';
 import './App.css'
-import image from "./logoeinn.png";
-
-
+import image from "./components/logo.png";
 import AdminRegister from './components/register/adminRegister';
-// import Home from "./components/home";
-//import College from "./components/Dashboard/College";
+//import CollegeRegister from './components/register/collegeRegister';
+//import StudentRegister from './components/register/studentRegister';
+//import AdminLogin from './components/login/adminlogin';
+
+//import TpoRegister from './components/register/tpoRegister';
 
 function App() {
   return (
@@ -43,6 +31,6 @@ function App() {
        <AdminRegister/>     
     </div>
   );
->>>>>>> 9316a6a36793b61294db6ea8e89f0c5059cc626c
 }
+
 export default App;

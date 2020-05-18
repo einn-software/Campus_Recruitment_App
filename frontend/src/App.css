@@ -1,24 +1,16 @@
 .nav{
-  background-color: #0c3c60;
+    background-color: #0c3c60;
 }
 .navLogo{
-  float:left;
-}
-.navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: .5rem 1rem;
+    float:left;
 }
 
 .title {
-  position:relative;
-  color: white;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  margin: auto;
-  margin-left:360px;
-  font-size: 3vw;
-  
-}
+    position:relative;
+    color: white;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    margin: auto;
+    margin-left:360px;
+    font-size: 3vw;
+    
+  }

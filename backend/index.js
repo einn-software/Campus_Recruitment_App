@@ -6,17 +6,18 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-//Connect to DB for Developemen
-mongoose.connect(
-  process.env.DB_CONNECT,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-  () => console.log("Connected to db!")
-);
+//Connect to MongoDB
+mongoose.connect(" mongodb://localhost/auth", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
+mongoose.connection
+  .once("open", () => console.log("Connected to db!"))
+  .on("error", (error) => {
+    console.log("Your error", error);
+  });
 
 //Import Routes
 const authRoute = require("./routes/auth");

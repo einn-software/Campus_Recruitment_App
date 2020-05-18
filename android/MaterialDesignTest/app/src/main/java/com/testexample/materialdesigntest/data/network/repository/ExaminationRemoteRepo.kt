@@ -17,7 +17,7 @@ class ExaminationRemoteRepo: IExaminationRemoteRepo {
         code: String,
         date: String
     ): Single<QuestionPaperComplete> {
-        return api.getQuestionPaper(token, code, date)
+        return api.getQuestionPaper(token, code)
     }
 
     override fun callApiForQuestion(token: String, questionId: String): Single<Question> {

@@ -19,8 +19,7 @@ class ApplicationDatabaseTest {
         Student(
             "1", "sdg", "sdg@test.com",
             "qwertyui", 545454545, 243,
-            "cse", "nitra","codes"
-        ,0)
+            "cse", "nitra","codes")
 
    // @get:Rule
     //val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously

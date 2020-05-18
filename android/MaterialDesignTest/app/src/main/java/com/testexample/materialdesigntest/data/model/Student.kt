@@ -19,7 +19,7 @@ data class Student(
     @SerializedName("roll")@ColumnInfo(name = "student_roll_no") val studentRollNo: Long,
     @SerializedName("branch")@ColumnInfo(name = "student_branch") val studentBranch: String,
     @SerializedName("college")@ColumnInfo(name = "student_college") val studentCollege: String,
-    @SerializedName("college_code")@ColumnInfo(name = "student_college_code") val studentCollegeCode: String,
-    @SerializedName("_v")  val version: Int
+    @SerializedName("college_code")@ColumnInfo(name = "student_college_code") val studentCollegeCode: String
+    //@SerializedName("_v")  val version: Int
 )
 

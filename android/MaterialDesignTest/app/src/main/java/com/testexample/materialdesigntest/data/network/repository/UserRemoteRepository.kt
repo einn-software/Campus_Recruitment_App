@@ -3,6 +3,7 @@ package com.testexample.materialdesigntest.data.network.repository
 import android.util.Log
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import io.reactivex.Flowable
@@ -30,7 +31,9 @@ class UserRemoteRepository: IUserRemoteRepository {
     }
 
     override fun authCollege(email: String, password: String): Single<String> {
-        return api.authCollege(email, password)
+        return api.authCollege(CollegeLoginRequest(email, password)).map { it ->
+            it.token
+        }
     }
 
 

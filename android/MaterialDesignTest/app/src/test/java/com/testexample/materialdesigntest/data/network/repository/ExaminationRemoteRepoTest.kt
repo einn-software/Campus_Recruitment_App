@@ -42,13 +42,17 @@ class ExaminationRemoteRepoTest {
         repository = ExaminationRemoteRepo()
         val result = repository.callApiForQuestionPaper(token,"515","29/01/2020")
             .subscribe(
-                {it -> Log.d(TAG," Result is $it")},
-                {err -> Log.d(TAG, err.localizedMessage!!)})
+                {it -> println(" Result is $it") },
+                {err -> println(err.localizedMessage)})
 
 
     }
 
     @Test
     fun callApiForQuestionTest() {
+        repository.callApiForQuestion(token, "id")
+            .subscribe(
+                {success -> println(success)},
+                {err -> println(err.localizedMessage)})
     }
 }

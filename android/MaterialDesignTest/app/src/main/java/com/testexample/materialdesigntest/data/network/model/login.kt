@@ -12,6 +12,7 @@ data class AuthResponse(
     @SerializedName("token")val token: String
 )
 
-data class StudentLoginResponse(
-    val name:String
+data class CollegeLoginRequest(
+    @SerializedName("email")val email: String,
+    @SerializedName("password")val password: String
 )

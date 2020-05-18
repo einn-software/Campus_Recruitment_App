@@ -4,23 +4,25 @@ const logger = require("./config/logger");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-dotenv.config();
-
-//Connect to DB for Developemen
-mongoose.connect(
-  process.env.DB_CONNECT,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-  () => console.log("Connected to db!")
-);
 
 //Import Routes
 const authRoute = require("./routes/auth");
 const resetPasswordRoute = require("./routes/ResetPassword");
+
+dotenv.config(); // importing all the configurations from .env file
+
+//Connect to MongoDB 
+mongoose.connect(" mongodb://localhost/auth", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
+mongoose.connection
+  .once("open", () => console.log("Connected to db!"))
+  .on("error", (error) => {
+    console.log("Your error", error);
+  });
 
 //Middleware
 app.use(function (req, res, next) {

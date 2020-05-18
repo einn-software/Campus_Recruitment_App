@@ -1,6 +1,8 @@
 const Joi = require("@hapi/joi");
 
 //Register Validation
+
+//Post Admin validation
 const adminRegisterValidation = (data) => {
   const adminSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -11,13 +13,7 @@ const adminRegisterValidation = (data) => {
   return adminSchema.validate(data);
 };
 
-//Get Validation for Admin
-const getAdminValidation = (data) => {
-  const adminSchema = Joi.object({
-    email: Joi.string().min(6).required().max(255).email(),
-  });
-  return adminSchema.validate(data);
-};
+//Post College Validation
 const collegeRegisterValidation = (data) => {
   const collegeSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -29,13 +25,8 @@ const collegeRegisterValidation = (data) => {
   });
   return collegeSchema.validate(data);
 };
-//Get Validation for College
-const getCollegeValidation = (data) => {
-  const collegeSchema = Joi.object({
-    email: Joi.string().min(6).required().max(255).email(),
-  });
-  return collegeSchema.validate(data);
-};
+
+//Post Tpo validation
 const tpoRegisterValidation = (data) => {
   const tpoSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -49,14 +40,7 @@ const tpoRegisterValidation = (data) => {
   return tpoSchema.validate(data);
 };
 
-//Get Validation for College
-const getTpoValidation = (data) => {
-  const TpoSchema = Joi.object({
-    email: Joi.string().min(6).required().max(255).email(),
-  });
-  return TpoSchema.validate(data);
-};
-
+//Post Student Vaidation 
 const studentRegisterValidation = (data) => {
   const studentSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -71,16 +55,6 @@ const studentRegisterValidation = (data) => {
   return studentSchema.validate(data);
 };
 
-// //Get Validation for Student
-// const getStudentValidation = data => {
-//      const StudentSchema = Joi.object({
-
-//          email: Joi.string().min(6).required().max(255).email(),
-
-//       });
-//       return StudentSchema.validate(data);
-//  };
-
 //Login Validation
 const loginValidation = (data) => {
   const schema = Joi.object({
@@ -89,8 +63,8 @@ const loginValidation = (data) => {
   });
   return schema.validate(data);
 };
-//STUDENT LOGIN VALIDATION
 
+//STUDENT LOGIN VALIDATION
 const studentloginValidation = (data) => {
   const schema = Joi.object({
     roll: Joi.number().min(6).required(),
@@ -99,7 +73,7 @@ const studentloginValidation = (data) => {
   return schema.validate(data);
 };
 
-// Test POST Instructions validation
+//POST Instructions validation
 const testinstructionsValidation = (data) => {
   const testinstructionsSchema = Joi.object({
     college_code: Joi.string().min(3).required(),
@@ -108,16 +82,8 @@ const testinstructionsValidation = (data) => {
   });
   return testinstructionsSchema.validate(data);
 };
-// Test GET Instructions validation
-const getinstructionsValidation = (data) => {
-  const getinstructionsSchema = Joi.object({
-    college_code: Joi.string().min(3).required(),
-    date: Joi.string().required().min(10),
-  });
-  return getinstructionsSchema.validate(data);
-};
 
-// Result Validation
+//Post Result Validation
 const ResultsValidation = (data) => {
   const ResultsSchema = Joi.object({
     roll: Joi.number().min(6).required(),
@@ -128,15 +94,8 @@ const ResultsValidation = (data) => {
   });
   return ResultsSchema.validate(data);
 };
-//Get Result Validation
-const getResultsValidation = (data) => {
-  const getResultsSchema = Joi.object({
-    roll: Joi.number().min(6).required(),
-  });
-  return getResultsSchema.validate(data);
-};
 
-// POST questionCollections validation
+//POST questionCollections validation
 const questionCollectionsValidation = (data) => {
   const questionCollectionsSchema = Joi.object({
     question: Joi.string().required(),
@@ -153,19 +112,11 @@ const questionCollectionsValidation = (data) => {
       .required(),
     answer: Joi.string().required(),
     weight: Joi.number().required(),
-  });
+ });
   return questionCollectionsSchema.validate(data);
 };
 
-// GET questionCollections validation
-const getquestionCollectionsValidation = (data) => {
-  const getquestionCollectionsSchema = Joi.object({
-    topic: Joi.string().min(3).max(30).required(),
-  });
-  return getquestionCollectionsSchema.validate(data);
-};
-
-// POST questionPaper validation
+//POST questionPaper validation
 const questionPaperValidation = (data) => {
   const questionPaperSchema = Joi.object({
     date: Joi.date().required(),
@@ -185,28 +136,14 @@ const questionPaperValidation = (data) => {
   });
   return questionPaperSchema.validate(data);
 };
-// GET questionPaper validation
-const getquestionPaperValidation = (data) => {
-  const getquestionPaperSchema = Joi.object({
-    college_code: Joi.string().min(3).max(30).required(),
-  });
-  return getquestionPaperSchema.validate(data);
-};
 
 module.exports.adminRegisterValidation = adminRegisterValidation;
-module.exports.getAdminValidation = getAdminValidation;
 module.exports.collegeRegisterValidation = collegeRegisterValidation;
-module.exports.getCollegeValidation = getCollegeValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
-module.exports.getTpoValidation = getTpoValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.studentloginValidation = studentloginValidation;
 module.exports.testinstructionsValidation = testinstructionsValidation;
-module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;
-module.exports.getResultsValidation = getResultsValidation;
 module.exports.questionCollectionsValidation = questionCollectionsValidation;
-module.exports.getquestionCollectionsValidation = getquestionCollectionsValidation;
 module.exports.questionPaperValidation = questionPaperValidation;
-module.exports.getquestionPaperValidation = getquestionPaperValidation;

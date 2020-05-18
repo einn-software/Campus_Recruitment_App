@@ -1,4 +1,5 @@
 const router = require("express").Router();
+//import models 
 const Admin = require("../model/Admin");
 const College = require("../model/College");
 const Tpo = require("../model/Tpo");
@@ -7,8 +8,10 @@ const testinstructions = require("../model/instruction");
 const Results = require("../model/Results");
 const questionCollections = require("../model/questionCollections");
 const questionPaper = require("../model/questionPaper");
+//import jwt token for login 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+// import validations 
 const {
   studentloginValidation,
   questionCollectionsValidation,
@@ -20,7 +23,7 @@ const {
   collegeRegisterValidation,
   tpoRegisterValidation,
   loginValidation,
-} = require("../validation");
+} = require("../config/validation");
 const verify = require("./verifyToken");
 
 //Admin Register

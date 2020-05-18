@@ -1,31 +1,4 @@
-.navbar-custom {
-  background-color: #0c3c60;
-  height: 90px;
-  position: fixed;
-  top:0px;
-  left: 0px;
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-}
-
-.head {
-  position: relative;
-  top: 13px;
-  width: 65%;
-  height: 65%;
-}
-
-.logo {
-  position: relative;
-  top: 10px;
-  border: 1px solid black;
-  height: 90px;
-  text-align: center;
-  width: 90px;
-  left: 150px;
-  background-color: white;
-}
+/*
 .footer-custom {
   background-color: #0c3c60;
   height: 50px;
@@ -126,7 +99,7 @@
   z-index: -1;
   margin: 10px 50px;
   /* margin: 0px 15px; */
-  top: 1rem;
+ /* top: 1rem;
 }
 .text1 {
   position: relative;
@@ -166,95 +139,4 @@
   background-color: white;
   margin: 100px 0px;
 }
-
-html,
-body {
-  position: relative;
-  height: 100%;
-}
-
-.login-container ,.register-container {
-  width: 320px;
-  height: 430px;
-  position:fixed;
-  margin: 180px auto;
-  padding: 20px 40px 40px;
-  background: whitesmoke;
-  box-shadow: 8px 8px 8px 8px #d1e0eb;
-  border: 1px solid #ccc;
-}
-
-<<<<<<< HEAD
-=======
-.AdminReg {
-  
-  width: 400px;
-  height: 540px;
-  
-}
-.StudentReg{
-  height:710px;
-}
-
-.TpoReg{
- height:690px;
-}
-
->>>>>>> 553a4080766740ffa54e47ccba31648b3e7a1fbc
-.avatar {
-  width: 110px;
-  height: 110px;
-  margin: 10px auto 30px;
-  border-radius: 100%;
-  border: 2px solid rgb(12, 60, 96);
-  background-size: cover;
-  background-color: white;
-}
-
-.userimg {
-  border-radius: 100%;
-}
-.text {
-  font-size: 20px;
-  font-style: italic;
-  font-weight: bold;
-  color: #0c3c60;
-  text-align:center;
-}
-
-.form-box input {
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  margin-top: 20px;
-  height: 40px;
-  border: 1px solid #ccc;
-  background: #fafafa;
-}
-
-.form-box input:focus {
-  outline: 0;
-}
-
-.form-box input[type="text"] {
-  border-radius: 5px;
-  text-transform: lowercase;
-}
-
-.form-box input[type="password"] {
-  border-radius: 5px;
-}
-
-.form-box button.login {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #0c3c60;
-}
-
-div.anc,
-a.anc {
-  margin-top: 7px;
-  color: #0c3c60;
-  font-size: 17px;
-  text-decoration: none;
-}
+*/

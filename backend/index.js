@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); //The Express is a web framwork for nodejs that provide small, robust tooling for HTTP servers, making it a great solution for single page applications, web sites, hybrids, or public HTTP APIs.
 const app = express();
 const logger = require("./config/logger");
 const volleyball = require("volleyball");
@@ -20,7 +20,7 @@ mongoose.connect(
 
 //Import Routes
 const authRoute = require("./routes/auth");
-const resetPasswordRoute = require("./routes/ResetPassword");
+//const resetPasswordRoute = require("./routes/ResetPassword");
 
 //Middleware
 app.use(function (req, res, next) {
@@ -37,6 +37,6 @@ app.use(express.json());
 
 //Route Middlewares
 app.use("/", authRoute);
-app.use("/", resetPasswordRoute);
+//app.use("/", resetPasswordRoute);
 
 module.exports = app;

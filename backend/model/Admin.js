@@ -19,13 +19,13 @@ const adminSchema = new mongoose.Schema({
     max: 1024,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
     min: 10,
   },
   resetLink: {
     type: String,
     default: "",
-  }
+  },
 });
 module.exports = mongoose.model("Admin", adminSchema);

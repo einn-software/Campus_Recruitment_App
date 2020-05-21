@@ -6,6 +6,18 @@ mongo --quiet <<EOF
     db.colleges.deleteMany({});
     db.students.deleteMany({});
     db.questioncollections.deleteMany({});
+    db.admins.deleteMany({});
+    db.instructions.deleteMany({});
+    db.results.deleteMany({});
+    db.tpos.deleteMany({});
+
+    db.admins.insertOne({
+         'name': 'Sanyam',
+         'email': 'sanyam009@gmail.com',
+         'password': 'sanyam11',
+         'phone': 8090889989,
+});
+
     db.colleges.insertOne({
          'name': 'Nitra Technical Campus',
          'email': 'nitra802@ntc.ac.in',
@@ -14,48 +26,23 @@ mongo --quiet <<EOF
          'code' : 802,
          'address': 'Sanjay Nagar, Ghaziabad'
 });
+
+    db.instructions.insertMany([
+    {
+          'college_code':902,
+          'message':"Einn Recruitment ",
+          'date' : "20/05/2020" 
+
+    },
+    
+    {
+          'college_code':234,
+          'message':"iriscon Recruitment ",
+          'date' : "27/05/2020" 
+
+    }
+]);
    
-    db.students.insertMany([
-{
-         'name': 'Shikha Gupta',
-         'email': 'gshikha912@gmail.com',
-         'password': 'shikha2611',
-         'phone': 6676789007,
-         'roll' : 1680210676,
-         'branch':'Computer science and engineering',
-         'college':'Nitra Technical Campus'
-
-},
-{
-         'name': 'Riya Singhal',
-         'email': 'riasinghal@gmail.com',
-         'password': 'ria2611',
-         'phone': 8809079567,
-         'roll' : 1680210025,
-         'branch':'Computer science and engineering',
-         'college':'Nitra Technical Campus'
-
-},
-{
-         'name': 'Shresthdeep Gupta',
-         'email': 'shresth@gmail.com',
-         'password': 'shresth2611',
-         'phone': 6676779007,
-         'roll' : 1680210690,
-         'branch':'Computer science and engineering',
-         'college':'Nitra Technical Campus'
-
-},
-{
-         'name': 'Suchitra Singh',
-         'email': 'suchitra@gmail.com',
-         'password': 'suchitra2611',
-         'phone': 6676789907,
-         'roll' : 1680210677,
-         'branch':'Computer science and engineering',
-         'college':'Nitra Technical Campus'
-
-}]);
 
    db.questioncollections.insertMany([
 {
@@ -319,6 +306,95 @@ mongo --quiet <<EOF
           'weight':5       
 
 }]);
+
+    db.results.insertMany([
+    {
+           'roll':1680210676,
+           'question_paper_id':56789,
+           'question_attempt':'twelve',
+           'correct_attempt':'seven',
+           'total_marks_scored':35
+
+    },
+    {
+           'roll':1680210676,
+           'question_paper_id':56789,
+           'question_attempt':'twelve',
+           'correct_attempt':'seven',
+           'total_marks_scored':35
+
+    },
+    {
+           'roll':1680210025,
+           'question_paper_id':56789,
+           'question_attempt':'sixteen',
+           'correct_attempt':'fifteen',
+           'total_marks_scored':75
+
+    },
+    {
+           'roll':1680210690,
+           'question_paper_id':56789,
+           'question_attempt':'eighteen',
+           'correct_attempt':'twelve',
+           'total_marks_scored':60
+
+    }
+]);
+
+    db.students.insertMany([
+{
+         'name': 'Shikha Gupta',
+         'email': 'gshikha912@gmail.com',
+         'password': 'shikha2611',
+         'phone': 6676789007,
+         'roll' : 1680210676,
+         'branch':'Computer science and engineering',
+         'college':'Nitra Technical Campus'
+
+},
+{
+         'name': 'Riya Singhal',
+         'email': 'riasinghal@gmail.com',
+         'password': 'ria2611',
+         'phone': 8809079567,
+         'roll' : 1680210025,
+         'branch':'Computer science and engineering',
+         'college':'Nitra Technical Campus'
+
+},
+{
+         'name': 'Shresthdeep Gupta',
+         'email': 'shresth@gmail.com',
+         'password': 'shresth2611',
+         'phone': 6676779007,
+         'roll' : 1680210690,
+         'branch':'Computer science and engineering',
+         'college':'Nitra Technical Campus'
+
+},
+{
+         'name': 'Suchitra Singh',
+         'email': 'suchitra@gmail.com',
+         'password': 'suchitra2611',
+         'phone': 6676789907,
+         'roll' : 1680210677,
+         'branch':'Computer science and engineering',
+         'college':'Nitra Technical Campus'
+
+}]);
+
+
+     db.tpos.insertOne({
+         'name': 'Anand',
+         'email': 'anand@gmail.com',
+         'password': 'anand344',
+         'phone': 6676789987,
+         'designation':'Head of Department',
+         'college':'Nitra Technical Campus',
+         'college_code':'802'
+});
+
    
   
 EOF

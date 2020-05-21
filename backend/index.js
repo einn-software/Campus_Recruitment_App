@@ -2,10 +2,16 @@ const express = require("express"); //The Express is a web framwork for nodejs t
 
 const logger = require("./config/logger");
 const volleyball = require("volleyball");
+<<<<<<< HEAD
 const mongoose = require("mongoose");
 const dotenv = require("dotenv"); // importing all the configurations from .env file
 const app = express(); // Create the Express application
 dotenv.config(); // Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+=======
+const mongoose = require("mongoose"); // provide structre to to the documents  
+const dotenv = require("dotenv");
+dotenv.config();  
+>>>>>>> e1157c5b622ef85f00ff9f2510eb2524cc82835e
 
 //Connect to MongoDB
 mongoose.connect(process.env.DB_CONNECT, {

@@ -325,6 +325,7 @@
 {"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzQ0MTB9.OKidgm1zj33JPq_JMsPXZ2AdPYg8-b1lQI7ccLA75rk\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T04:00:10.866Z"}
 {"level":"info","timestamp":"2020-05-18T04:27:24.217Z"}
 {"message":"{\"message\":\"Recovery email sent, Please check your email inbox and spam folder\",\"Status_code\":200}","level":"info","timestamp":"2020-05-18T04:27:27.376Z"}
+<<<<<<< HEAD
 {"level":"info","timestamp":"2020-05-18T06:32:27.576Z"}
 {"message":{"error":{"_original":{"password":"RiyaSinghal"},"details":[{"message":"\"email\" is required","path":["email"],"type":"any.required","context":{"label":"email","key":"email"}}]},"statusCode":400},"level":"info","timestamp":"2020-05-18T06:32:27.641Z"}
 {"message":"{\"error\":{\"_original\":{\"password\":\"RiyaSinghal\"},\"details\":[{\"message\":\"\\\"email\\\" is required\",\"path\":[\"email\"],\"type\":\"any.required\",\"context\":{\"label\":\"email\",\"key\":\"email\"}}]},\"statusCode\":400}","level":"info","timestamp":"2020-05-18T06:32:27.643Z"}
@@ -409,3 +410,10 @@
 {"level":"info","timestamp":"2020-05-21T03:39:00.799Z"}
 {"message":{"resetLink":"","_id":"5ec5f7d54f414234041bc446","name":"Riya Singhal","email":"sghihjgjn231@gmail.com","password":"$2a$10$WJwc1qayr/c6.KSCxgR3Quod6wUfBfABAZiyA2mr7IguZ8yuNgjKm","phone":14236,"__v":0},"level":"info","timestamp":"2020-05-21T03:39:01.091Z"}
 {"message":"{\"resetLink\":\"\",\"_id\":\"5ec5f7d54f414234041bc446\",\"name\":\"Riya Singhal\",\"email\":\"sghihjgjn231@gmail.com\",\"password\":\"$2a$10$WJwc1qayr/c6.KSCxgR3Quod6wUfBfABAZiyA2mr7IguZ8yuNgjKm\",\"phone\":14236,\"__v\":0}","level":"info","timestamp":"2020-05-21T03:39:01.092Z"}
+=======
+{"level":"info","timestamp":"2020-05-18T10:12:44.669Z"}
+{"message":{"resetLink":"","_id":"5ec25f9d982ac319a8f55c5a","name":"heyoooo","email":"heyoo000@gmail.com","password":"$2a$10$PO2M7Qw9eLg4Oantw3cLCO7hjQJNldD35cxtYpOgnVsPS7w2uoK8G","phone":64656546464,"__v":0},"level":"info","timestamp":"2020-05-18T10:12:45.159Z"}
+{"message":"{\"resetLink\":\"\",\"_id\":\"5ec25f9d982ac319a8f55c5a\",\"name\":\"heyoooo\",\"email\":\"heyoo000@gmail.com\",\"password\":\"$2a$10$PO2M7Qw9eLg4Oantw3cLCO7hjQJNldD35cxtYpOgnVsPS7w2uoK8G\",\"phone\":64656546464,\"__v\":0}","level":"info","timestamp":"2020-05-18T10:12:45.162Z"}
+{"level":"info","timestamp":"2020-05-18T10:12:45.168Z"}
+{"message":"{\"level\":\"info\"}","level":"info","timestamp":"2020-05-18T10:12:45.168Z"}
+>>>>>>> e1157c5b622ef85f00ff9f2510eb2524cc82835e

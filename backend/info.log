@@ -325,3 +325,87 @@
 {"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzQ0MTB9.OKidgm1zj33JPq_JMsPXZ2AdPYg8-b1lQI7ccLA75rk\",\"statusCode\":400}","level":"info","timestamp":"2020-05-18T04:00:10.866Z"}
 {"level":"info","timestamp":"2020-05-18T04:27:24.217Z"}
 {"message":"{\"message\":\"Recovery email sent, Please check your email inbox and spam folder\",\"Status_code\":200}","level":"info","timestamp":"2020-05-18T04:27:27.376Z"}
+{"level":"info","timestamp":"2020-05-18T06:32:27.576Z"}
+{"message":{"error":{"_original":{"password":"RiyaSinghal"},"details":[{"message":"\"email\" is required","path":["email"],"type":"any.required","context":{"label":"email","key":"email"}}]},"statusCode":400},"level":"info","timestamp":"2020-05-18T06:32:27.641Z"}
+{"message":"{\"error\":{\"_original\":{\"password\":\"RiyaSinghal\"},\"details\":[{\"message\":\"\\\"email\\\" is required\",\"path\":[\"email\"],\"type\":\"any.required\",\"context\":{\"label\":\"email\",\"key\":\"email\"}}]},\"statusCode\":400}","level":"info","timestamp":"2020-05-18T06:32:27.643Z"}
+{"level":"info","timestamp":"2020-05-18T06:38:15.276Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sing231@gmail.com\",\"password\":\"riya\",\"phone\":\"1478965236\"},\"details\":[{\"message\":\"\\\"password\\\" length must be at least 6 characters long\",\"path\":[\"password\"],\"type\":\"string.min\",\"context\":{\"limit\":6,\"value\":\"riya\",\"label\":\"password\",\"key\":\"password\"}}]},\"Status_code\":400}","level":"info","timestamp":"2020-05-18T06:38:15.345Z"}
+{"level":"info","timestamp":"2020-05-18T06:43:44.036Z"}
+{"message":"{\"error\":\"\\\"password\\\" length must be at least 6 characters long\",\"Status_code\":400}","level":"info","timestamp":"2020-05-18T06:43:44.097Z"}
+{"level":"info","timestamp":"2020-05-18T06:50:55.970Z"}
+{"level":"info","timestamp":"2020-05-18T06:55:07.994Z"}
+{"level":"info","timestamp":"2020-05-18T07:00:08.601Z"}
+{"level":"info","timestamp":"2020-05-18T07:00:40.447Z"}
+{"level":"info","timestamp":"2020-05-18T07:03:21.406Z"}
+{"level":"info","timestamp":"2020-05-18T07:04:02.456Z"}
+{"level":"info","timestamp":"2020-05-18T07:05:41.882Z"}
+{"level":"info","timestamp":"2020-05-18T07:07:55.225Z"}
+{"level":"info","timestamp":"2020-05-18T07:15:57.508Z"}
+{"level":"info","timestamp":"2020-05-18T07:27:50.519Z"}
+{"level":"info","timestamp":"2020-05-18T07:28:08.034Z"}
+{"level":"info","timestamp":"2020-05-18T08:30:29.557Z"}
+{"message":{"savedUser":{"resetLink":"","_id":"5ec247a5ef425c353c20d183","name":"Riya Singhal","email":"sing231@gmail.com","password":"$2a$10$kJo4ET6v9r9G.JfWLR1eVueEurCoPcRD8SZlLbG66TPu.4yVxSGUK","phone":1478965236,"__v":0},"Status_code":200},"level":"info","timestamp":"2020-05-18T08:30:29.820Z"}
+{"message":"{\"savedUser\":{\"resetLink\":\"\",\"_id\":\"5ec247a5ef425c353c20d183\",\"name\":\"Riya Singhal\",\"email\":\"sing231@gmail.com\",\"password\":\"$2a$10$kJo4ET6v9r9G.JfWLR1eVueEurCoPcRD8SZlLbG66TPu.4yVxSGUK\",\"phone\":1478965236,\"__v\":0},\"Status_code\":200}","level":"info","timestamp":"2020-05-18T08:30:29.822Z"}
+{"level":"info","timestamp":"2020-05-18T08:34:18.563Z"}
+{"message":{"response":{"resetLink":"","_id":"5ec2488a1bb40122144e5447","name":"Riya Singhal","email":"sin231@gmail.com","password":"$2a$10$UKb14uspSJoI/f0xzs.jS.RlPs8zY9PQEtyqxP28syGQgs9CFjp1u","phone":1478965236,"__v":0},"Status_code":200},"level":"info","timestamp":"2020-05-18T08:34:18.827Z"}
+{"level":"info","timestamp":"2020-05-18T09:00:00.680Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3OTI0MDB9.-SkqKgiB79rm9aFvSKVg6TIouPzUzuttfUH5NhE-nPM","Status_code":200},"level":"info","timestamp":"2020-05-18T09:00:00.967Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3OTI0MDB9.-SkqKgiB79rm9aFvSKVg6TIouPzUzuttfUH5NhE-nPM\",\"Status_code\":200}","level":"info","timestamp":"2020-05-18T09:00:00.968Z"}
+{"level":"info","timestamp":"2020-05-18T09:00:35.792Z"}
+{"message":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3OTI0MzV9.5nksv5Am0hZVchY7h5C5n538oldiUDKtZYeR44qm5J4","Status_code":200},"level":"info","timestamp":"2020-05-18T09:00:35.954Z"}
+{"message":"{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3OTI0MzV9.5nksv5Am0hZVchY7h5C5n538oldiUDKtZYeR44qm5J4\",\"Status_code\":200}","level":"info","timestamp":"2020-05-18T09:00:35.955Z"}
+{"level":"info","timestamp":"2020-05-18T09:01:44.771Z"}
+{"message":"{\"statusCode\":200,\"data\":{\"resetLink\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzYwNDQsImV4cCI6MTU4OTc3NzI0NH0.fWO9gm8m5_pwW3G5rqcQin_s6ZoAgTki7QoFzDIb8Yk\",\"_id\":\"5ebb52600bf9ce0a4ca3b2f6\",\"name\":\"Riya Singhal\",\"email\":\"riya.singhal@einn.in\",\"password\":\"$2b$10$zkxW6ckMQCaVIPiV3ThopO.pVmUHSSDpQaDjjzgS5pOroJPuWZ5/6\",\"phone\":1478965236,\"date\":\"2020-05-13T01:50:24.821Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-18T09:01:44.803Z"}
+{"level":"info","timestamp":"2020-05-18T09:02:14.197Z"}
+{"message":"{\"results\":{\"resetLink\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWJiNTI2MDBiZjljZTBhNGNhM2IyZjYiLCJpYXQiOjE1ODk3NzYwNDQsImV4cCI6MTU4OTc3NzI0NH0.fWO9gm8m5_pwW3G5rqcQin_s6ZoAgTki7QoFzDIb8Yk\",\"_id\":\"5ebb52600bf9ce0a4ca3b2f6\",\"name\":\"Riya Singhal\",\"email\":\"riya.singhal@einn.in\",\"password\":\"$2b$10$zkxW6ckMQCaVIPiV3ThopO.pVmUHSSDpQaDjjzgS5pOroJPuWZ5/6\",\"phone\":1478965236,\"date\":\"2020-05-13T01:50:24.821Z\",\"__v\":0},\"statusCode\":200}","level":"info","timestamp":"2020-05-18T09:02:14.248Z"}
+{"level":"info","timestamp":"2020-05-18T09:33:18.588Z"}
+{"message":"{\"success\":1,\"data\":{\"_id\":\"5eba2739615d7a16d459c78a\",\"roll\":123456,\"question_paper_id\":456789,\"question_attempt\":\"5\",\"correct_attempt\":\"20\",\"total_marks_scored\":9,\"date\":\"2020-05-12T04:34:01.908Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-18T09:33:18.705Z"}
+{"level":"info","timestamp":"2020-05-18T09:33:36.495Z"}
+{"message":"{\"success\":1,\"data\":{\"_id\":\"5eba2739615d7a16d459c78a\",\"roll\":123456,\"question_paper_id\":456789,\"question_attempt\":\"5\",\"correct_attempt\":\"20\",\"total_marks_scored\":9,\"date\":\"2020-05-12T04:34:01.908Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-18T09:33:36.529Z"}
+{"level":"info","timestamp":"2020-05-18T09:33:51.862Z"}
+{"message":"{\"success\":1,\"data\":{\"_id\":\"5eba2739615d7a16d459c78a\",\"roll\":123456,\"question_paper_id\":456789,\"question_attempt\":\"5\",\"correct_attempt\":\"20\",\"total_marks_scored\":9,\"date\":\"2020-05-12T04:34:01.908Z\",\"__v\":0}}","level":"info","timestamp":"2020-05-18T09:33:51.892Z"}
+{"level":"info","timestamp":"2020-05-18T10:16:13.707Z"}
+{"message":"Access Denied","level":"info","timestamp":"2020-05-18T10:16:13.748Z"}
+{"level":"info","timestamp":"2020-05-18T10:17:00.960Z"}
+{"message":"Access Denied","level":"info","timestamp":"2020-05-18T10:17:00.963Z"}
+{"level":"info","timestamp":"2020-05-20T07:35:26.178Z"}
+{"message":{"user":{"resetLink":"","_id":"5ec4ddbe7676ac25507e8433","name":"Riya Singhal","email":"sghin231@gmail.com","password":"$2a$10$OzUUmrAvtheO3I8JwkRnnOXk0AYFgPYNx8kiqjcSPUqQFHOung15.","phone":1478965236,"__v":0},"Status_code":200},"level":"info","timestamp":"2020-05-20T07:35:26.595Z"}
+{"message":"{\"user\":{\"resetLink\":\"\",\"_id\":\"5ec4ddbe7676ac25507e8433\",\"name\":\"Riya Singhal\",\"email\":\"sghin231@gmail.com\",\"password\":\"$2a$10$OzUUmrAvtheO3I8JwkRnnOXk0AYFgPYNx8kiqjcSPUqQFHOung15.\",\"phone\":1478965236,\"__v\":0},\"Status_code\":200}","level":"info","timestamp":"2020-05-20T07:35:26.596Z"}
+{"level":"info","timestamp":"2020-05-20T07:35:38.605Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sghin231@gmail.com\",\"phone\":\"1478965236\"},\"details\":[{\"message\":\"\\\"password\\\" is required\",\"path\":[\"password\"],\"type\":\"any.required\",\"context\":{\"label\":\"password\",\"key\":\"password\"}}]},\"Status_code\":400}","level":"info","timestamp":"2020-05-20T07:35:38.616Z"}
+{"level":"info","timestamp":"2020-05-20T07:37:47.559Z"}
+{"level":"info","timestamp":"2020-05-20T07:38:27.129Z"}
+{"message":"{\"status\":\"fail\",\"message\":\"Can't find /rgister/admin on this server!\"}","level":"info","timestamp":"2020-05-20T07:38:27.156Z"}
+{"level":"info","timestamp":"2020-05-20T07:38:43.451Z"}
+{"message":"{\"status\":\"fail\",\"message\":\"Can't find /register/admin on this server!\"}","level":"info","timestamp":"2020-05-20T07:38:43.455Z"}
+{"level":"info","timestamp":"2020-05-20T07:38:50.653Z"}
+{"message":"{\"status\":\"fail\",\"message\":\"Can't find /register/admin on this server!\"}","level":"info","timestamp":"2020-05-20T07:38:50.655Z"}
+{"level":"info","timestamp":"2020-05-21T02:54:36.931Z"}
+{"message":"{\"status\":\"fail\",\"message\":\"Can't find /register/admin on this server!\"}","level":"info","timestamp":"2020-05-21T02:54:37.031Z"}
+{"level":"info","timestamp":"2020-05-21T02:55:23.427Z"}
+{"message":"{\"error\":\"Email already exist\",\"Status_code\":400}","level":"info","timestamp":"2020-05-21T02:55:23.511Z"}
+{"level":"info","timestamp":"2020-05-21T02:55:56.254Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sghin231@gmail.com\",\"phone\":\"1478965236\"},\"details\":[{\"message\":\"\\\"password\\\" is required\",\"path\":[\"password\"],\"type\":\"any.required\",\"context\":{\"label\":\"password\",\"key\":\"password\"}}]},\"Status_code\":400}","level":"info","timestamp":"2020-05-21T02:55:56.288Z"}
+{"level":"info","timestamp":"2020-05-21T02:59:14.933Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sghin231@gmail.com\",\"phone\":\"1478965236\"},\"details\":[{\"message\":\"\\\"password\\\" is required\",\"path\":[\"password\"],\"type\":\"any.required\",\"context\":{\"label\":\"password\",\"key\":\"password\"}}]}}","level":"info","timestamp":"2020-05-21T02:59:14.970Z"}
+{"level":"info","timestamp":"2020-05-21T03:01:44.453Z"}
+{"message":"{\"error\":\"Email already exist\",\"Status_code\":400}","level":"info","timestamp":"2020-05-21T03:01:44.511Z"}
+{"level":"info","timestamp":"2020-05-21T03:02:16.112Z"}
+{"level":"info","timestamp":"2020-05-21T03:02:40.871Z"}
+{"level":"info","timestamp":"2020-05-21T03:02:40.924Z"}
+{"level":"info","timestamp":"2020-05-21T03:08:43.192Z"}
+{"message":"{\"error\":\"Email already exist\",\"Status_code\":400}","level":"info","timestamp":"2020-05-21T03:08:43.239Z"}
+{"level":"info","timestamp":"2020-05-21T03:08:49.232Z"}
+{"message":{"resetLink":"","_id":"5ec5f0c1d1d2e531e8d9611d","name":"Riya Singhal","email":"sghihjgn231@gmail.com","password":"$2a$10$HWVoOlaigJfEjgqBGwwbJuJrI/pTenX0TyDCbR3/U4osLZ9BvH1bO","phone":14236,"__v":0},"level":"info","timestamp":"2020-05-21T03:08:49.378Z"}
+{"message":"{\"resetLink\":\"\",\"_id\":\"5ec5f0c1d1d2e531e8d9611d\",\"name\":\"Riya Singhal\",\"email\":\"sghihjgn231@gmail.com\",\"password\":\"$2a$10$HWVoOlaigJfEjgqBGwwbJuJrI/pTenX0TyDCbR3/U4osLZ9BvH1bO\",\"phone\":14236,\"__v\":0}","level":"info","timestamp":"2020-05-21T03:08:49.380Z"}
+{"level":"info","timestamp":"2020-05-21T03:09:06.982Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sghihjgbjn231@gmail.com\",\"password\":\"bckzd\",\"phone\":\"14236\"},\"details\":[{\"message\":\"\\\"password\\\" length must be at least 6 characters long\",\"path\":[\"password\"],\"type\":\"string.min\",\"context\":{\"limit\":6,\"value\":\"bckzd\",\"label\":\"password\",\"key\":\"password\"}}]}}","level":"info","timestamp":"2020-05-21T03:09:06.988Z"}
+{"level":"info","timestamp":"2020-05-21T03:09:49.968Z"}
+{"level":"info","timestamp":"2020-05-21T03:09:56.724Z"}
+{"message":"{\"error\":{\"_original\":{\"name\":\"Riya Singhal\",\"email\":\"sghihjgbjn231@gmail.com\",\"password\":\"bckzd\",\"phone\":\"14236\"},\"details\":[{\"message\":\"\\\"password\\\" length must be at least 6 characters long\",\"path\":[\"password\"],\"type\":\"string.min\",\"context\":{\"limit\":6,\"value\":\"bckzd\",\"label\":\"password\",\"key\":\"password\"}}]}}","level":"info","timestamp":"2020-05-21T03:09:56.727Z"}
+{"level":"info","timestamp":"2020-05-21T03:38:26.424Z"}
+{"message":{"resetLink":"","_id":"5ec5f7b2b71fa523ac9c8a55","name":"Riya Singhal","email":"sghihjgbjn231@gmail.com","password":"$2a$10$n6lwhDeQBGOxbDQLzoPIqupZzGk6GP2i.nwTbNQInI/5unB.AdxrK","phone":14236,"__v":0},"level":"info","timestamp":"2020-05-21T03:38:26.744Z"}
+{"message":"{\"resetLink\":\"\",\"_id\":\"5ec5f7b2b71fa523ac9c8a55\",\"name\":\"Riya Singhal\",\"email\":\"sghihjgbjn231@gmail.com\",\"password\":\"$2a$10$n6lwhDeQBGOxbDQLzoPIqupZzGk6GP2i.nwTbNQInI/5unB.AdxrK\",\"phone\":14236,\"__v\":0}","level":"info","timestamp":"2020-05-21T03:38:26.746Z"}
+{"level":"info","timestamp":"2020-05-21T03:39:00.799Z"}
+{"message":{"resetLink":"","_id":"5ec5f7d54f414234041bc446","name":"Riya Singhal","email":"sghihjgjn231@gmail.com","password":"$2a$10$WJwc1qayr/c6.KSCxgR3Quod6wUfBfABAZiyA2mr7IguZ8yuNgjKm","phone":14236,"__v":0},"level":"info","timestamp":"2020-05-21T03:39:01.091Z"}
+{"message":"{\"resetLink\":\"\",\"_id\":\"5ec5f7d54f414234041bc446\",\"name\":\"Riya Singhal\",\"email\":\"sghihjgjn231@gmail.com\",\"password\":\"$2a$10$WJwc1qayr/c6.KSCxgR3Quod6wUfBfABAZiyA2mr7IguZ8yuNgjKm\",\"phone\":14236,\"__v\":0}","level":"info","timestamp":"2020-05-21T03:39:01.092Z"}

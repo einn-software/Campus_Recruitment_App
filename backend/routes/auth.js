@@ -17,7 +17,7 @@ const {
   questionCollectionsValidation,
   questionPaperValidation,
   ResultsValidation,
-  testinstructionsValidation,
+  instructionsValidation,
   adminRegisterValidation,
   studentRegisterValidation,
   collegeRegisterValidation,
@@ -607,11 +607,11 @@ router.delete("/student", verify, function (req, res, next) {
     });
 });
 
-//testinstructions
+//instructions
 
 router.post("/instruction", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-  const { error } = testinstructionsValidation(req.body);
+  const { error } = instructionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the college is already in the database

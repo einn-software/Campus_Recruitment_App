@@ -1,7 +1,5 @@
 const router = require("express").Router();
-var session = require("express-session");
-const redis = require("redis");
-const connectRedis = require("connect-redis");
+
 //import models
 const Admin = require("../model/Admin");
 const College = require("../model/College");
@@ -11,15 +9,11 @@ const testinstructions = require("../model/instruction");
 const Results = require("../model/Results");
 const questionCollections = require("../model/questionCollections");
 const questionPaper = require("../model/questionPaper");
+
 //import jwt token for login
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const express = require("express");
-const app = express();
-const {
-  hashSync,
-  genSaltSync
-} = require("bcrypt");
+
 // import validations
 const {
   studentloginValidation,
@@ -33,47 +27,14 @@ const {
   tpoRegisterValidation,
   loginValidation,
 } = require("../config/validation");
-app.use(session({
-  secret: "ssshhhhh"
-}));
+
 const verify = require("../config/verifyToken");
-const RedisStore = connectRedis(session);
 
-// 1 configure our redis
-const redisClient = redis.createClient({
-  port: 3000,
-  host: "localhost",
-});
-
-// 2. configure session middleware
-app.use(
-  session({
-    store: new RedisStore({
-      client: redisClient
-    }),
-    secret: "mySecret",
-    saveUninitialized: false,
-    resave: false,
-    cookie: {
-      secure: false, // if true: only transmit cookie over https
-      httpOnly: true, // if true: prevents client side JS from reading the cookie
-      maxAge: 1000 * 60 * 30, // session max age in milliseconds
-    },
-  })
-);
-
-const error = (req, res, next) => {
-  (status = res.status), (error_info = res.body.details);
-};
 //Admin Register
 router.post("/register/admin", async (req, res, next) => {
   //LETS VALIDATE THE DATA BEFORE WE MAKE A Admin
-  const {
-    error
-  } = adminRegisterValidation(req.body);
-  if (error) return res.status(400).json({
-    error
-  });
+  const { error } = adminRegisterValidation(req.body);
+  if (error) return res.status(400).json({ error });
 
   //Checking if the admin is already in the database
   const emailExist = await Admin.findOne({
@@ -109,9 +70,7 @@ router.post("/register/admin", async (req, res, next) => {
 
 //LOGIN ADMIN
 router.post("/login/admin", async (req, res) => {
-  const {
-    error
-  } = loginValidation(req.body);
+  const { error } = loginValidation(req.body);
   if (error)
     return res.status(400).json({
       error: error.details[0].message,
@@ -137,15 +96,12 @@ router.post("/login/admin", async (req, res) => {
     });
 
   //Create and assign a token
-  const token = jwt.sign({
+  const token = jwt.sign(
+    {
       _id: admin._id,
     },
     process.env.TOKEN_SECRET
   );
-  res.session.email = req.body.email;
-  req.session.Id = req.admin._id;
-  req.session.token = token;
-  req.session.user_type = admin;
   res.status(200).header("auth-token", token).send({
     token: token,
     Status_code: 200,
@@ -156,7 +112,8 @@ router.post("/login/admin", async (req, res) => {
 
 router.get("/admin", verify, async (req, res) => {
   const id = req.user._id;
-  Admin.findOne({
+  Admin.findOne(
+    {
       _id: id,
     },
     (err, results) => {
@@ -174,7 +131,7 @@ router.get("/admin", verify, async (req, res) => {
         });
       }
       return res.json({
-        data: req.session,
+        data: results,
         statusCode: 200,
       });
     }
@@ -189,11 +146,12 @@ router.put("/admin", verify, function (req, res) {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(body.password, salt);
   body.password = hashedPassword;
-  Admin.findOneAndUpdate({
-        _id: id,
-      },
-      body
-    )
+  Admin.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    body
+  )
     .then((College) => {
       if (!College) {
         return res.json({
@@ -236,9 +194,7 @@ router.delete("/admin", verify, function (req, res) {
 //College Register
 router.post("/register/college", async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE MAKE A college user
-  const {
-    error
-  } = collegeRegisterValidation(req.body);
+  const { error } = collegeRegisterValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the college is already in the database
@@ -270,9 +226,7 @@ router.post("/register/college", async (req, res) => {
 
 // LOGIN COLLEGE
 router.post("/login/college", async (req, res) => {
-  const {
-    error
-  } = loginValidation(req.body);
+  const { error } = loginValidation(req.body);
   if (error)
     return res
       .status(400)
@@ -289,7 +243,8 @@ router.post("/login/college", async (req, res) => {
   if (!validPass) return res.status(400).send("Invalid password");
 
   //Create and assign a token
-  const token = jwt.sign({
+  const token = jwt.sign(
+    {
       _id: college._id,
       name: college.name,
       email: college.email,
@@ -308,7 +263,8 @@ router.post("/login/college", async (req, res) => {
 
 router.get("/college", verify, async (req, res) => {
   const id = req.user._id;
-  College.findOne({
+  College.findOne(
+    {
       _id: id,
     },
     (err, results) => {
@@ -334,11 +290,12 @@ router.get("/college", verify, async (req, res) => {
 
 router.put("/college", verify, function (req, res, next) {
   const id = req.user._id;
-  College.findOneAndUpdate({
-        _id: id,
-      },
-      req.body
-    )
+  College.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    req.body
+  )
     .then((College) => {
       if (College === null) {
         return done(null, false, {
@@ -358,8 +315,8 @@ router.put("/college", verify, function (req, res, next) {
 router.delete("/college", verify, function (req, res, next) {
   const id = req.user._id;
   College.findOneAndRemove({
-      _id: id,
-    })
+    _id: id,
+  })
     .then((College) => {
       if (College === null) {
         return done(null, false, {
@@ -377,9 +334,7 @@ router.delete("/college", verify, function (req, res, next) {
 //TPO Register
 router.post("/register/tpo", async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo
-  const {
-    error
-  } = tpoRegisterValidation(req.body);
+  const { error } = tpoRegisterValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the tpo is already in the database
@@ -413,9 +368,7 @@ router.post("/register/tpo", async (req, res) => {
 //LOGIN TPO
 
 router.post("/login/tpo", async (req, res) => {
-  const {
-    error
-  } = loginValidation(req.body);
+  const { error } = loginValidation(req.body);
   if (error)
     return res
       .status(400)
@@ -432,7 +385,8 @@ router.post("/login/tpo", async (req, res) => {
   if (!validPass) return res.status(400).send("Invalid password");
 
   //Create and assign a token
-  const token = jwt.sign({
+  const token = jwt.sign(
+    {
       _id: tpo._id,
       name: tpo.name,
       email: tpo.email,
@@ -451,7 +405,8 @@ router.post("/login/tpo", async (req, res) => {
 
 router.get("/Tpo", verify, async (req, res) => {
   const id = req.user._id;
-  Tpo.findOne({
+  Tpo.findOne(
+    {
       _id: id,
     },
     (err, results) => {
@@ -477,11 +432,12 @@ router.get("/Tpo", verify, async (req, res) => {
 
 router.put("/tpo", verify, function (req, res, next) {
   const id = req.user._id;
-  Tpo.findOneAndUpdate({
-        _id: id,
-      },
-      req.body
-    )
+  Tpo.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    req.body
+  )
     .then((Tpo) => {
       if (Tpo === null) {
         return done(null, false, {
@@ -501,8 +457,8 @@ router.put("/tpo", verify, function (req, res, next) {
 router.delete("/tpo", verify, function (req, res, next) {
   const id = req.user._id;
   Tpo.findOneAndRemove({
-      _id: id,
-    })
+    _id: id,
+  })
     .then((Tpo) => {
       if (Tpo === null) {
         return done(null, false, {
@@ -520,9 +476,7 @@ router.delete("/tpo", verify, function (req, res, next) {
 //Student Register
 router.post("/register/student", async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
-  const {
-    error
-  } = studentRegisterValidation(req.body);
+  const { error } = studentRegisterValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the student is already in the database
@@ -561,9 +515,7 @@ router.post("/register/student", async (req, res) => {
 //Student LOGIN
 
 router.post("/login/student", async (req, res) => {
-  const {
-    error
-  } = studentloginValidation(req.body);
+  const { error } = studentloginValidation(req.body);
   if (error)
     return res.status(400).send({
       error: "Unable to login - something went wrong, please try again",
@@ -583,7 +535,8 @@ router.post("/login/student", async (req, res) => {
   if (!validPass) return res.status(400).send("Invalid password");
 
   //Create and assign a token
-  const token = jwt.sign({
+  const token = jwt.sign(
+    {
       _id: student._id,
     },
     process.env.TOKEN_SECRET
@@ -597,7 +550,8 @@ router.post("/login/student", async (req, res) => {
 
 router.get("/student", verify, function (req, res) {
   const id = req.user._id;
-  Student.findOne({
+  Student.findOne(
+    {
       _id: id,
     },
     (err, results) => {
@@ -623,11 +577,12 @@ router.get("/student", verify, function (req, res) {
 
 router.put("/student", verify, function (req, res, next) {
   const id = req.user._id;
-  Student.findOneAndUpdate({
-        _id: id,
-      },
-      req.body
-    )
+  Student.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    req.body
+  )
     .then((Student) => {
       if (Student === null) {
         return done(null, false, {
@@ -647,8 +602,8 @@ router.put("/student", verify, function (req, res, next) {
 router.delete("/student", verify, function (req, res, next) {
   const id = req.user._id;
   Student.findOneAndRemove({
-      _id: id,
-    })
+    _id: id,
+  })
     .then((Student) => {
       if (Student === null) {
         return done(null, false, {
@@ -665,16 +620,14 @@ router.delete("/student", verify, function (req, res, next) {
 
 //testinstructions
 
-router.post("/instruction", verify, async (req, res) => {
+router.post("/instructions", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-  const {
-    error
-  } = testinstructionsValidation(req.body);
+  const { error } = testinstructionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the college is already in the database
   const collegeExist = await testinstructions.findOne({
-    college_code: req.body.college_code,
+    code: req.body.code,
   });
   if (collegeExist) return res.status(400).send("College already exist");
 
@@ -682,51 +635,47 @@ router.post("/instruction", verify, async (req, res) => {
   const instructions = new testinstructions({
     college_code: req.body.college_code,
     message: req.body.message,
-    date: req.body.date,
+    year: req.body.year,
+    month: req.body.month,
+    day: req.body.day,
   });
   try {
     const instructions = await instructions.save();
-    res.send(instructions);
+    res.json(instructions);
   } catch (err) {
     res.status(400).send(err);
   }
 });
 
 //display test instructions
-router.get("/instruction/:college_code/:date", verify, async (req, res) => {
-  testinstructions.findOne({
-      college_code: req.params.college_code,
-      date: req.params.date,
+router.get("/instruction/:id", verify, async (req, res) => {
+  testinstructions.findOne(
+    {
+      _id: req.params.id,
     },
-    (err, results) => {
+    (err, response) => {
       if (err) {
         console.log(err);
         return;
       }
-      if (!results) {
+      if (!response) {
         return res.json({
           success: 0,
           message: "Record not Found",
         });
       }
-      return res.json({
-        success: 1,
-        instructions: results,
-      });
+      return res.json(response);
     }
   );
 });
 
 //Update instructions
 
-router.put("/instruction/:college_code/:date", verify, function (
-  req,
-  res,
-  next
-) {
+router.put("/instruction/:id", verify, function (req, res, next) {
   testinstructions
-    .findOneAndUpdate({
-        college_code: req.body.college_code,
+    .findOneAndUpdate(
+      {
+        _id: req.params.id,
       },
       req.body
     )
@@ -736,20 +685,20 @@ router.put("/instruction/:college_code/:date", verify, function (
           message: "Something went wrong , Please try again",
         });
       } else {
-        res.status(200).send("Instruction updated successfully");
+        res.status(200).json(data);
       }
     })
     .catch(() => {
-      res.status(400).send("Data not found");
+      res.status(400).json({ message: "Data not found" });
     });
 });
 
 // delete a instruction from the db
 
-router.delete("/instruction/:college_code/:date", verify, function (req, res) {
+router.delete("/instruction/:id", verify, function (req, res) {
   testinstructions
     .findOneAndRemove({
-      college_code: req.params.college_code,
+      _id: req.params.id,
     })
     .then((admin) => {
       if (admin === null) {
@@ -757,21 +706,19 @@ router.delete("/instruction/:college_code/:date", verify, function (req, res) {
           message: "Something went wrong , Please try again",
         });
       } else {
-        res.status(200).send("Instruction deleted successfully");
+        res.status(200).json({ message: "Instruction deleted successfully" });
       }
     })
     .catch(() => {
-      res.status(400).send("Data not found");
+      res.status(400).json({ message: "Data not found" });
     });
 });
 
 //Results
 
-router.post("/result", verify, async (req, res) => {
+router.post("/results", verify, async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE ADD A RESULT
-  const {
-    error
-  } = ResultsValidation(req.body);
+  const { error } = ResultsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the studentid is already in the database
@@ -783,7 +730,10 @@ router.post("/result", verify, async (req, res) => {
 
   // Create Result
   const Result = new Results({
+    student_id: req.body.student_id,
     roll: req.body.roll,
+    name: req.body.name,
+    code: req.body.code,
     question_paper_id: req.body.question_paper_id,
     question_attempt: req.body.question_attempt,
     correct_attempt: req.body.correct_attempt,
@@ -791,86 +741,44 @@ router.post("/result", verify, async (req, res) => {
   });
   try {
     const Result = await Result.save();
-    res.send(Result);
+    res.json(Result);
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).json(err);
   }
 });
 
 // display Results
 
-router.get("/result/:roll", verify, async (req, res) => {
-  Results.findOne({
-      roll: req.params.roll,
-    },
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      if (!results) {
-        return res.json({
-          success: 0,
-          message: "Record not Found",
-        });
-      }
-      return res.json({
-        success: 1,
-        data: results,
-      });
-    }
-  );
-});
-
-//Update result
-
-router.put("/result/:roll", verify, function (req, res, next) {
-  Results.findOneAndUpdate({
-        roll: req.params.roll,
+router.get(
+  "/colleges/:code/results/:question-paper-id",
+  verify,
+  async (req, res) => {
+    Results.findOne(
+      {
+        code: req.params.code,
+        question_paper_id: req.params.question - paper - id,
       },
-      req.body
-    )
-    .then((Result) => {
-      if (Result === null) {
-        return done(null, false, {
-          message: "Something went wrong , Please try again",
-        });
-      } else {
-        res.status(200).send(Result);
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        if (!results) {
+          return res.json({
+            message: "Record not Found",
+          });
+        }
+        return res.json({ results });
       }
-    })
-    .catch(() => {
-      res.status(400).send("Data not found");
-    });
-});
-
-// delete result from the db
-
-router.delete("/result/:roll", verify, function (req, res, next) {
-  Results.findOneAndRemove({
-      roll: req.params.roll,
-    })
-    .then((Result) => {
-      if (Result === null) {
-        return done(null, false, {
-          message: "Something went wrong , Please try again",
-        });
-      } else {
-        res.status(200).send("Successfully Deleted");
-      }
-    })
-    .catch(() => {
-      res.status(400).send("Data not found");
-    });
-});
+    );
+  }
+);
 
 //questionCollections
 
 router.post("/questioncollection", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
-  const {
-    error
-  } = questionCollectionsValidation(req.body);
+  const { error } = questionCollectionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   // Create a new questionCollection
   const questionCollection = new questionCollections({
@@ -893,7 +801,8 @@ router.post("/questioncollection", verify, async (req, res) => {
 //get questionCollections
 
 router.get("/questionCollection/:id", verify, async (req, res) => {
-  questionCollections.findOne({
+  questionCollections.findOne(
+    {
       _id: req.params.id,
     },
     (err, results) => {
@@ -919,7 +828,8 @@ router.get("/questionCollection/:id", verify, async (req, res) => {
 
 router.put("/questioncCollection/:id", verify, function (req, res, next) {
   questionCollections
-    .findByIdAndUpdate({
+    .findByIdAndUpdate(
+      {
         _id: req.params.id,
       },
       req.body
@@ -957,9 +867,7 @@ router.delete("/questionCollection/:id", verify, function (req, res, next) {
 
 router.post("/questionPaper", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
-  const {
-    error
-  } = questionPaperValidation(req.body);
+  const { error } = questionPaperValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the studentid is already in the database
@@ -988,7 +896,8 @@ router.post("/questionPaper", verify, async (req, res) => {
 //Get questionPaper
 
 router.get("/questionPaper/:college_code", verify, async (req, res) => {
-  questionPaper.findOne({
+  questionPaper.findOne(
+    {
       college_code: req.params.college_code,
     },
     (err, results) => {
@@ -1014,7 +923,8 @@ router.get("/questionPaper/:college_code", verify, async (req, res) => {
 
 router.put("/questionPaper/:college_code", verify, function (req, res, next) {
   questionPaper
-    .findOneAndUpdate({
+    .findOneAndUpdate(
+      {
         college_code: req.params.college_code,
       },
       req.body

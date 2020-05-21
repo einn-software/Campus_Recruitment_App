@@ -4,16 +4,19 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
     min: 6,
+    max:255
   },
   email: {
     type: String,
     required: true,
     min: 13,
+    max:255
   },
   password: {
     type: String,
     required: true,
     min: 6,
+    max:255
   },
   phone: {
     type: String,
@@ -22,7 +25,6 @@ const studentSchema = new mongoose.Schema({
   roll: {
     type: String,
     required: true,
-    unique: true,
   },
   branch: {
     type: String,

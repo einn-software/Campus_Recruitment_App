@@ -3,44 +3,47 @@ const studentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    min: 6
+    min: 6,
   },
   email: {
     type: String,
     required: true,
-    min: 6
+    min: 13,
   },
   password: {
     type: String,
     required: true,
-    min: 6
+    min: 6,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
-    min: 6
   },
   roll: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
-    min: 6
   },
   branch: {
     type: String,
     required: true,
-    min: 6
+    min: 6,
+    max: 255,
   },
   college: {
     type: String,
     required: true,
     min: 6,
-    max: 255
+    max: 255,
   },
-  college_code: {
-    type: String,
+  code: {
+    type: Number,
     required: true,
-    min: 3
+    min: 4,
+  },
+  exam_start_time:{
+    default:Date.now(),
+    required: true
   },
   resetLink: {
     type: String,

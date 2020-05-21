@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const testinstructionsSchema = new mongoose.Schema({
-  college_code: { type: String, required: true, min: 3, max: 255 },
+const instructionsSchema = new mongoose.Schema({
+  code: { type: Number, required: true, min: 4},
   message: { type: String, required: true },
-  date: {
-    type: String,
-    required: true,
-    min: 10,
-  },
+  year: { type: Number, required: true },
+  month: { type: Number, required: true },
+  day: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("testinstructions", testinstructionsSchema);
+module.exports = mongoose.model("instruction", instructionsSchema);

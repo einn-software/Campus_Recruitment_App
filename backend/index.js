@@ -2,12 +2,12 @@ const express = require("express"); //The Express is a web framwork for nodejs t
 const app = express();
 const logger = require("./config/logger");
 const volleyball = require("volleyball");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // provide structre to to the documents  
 const dotenv = require("dotenv");
-dotenv.config();
+dotenv.config();  
 
 //Connect to MongoDB
-mongoose.connect(" mongodb://localhost/auth", {
+mongoose.connect(process.env.DB_CONNECT, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

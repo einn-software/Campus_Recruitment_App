@@ -18,7 +18,4 @@ const questionCollectionsSchema = new mongoose.Schema({
   weight: { type: Number, required: true },
 });
 
-module.exports = mongoose.model(
-  "questionCollections",
-  questionCollectionsSchema
-);
+module.exports = mongoose.model("questionCollections", questionCollectionsSchema );

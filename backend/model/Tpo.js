@@ -3,13 +3,13 @@ const tpoSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    min: 6,
+    min: 4,
     max: 255
   },
   email: {
     type: String,
     required: true,
-    min: 6,
+    min: 13,
     max: 255
   },
   password: {
@@ -19,7 +19,7 @@ const tpoSchema = new mongoose.Schema({
     max: 1024
   },
   phone: {
-    type: Number,
+    type: String,
     required: true
   },
   designation: {
@@ -34,10 +34,10 @@ const tpoSchema = new mongoose.Schema({
     max: 40,
     min: 6
   },
-  college_code: {
-    type: String,
+  code: {
+    type: Number,
     required: true,
-    min: 3
+    min: 4
   },
   resetLink: {
     type: String,

@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Students = require("../model/Student");
 
 const url = "mongodb://localhost/Models";
-const connect = mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true});
+const connect = mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 connect.then((db) => {
   console.log("connected to the server");
@@ -13,10 +16,10 @@ connect.then((db) => {
     password: "ss2611",
     phone: "7898766554",
     roll: "34567",
-    branch:"computer science and engg",
-    college:"Nitra Technical Campus",
+    branch: "computer science and engg",
+    college: "Nitra Technical Campus",
     code: 80989,
-    exam_start_time:'2012-12-09'
+    exam_start_time: "2020-05-21 12:19:14",
   });
 
   newStudent
@@ -32,7 +35,7 @@ connect.then((db) => {
     })
     .then(() => {
       return mongoose.connection.close();
-    })  
+    })
     .catch((err) => {
       console.log(err);
     });

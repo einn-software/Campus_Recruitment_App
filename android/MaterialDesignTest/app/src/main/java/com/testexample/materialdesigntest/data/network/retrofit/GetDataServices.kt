@@ -3,7 +3,6 @@ package com.testexample.materialdesigntest.data.network.retrofit
 import com.testexample.materialdesigntest.data.model.*
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
-import com.testexample.materialdesigntest.data.network.model.ExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
@@ -27,11 +26,10 @@ interface GetDataServices {
     @GET("college")
     fun getCollege(@Header("auth-token") token: String): Flowable<College>
 
-    @GET("instruction/{code}/{date}")
-    fun getInstructions(@Header("auth-token") token: String ,
-                        @Path("code") code: String,
-                        @Path("date") date: String):
-            Flowable<Instructions>
+    @GET("instruction/{id}")
+    fun getInstructions(@Header("auth-token") token: String,
+                    @Path("id") instructionId: String):
+            Single<Instructions>
 
     @GET("questionPaper/{code}")
     fun getQuestionPaper(@Header("auth-token") token: String ,

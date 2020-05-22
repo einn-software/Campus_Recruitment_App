@@ -9,6 +9,6 @@ interface InstructionsContract {
         fun showInstructions(instruction: Instructions)
     }
     interface Presenter : BaseContract.BasePresenter {
-        fun fetchInstructions(code: String, date: String)
+        fun fetchInstructions(id: String)
     }
 }

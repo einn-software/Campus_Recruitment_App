@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "student_table")
 data class Student(
     @NonNull @PrimaryKey
-    @SerializedName("_id")@ColumnInfo(name = "student_Id") val studentId:String,
+    @SerializedName("_id")@ColumnInfo(name = "student_Id") val studentId:String ,
     @SerializedName("name")@ColumnInfo(name = "student_name") val studentName: String?,
     @SerializedName("email")@ColumnInfo(name = "student_email") val studentEmail: String?,
     @SerializedName("password")@ColumnInfo(name = "student_password") val studentPassword: String,

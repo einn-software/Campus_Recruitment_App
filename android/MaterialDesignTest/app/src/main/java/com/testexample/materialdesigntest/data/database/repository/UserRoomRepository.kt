@@ -38,7 +38,7 @@ class UserRoomRepository(context: Context) :
         studentDao.deleteUser(student)
     }
 
-    override fun getCollege(email: String, password: String): Flowable<College> {
+    override fun getCollege(email: String): Flowable<College> {
         TODO("Not yet implemented")
     }
 

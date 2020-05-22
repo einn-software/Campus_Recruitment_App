@@ -1,10 +1,7 @@
 package com.testexample.materialdesigntest.data.network.retrofit
 
 import com.testexample.materialdesigntest.data.model.*
-import com.testexample.materialdesigntest.data.network.model.AuthResponse
-import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
-import com.testexample.materialdesigntest.data.network.model.ExamRequest
-import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
+import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -15,17 +12,37 @@ import retrofit2.http.*
 
 interface GetDataServices {
 
-    @POST("login/student")
+    @POST("login/students")
     fun authStudent(@Body loginRequest: StudentLoginRequest): Single<AuthResponse>
 
-    @GET("student")
-    fun getStudent(@Header("auth-token") token: String) : Flowable<Student>
+    @GET("student/{id}")
+    fun getStudent(@Header("auth-token") token: String,
+                   @Path("id") studentId: String):
+            Flowable<Student>
 
-    @POST("login/college")
-    fun authCollege(@Body loginRequest: CollegeLoginRequest): Single<AuthResponse>
+    @GET("colleges/{code}/students")
+    fun getStudentList(@Header("auth-token") token: String,
+                       @Path("code") code: String ): Flowable<List<StudentResponse>>
 
-    @GET("college")
-    fun getCollege(@Header("auth-token") token: String): Flowable<College>
+    @POST("forgot-password/students")
+    fun studentForgotPassword(@Body email: String): Single<String>
+
+    @POST("login/tpos")
+    fun authTPO(@Body loginRequest: CollegeLoginRequest): Single<AuthResponse>
+
+    @GET("tpos/{id}")
+    fun getTPO(@Header("auth-token") token: String, @Path("id") tpoId: String): Flowable<College>
+
+    @POST("forgot-password/tpos")
+    fun tpoForgotPassword(@Body email: String):Single<String>
+
+    @GET("colleges")
+    fun getCollegeList(): Flowable<List<CollegeResponse>>
+
+    @GET("colleges/{code}")
+    fun getCollege(@Header("auth-token") token: String,
+                   @Path("code") code: String ):
+            Single<College>
 
     @GET("instruction/{code}/{date}")
     fun getInstructions(@Header("auth-token") token: String ,

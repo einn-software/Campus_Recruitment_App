@@ -64,7 +64,7 @@ class StudentResult : Fragment(R.layout.fragment_student_result) {
     override fun onDetach() {
         Log.d(TAG, "onDetach")
         super.onDetach()
-        activity!!.studentDashboardContainer.visibility = VISIBLE
+        requireActivity().studentDashboardContainer.visibility = VISIBLE
     }
 
     companion object {

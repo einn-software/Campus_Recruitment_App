@@ -20,8 +20,7 @@ interface IUserRoomRepository {
     fun deleteUser(student: Student)
 
     fun getCollege(
-        email: String,
-        password: String
+        email: String
     ): Flowable<College>
 
     fun saveCollege(college: College)

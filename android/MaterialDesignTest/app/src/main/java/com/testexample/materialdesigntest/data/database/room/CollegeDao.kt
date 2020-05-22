@@ -22,7 +22,7 @@ interface CollegeDao {
     @Query("SELECT * FROM college_table")
     fun getAllUsers(): Flowable<List<College>>
 
-    @Query("SELECT * FROM college_table WHERE college_email LIKE :userEmail AND college_password LIKE:password")
-    fun getUserByEmailPassword(userEmail: String,  password: String): Flowable<College>
+    @Query("SELECT * FROM college_table WHERE college_email LIKE :userEmail")
+    fun getUserByEmailPassword(userEmail: String): Flowable<College>
 
 }

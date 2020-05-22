@@ -9,6 +9,7 @@ import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import io.reactivex.Flowable
 import io.reactivex.Single
 
+
 class UserRemoteRepository: IUserRemoteRepository {
 
     private val TAG = "User Remote Repository"
@@ -23,15 +24,15 @@ class UserRemoteRepository: IUserRemoteRepository {
 
     override fun getStudent(token: String): Flowable<Student> {
         Log.d(TAG, "fetch student data")
-        return api.getStudent(token)
+        return api.getStudent(token,"")
     }
 
     override fun getCollege(token: String): Flowable<College> {
-        return api.getCollege(token)
+        return api.getTPO(token,"ds")
     }
 
     override fun authCollege(email: String, password: String): Single<String> {
-        return api.authCollege(CollegeLoginRequest(email, password)).map { it ->
+        return api.authTPO(CollegeLoginRequest(email, password)).map { it ->
             it.token
         }
     }

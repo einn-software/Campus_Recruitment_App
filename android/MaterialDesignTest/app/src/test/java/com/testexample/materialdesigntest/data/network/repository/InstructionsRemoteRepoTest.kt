@@ -2,8 +2,7 @@ package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -38,14 +37,13 @@ class InstructionsRemoteRepoTest {
             .subscribe(
                 {success -> println("Instruction is $success")
                     assertTrue(
-                        "Verification for Id is Failed Received Null Parameter",
+                        "callInstructionsApi_withExistingId(): Verification Failed",
                         success.id.isBlank() && success.collegeCode.isBlank() && success.year.isBlank() && success.month.isBlank() && success.day.isBlank() && success.message.isBlank() && success.version == 0
                     )
                 },
             { error -> println(error.localizedMessage)
-                assertFalse("Verification Failed as received ${error.message}",error.message == "HTTP 404 Not Found")
+                assertTrue("callInstructionsApi_withExistingId(): Verification Failed as received ${error.message}",error.message.toString() != "HTTP 404 Not Found")
             })
-
     }
 
     @Test
@@ -53,14 +51,10 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"abcde")
             .subscribe(
                 {success -> println("Instruction is $success")
-                    assertTrue(
-                        "Verification for Id is Failed Received Null Parameter",
-                        success.id.isBlank() && success.collegeCode.isBlank() && success.year.isBlank() && success.month.isBlank() && success.day.isBlank() && success.message.isBlank() && success.version == 0
-                    )
+                    assertTrue("callInstructionsApi_withNotExistingId(): Verification Failed ", success != null)
                 },
                 { error -> println(error.localizedMessage)
-                    println(error.message)
-                    assertTrue("Verification Passed as received ${error.message}",error.message == "HTTP 404 Not Found")
+                    assertTrue("callInstructionsApi_withNotExistingId(): Verification Failed as received ${error.message}",error.message.toString()== "HTTP 404 Not Found")
                 })
     }
 
@@ -69,13 +63,11 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"@#%$^&")
             .subscribe(
                 {success -> println("Instruction is $success")
-                    assertTrue(
-                        "Verification for Id is Failed Received Null Parameter",
-                        success.id.isBlank() && success.collegeCode.isBlank() && success.year.isBlank() && success.month.isBlank() && success.day.isBlank() && success.message.isBlank() && success.version == 0
-                    )
+                    assertTrue("callInstructionsApi_withSpecialCharId(): Verification Failed ", success != null)
+
                 },
                 { error -> println(error.localizedMessage)
-                    assertTrue("Verification Passed as received ${error.message}",error.message == "HTTP 404 Not Found")
+                    assertTrue("callInstructionsApi_withSpecialCharId(): Verification Failed as received ${error.message}",error.message.toString()== "HTTP 404 Not Found")
                 })
     }
 
@@ -84,13 +76,11 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"")
             .subscribe(
                 {success -> println("Instruction is $success")
-                    assertTrue(
-                        "Verification for Id is Failed Received Null Parameter",
-                        success.id.isBlank() && success.collegeCode.isBlank() && success.year.isBlank() && success.month.isBlank() && success.day.isBlank() && success.message.isBlank() && success.version == 0
-                    )
+                    assertTrue("callInstructionsApi_withNullId(): Verification Failed ", success != null)
+
                 },
                 { error -> println(error.localizedMessage)
-                    assertTrue("Verification Passed as received ${error.message}",error.message == "HTTP 404 Not Found")
+                    assertTrue("callInstructionsApi_withNullId(): Verification Failed as received ${error.message}",error.message.toString()== "HTTP 404 Not Found")
                 })
     }
 
@@ -99,13 +89,11 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token," ")
             .subscribe(
                 {success -> println("Instruction is $success")
-                    assertTrue(
-                        "Verification for Id is Failed Received Null Parameter",
-                        success.id.isBlank() && success.collegeCode.isBlank() && success.year.isBlank() && success.month.isBlank() && success.day.isBlank() && success.message.isBlank() && success.version == 0
-                    )
-                    },
+                    assertTrue("callInstructionsApi_withSpaceAsId(): Verification Failed ", success != null)
+
+                },
                 { error -> println(error.localizedMessage)
-                    assertTrue("Verification Passed as received ${error.message}",error.message == "HTTP 404 Not Found")
+                    assertTrue("callInstructionsApi_withSpaceAsId(): Verification Failed as received ${error.message}",error.message.toString()== "HTTP 404 Not Found")
                 })
     }
 }

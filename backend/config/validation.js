@@ -52,7 +52,7 @@ const studentRegisterValidation = (data) => {
     branch: Joi.string().min(6).max(255).required(),
     college: Joi.string().min(6).required().max(255),
     code: Joi.string().min(4).required(),
-    exam_start_time:Joi.date().required(),
+    exam_start_time: Joi.date().required(),
     resetLink: Joi.string(),
   });
   return studentSchema.validate(data);
@@ -62,7 +62,7 @@ const studentRegisterValidation = (data) => {
 const loginValidation = (data) => {
   const schema = Joi.object({
     email: Joi.string().min(13).max(255).required().email(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().min(6).required()
   });
   return schema.validate(data);
 };
@@ -70,8 +70,9 @@ const loginValidation = (data) => {
 //STUDENT LOGIN VALIDATION
 const studentloginValidation = (data) => {
   const schema = Joi.object({
+    code: Joi.number().min(4).required(),
     roll: Joi.number().min(13).max(255).required(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().min(6).required()
   });
   return schema.validate(data);
 };
@@ -82,8 +83,8 @@ const instructionsValidation = (data) => {
     code: Joi.number().min(4).required(),
     message: Joi.string().required(),
     year: Joi.number().required(),
-    month:Joi.number().required(),
-    day:Joi.number().required()
+    month: Joi.number().required(),
+    day: Joi.number().required()
   });
   return instructionsSchema.validate(data);
 };
@@ -149,7 +150,6 @@ module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.studentloginValidation = studentloginValidation;
 module.exports.instructionsValidation = instructionsValidation;
-module.exports.getinstructionsValidation = getinstructionsValidation;
 module.exports.ResultsValidation = ResultsValidation;
 module.exports.questionCollectionsValidation = questionCollectionsValidation;
 module.exports.questionPaperValidation = questionPaperValidation;

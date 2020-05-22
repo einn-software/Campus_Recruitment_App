@@ -33,9 +33,5 @@ const collegeSchema = new mongoose.Schema({
     min: 13,
     max: 255
   },
-  resetLink: {
-    type: String,
-    default: "",
-  }
 });
 module.exports = mongoose.model("College", collegeSchema);

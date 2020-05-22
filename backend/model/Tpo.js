@@ -39,9 +39,5 @@ const tpoSchema = new mongoose.Schema({
     required: true,
     min: 4
   },
-  resetLink: {
-    type: String,
-    default: "",
-  },
 });
 module.exports = mongoose.model("Tpo", tpoSchema);

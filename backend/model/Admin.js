@@ -23,9 +23,5 @@ const adminSchema = new mongoose.Schema({
     required: true,
     min: 10,
   },
-  resetLink: {
-    type: String,
-    default: "",
-  },
 });
 module.exports = mongoose.model("Admin", adminSchema);

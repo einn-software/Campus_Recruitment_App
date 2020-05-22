@@ -4,8 +4,6 @@ import com.testexample.materialdesigntest.data.model.Question
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
-import com.testexample.materialdesigntest.data.network.model.ExamRequest
-import io.reactivex.Flowable
 import io.reactivex.Single
 
 

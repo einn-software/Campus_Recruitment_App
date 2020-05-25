@@ -51,9 +51,8 @@ const studentRegisterValidation = (data) => {
     roll: Joi.string().required(),
     branch: Joi.string().min(6).max(255).required(),
     college: Joi.string().min(6).required().max(255),
-    code: Joi.string().min(4).required(),
-    exam_start_time: Joi.date().required(),
-    resetLink: Joi.string(),
+    code: Joi.string().min(4).required()
+    // exam_start_time: Joi.date().required()
   });
   return studentSchema.validate(data);
 };
@@ -71,7 +70,7 @@ const loginValidation = (data) => {
 const studentloginValidation = (data) => {
   const schema = Joi.object({
     code: Joi.number().min(4).required(),
-    roll: Joi.number().min(13).max(255).required(),
+    roll: Joi.number().min(13).required(),
     password: Joi.string().min(6).required()
   });
   return schema.validate(data);

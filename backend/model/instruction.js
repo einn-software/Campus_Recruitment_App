@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const instructionsSchema = new mongoose.Schema({
+
+const instructionSchema = new mongoose.Schema({
   code: { type: Number, required: true, min: 4},
   message: { type: String, required: true },
   year: { type: Number, required: true },
@@ -7,4 +8,4 @@ const instructionsSchema = new mongoose.Schema({
   day: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("instruction", instructionsSchema);
+module.exports = mongoose.model("Instruction", instructionSchema);

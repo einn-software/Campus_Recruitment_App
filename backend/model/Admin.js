@@ -21,7 +21,6 @@ const adminSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    min: 10,
-  },
+  }
 });
 module.exports = mongoose.model("Admin", adminSchema);

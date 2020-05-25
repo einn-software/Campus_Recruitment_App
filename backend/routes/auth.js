@@ -3,15 +3,15 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session); //MongoDB session store for Connect and Express
 
-//import models
+//import models 
 const Admin = require("../model/Admin");
 const College = require("../model/College");
 const Tpo = require("../model/Tpo");
 const Student = require("../model/Student");
-const testinstructions = require("../model/instruction");
-const Results = require("../model/Results");
-const questionCollections = require("../model/questionCollections");
-const questionPaper = require("../model/questionPaper");
+const Instruction = require("../model/Instruction");
+const Result = require("../model/Result");
+const QuestionCollections = require("../model/QuestionCollections");
+const QuestionPaper = require("../model/QuestionPaper");
 
 //import jwt token for login
 const jwt = require("jsonwebtoken");
@@ -23,8 +23,8 @@ const {
   studentloginValidation,
   questionCollectionsValidation,
   questionPaperValidation,
-  ResultsValidation,
-  instructionsValidation,
+  resultValidation,
+  instructionValidation,
   adminRegisterValidation,
   studentRegisterValidation,
   collegeRegisterValidation,
@@ -555,23 +555,23 @@ router.delete("/student", verify, function (req, res, next) {
     });
 });
 
-//testinstructions
+//Instruction
 
 router.post("/instructions", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
   const {
     error
-  } = instructionsValidation(req.body);
+  } = instructionValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the college is already in the database
-  const collegeExist = await testinstructions.findOne({
+  const collegeExist = await Instruction.findOne({
     code: req.body.code,
   });
   if (collegeExist) return res.status(400).send("College already exist");
 
   // Create a new instruction
-  const instructions = new testinstructions({
+  const instructions = new Instruction({
     college_code: req.body.college_code,
     message: req.body.message,
     year: req.body.year,
@@ -586,9 +586,9 @@ router.post("/instructions", verify, async (req, res) => {
   }
 });
 
-//display test instructions
+//display instructions
 router.get("/instruction/:id", verify, async (req, res) => {
-  testinstructions.findOne({
+  Instruction.findOne({
       _id: req.params.id,
     },
     (err, response) => {
@@ -609,7 +609,7 @@ router.get("/instruction/:id", verify, async (req, res) => {
 //Update instructions
 
 router.put("/instruction/:id", verify, function (req, res, next) {
-  testinstructions
+  Instruction
     .findOneAndUpdate({
         _id: req.params.id,
       },
@@ -634,7 +634,7 @@ router.put("/instruction/:id", verify, function (req, res, next) {
 // delete a instruction from the db
 
 router.delete("/instruction/:id", verify, function (req, res) {
-  testinstructions
+  Instruction
     .findOneAndRemove({
       _id: req.params.id,
     })
@@ -662,18 +662,18 @@ router.post("/results", verify, async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE ADD A RESULT
   const {
     error
-  } = ResultsValidation(req.body);
+  } = resultValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the studentid is already in the database
-  const studentExist = await Results.findOne({
+  const studentExist = await Result.findOne({
     student_id: req.body.student_id,
   });
   if (studentExist)
     return res.status(400).send("Student has already given the test");
 
   // Create Result
-  const Result = new Results({
+  const result = new Result({
     student_id: req.body.student_id,
     roll: req.body.roll,
     name: req.body.name,
@@ -684,7 +684,7 @@ router.post("/results", verify, async (req, res) => {
     total_marks_scored: req.body.total_marks_scored,
   });
   try {
-    const Result = await Result.save();
+    const result = await result.save();
     res.json(Result);
   } catch (err) {
     res.status(400).json(err);
@@ -697,7 +697,7 @@ router.get(
   "/colleges/:code/results/:question-paper-id",
   verify,
   async (req, res) => {
-    Results.findOne({
+    Result.findOne({
         code: req.params.code,
         question_paper_id: req.params.question - paper - id,
       },
@@ -728,7 +728,7 @@ router.post("/questioncollection", verify, async (req, res) => {
   } = questionCollectionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   // Create a new questionCollection
-  const questionCollection = new questionCollections({
+  const questionCollection = new QuestionCollections({
     question: req.body.question,
     topic: req.body.topic,
     options: req.body.options,
@@ -748,7 +748,7 @@ router.post("/questioncollection", verify, async (req, res) => {
 //get questionCollections
 
 router.get("/questionCollection/:id", verify, async (req, res) => {
-  questionCollections.findOne({
+  QuestionCollections.findOne({
       _id: req.params.id,
     },
     (err, results) => {
@@ -773,19 +773,19 @@ router.get("/questionCollection/:id", verify, async (req, res) => {
 //Update questioncollections
 
 router.put("/questioncCollection/:id", verify, function (req, res, next) {
-  questionCollections
+  QuestionCollections
     .findByIdAndUpdate({
         _id: req.params.id,
       },
       req.body
     )
     .then(function () {
-      questionCollections
+      QuestionCollections
         .findOne({
           _id: req.params.id,
         })
-        .then(function (questionCollection) {
-          res.send(questionCollection);
+        .then(function (QuestionCollection) {
+          res.send(QuestionCollection);
         });
     })
     .catch(err, () => {
@@ -825,7 +825,7 @@ router.post("/questionPaper", verify, async (req, res) => {
     return res.status(400).send("This college has already submitted the test");
 
   // Create a new questionPaper
-  const questionPapers = new questionPaper({
+  const questionPapers = new QuestionPaper({
     date: req.body.date,
     max_marks: req.body.max_marks,
     max_time: req.body.max_time,
@@ -843,7 +843,7 @@ router.post("/questionPaper", verify, async (req, res) => {
 //Get questionPaper
 
 router.get("/questionPaper/:college_code", verify, async (req, res) => {
-  questionPaper.findOne({
+  QuestionPaper.findOne({
       college_code: req.params.college_code,
     },
     (err, results) => {
@@ -868,7 +868,7 @@ router.get("/questionPaper/:college_code", verify, async (req, res) => {
 //Update questionPapers
 
 router.put("/questionPaper/:college_code", verify, function (req, res, next) {
-  questionPaper
+  QuestionPaper
     .findOneAndUpdate({
         college_code: req.params.college_code,
       },
@@ -895,7 +895,7 @@ router.delete("/questionPaper/:college_code", verify, function (
   res,
   next
 ) {
-  questionPaper
+  QuestionPaper
     .findOneAndRemove({
       college_code: req.params.college_code,
     })

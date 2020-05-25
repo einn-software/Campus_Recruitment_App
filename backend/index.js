@@ -1,10 +1,13 @@
-const express = require("express"); //The Express is a web framwork for nodejs that provide small, robust tooling for HTTP servers, making it a great solution for single page applications, web sites, hybrids, or public HTTP APIs.
+const express = require("express"); 
 const logger = require("./config/logger");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv"); // importing all the configurations from .env file
 const app = express(); // Create the Express application
 dotenv.config(); // Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+//Import Routes
+const authRoute = require("./routes/auth");
+//const resetPasswordRoute = require("./routes/ResetPassword");
 
 //Connect to MongoDB
 mongoose.connect(process.env.DB_CONNECT, {
@@ -19,16 +22,13 @@ mongoose.connection
     console.log("Your error", error);
   });
 
-//Import Routes
-const authRoute = require("./routes/auth");
-//const resetPasswordRoute = require("./routes/ResetPassword");
-
 //Middleware
 // Logging middleware
 app.use(function (req, res, next) {
   let oldSend = res.send; //only assign the send function to oldsend without a body
-  console.log(`${oldSend}`)
-  res.send = function (data) { // data is used as a body for send function
+  console.log(`${oldSend}`);
+  res.send = function (data) {
+    // data is used as a body for send function
     res.send = oldSend; // set function back to avoid the 'double-send'
     logger.info(data);
     console.log(res.send);
@@ -54,7 +54,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     status: error.status,
-    message: `
+    message:
+      `
           $ {
             req.url
           }

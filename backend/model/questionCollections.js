@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
+
 const questionCollectionsSchema = new mongoose.Schema({
   question: { type: String, required: true },
-
   topic: { type: String, required: true },
-
   options: [
     {
       option1: [{ type: String, required: true }],
@@ -12,10 +11,8 @@ const questionCollectionsSchema = new mongoose.Schema({
       option4: [{ type: String, required: true }],
     },
   ],
-
   answer: { type: String, required: true },
-
   weight: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("questionCollections", questionCollectionsSchema );
+module.exports = mongoose.model("QuestionCollection", questionCollectionsSchema );

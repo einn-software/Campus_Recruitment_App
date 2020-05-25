@@ -32,6 +32,6 @@ const collegeSchema = new mongoose.Schema({
     required: true,
     min: 13,
     max: 255
-  },
+  }
 });
 module.exports = mongoose.model("College", collegeSchema);

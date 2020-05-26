@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const logger = require("./config/logger");
 const dotenv = require("dotenv"); // The dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 const app = express(); // Create the Express application
+const errHandler = require("./controller/errorHandling");
+const Constants = require('./config/constant');
 //Import Routes
 const authRoute = require("./routes/auth");
 //const resetPasswordRoute = require("./routes/ResetPassword");
@@ -17,9 +19,9 @@ mongoose.connect(process.env.DB_CONNECT, {
   useCreateIndex: true,
 });
 mongoose.connection
-  .once("open", () => logger.log("Connected to db!"))
+  .once("open", () => logger.info("Connected to db!"))
   .on("error", (error) => {
-    logger.log('error',error);
+    logger.log('error', error);
   });
 
 //Middleware
@@ -36,25 +38,15 @@ app.use(function (req, res, next) {
   next();
 })
 
-
 //Route Middlewares
 app.use("/", authRoute);
-
-
-
 // Error hadling middleware
-// app.use((req, res, next) => {
-//   const error = new Error("Path is not found");
-//   error.status = 404;
-//   next(error);
-// });
+app.use((req, res, next) => {
+  next(error);
+});
 
-// app.use((error, req, res, next) => {
-//   res.status(error.status || 500);
-//   res.json({
-//     status: error.status,
-//     message: `${req.url}` + error.message,
-//   });
-// });
+app.use((error, req, res, next) => {
+  res.json(errHandler.noRouteErrorHandler(error));
+});
 
 module.exports = app;

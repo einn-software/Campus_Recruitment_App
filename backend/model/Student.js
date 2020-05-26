@@ -4,19 +4,19 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
     min: 6,
-    max:255
+    max: 255
   },
   email: {
     type: String,
     required: true,
     min: 13,
-    max:255
+    max: 255
   },
   password: {
     type: String,
     required: true,
     min: 6,
-    max:255
+    max: 255
   },
   phone: {
     type: String,
@@ -43,8 +43,8 @@ const studentSchema = new mongoose.Schema({
     required: true,
     min: 4,
   },
-  exam_start_time: {
-    type: Date()
-  },
+  // exam_start_time: {
+  //   type: Date()
+  // },
 });
 module.exports = mongoose.model("Student", studentSchema);

@@ -2,8 +2,8 @@
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
 const Student = require("../model/Student");
-const errHandler = require("../errorHandling");
-
+const errHandler = require("./errorHandling");
+const Constants = require('../config/constant');
 // import validations
 const {
   studentloginValidation,
@@ -19,9 +19,11 @@ const failure = 400;
 //Admin Login
 
 const AdminLogin = async (req, res) => {
-  const { error } = loginValidation(req.body);
+  const {
+    error
+  } = loginValidation(req.body);
   if (error) {
-    return res.status(`${failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
   }
 
   //Checking if the admin is not in the database
@@ -30,7 +32,7 @@ const AdminLogin = async (req, res) => {
   });
   if (!admin) {
     return res
-      .status(`${notFound}`)
+      .status(`${Constants.er_notFound}`)
       .json(errHandler.emailNotFoundErrorHandler());
   }
 
@@ -38,35 +40,36 @@ const AdminLogin = async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, admin.password);
   if (!validPass)
     return res
-      .status(`${authorizationFailed}`)
+      .status(`${Constants.er_authenticationFailed}`)
       .json(errHandler.invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: admin._id,
     },
     process.env.TOKEN_SECRET
   );
   //To store or access session data, we use the request property req.session, which is (generally) serialized as JSON by the store.
   (req.session.email = admin.email),
-    (req.session._id = admin._id),
-    (req.session.token = token),
-    (req.session.user_type = 1),
-    res.status(`${success}`).header("auth-token", token).json({
-      email: req.session.email,
-      _id: req.session._id,
-      token: req.session.token,
-      user_type: req.session.user_type,
-    });
+  (req.session._id = admin._id),
+  (req.session.token = token),
+  (req.session.user_type = Constants[1]),
+  res.status(`${Constants.success}`).header("auth-token", token).json({
+    email: req.session.email,
+    _id: req.session._id,
+    token: req.session.token,
+    user_type: req.session.user_type,
+  });
 };
 
 //Student Login
 
 const StudentLogin = async (req, res) => {
-  const { error } = studentloginValidation(req.body);
+  const {
+    error
+  } = studentloginValidation(req.body);
   if (error)
-    return res.status(`${failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
 
   //Checking if the student is not in the database
   const student = await Student.findOne({
@@ -75,19 +78,18 @@ const StudentLogin = async (req, res) => {
   });
   if (!student)
     return res
-      .status(`${notFound}`)
+      .status(`${Constants.er_notFound}`)
       .json(errHandler.notFoundRollCodeErrorHandler());
 
   //Check if the password is correct
   const validPass = await bcrypt.compare(req.body.password, student.password);
   if (!validPass)
     return res
-      .status(`${authorizationFailed}`)
+      .status(`${Constants.er_authorizationFailed}`)
       .json(errHandler.invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: student._id,
     },
     process.env.TOKEN_SECRET
@@ -95,8 +97,8 @@ const StudentLogin = async (req, res) => {
   req.session.email = student.email;
   req.session._id = student._id;
   req.session.token = token;
-  req.session.user_type = 3;
-  res.status(`${success}`).header("auth-token", token).json({
+  req.session.user_type = Constants[3];
+  res.status(`${Constants.success}`).header("auth-token", token).json({
     email: req.session.email,
     _id: req.session._id,
     token: req.session.token,
@@ -107,9 +109,11 @@ const StudentLogin = async (req, res) => {
 //Tpo Login
 
 const TpoLogin = async (req, res) => {
-  const { error } = loginValidation(req.body);
+  const {
+    error
+  } = loginValidation(req.body);
   if (error)
-    return res.status(`${failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
 
   //Checking if the tpo is not in the database
   const tpo = await Tpo.findOne({
@@ -117,19 +121,18 @@ const TpoLogin = async (req, res) => {
   });
   if (!tpo)
     return res
-      .status(`${notFound}`)
+      .status(`${Constants.er_notFound}`)
       .json(errHandler.emailNotFoundErrorHandler());
 
   //Check if the password is correct
   const validPass = await bcrypt.compare(req.body.password, tpo.password);
   if (!validPass)
     return res
-      .status(`${authorizationFailed}`)
+      .status(`${Constants.er_authorizationFailed}`)
       .json(errHandler.invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: tpo._id,
     },
     process.env.TOKEN_SECRET
@@ -137,8 +140,8 @@ const TpoLogin = async (req, res) => {
   req.session.email = tpo.email;
   req.session._id = tpo._id;
   req.session.token = token;
-  req.session.user_type = 2;
-  res.status(`${success}`).header("auth-token", token).json({
+  req.session.user_type = Constants[2];
+  res.status(`${Constants.success}`).header("auth-token", token).json({
     email: req.session.email,
     _id: req.session._id,
     token: req.session.token,
@@ -146,4 +149,6 @@ const TpoLogin = async (req, res) => {
   });
 };
 
-module.exports = { StudentLogin, AdminLogin, TpoLogin };
+module.exports.StudentLogin = StudentLogin
+module.exports.AdminLogin = AdminLogin
+module.exports.TpoLogin = TpoLogin

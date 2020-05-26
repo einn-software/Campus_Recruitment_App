@@ -1,6 +1,6 @@
 const Joi = require("@hapi/joi"); //Joi is the most powerful schema description language and data validator for JavaScript.
 
-//Register Validation
+//Admin Register Validation
 const adminRegisterValidation = (data) => {
   const adminSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -11,11 +11,11 @@ const adminRegisterValidation = (data) => {
   return adminSchema.validate(data);
 };
 
-// College Validation
+// College Register Validation
 const collegeValidation = (data) => {
   const collegeSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
-    code: Joi.number().min(4).required(),
+    code: Joi.number().min(4),
     address: Joi.string().min(13).required().max(255),
     university: Joi.string().min(6).max(255).required(),
     email: Joi.string().min(13).required().max(255).email(),
@@ -24,7 +24,7 @@ const collegeValidation = (data) => {
   return collegeSchema.validate(data);
 };
 
-// Tpo validation
+// Tpo Register validation
 const tpoRegisterValidation = (data) => {
   const tpoSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -38,7 +38,7 @@ const tpoRegisterValidation = (data) => {
   return tpoSchema.validate(data);
 };
 
-// Student validation
+// Student register validation
 const studentRegisterValidation = (data) => {
   const studentSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
@@ -73,7 +73,7 @@ const studentloginValidation = (data) => {
   return schema.validate(data);
 };
 
-// Test POST Instructions validation
+// POST Instructions validation
 const instructionValidation = (data) => {
   const instructionsSchema = Joi.object({
     code: Joi.number().min(4).required(),
@@ -85,7 +85,7 @@ const instructionValidation = (data) => {
   return instructionSchema.validate(data);
 };
 
-// Result Validation
+// POST Result Validation
 const resultValidation = (data) => {
   const resultSchema = Joi.object({
     roll: Joi.string().required(),
@@ -150,17 +150,85 @@ const questionPaperValidation = (data) => {
 
 // Post StudentAnswerSheet Validation
 
-const studentAnswerSheetValidation = (data) =>{
+const studentAnswerSheetValidation = (data) => {
   const studentAnswerSheetSchema = Joi.object({
-     student_id: Joi.string().required(),
-     question_paper_id: Joi.string().required(),
-     question_collection_id: Joi.string().required(),
-     selected_option: Joi.number().required(),
-     state: Joi.number().required(),
+    student_id: Joi.string().required(),
+    question_paper_id: Joi.string().required(),
+    question_collection_id: Joi.string().required(),
+    selected_option: Joi.number().required(),
+    state: Joi.number().required(),
 
   });
   return studentAnswerSheetSchema.validate(data);
 };
+
+// All the put request validation 
+// PUT Instructions validation
+const instructionPutValidation = (data) => {
+  const instructionPutSchema = Joi.object({
+    code: Joi.number().min(4),
+    message: Joi.string(),
+    year: Joi.number(),
+    month: Joi.number(),
+    day: Joi.number(),
+  });
+  return instructionPutSchema.validate(data);
+};
+// Put Student validation
+const studentPutValidation = (data) => {
+  const studentPutSchema = Joi.object({
+    name: Joi.string().min(6).max(255),
+    email: Joi.string().min(6).max(255).email(),
+    password: Joi.string().min(6).max(255),
+    phone: Joi.string(),
+    roll: Joi.string(),
+    branch: Joi.string().min(6).max(255),
+    college: Joi.string().min(6).max(255),
+    code: Joi.number().min(4),
+    exam_start_time: Joi.date()
+  });
+  return studentPutSchema.validate(data);
+};
+//Put Admin Validation
+const adminPutValidation = (data) => {
+  const adminPutSchema = Joi.object({
+    name: Joi.string().min(6).max(255),
+    email: Joi.string().min(13).max(255).email(),
+    password: Joi.string().min(6).max(1024),
+    phone: Joi.string()
+  });
+  return adminPutSchema.validate(data);
+};
+
+// PUT College Validation
+const collegePutValidation = (data) => {
+  const collegePutSchema = Joi.object({
+    name: Joi.string().min(6).max(255),
+    address: Joi.string().min(13).max(255),
+    university: Joi.string().min(6).max(255),
+    email: Joi.string().min(13).max(255).email(),
+    phone: Joi.string(),
+  });
+  return collegePutSchema.validate(data);
+};
+
+// PUT Tpo validation
+const tpoPutValidation = (data) => {
+  const tpoPutSchema = Joi.object({
+    name: Joi.string().min(6).max(255),
+    email: Joi.string().min(13).max(255).email(),
+    password: Joi.string().min(6).max(255),
+    phone: Joi.string(),
+    designation: Joi.string().min(6).max(23),
+    college: Joi.string().min(6).max(40),
+    code: Joi.string().min(4),
+  });
+  return tpoPutSchema.validate(data);
+};
+
+
+
+
 
 module.exports.adminRegisterValidation = adminRegisterValidation;
 module.exports.collegeValidation = collegeValidation;
@@ -168,8 +236,13 @@ module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.studentloginValidation = studentloginValidation;
+module.exports.studentPutValidation = studentPutValidation;
 module.exports.instructionValidation = instructionValidation;
+module.exports.instructionPutValidation = instructionPutValidation;
 module.exports.resultValidation = resultValidation;
 module.exports.questionCollectionsValidation = questionCollectionsValidation;
 module.exports.questionPaperValidation = questionPaperValidation;
 module.exports.studentAnswerSheetValidation = studentAnswerSheetValidation;
+module.exports.tpoPutValidation = tpoPutValidation;
+module.exports.adminPutValidation = adminPutValidation;
+module.exports.collegePutValidation = collegePutValidation;

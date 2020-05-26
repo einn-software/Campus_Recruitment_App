@@ -41,9 +41,16 @@ interface GetDataServices {
                     @Path("id") questionId: String):
             Single<Question>
 
-    @GET("result/{roll}")
-    fun getResult(@Header("auth-token") token: String,
-                  @Path("roll") rollNo: Long):
+    @GET("colleges/{code}/results/{question_paper_id}")
+    fun getResultFromQuesId(@Header("auth-token") token: String,
+                            @Path("code") code: Int,
+                  @Path("question_paper_id") question_paper_id: String):
+            Single<List<Result>>
+
+    @GET("colleges/{code}/results/{student-id}")
+    fun getResultFromStudentId(@Header("auth-token") token: String,
+                               @Path("code") code: Int,
+                  @Path("student_id") student_id: String):
             Single<Result>
 
 

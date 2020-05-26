@@ -8,8 +8,12 @@ class ResultRemoteRepo: IResultRemoteRepo {
 
     private val api: GetDataServices = GetDataServices.create()
 
-    override fun callApiForResult(token: String, rollNo: Long): Single<Result> {
-        return api.getResult(token, rollNo)
+    override fun callApiForResultWithQuesId(token: String, code: Int, question_paper_id: String): Single<List<Result>> {
+        return api.getResultFromQuesId(token, code, question_paper_id)
+    }
+
+    override fun callApiForResultWithStudentId(token: String, code: Int, student_id: String): Single<Result> {
+        return api.getResultFromStudentId(token, code, student_id)
     }
 
     override fun saveResult(result: Result) {

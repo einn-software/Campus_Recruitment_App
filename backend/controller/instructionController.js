@@ -7,21 +7,16 @@ const verify = require("../config/verifyToken");
 
 //instructions
 const InstructionCont =
-  (verify,
-  async (req, res) => {
+  (verify, async (req, res) => {
     //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-    const { error } = instructionValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    //Checking if the college is already in the database
-    const collegeExist = await Instruction.findOne({
-      code: req.body.code,
-    });
-    if (collegeExist) return res.status(400).send("College already exist");
-
+    const {
+      error
+    } = instructionValidation(req.body);
+    if (error) return res.status(`${failure}`).json(errorHandler(error));
+  
     // Create a new instruction
-    const instructions = new Instruction({
-      college_code: req.body.college_code,
+    const instructions = new Instructions({
+      code: req.body.code,
       message: req.body.message,
       year: req.body.year,
       month: req.body.month,
@@ -29,12 +24,12 @@ const InstructionCont =
     });
     try {
       const instructions = await instructions.save();
-      res.json(instructions);
+      res.status(`${success}`).json(instructions);
     } catch (err) {
-      res.status(400).send(err);
+      res.status(`${failure}`).send(errorHandler(err));
     }
   });
-
+  
 //Get instruction
 
 const InstructionContGet =

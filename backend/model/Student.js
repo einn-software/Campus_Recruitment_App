@@ -43,9 +43,8 @@ const studentSchema = new mongoose.Schema({
     required: true,
     min: 4,
   },
-  exam_start_time:{
-    type:Date,
-    required: true
-  }
+  exam_start_time: {
+    type: Date()
+  },
 });
 module.exports = mongoose.model("Student", studentSchema);

@@ -6,7 +6,12 @@ const collegeSchema = new mongoose.Schema({
     min: 6,
     max: 255
   },
-  email: {
+  code: {
+    type: Number,
+    required: true,
+    min: 4
+  },
+  address: {
     type: String,
     required: true,
     min: 13,
@@ -18,20 +23,16 @@ const collegeSchema = new mongoose.Schema({
     min: 6,
     max: 255
   },
-  phone: {
-    type: String,
-    required: true,
-  },
-  code: {
-    type: Number,
-    required: true,
-    min: 4
-  },
-  address: {
+  email: {
     type: String,
     required: true,
     min: 13,
     max: 255
-  }
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+
 });
 module.exports = mongoose.model("College", collegeSchema);

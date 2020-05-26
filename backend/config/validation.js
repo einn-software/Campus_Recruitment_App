@@ -6,22 +6,20 @@ const adminRegisterValidation = (data) => {
     name: Joi.string().min(6).required().max(255),
     email: Joi.string().min(13).required().max(255).email(),
     password: Joi.string().min(6).max(1024).required(),
-    phone: Joi.string().required(),
-    resetLink: Joi.string(),
+    phone: Joi.string().required()
   });
   return adminSchema.validate(data);
 };
 
 // College Validation
-const collegeRegisterValidation = (data) => {
+const collegeValidation = (data) => {
   const collegeSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
-    email: Joi.string().min(13).required().max(255).email(),
-    university: Joi.string().min(6).max(255).required(),
-    phone: Joi.string().required(),
     code: Joi.number().min(4).required(),
     address: Joi.string().min(13).required().max(255),
-    resetLink: Joi.string(),
+    university: Joi.string().min(6).max(255).required(),
+    email: Joi.string().min(13).required().max(255).email(),
+    phone: Joi.string().required(),
   });
   return collegeSchema.validate(data);
 };
@@ -35,8 +33,7 @@ const tpoRegisterValidation = (data) => {
     phone: Joi.string().required(),
     designation: Joi.string().min(6).required().max(23),
     college: Joi.string().min(6).required().max(40),
-    code: Joi.number().min(4).required(),
-    resetLink: Joi.string(),
+    code: Joi.string().min(4).required(),
   });
   return tpoSchema.validate(data);
 };
@@ -52,8 +49,7 @@ const studentRegisterValidation = (data) => {
     branch: Joi.string().min(6).max(255).required(),
     college: Joi.string().min(6).required().max(255),
     code: Joi.number().min(4).required(),
-    exam_start_time: Joi.date().required(),
-    resetLink: Joi.string(),
+    exam_start_time: Joi.date()
   });
   return studentSchema.validate(data);
 };
@@ -167,7 +163,7 @@ const studentAnswerSheetValidation = (data) =>{
 };
 
 module.exports.adminRegisterValidation = adminRegisterValidation;
-module.exports.collegeRegisterValidation = collegeRegisterValidation;
+module.exports.collegeValidation = collegeValidation;
 module.exports.tpoRegisterValidation = tpoRegisterValidation;
 module.exports.studentRegisterValidation = studentRegisterValidation;
 module.exports.loginValidation = loginValidation;

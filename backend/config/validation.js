@@ -6,8 +6,7 @@ const adminRegisterValidation = (data) => {
     name: Joi.string().min(6).required().max(255),
     email: Joi.string().min(13).required().max(255).email(),
     password: Joi.string().min(6).max(1024).required(),
-    phone: Joi.string().required(),
-    resetLink: Joi.string(),
+    phone: Joi.string().required()
   });
   return adminSchema.validate(data);
 };
@@ -16,12 +15,11 @@ const adminRegisterValidation = (data) => {
 const collegeRegisterValidation = (data) => {
   const collegeSchema = Joi.object({
     name: Joi.string().min(6).required().max(255),
-    email: Joi.string().min(13).required().max(255).email(),
-    university: Joi.string().min(6).max(255).required(),
-    phone: Joi.string().required(),
     code: Joi.number().min(4).required(),
     address: Joi.string().min(13).required().max(255),
-    resetLink: Joi.string(),
+    university: Joi.string().min(6).max(255).required(),
+    email: Joi.string().min(13).required().max(255).email(),
+    phone: Joi.string().required(),
   });
   return collegeSchema.validate(data);
 };
@@ -36,7 +34,6 @@ const tpoRegisterValidation = (data) => {
     designation: Joi.string().min(6).required().max(23),
     college: Joi.string().min(6).required().max(40),
     code: Joi.string().min(4).required(),
-    resetLink: Joi.string(),
   });
   return tpoSchema.validate(data);
 };
@@ -51,8 +48,8 @@ const studentRegisterValidation = (data) => {
     roll: Joi.string().required(),
     branch: Joi.string().min(6).max(255).required(),
     college: Joi.string().min(6).required().max(255),
-    code: Joi.string().min(4).required()
-    // exam_start_time: Joi.date().required()
+    code: Joi.string().min(4).required(),
+    exam_start_time: Joi.date()
   });
   return studentSchema.validate(data);
 };

@@ -44,10 +44,8 @@ const studentSchema = new mongoose.Schema({
     required: true,
     min: 4,
   },
-  // exam_start_time: {
-  //   default: Date,
-  //   type: Date.UTC(),
-  //   required: true
-  // },
+  exam_start_time: {
+    type: Date.UTC()
+  },
 });
 module.exports = mongoose.model("Student", studentSchema);

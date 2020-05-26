@@ -58,8 +58,7 @@ function errorHandler(error) {
     message: error.details[0].message,
     error_info: error.name,
     server_msg: error._message,
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -69,10 +68,8 @@ function unauthorizedErrorHandler() {
     status: authorizationFailed, //403
     message: "Unauthorized access",
     error_info: "Authrization Error",
-    server_msg:
-      "Authrization Error: the user is not authorized to access this data",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_msg: "Authrization Error: the user is not authorized to access this data",
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -82,10 +79,8 @@ function emailNotFoundErrorHandler(error) {
     status: notFound, //404
     message: "Email not found, Please register yourself",
     error_info: "Login Error, As email is not registerd in database",
-    server_msg:
-      "No user is registered with this email, So can't login the user",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_msg: "No user is registered with this email, So can't login the user",
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -95,10 +90,8 @@ function emailExistErrorHandler() {
     status: failure, //400
     message: "Already registered with this email, Please try to login",
     error_info: "Registeration Error, As email is already in database",
-    server_msg:
-      "Email already exist in the database, So can't register the same user twice",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_msg: "Email already exist in the database, So can't register the same user twice",
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -109,8 +102,7 @@ function invalidPasswordErrorHandler() {
     message: "Invalid password, please try again later",
     error_info: "Athentication Error",
     server_msg: "Athentication Error: invalid password",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -121,8 +113,7 @@ function idNotFoundErrorHandler() {
     message: "Please provide a valid id",
     error_info: "Not Found Error, As id is not found in database",
     server_msg: "No user is registered with this id, So can't get the user",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -131,12 +122,9 @@ function notFoundRollCodeErrorHandler() {
   const err = {
     status: authenticationFailed, //404
     message: "Roll no. and code not found, Please register yourself",
-    error_info:
-      "Login Error, As roll no. and code are not registerd in database",
-    server_msg:
-      "No user is registered with this roll no. and code, So can't login the user",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    error_info: "Login Error, As roll no. and code are not registerd in database",
+    server_msg: "No user is registered with this roll no. and code, So can't login the user",
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -147,8 +135,7 @@ function codeRollErrorHandler() {
     message: "Either Roll no. or code must be unique",
     error_info: "Registertion Error",
     server_msg: "Registeration Error: Either Roll no. or code must be unique",
-    server_error_ref:
-      Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+    server_error_ref: Date.now() + `${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   };
   return err;
 }
@@ -156,7 +143,9 @@ function codeRollErrorHandler() {
 //Admin Register
 router.post("/register/admins", async (req, res, next) => {
   //LETS VALIDATE THE DATA BEFORE WE MAKE A Admin
-  const { error } = adminRegisterValidation(req.body);
+  const {
+    error
+  } = adminRegisterValidation(req.body);
   if (error) {
     return res.status(`${failure}`).json(errorHandler(error));
   }
@@ -191,7 +180,9 @@ router.post("/register/admins", async (req, res, next) => {
 //TPO Register
 router.post("/register/tpos", async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo
-  const { error } = tpoRegisterValidation(req.body);
+  const {
+    error
+  } = tpoRegisterValidation(req.body);
   if (error) {
     return res.status(`${failure}`).json(errorHandler(error));
   }
@@ -229,7 +220,9 @@ router.post("/register/tpos", async (req, res) => {
 //Student Register
 router.post("/register/students", async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
-  const { error } = studentRegisterValidation(req.body);
+  const {
+    error
+  } = studentRegisterValidation(req.body);
   if (error) return res.status(`${failure}`).json(errorHandler(error));
 
   //Checking if the student is already in the database
@@ -270,7 +263,9 @@ router.post("/register/students", async (req, res) => {
 
 //Student LOGIN
 router.post("/login/students", async (req, res) => {
-  const { error } = studentloginValidation(req.body);
+  const {
+    error
+  } = studentloginValidation(req.body);
   if (error) return res.status(`${failure}`).json(errorHandler(error));
 
   //Checking if the student is not in the database
@@ -289,8 +284,7 @@ router.post("/login/students", async (req, res) => {
       .json(invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: student._id,
     },
     process.env.TOKEN_SECRET
@@ -309,7 +303,9 @@ router.post("/login/students", async (req, res) => {
 
 //LOGIN ADMIN
 router.post("/login/admins", async (req, res) => {
-  const { error } = loginValidation(req.body);
+  const {
+    error
+  } = loginValidation(req.body);
   if (error) {
     return res.status(`${failure}`).json(errorHandler(error));
   }
@@ -330,28 +326,29 @@ router.post("/login/admins", async (req, res) => {
       .json(invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: admin._id,
     },
     process.env.TOKEN_SECRET
   );
   //To store or access session data, we use the request property req.session, which is (generally) serialized as JSON by the store.
   (req.session.email = admin.email),
-    (req.session._id = admin._id),
-    (req.session.token = token),
-    (req.session.user_type = 1),
-    res.status(`${success}`).header("auth-token", token).json({
-      email: req.session.email,
-      _id: req.session._id,
-      token: req.session.token,
-      user_type: req.session.user_type,
-    });
+  (req.session._id = admin._id),
+  (req.session.token = token),
+  (req.session.user_type = 1),
+  res.status(`${success}`).header("auth-token", token).json({
+    email: req.session.email,
+    _id: req.session._id,
+    token: req.session.token,
+    user_type: req.session.user_type,
+  });
 });
 
 //LOGIN TPO
 router.post("/login/tpos", async (req, res) => {
-  const { error } = loginValidation(req.body);
+  const {
+    error
+  } = loginValidation(req.body);
   if (error) return res.status(`${failure}`).json(errorHandler(error));
 
   //Checking if the tpo is not in the database
@@ -368,8 +365,7 @@ router.post("/login/tpos", async (req, res) => {
       .json(invalidPasswordErrorHandler());
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: tpo._id,
     },
     process.env.TOKEN_SECRET
@@ -389,8 +385,7 @@ router.post("/login/tpos", async (req, res) => {
 // To get single Admin data using id
 router.get("/admins/:id", verify, async (req, res) => {
   if (req.session.user_type == 1) {
-    Admin.findOne(
-      {
+    Admin.findOne({
         _id: req.params.id,
       },
       (err, results) => {
@@ -430,12 +425,11 @@ router.put("/admins/:id", verify, function (req, res) {
   const hashedPassword = bcrypt.hashSync(body.password, salt);
   body.password = hashedPassword;
   if (req.session.user_type == 1) {
-    Admin.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
-      body
-    )
+    Admin.findOneAndUpdate({
+          _id: req.params.id,
+        },
+        body
+      )
       .then((results) => {
         if (!results) {
           return res.status(`${notFound}`).json(idNotFoundErrorHandler());
@@ -456,8 +450,7 @@ router.put("/admins/:id", verify, function (req, res) {
 // delete a admin from the db
 router.delete("/admins/:id", verify, function (req, res) {
   if (req.session.user_type == 1) {
-    Admin.findByIdAndRemove(
-      {
+    Admin.findByIdAndRemove({
         _id: req.params.id,
       },
       (err, results) => {
@@ -480,8 +473,7 @@ router.delete("/admins/:id", verify, function (req, res) {
 // To get single Tpo data using id
 router.get("/tpos/:id", verify, async (req, res) => {
   if (req.session.user_type == 2) {
-    Tpo.findOne(
-      {
+    Tpo.findOne({
         _id: req.params.id,
       },
       (err, results) => {
@@ -521,12 +513,11 @@ router.put("/tpos/:id", verify, function (req, res) {
   const hashedPassword = bcrypt.hashSync(body.password, salt);
   body.password = hashedPassword;
   if (req.session.user_type == 2) {
-    Tpo.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
-      body
-    )
+    Tpo.findOneAndUpdate({
+          _id: req.params.id,
+        },
+        body
+      )
       .then((results) => {
         if (!results) {
           return res.status(`${notFound}`).json(idNotFoundErrorHandler());
@@ -547,8 +538,7 @@ router.put("/tpos/:id", verify, function (req, res) {
 // delete a tpo from the db
 router.delete("/tpos/:id", verify, function (req, res) {
   if (req.session.user_type == 2) {
-    Tpo.findByIdAndRemove(
-      {
+    Tpo.findByIdAndRemove({
         _id: req.params.id,
       },
       (err, results) => {
@@ -571,8 +561,7 @@ router.delete("/tpos/:id", verify, function (req, res) {
 // To get single student data using id
 router.get("/students/:id", verify, async (req, res) => {
   if (req.session.user_type == 3) {
-    Student.findOne(
-      {
+    Student.findOne({
         _id: req.params.id,
       },
       (err, results) => {
@@ -612,12 +601,11 @@ router.put("/students/:id", verify, function (req, res) {
   const hashedPassword = bcrypt.hashSync(body.password, salt);
   body.password = hashedPassword;
   if (req.session.user_type == 3) {
-    Student.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
-      body
-    )
+    Student.findOneAndUpdate({
+          _id: req.params.id,
+        },
+        body
+      )
       .then((results) => {
         if (!results) {
           return res.status(`${notFound}`).json(idNotFoundErrorHandler());
@@ -638,8 +626,7 @@ router.put("/students/:id", verify, function (req, res) {
 // delete a student from the db
 router.delete("/students/:id", verify, function (req, res) {
   if (req.session.user_type == 3) {
-    Student.findByIdAndRemove(
-      {
+    Student.findByIdAndRemove({
         _id: req.params.id,
       },
       (err, results) => {
@@ -662,14 +649,10 @@ router.delete("/students/:id", verify, function (req, res) {
 //testinstructions
 router.post("/instructions", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-  const { error } = instructionsValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
-  //Checking if the college is already in the database
-  const collegeExist = await testinstructions.findOne({
-    code: req.body.code,
-  });
-  if (collegeExist) return res.status(400).send("College already exist");
+  const {
+    error
+  } = instructionsValidation(req.body);
+  if (error) return res.status(`${failure}`).json(errorHandler(error));
 
   // Create a new instruction
   const instructions = new testinstructions({
@@ -681,16 +664,104 @@ router.post("/instructions", verify, async (req, res) => {
   });
   try {
     const instructions = await instructions.save();
-    res.json(instructions);
+    res.status(`${success}`).json(instructions);
   } catch (err) {
-    res.status(400).send(err);
+    res.status(`${failure}`).send(errorHandler(err));
+  }
+});
+
+
+// To get single Admin data using id
+router.get("/admins/:id", verify, async (req, res) => {
+  if (req.session.user_type == 1) {
+    Admin.findOne({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err) {
+          return res.status(`${notFound}`).json(idNotFoundErrorHandler());
+        }
+        return res.status(`${success}`).json(results);
+      }
+    );
+  } else {
+    return res
+      .status(`${authorizationFailed}`)
+      .json(unauthorizedErrorHandler());
+  }
+});
+
+// To get all Admin's data
+router.get("/admins", async (req, res) => {
+  if (req.session.user_type == 1) {
+    Admin.find({}, (err, results) => {
+      if (err) {
+        return res.status(`${notFound}`).json(idNotFoundErrorHandler());
+      }
+      return res.status(`${success}`).json(results);
+    });
+  } else {
+    return res
+      .status(`${authorizationFailed}`)
+      .json(unauthorizedErrorHandler());
+  }
+});
+
+//Update admin's info
+router.put("/admins/:id", verify, function (req, res) {
+  const body = req.body;
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(body.password, salt);
+  body.password = hashedPassword;
+  if (req.session.user_type == 1) {
+    Admin.findOneAndUpdate({
+          _id: req.params.id,
+        },
+        body
+      )
+      .then((results) => {
+        if (!results) {
+          return res.status(`${notFound}`).json(idNotFoundErrorHandler());
+        } else {
+          res.status(`${success}`).json(results);
+        }
+      })
+      .catch((err) => {
+        return res.status(`${failure}`).json(errorHandler(err));
+      });
+  } else {
+    return res
+      .status(`${authorizationFailed}`)
+      .json(unauthorizedErrorHandler());
+  }
+});
+
+// delete a admin from the db
+router.delete("/admins/:id", verify, function (req, res) {
+  if (req.session.user_type == 1) {
+    Admin.findByIdAndRemove({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err) {
+          return res.status(`${failure}`).json(errorHandler(err));
+        }
+        if (!results) {
+          return res.status(`${notFound}`).json(idNotFoundErrorHandler());
+        }
+        return res.status(`${success}`);
+      }
+    );
+  } else {
+    return res
+      .status(`${authorizationFailed}`)
+      .json(unauthorizedErrorHandler());
   }
 });
 
 //display test instructions
 router.get("/instruction/:id", verify, async (req, res) => {
-  testinstructions.findOne(
-    {
+  testinstructions.findOne({
       _id: req.params.id,
     },
     (err, response) => {
@@ -712,8 +783,7 @@ router.get("/instruction/:id", verify, async (req, res) => {
 
 router.put("/instruction/:id", verify, function (req, res, next) {
   testinstructions
-    .findOneAndUpdate(
-      {
+    .findOneAndUpdate({
         _id: req.params.id,
       },
       req.body
@@ -763,7 +833,9 @@ router.delete("/instruction/:id", verify, function (req, res) {
 
 router.post("/results", verify, async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE ADD A RESULT
-  const { error } = ResultsValidation(req.body);
+  const {
+    error
+  } = ResultsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the studentid is already in the database
@@ -798,8 +870,7 @@ router.get(
   "/colleges/:code/results/:question-paper-id",
   verify,
   async (req, res) => {
-    Results.findOne(
-      {
+    Results.findOne({
         code: req.params.code,
         question_paper_id: req.params.question - paper - id,
       },
@@ -825,7 +896,9 @@ router.get(
 
 router.post("/questioncollection", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
-  const { error } = questionCollectionsValidation(req.body);
+  const {
+    error
+  } = questionCollectionsValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   // Create a new questionCollection
   const questionCollection = new questionCollections({
@@ -848,8 +921,7 @@ router.post("/questioncollection", verify, async (req, res) => {
 //get questionCollections
 
 router.get("/questionCollection/:id", verify, async (req, res) => {
-  questionCollections.findOne(
-    {
+  questionCollections.findOne({
       _id: req.params.id,
     },
     (err, results) => {
@@ -875,8 +947,7 @@ router.get("/questionCollection/:id", verify, async (req, res) => {
 
 router.put("/questioncCollection/:id", verify, function (req, res, next) {
   questionCollections
-    .findByIdAndUpdate(
-      {
+    .findByIdAndUpdate({
         _id: req.params.id,
       },
       req.body
@@ -914,7 +985,9 @@ router.delete("/questionCollection/:id", verify, function (req, res, next) {
 
 router.post("/questionPaper", verify, async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
-  const { error } = questionPaperValidation(req.body);
+  const {
+    error
+  } = questionPaperValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the studentid is already in the database
@@ -943,8 +1016,7 @@ router.post("/questionPaper", verify, async (req, res) => {
 //Get questionPaper
 
 router.get("/questionPaper/:college_code", verify, async (req, res) => {
-  questionPaper.findOne(
-    {
+  questionPaper.findOne({
       college_code: req.params.college_code,
     },
     (err, results) => {
@@ -970,8 +1042,7 @@ router.get("/questionPaper/:college_code", verify, async (req, res) => {
 
 router.put("/questionPaper/:college_code", verify, function (req, res, next) {
   questionPaper
-    .findOneAndUpdate(
-      {
+    .findOneAndUpdate({
         college_code: req.params.college_code,
       },
       req.body
@@ -1018,7 +1089,9 @@ router.delete("/questionPaper/:college_code", verify, function (
 //College Register
 router.post("/register/college", async (req, res) => {
   //LETS VALIDATE THE DATA BEFORE WE MAKE A college user
-  const { error } = collegeRegisterValidation(req.body);
+  const {
+    error
+  } = collegeRegisterValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   //Checking if the college is already in the database
@@ -1050,7 +1123,9 @@ router.post("/register/college", async (req, res) => {
 
 // LOGIN COLLEGE
 router.post("/login/college", async (req, res) => {
-  const { error } = loginValidation(req.body);
+  const {
+    error
+  } = loginValidation(req.body);
   if (error)
     return res
       .status(400)
@@ -1067,25 +1142,23 @@ router.post("/login/college", async (req, res) => {
   if (!validPass) return res.status(400).send("Invalid password");
 
   //Create and assign a token
-  const token = jwt.sign(
-    {
+  const token = jwt.sign({
       _id: college._id,
     },
     process.env.TOKEN_SECRET
   );
   (req.session.email = admin.email),
-    (req.session._id = admin._id),
-    (req.session.token = token),
-    (req.session.user_type = "Admin"),
-    res.header("auth-token", token).json(req.session);
+  (req.session._id = admin._id),
+  (req.session.token = token),
+  (req.session.user_type = "Admin"),
+  res.header("auth-token", token).json(req.session);
 });
 
 // display College Data
 
 router.get("/college", verify, async (req, res) => {
   const id = req.user._id;
-  College.findOne(
-    {
+  College.findOne({
       _id: id,
     },
     (err, results) => {
@@ -1109,12 +1182,11 @@ router.get("/college", verify, async (req, res) => {
 
 router.put("/college", verify, function (req, res, next) {
   const id = req.user._id;
-  College.findOneAndUpdate(
-    {
-      _id: id,
-    },
-    req.body
-  )
+  College.findOneAndUpdate({
+        _id: id,
+      },
+      req.body
+    )
     .then((College) => {
       if (College === null) {
         return done(null, false, {
@@ -1134,8 +1206,8 @@ router.put("/college", verify, function (req, res, next) {
 router.delete("/college", verify, function (req, res, next) {
   const id = req.user._id;
   College.findOneAndRemove({
-    _id: id,
-  })
+      _id: id,
+    })
     .then((College) => {
       if (College === null) {
         return done(null, false, {

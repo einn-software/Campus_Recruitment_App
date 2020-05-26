@@ -1,4 +1,4 @@
-//import models
+/*//import models
 const Result = require("../model/Result");
 
 // import validations
@@ -66,3 +66,4 @@ const ResultContGet =
     );
   });
 module.exports = { ResultCont, ResultContGet };
+*/

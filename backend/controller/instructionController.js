@@ -1,4 +1,4 @@
-//import models
+/*//import models
 const Instruction = require("../model/Instruction");
 
 // import validations
@@ -113,3 +113,4 @@ module.exports = {
   InstructionContPut,
   InstructionContDelete,
 };
+*/

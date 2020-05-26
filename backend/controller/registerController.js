@@ -56,8 +56,8 @@ const AdminGet = async (req, res) => {
     Admin.find({}, (err, results) => {
       if (err) {
         return res
-          .status(`${notFound}`)
-          .json(errHandler.idNotFoundErrorHandler());
+          .status(`${failure}`)
+          .json(errHandler.errorHandler(err));
       }
       return res.status(`${success}`).json(results);
     });
@@ -219,8 +219,8 @@ const TpoGet = async (req, res) => {
     Tpo.find({}, (err, results) => {
       if (err) {
         return res
-          .status(`${notFound}`)
-          .json(errHandler.idNotFoundErrorHandler());
+          .status(`${failure}`)
+          .json(errHandler.errorHandler(err));
       }
       return res.status(`${success}`).json(results);
     });

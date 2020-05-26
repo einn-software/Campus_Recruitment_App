@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB_CONNECT, {
   useCreateIndex: true,
 });
 mongoose.connection
-  .once("open", () => console.log("Connected to db!"))
+  .once("open", () => logger.log("Connected to db!"))
   .on("error", (error) => {
     logger.log('error',error);
   });

@@ -2,6 +2,7 @@
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
 const Student = require("../model/Student");
+const errHandler = require("../errorHandling");
 
 // import validations
 const {
@@ -12,6 +13,8 @@ const {
 //import jwt token for login
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const success = 200;
+const failure = 400;
 
 //Admin Login
 

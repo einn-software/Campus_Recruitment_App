@@ -1,14 +1,13 @@
-const express = require("express"); 
-const logger = require("./config/logger");
+const express = require("express"); //The Express is a web framwork for nodejs that provide small, robust tooling for HTTP servers, making it a great solution for single page applications, web sites, hybrids, or public HTTP APIs.
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const logger = require("./config/logger");
 const dotenv = require("dotenv"); // The dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 const app = express(); // Create the Express application
-dotenv.config(); // Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
 //Import Routes
 const authRoute = require("./routes/auth");
 //const resetPasswordRoute = require("./routes/ResetPassword");
+dotenv.config(); // Here call the config() method of dotenv library, which loads the variables into the process.env.
 
 //Connect to MongoDB
 mongoose.connect(process.env.DB_CONNECT, {

@@ -4,7 +4,6 @@ import com.testexample.materialdesigntest.data.interactor.interfaces.IInstructio
 import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.network.repository.IInstructionsRemoteRepo
 import com.testexample.materialdesigntest.data.network.repository.InstructionsRemoteRepo
-import io.reactivex.Flowable
 import io.reactivex.Single
 
 

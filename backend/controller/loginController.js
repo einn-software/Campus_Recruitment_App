@@ -23,7 +23,7 @@ const AdminLogin = async (req, res) => {
     error
   } = loginValidation(req.body);
   if (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the admin is not in the database
@@ -69,7 +69,7 @@ const StudentLogin = async (req, res) => {
     error
   } = studentloginValidation(req.body);
   if (error)
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
 
   //Checking if the student is not in the database
   const student = await Student.findOne({
@@ -113,7 +113,7 @@ const TpoLogin = async (req, res) => {
     error
   } = loginValidation(req.body);
   if (error)
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
 
   //Checking if the tpo is not in the database
   const tpo = await Tpo.findOne({

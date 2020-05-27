@@ -67,7 +67,7 @@ const loginValidation = (data) => {
 const studentloginValidation = (data) => {
   const schema = Joi.object({
     code: Joi.number().min(4).required(),
-    roll: Joi.string().min(13).max(255).required(),
+    roll: Joi.string().required(),
     password: Joi.string().min(6).required(),
   });
   return schema.validate(data);

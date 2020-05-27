@@ -84,7 +84,7 @@ router.post("/login/tpos", TpoLogin);
 // College Apis
 router.post("/colleges", collegeAdd);
 router.get("/colleges/:id", collegeGetById);
-router.get("/collegess", collegeGet);
+router.get("/colleges", collegeGet);
 router.put("/colleges/:id", collegePut);
 router.delete("/colleges/:id", collegeDelete);
 

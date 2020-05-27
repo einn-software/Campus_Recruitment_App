@@ -14,7 +14,7 @@ const instructionAdd = (verify, async (req, res) => {
   const {
     error
   } = instructionValidation(req.body);
-  if (error) return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+  if (error) return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
 
   //Checking if the college is already in the database
   const collegeExist = await Instructions.findOne({
@@ -86,7 +86,7 @@ const instructionPut =
         error
       } = instructionPutValidation(body);
       if (error) {
-        return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+        return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
       }
       if (req.session.user_type == Constants[1]) {
         Instructions.findOneAndUpdate({

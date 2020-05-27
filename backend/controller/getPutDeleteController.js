@@ -58,17 +58,17 @@ const AdminPut =
     (verify,
         function (req, res) {
             const body = req.body;
-            //VALIDATE THE DATA BEFORE WE MAKE A Admin
-            const {
-                error
-            } = adminPutValidation(body);
-            if (error) {
-                return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
-            }
-            const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(body.password, salt);
-            body.password = hashedPassword;
             if (req.session.user_type == Constants[1]) {
+                //VALIDATE THE DATA BEFORE WE MAKE A Admin
+                const {
+                    error
+                } = adminPutValidation(body);
+                if (error) {
+                    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+                }
+                const salt = bcrypt.genSaltSync(10);
+                const hashedPassword = bcrypt.hashSync(body.password, salt);
+                body.password = hashedPassword;
                 Admin.findOneAndUpdate({
                             _id: req.params.id,
                         },
@@ -164,17 +164,18 @@ const TpoPut =
     (verify,
         function (req, res) {
             const body = req.body;
-            //VALIDATE THE DATA BEFORE WE MAKE A Admin
-            const {
-                error
-            } = tpoPutValidation(body);
-            if (error) {
-                return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
-            }
-            const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(body.password, salt);
-            body.password = hashedPassword;
+
             if (req.session.user_type == Constants[2]) {
+                //VALIDATE THE DATA BEFORE WE MAKE A Admin
+                const {
+                    error
+                } = tpoPutValidation(body);
+                if (error) {
+                    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+                }
+                const salt = bcrypt.genSaltSync(10);
+                const hashedPassword = bcrypt.hashSync(body.password, salt);
+                body.password = hashedPassword;
                 Tpo.findOneAndUpdate({
                             _id: req.params.id,
                         },
@@ -265,17 +266,18 @@ const StudentGet = (verify, function (req, res) {
 //Update student's info
 const StudentPut = (verify, function (req, res) {
     const body = req.body;
-    //VALIDATE THE DATA BEFORE WE MAKE A Admin
-    const {
-        error
-    } = studentPutValidation(body);
-    if (error) {
-        return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
-    }
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
+
     if (req.session.user_type == 3) {
+        //VALIDATE THE DATA BEFORE WE MAKE A Admin
+        const {
+            error
+        } = studentPutValidation(body);
+        if (error) {
+            return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+        }
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(body.password, salt);
+        body.password = hashedPassword;
         Student.findOneAndUpdate({
                     _id: req.params.id,
                 },

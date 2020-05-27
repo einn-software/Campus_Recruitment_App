@@ -22,7 +22,7 @@ const AdminRegister = async (req, res, next) => {
     error
   } = adminRegisterValidation(req.body);
   if (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the admin is already in the database
@@ -59,7 +59,7 @@ const TpoRegister = async (req, res) => {
     error
   } = tpoRegisterValidation(req.body);
   if (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the tpo is already in the database
@@ -100,7 +100,7 @@ const StudentRegister = async (req, res) => {
     error
   } = studentRegisterValidation(req.body);
   if (error)
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
 
   //Checking if the student is already in the database
   const emailExist = await Student.findOne({

@@ -8,9 +8,21 @@ function randomGenerate() {
 function errorHandler(error) {
   const err = {
     status: Constants.er_failure,
-    message: error.details[0].message,
+    message: error.message,
     error_info: error.name,
     server_msg: error._message,
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  console.log(err);
+  return err;
+}
+
+function validationErrorHandler(error) {
+  const err = {
+    status: Constants.er_failure,
+    message: error.details[0].message,
+    error_info: error.name,
+    server_msg: "This error is generated because" + error.message,
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -114,5 +126,6 @@ module.exports = {
   idNotFoundErrorHandler,
   invalidPasswordErrorHandler,
   unauthorizedErrorHandler,
-  noRouteErrorHandler
+  noRouteErrorHandler,
+  validationErrorHandler
 }

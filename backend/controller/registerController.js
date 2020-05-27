@@ -31,7 +31,7 @@ const AdminRegister = async (req, res, next) => {
   }
 
   //Hash password
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10); //TODO Should be defined in macro
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   // Create a new admin
@@ -52,7 +52,7 @@ const AdminRegister = async (req, res, next) => {
 //Admin Get
 
 const AdminGet = async (req, res) => {
-  if (req.session.user_type == 1) {
+  if (req.session.user_type == 1) { //todo need to define a constant 
     Admin.find({}, (err, results) => {
       if (err) {
         return res
@@ -74,10 +74,10 @@ const AdminPut =
   (verify,
   function (req, res) {
     const body = req.body;
-    const salt = bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(10);//TODO
     const hashedPassword = bcrypt.hashSync(body.password, salt);
     body.password = hashedPassword;
-    if (req.session.user_type == 1) {
+    if (req.session.user_type == 1) { //TODO
       Admin.findOneAndUpdate(
         {
           _id: req.params.id,

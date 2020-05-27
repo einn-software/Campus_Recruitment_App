@@ -52,7 +52,7 @@ const AdminLogin = async (req, res) => {
   (req.session.email = admin.email),
     (req.session._id = admin._id),
     (req.session.token = token),
-    (req.session.user_type = 1),
+    (req.session.user_type = 1),//TODo we need to define a constant 
     res.status(`${success}`).header("auth-token", token).json({
       email: req.session.email,
       _id: req.session._id,

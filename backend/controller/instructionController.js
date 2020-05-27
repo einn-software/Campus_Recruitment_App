@@ -1,116 +1,147 @@
-/*//import models
-const Instruction = require("../model/Instruction");
-
+const Instructions = require('../model/instruction');
+const errHandler = require("./errorHandling");
+const verify = require('../config/verifyToken');
+const Constants = require('../config/constant');
 // import validations
-const { instructionValidation } = require("../config/validation");
-const verify = require("../config/verifyToken");
+const {
+  instructionValidation,
+  instructionPutValidation
+} = require("../config/validation");
 
-//instructions
-const InstructionCont =
-  (verify, async (req, res) => {
-    //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-    const {
-      error
-    } = instructionValidation(req.body);
-    if (error) return res.status(`${failure}`).json(errorHandler(error));
-  
-    // Create a new instruction
-    const instructions = new Instructions({
-      code: req.body.code,
-      message: req.body.message,
-      year: req.body.year,
-      month: req.body.month,
-      day: req.body.day,
-    });
-    try {
-      const instructions = await instructions.save();
-      res.status(`${success}`).json(instructions);
-    } catch (err) {
-      res.status(`${failure}`).send(errorHandler(err));
-    }
+//testinstructions
+const instructionAdd = (verify, async (req, res) => {
+  //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
+  const {
+    error
+  } = instructionValidation(req.body);
+  if (error) return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+
+  //Checking if the college is already in the database
+  const collegeExist = await Instructions.findOne({
+    code: req.body.code,
   });
-  
-//Get instruction
+  if (collegeExist) return res.status(`${Constants.er_failure}`).json(errHandler.emailExistErrorHandler());
 
-const InstructionContGet =
-  (verify,
-  async (req, res) => {
-    Instruction.findOne(
-      {
+  // Create a new instruction
+  const instructions = new Instructions({
+    code: req.body.code,
+    message: req.body.message,
+    year: req.body.year,
+    month: req.body.month,
+    day: req.body.day,
+  });
+  try {
+    const instructions = await Instructions.save();
+    res.status(`${Constants.success}`).json(instructions);
+  } catch (err) {
+    res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
+  }
+});
+
+//To Get all the instructions data
+const instructionGet = (verify, function (req, res) {
+  if (req.session.user_type == Constants[1]) {
+    Instructions.find({}, (err, results) => {
+      if (err) {
+        return res
+          .status(`${Constants.er_failure}`)
+          .json(errHandler.errorHandler(err));
+      }
+      return res.status(`${Constants.success}`).json(results);
+    });
+  } else {
+    return res
+      .status(`${Constants.er_authorizationFailed}`)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+});
+
+// To get single instruction data using id
+const instructionGetById = (verify, function (req, res) {
+  if (req.session.user_type == 1) { //Todo
+    Instructions.findOne({
         _id: req.params.id,
       },
-      (err, response) => {
+      (err, results) => {
         if (err) {
-          console.log(err);
-          return;
+          return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
         }
-        if (!response) {
-          return res.json({
-            message: "Record not Found",
-          });
-        }
-        return res.json(response);
+        return res.status(`${Constants.success}`).json(results);
       }
     );
-  });
+  } else {
+    return res
+      .status(`${Constants.er_authorizationFailed}`)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+});
 
-//Put instruction
-
-const InstructionContPut =
+//To change or update the instruction's data by using their id
+const instructionPut =
   (verify,
-  function (req, res, next) {
-    Instruction.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
-      req.body
-    )
-      .then((data) => {
-        if (admin === null) {
-          return done(null, false, {
-            message: "Something went wrong , Please try again",
+    function (req, res) {
+      const body = req.body;
+      //VALIDATE THE DATA BEFORE WE MAKE A Admin
+      const {
+        error
+      } = instructionPutValidation(body);
+      if (error) {
+        return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+      }
+      if (req.session.user_type == Constants[1]) {
+        Instructions.findOneAndUpdate({
+              _id: req.params.id,
+            },
+            body
+          )
+          .then((results) => {
+            if (!results) {
+              return res
+                .status(`${Constants.er_notFound}`)
+                .json(errHandler.idNotFoundErrorHandler());
+            } else {
+              res.status(`${Constants.success}`).json(results);
+            }
+          })
+          .catch((err) => {
+            return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
           });
-        } else {
-          res.status(200).json(data);
-        }
-      })
-      .catch(() => {
-        res.status(400).json({
-          message: "Data not found",
-        });
-      });
-  });
+      } else {
+        return res
+          .status(`${Constants.er_authorizationFailed}`)
+          .json(errHandler.unauthorizedErrorHandler());
+      }
+    });
 
-//Delete Instruction
-
-const InstructionContDelete =
+//To delete the instruction's data by using their id
+const instructionDelete =
   (verify,
-  function (req, res) {
-    Instruction.findOneAndRemove({
-      _id: req.params.id,
-    })
-      .then((admin) => {
-        if (admin === null) {
-          return done(null, false, {
-            message: "Something went wrong , Please try again",
-          });
-        } else {
-          res.status(200).json({
-            message: "Instruction deleted successfully",
-          });
-        }
-      })
-      .catch(() => {
-        res.status(400).json({
-          message: "Data not found",
-        });
-      });
-  });
+    function (req, res) {
+      if (req.session.user_type == Constants[1]) {
+        Instructions.findByIdAndRemove({
+            _id: req.params.id,
+          },
+          (err, results) => {
+            if (err) {
+              return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
+            }
+            if (!results) {
+              return res
+                .status(`${Constants.er_notFound}`)
+                .json(errHandler.idNotFoundErrorHandler());
+            }
+            return res.status(`${Constants.success}`);
+          }
+        );
+      } else {
+        return res
+          .status(`${Constants.er_authorizationFailed}`)
+          .json(errHandler.unauthorizedErrorHandler());
+      }
+    });
 
-module.exports = {
-  InstructionCont,
-  InstructionContGet,
-  InstructionContPut,
-  InstructionContDelete,
-};
-*/
+module.exports.instructionAdd = instructionAdd
+module.exports.instructionDelete = instructionDelete
+module.exports.instructionPut = instructionPut
+module.exports.instructionGetById = instructionGetById
+module.exports.instructionGet = instructionGet

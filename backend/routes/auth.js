@@ -2,11 +2,46 @@ const router = require("express").Router();
 const session = require("express-session");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session); //MongoDB session store for Connect and Express
-const regcontroller = require("../controller/registerController");
-const logController = require("../controller/loginController");
-const examController = require("../controller/examinationController");
-const resultController = require("../controller/resultController");
-const instructionController = require("../controller/instructionController");
+const {
+  AdminRegister,
+  StudentRegister,
+  TpoRegister
+} = require("../controller/registerController");
+const {
+  AdminLogin,
+  StudentLogin,
+  TpoLogin
+} = require("../controller/loginController");
+const {
+  collegeAdd,
+  collegeDelete,
+  collegeGet,
+  collegeGetById,
+  collegePut
+} = require('../controller/collegeRouteController');
+const {
+  AdminDelete,
+  AdminGet,
+  AdminGetById,
+  AdminPut,
+  StudentDelete,
+  StudentGet,
+  StudentGetById,
+  StudentPut,
+  TpoDelete,
+  TpoGet,
+  TpoGetBtId,
+  TpoPut
+} = require('../controller/getPutDeleteController')
+//const {} = require("../controller/examinationController");
+//const resultController = require("../controller/resultController");
+const {
+  instructionDelete,
+  instructionGet,
+  instructionGetById,
+  instructionPut,
+  instructionAdd
+} = require("../controller/instructionController");
 
 router.use(
   session({
@@ -21,46 +56,66 @@ router.use(
 );
 
 //Admin Register
-router.post("/register/admins", regcontroller.AdminRegister);
-router.get("/admins/:id", regcontroller.AdminGet);
-router.put("/admins/:id", regcontroller.AdminPut);
-router.delete("/admins/:id", regcontroller.AdminDelete);
+router.post("/register/admins", AdminRegister);
+router.get("/admins", AdminGet)
+router.get("/admins/:id", AdminGetById);
+router.put("/admins/:id", AdminPut);
+router.delete("/admins/:id", AdminDelete);
 
 //Student Register
-router.post("/register/students", regcontroller.StudentRegister);
+router.post("/register/students", StudentRegister);
+router.get("/students", StudentGet)
+router.get("/students/:id", StudentGetById);
+router.put("/students/:id", StudentPut);
+router.delete("/students/:id", StudentDelete);
 
 //Tpo Register
-router.post("/register/tpos", regcontroller.TpoRegister);
-router.get("/tpos/:id", regcontroller.TpoGet);
-router.put("/tpos/:id",regcontroller.TpoPut);
-router.delete("/tpos/:id", regcontroller.TpoDelete);
+router.post("/register/tpos", TpoRegister);
+router.post("/tpos", TpoGet)
+router.get("/tpos/:id", TpoGetBtId);
+router.put("/tpos/:id", TpoPut);
+router.delete("/tpos/:id", TpoDelete);
 
 //Login
-router.post("/login/admins", logController.AdminLogin);
-router.post("/login/students", logController.StudentLogin);
-router.post("/login/tpos", logController.TpoLogin);
+router.post("/login/admins", AdminLogin);
+router.post("/login/students", StudentLogin);
+router.post("/login/tpos", TpoLogin);
 
-//Question Collection
-router.post("/questioncollection", examController.QuestionCollectionCont);
-router.get("/questionCollection/:id", examController.QuestionCollectionContGet);
-router.put("/questioncCollection/:id", examController.QuestionCollectionContPut);
-router.delete("/questionCollection/:id",examController.QuestionCollectionContDelete);
+// College Apis
+router.post("/colleges", collegeAdd);
+router.get("/colleges/:id", collegeGetById);
+router.get("/collegess", collegeGet);
+router.put("/colleges/:id", collegePut);
+router.delete("/colleges/:id", collegeDelete);
 
-//Question Paper
-router.post("/questionPaper", examController.QuestionPaperCont);
-router.get("/questionPaper/:college_code",examController.QuestionPaperContGet);
-router.put("/questionPaper/:college_code",examController.QuestionPaperContPut);
-router.delete("/questionPaper/:college_code",examController.QuestionPaperContDelete);
+// Instructions api
+router.post("/instructions", instructionAdd)
+router.get("/instructions", instructionGet)
+router.get("/instructions/:id", instructionGetById);
+router.put("/instructions/:id", instructionPut);
+router.delete("/instructions/:id", instructionDelete);
 
-//Result
-router.post("/results", resultController.ResultCont);
-router.get("/colleges/:code/results/:question-paper-id",resultController.ResultContGet);
+// //Question Collection
+// router.post("/questioncollection", examController.QuestionCollectionCont);
+// router.get("/questionCollection/:id", examController.QuestionCollectionContGet);
+// router.put("/questioncCollection/:id", examController.QuestionCollectionContPut);
+// router.delete("/questionCollection/:id",examController.QuestionCollectionContDelete);
 
-//Instruction
-router.post("/instructions", instructionController.InstructionCont);
-router.get("/instruction/:id", instructionController.InstructionContGet);
-router.put("/instruction/:id",instructionController.InstructionContPut);
-router.delete("/instruction/:id", instructionController.InstructionContDelete);
+// //Question Paper
+// router.post("/questionPaper", examController.QuestionPaperCont);
+// router.get("/questionPaper/:college_code",examController.QuestionPaperContGet);
+// router.put("/questionPaper/:college_code",examController.QuestionPaperContPut);
+// router.delete("/questionPaper/:college_code",examController.QuestionPaperContDelete);
+
+// //Result
+// router.post("/results", resultController.ResultCont);
+// router.get("/colleges/:code/results/:question-paper-id",resultController.ResultContGet);
+
+// //Instruction
+// router.post("/instructions", instructionController.InstructionCont);
+// router.get("/instruction/:id", instructionController.InstructionContGet);
+// router.put("/instruction/:id",instructionController.InstructionContPut);
+// router.delete("/instruction/:id", instructionController.InstructionContDelete);
 
 
 module.exports = router;

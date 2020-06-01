@@ -1,15 +1,11 @@
 package com.testexample.materialdesigntest.data.network.repository
 
-import android.content.Context
-import android.util.Log
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
-import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.Student
-import com.testexample.materialdesigntest.data.session.SessionManager
-import io.reactivex.Observable
-import io.reactivex.Scheduler
+import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
+import com.testexample.materialdesigntest.data.network.model.UserRequest
+import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
@@ -17,22 +13,22 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.ClassRule
-import org.mockito.Mockito
-import retrofit2.HttpException
 
 class UserRemoteRepositoryTest {
-    companion object {
-        @ClassRule
-        @JvmField
-        val schedulers = RxImmediateSchedulerRule()
-    }
+//    companion object {
+//        @ClassRule
+//        @JvmField
+//        val schedulers = RxImmediateSchedulerRule()
+//    }
 
-    lateinit var repository: IUserRemoteRepository
-    val  TAG = "Testing UserRemoteRepository"
+    private lateinit var repository: IUserRemoteRepository
+    private val validCollegeLoginRequest = CollegeLoginRequest("TestUSer@test.com","password")
+    private val validStudentLoginRequest = StudentLoginRequest("1680210676",2346, "shikha2611")
 
     @Before
     fun setUp() {
         repository = UserRemoteRepository()
+
     }
 
     @After
@@ -40,61 +36,67 @@ class UserRemoteRepositoryTest {
 
     }
 
-    fun setToken(): String{
+    fun setToken(): UserRequest{
         setUp()
-        var token = ""
-        repository.authStudent(123456789, "15787851")
+        var getUserRequest = UserRequest("","")
+        repository.authStudent(validStudentLoginRequest)
             .subscribe(
-                {success -> token = success
-                    println("token is $token")},
+                {success ->
+                    getUserRequest = UserRequest(success.token, success.id)
+                    println("Auth Response is $success")},
                 { error -> println(error.localizedMessage) })
 
-        return token
+        return getUserRequest
     }
 
-    private fun setToken(email: String, password: String): String {
+    private fun setToken(request: CollegeLoginRequest): UserRequest {
         setUp()
-        var token = ""
-        repository.authCollege(email, password)
+        var getUserRequest = UserRequest("","")
+        repository.authTPO(request)
             .subscribe(
-                {success -> token = success},
-                {err -> println(err.localizedMessage)})
-        return token
+                {success ->
+                    getUserRequest = UserRequest(success.token, success.id)
+                    println("Auth Response is $success")},
+                { error -> println(error.localizedMessage) })
+
+        return getUserRequest
     }
 
 
     @Test
     fun authStudentTest() {
-        var token: String = ""
-         repository.authStudent(123456789, "15787851")
+        var getUserRequest = UserRequest("","")
+         repository.authStudent(validStudentLoginRequest)
             .subscribe(
-                {success -> token = success
-                println("token is $token")},
-                { error -> println(error.localizedMessage) })
+                {success ->
+                    getUserRequest = UserRequest(success.token, success.id)
+                    println("Auth Response is $success")},
+                { error ->
+                    println(error.localizedMessage) })
 
-        assertNotNull(token)
+
+        assertNotNull(getUserRequest.id)
+        assertNotNull(getUserRequest.token)
     }
 
     @Test
     fun getStudentTest() {
         var student: Student
-        val token = setToken()
-        val output = repository.getStudent(token)
-        assertEquals(true, output.blockingSubscribe(
-            {it ->
-                it.studentName
-                print(it)
-            },
-            {})
-            .toString().isNotEmpty())
-
-
+        val getUserRequest = setToken()
+        val output = repository.getStudent(getUserRequest)
+        output.test().assertNoErrors()
+        output.doOnNext{
+            println(it)
+            assertEquals(it.studentRollNo,validStudentLoginRequest.rollNo)
+            assertEquals(it.studentCollegeCode, validStudentLoginRequest.code)
+        }
     }
 
 
     @Test
     fun `when unregistered student roll number is supplied for login`() {
-        val output = repository.authStudent(12456789,"15787851")
+        val output = repository
+            .authStudent(StudentLoginRequest("168021067",802,"15787851"))
         var err: String = "none"
         output.subscribe({ println("success")},{err = it.localizedMessage!!})
 
@@ -104,7 +106,7 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when wrong password is supplied for login`() {
-        val output = repository.authStudent(123456789,"187851")
+        val output = repository.authStudent(StudentLoginRequest("1680210676",802,"1587851"))
         var err: String = "none"
         output.subscribe(
             { println("success")},
@@ -114,10 +116,12 @@ class UserRemoteRepositoryTest {
 
     }
 
+
+
     @Test
     fun `when no roll number is supplied for login`() {
-        val output = repository.authStudent(0,"187851")
-        var err: String = "none"
+        val output = repository.authStudent(StudentLoginRequest("",802,"15787851"))
+        var err = "none"
         output.subscribe(
             { println("success")},
             {err = it.localizedMessage!!})
@@ -128,8 +132,8 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when password is not supplied for login`() {
-        val output = repository.authStudent(123456789,"")
-        var err: String = "none"
+        val output = repository.authStudent(StudentLoginRequest("1680210676",802,""))
+        var err = "none"
         output.subscribe(
             { println("success")},
             {err = it.localizedMessage!!})
@@ -140,8 +144,8 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when neither roll number nor password is supplied for login`() {
-        val output = repository.authStudent(0,"")
-        var err: String = "none"
+        val output = repository.authStudent(StudentLoginRequest("",802,""))
+        var err = "none"
         output.subscribe(
             { println("success")},
             {err = it.localizedMessage!!})
@@ -151,35 +155,40 @@ class UserRemoteRepositoryTest {
     }
 
     @Test
-    fun getCollegeTest() {
-        val token = setToken("xz.d@gg.com", "15787851")
-        val output = repository.getCollege(token)
-        assertEquals(true, output.blockingSubscribe(
-            {it ->
-                it.collegeName
-                print(it)
-            },
-            {})
-            .toString().isNotEmpty())
+    fun getTPOTest() {
+        val getUserRequest = setToken(validCollegeLoginRequest)
+        val output = repository.getTPO(getUserRequest)
+        output.test().assertNoErrors()
+        output
+            .subscribe(
+                {
+                    println("The TPO information is $it")
+                    assertEquals(it.TPOEmail, validCollegeLoginRequest.email)
+                },
+                {
+                    println(it.localizedMessage)
+                })
     }
 
     @Test
-    fun authCollegeTest() {
-        var token: String = ""
-        repository.authCollege("xz.d@gg.com", "15787851")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {success -> token = success
-                    println("token is $token")},
-                { error -> println(error.localizedMessage) })
+    fun authTPOTest() {
+        var getUserRequest = UserRequest("","")
+        val output = repository.authTPO(validCollegeLoginRequest)
+        output.test().assertNoErrors()
+        output.subscribe(
+                {success -> getUserRequest = UserRequest(success.token, success.id)
+                    println("Auth Response is $success")},
+                { error ->
+                    fail("Verification failed with message ${error.localizedMessage}")
+                })
 
-        assertNotNull(token)
+        assertNotNull(getUserRequest.token)
+        assertNotNull(getUserRequest.id)
     }
 
     @Test
     fun `when unregistered email is supplied for college login`() {
-        val output = repository.authCollege("xyz@abc.com","15787851")
+        val output = repository.authTPO(CollegeLoginRequest("xyz@abc.com","15787851"))
         var err: String = "none"
         output.subscribe(
             { println("success")},
@@ -190,7 +199,7 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when Wrong Password supplied for college login`() {
-        val output = repository.authCollege("xz.d@gg.com","157878")
+        val output = repository.authTPO(CollegeLoginRequest("xyz@abc.com","157851"))
         var err: String = "none"
         output.subscribe(
             { println("success")},
@@ -201,7 +210,7 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when neither Email nor Password is supplied for college login`() {
-        val output = repository.authCollege("","")
+        val output = repository.authTPO(CollegeLoginRequest("",""))
         var err: String = "none"
         output.subscribe(
             { println("success")},
@@ -212,13 +221,13 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun `when email is not supplied for login`() {
-        val output = repository.authCollege("xyz@abc.com","15787851")
+        val output = repository.authTPO(CollegeLoginRequest("","15787851"))
         var err: String = "none"
         output.subscribe(
             { println("success")},
             {err = it.localizedMessage!!})
 
-        assertEquals("Invalid Email ", err)
+        assertEquals("Please Do Not leave Email blank ", err)
     }
 
 }

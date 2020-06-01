@@ -22,7 +22,7 @@ class InstructionsRemoteRepoTest {
     @Before
     fun setUp() {
         tokenRepository = UserRemoteRepositoryTest()
-        token = tokenRepository.setToken()
+        token = tokenRepository.setToken().token
         instructionRemoteRepo = InstructionsRemoteRepo()
     }
 
@@ -35,6 +35,6 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"802","29-06-2020")
             .subscribe(
                 {success -> println("Instruction is $success")},
-            { error -> println(error.localizedMessage) })
+                { error -> println(error.localizedMessage) })
     }
 }

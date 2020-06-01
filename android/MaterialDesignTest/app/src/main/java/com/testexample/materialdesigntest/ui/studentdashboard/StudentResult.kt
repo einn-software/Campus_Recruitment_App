@@ -44,8 +44,6 @@ class StudentResult : Fragment(R.layout.fragment_student_result) {
             .noOfQuestionsAttempted
             .toString()
 
-        totalQuestionsValue.text = result
-            .totalQuestions.toString()
 
         totalQuestionsAttemptedWrongValue.text = (result
             .noOfQuestionsAttempted - result

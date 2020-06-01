@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.ui.login
 
+import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.ui.base.BaseContract
 
 /**
@@ -11,11 +12,13 @@ interface LoginContract {
         fun openMainActivity()
         fun onValidationMessage(errorCode: Int)
         fun showLoading(flag: Boolean)
+        fun loadSpinner(collegeList: List<CollegeResponse>)
 
 
     }
     interface Presenter : BaseContract.BasePresenter {
         fun onStudentLogin(rollNo : String, password : String)
+        fun generateCollegeList()
     }
 
     interface CollegeView : BaseContract.BaseView<CollegePresenter> {

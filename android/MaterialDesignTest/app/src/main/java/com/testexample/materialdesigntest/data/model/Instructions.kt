@@ -5,8 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Instructions(
     @SerializedName("_id")val id: String,
-    @SerializedName("college_code")val collegeCode: String,
-    @SerializedName("date")val examDate: String,
+    @SerializedName("code")val collegeCode: String,
+    @SerializedName("day")val date: Int,
     @SerializedName("message")val message: String,
-    @SerializedName("_v")val version: Int
+    @SerializedName("month") val month: Int,
+    @SerializedName("year") val year: Int
 )

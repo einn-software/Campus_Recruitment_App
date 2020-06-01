@@ -31,7 +31,7 @@ abstract class QuestionPaperDao {
     abstract fun deleteQuestionPaper(questionPaper: QuestionPaper)
 
     @Transaction
-    @Query("SELECT * FROM QuestionPaper WHERE college_code = :collegeCode AND date = :examDate")
+    @Query("SELECT * FROM QuestionPaper WHERE collegeCode = :collegeCode AND date = :examDate")
     abstract fun getQuestionPaper(collegeCode: String, examDate: String): Single<QuestionPaperComplete>
 
     @Query("SELECT * FROM questions_table WHERE questionId = :questionId")

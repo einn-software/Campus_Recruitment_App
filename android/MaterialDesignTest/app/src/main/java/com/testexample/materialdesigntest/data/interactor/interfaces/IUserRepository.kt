@@ -2,6 +2,9 @@ package com.testexample.materialdesigntest.data.interactor.interfaces
 
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.model.TPO
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
+import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -11,7 +14,7 @@ interface IUserRepository {
     fun isStudentValid(
         rollNo: Long,
         password: String
-    ): Single<String>
+    ): Single<AuthResponse>
 
     fun isExistingUser(
         userEmail: String
@@ -26,11 +29,13 @@ interface IUserRepository {
     fun isCollegeValid(
         email: String,
         password: String
-    ): Single<String>
+    ): Single<AuthResponse>
 
     fun getCollege(
         token: String
-    ): Flowable<College>
+    ): Flowable<TPO>
+
+    fun getCollegeList(): Flowable<List<CollegeResponse>>
 
 }
 

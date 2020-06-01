@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.ui.instructions.InstructionActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_student_login.*
@@ -19,10 +21,12 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
 
     private lateinit var presenter: LoginContract.Presenter
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = LoginPresenter(this)
+        presenter.generateCollegeList()
 
         studentLoginButton.setOnClickListener {
             presenter.onStudentLogin(rollNoText.text.toString(),
@@ -59,6 +63,20 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
         TODO("Not yet implemented")
     }
 
+    override fun loadSpinner(collegeList: List<CollegeResponse>) {
+        val collegeNameList = getCollegeNameList(collegeList)
+        searchableSpinnerForCollege.adapter = ArrayAdapter<String>(requireActivity(),
+            android.R.layout.simple_spinner_item, collegeNameList)
+    }
+
+    private fun getCollegeNameList(collegeList: List<CollegeResponse>): List<String> {
+        val result = ArrayList<String>()
+        for (college in collegeList){
+            result.add(college.collegeName!! + ", " + college.collegeCode.toString())
+        }
+        return result
+    }
+
     override fun setPresenter(presenter: LoginContract.Presenter) {
         this.presenter = presenter
     }
@@ -66,7 +84,6 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
     override fun setContext(): Context {
         return this.requireContext()
     }
-
 
     override fun onDestroy() {
         presenter.onDestroy()

@@ -5,6 +5,7 @@ import com.testexample.materialdesigntest.data.database.repository.ExaminationRo
 import com.testexample.materialdesigntest.data.database.repository.IExaminationRoomRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
 import com.testexample.materialdesigntest.data.model.*
+import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.network.repository.ExaminationRemoteRepo
 import com.testexample.materialdesigntest.data.network.repository.IExaminationRemoteRepo
 import io.reactivex.Completable
@@ -21,7 +22,7 @@ class ExaminationRepo(context: Context) : IExaminationRepo {
 
     override fun loadQuestionPaperFromRemote(collegeCode: String, date: String): Single<QuestionPaperComplete> {
         return remoteRepo
-            .callApiForQuestionPaper(token, collegeCode, date)
+            .callApiForQuestionPaper(token, FetchExamRequest(802,2020,5,29))
     }
 
     override fun saveResponseInRoom(response: Response): Completable{
@@ -50,7 +51,8 @@ class ExaminationRepo(context: Context) : IExaminationRepo {
 
     override fun addQuestionPaper(questionPaper: QuestionPaperComplete) {
         roomRepo
-            .addQuestionPaper(QuestionPaperComplete(QuestionPaper("534",25,29,"802","26-02-2020"),
+            .addQuestionPaper(QuestionPaperComplete(QuestionPaper("534","name",50,
+                180,"dada",802,29,5,2020,"10:00 AM",true,1,.25),
             listOf(Section("534", "section1",52,54, listOf("s54","545","454")))))
     }
 }

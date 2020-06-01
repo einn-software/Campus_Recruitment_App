@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.core.text.isDigitsOnly
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,17 +40,40 @@ class LoginPresenter(private var view: LoginContract.View?) :
                               { token ->
                                   Log.d("inside passed Auth", "updating session with token \n $token \n")
                                   updateSession(
-                                      token,
+                                      token.token,
                                       Constants.Companion
                                           .LoggedInMode.LOGGED_IN_MODE_SERVER
                                   )
-                                  userRepository.saveStudent(token)
+                                  userRepository.saveStudent(token.token)
                                   view!!.openMainActivity()
                               },
                               { error -> Log.d("REQUEST FAILED !! ", error.toString()) }
                           ))
           }
         }
+    }
+
+    override fun generateCollegeList() {
+        var collegeList: List<CollegeResponse> = emptyList()
+        userRepository = UserRepository(view!!.setContext())
+
+        view.let {
+            userRepository.getCollegeList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {college ->
+                        collegeList = college
+                    },
+                    {error ->
+                        println(error.localizedMessage)
+                    },
+                    {
+                        view!!.loadSpinner(collegeList)
+                    }
+                )
+        }
+
     }
 
     private fun updateSession(token: String, loginStatus: Constants.Companion.LoggedInMode) {

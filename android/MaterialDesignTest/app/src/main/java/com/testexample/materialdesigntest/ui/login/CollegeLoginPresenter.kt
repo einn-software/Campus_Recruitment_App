@@ -41,7 +41,7 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
                     .subscribe(
                         { token ->
                             updateSession(
-                                token,
+                                token.token,
                                 Constants.Companion
                                     .LoggedInMode.LOGGED_IN_MODE_SERVER
                             )

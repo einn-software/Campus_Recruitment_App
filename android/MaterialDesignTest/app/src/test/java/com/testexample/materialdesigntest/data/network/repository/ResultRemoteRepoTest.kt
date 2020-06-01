@@ -23,7 +23,7 @@ class ResultRemoteRepoTest {
     @Before
     fun setUp() {
         tokenRepository = UserRemoteRepositoryTest()
-        token = tokenRepository.setToken()
+        token = tokenRepository.setToken().token
         resultRemoteRepo = ResultRemoteRepo()
     }
 

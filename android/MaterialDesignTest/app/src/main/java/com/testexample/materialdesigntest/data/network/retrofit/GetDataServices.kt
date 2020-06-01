@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.data.network.retrofit
 
+import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.data.model.*
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
@@ -22,7 +23,7 @@ interface GetDataServices {
 
     @GET("colleges/{code}/students")
     fun getStudentList(@Header("auth-token") token: String,
-                       @Path("code") code: String ): Flowable<List<StudentResponse>>
+                       @Path("code") code: Int ): Flowable<List<StudentResponse>>
 
     @POST("forgot-password/students")
     fun studentForgotPassword(@Body email: String): Single<String>
@@ -31,39 +32,69 @@ interface GetDataServices {
     fun authTPO(@Body loginRequest: CollegeLoginRequest): Single<AuthResponse>
 
     @GET("tpos/{id}")
-    fun getTPO(@Header("auth-token") token: String, @Path("id") tpoId: String): Flowable<College>
+    fun getTPO(@Header("auth-token") token: String,
+               @Path("id") tpoId: String): Flowable<TPO>
 
     @POST("forgot-password/tpos")
     fun tpoForgotPassword(@Body email: String):Single<String>
+
+    @PUT("tpos/{id}")
+    fun updateTPO(@Header("auth-token") token: String,
+                  @Path("id") TPOId: String,
+                  @Body updateParameters: TPOUpdateRequest): Flowable<TPO>
 
     @GET("colleges")
     fun getCollegeList(): Flowable<List<CollegeResponse>>
 
     @GET("colleges/{code}")
     fun getCollege(@Header("auth-token") token: String,
-                   @Path("code") code: String ):
+                   @Path("code") code: Int ):
             Single<College>
 
-    @GET("instruction/{code}/{date}")
+    @PUT("colleges/{id}")
+    fun updateCollege()
+
+    @GET("instructions/{id}")
     fun getInstructions(@Header("auth-token") token: String ,
-                        @Path("code") code: String,
-                        @Path("date") date: String):
+                        @Path("id") InstructionId: String):
             Flowable<Instructions>
 
-    @GET("questionPaper/{code}")
+    @GET("colleges/{code}/question-papers/{year}")
     fun getQuestionPaper(@Header("auth-token") token: String ,
-                         @Path("code") code: String):
+                         @Path("code") code: Int,
+                         @Path("year") year: Int,
+                         @Query("month") month: Int,
+                         @Query("date") date: Int):
             Single<QuestionPaperComplete>
 
-    @GET("question/{id}")
+    @GET("questions/{id}")
     fun getQuestion(@Header("auth-token") token: String,
                     @Path("id") questionId: String):
             Single<Question>
 
-    @GET("result/{roll}")
-    fun getResult(@Header("auth-token") token: String,
-                  @Path("roll") rollNo: Long):
-            Single<Result>
+    @GET("student-answers/{student-id}/{question-paper-id}/{question-id}")
+    fun getStudentResponse(@Header("auth-token") token: String ,
+                           @Path("student-id") studentId: String,
+                           @Path("question-paper-id") QuestionPaperId: String,
+                           @Path("question-id") questionId: String): Single<Question>
+
+    @POST("student-answers")
+    fun addStudentResponse(@Body request : StudentAnswerRequest): Single<StudentAnswerResponse>
+
+    @PUT("student-answers/{id}")
+    fun updateStudentResponse(@Path("id") id: String,
+                              @Body request: StudentAnswerRequest): Single<StudentAnswerResponse>
+
+    @POST("final-submission/")
+    fun endExam(@Body endExamRequest: EndExamRequest): Single<EndExamResponse>
+
+    @GET("colleges/{code}/results/{question-paper-id}")
+    fun getStudentResultList(@Header("auth-token") token: String):
+            Flowable<List<CollegeWiseResultResponse>>
+
+
+
+
 
 
 

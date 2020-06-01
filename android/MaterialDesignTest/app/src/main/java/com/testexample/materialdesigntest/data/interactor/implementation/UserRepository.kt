@@ -7,6 +7,8 @@ import com.testexample.materialdesigntest.data.database.repository.UserRoomRepos
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.College
+import com.testexample.materialdesigntest.data.model.TPO
+import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.repository.IUserRemoteRepository
 import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepository
 import io.reactivex.Flowable
@@ -25,8 +27,8 @@ class UserRepository(context: Context)
 
     private val roomRepository: IUserRoomRepository = UserRoomRepository(context)
 
-    override fun isStudentValid(rollNo: Long, password: String): Single<String> {
-        return remoteRepository.authStudent(rollNo, password)
+    override fun isStudentValid(rollNo: Long, password: String): Single<AuthResponse> {
+        return remoteRepository.authStudent(StudentLoginRequest(rollNo.toString(),802,password))
     }
 
     override fun isExistingUser(userEmail: String): Boolean {
@@ -35,7 +37,7 @@ class UserRepository(context: Context)
 
     override fun saveStudent(token: String) {
         Log.d(TAG, "save Student")
-        val student = remoteRepository.getStudent(token)
+        val student = remoteRepository.getStudent(UserRequest(token,""))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -53,12 +55,16 @@ class UserRepository(context: Context)
         TODO("Not yet implemented")
     }
 
-    override fun isCollegeValid(email: String, password: String): Single<String> {
-        return remoteRepository.authCollege(email, password)
+    override fun isCollegeValid(email: String, password: String): Single<AuthResponse> {
+        return remoteRepository.authTPO(CollegeLoginRequest(email, password))
     }
 
-    override fun getCollege(token: String): Flowable<College> {
-        return remoteRepository.getCollege(token)
+    override fun getCollege(token: String): Flowable<TPO> {
+        return remoteRepository.getTPO(UserRequest(token,""))
+    }
+
+    override fun getCollegeList(): Flowable<List<CollegeResponse>> {
+        TODO("Not yet implemented")
     }
 
 }

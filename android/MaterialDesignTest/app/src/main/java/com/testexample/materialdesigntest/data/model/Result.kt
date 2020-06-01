@@ -9,7 +9,8 @@ import kotlinx.android.parcel.Parcelize
 data class Result(
     val studentId: String,
     val questionPaperId: String,
-    val totalQuestions: Int,
+    val studentName: String,
+    val studentRollNo: String,
     val noOfQuestionsAttempted: Int,
     val noOfQuestionsCorrect: Int,
     val totalMarks: Int,

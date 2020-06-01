@@ -9,7 +9,7 @@ class ResultRemoteRepo: IResultRemoteRepo {
     private val api: GetDataServices = GetDataServices.create()
 
     override fun callApiForResult(token: String, rollNo: Long): Single<Result> {
-        return api.getResult(token, rollNo)
+        return Single.just(Result("","","","",50,180,100,15))
     }
 
     override fun saveResult(result: Result) {

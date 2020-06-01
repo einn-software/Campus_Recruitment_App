@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import java.util.*
 
 
 open class Converter {
@@ -16,6 +17,16 @@ open class Converter {
     open fun stringToList(value: String): List<String> {
         return value.split(",").map { it }
     }
+
+//    @TypeConverter
+//    open fun dateToString(value: Date):String {
+//        return value.toString()
+//    }
+//
+//    @TypeConverter
+//    open fun stringToDate(value: String): List<String> {
+//        return value.
+//    }
 
 //    @TypeConverter
 //    open fun stringFromObject(list: List<Section?>?): String? {

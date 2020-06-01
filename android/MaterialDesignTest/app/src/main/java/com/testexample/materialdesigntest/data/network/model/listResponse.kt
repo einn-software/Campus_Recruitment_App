@@ -17,3 +17,12 @@ data class StudentResponse(
     @SerializedName("roll") val studentRollNo: String,
     @SerializedName("branch") val studentBranch: String
 )
+
+data class CollegeWiseResultResponse(
+    @SerializedName("_id") val studentId: String,
+    @SerializedName("roll") val studentRollNo: String,
+    @SerializedName("name") val studentName: String?,
+    @SerializedName("question_attempt") val questionAttended: Int,
+    @SerializedName("correct_attempt") val correctAttempted: Int,
+    @SerializedName("total_marks_scored") val totalMarksScored: Int
+)

@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.presenter
 
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
 import io.mockk.every
@@ -26,7 +27,7 @@ class LoginPresenterTest {
     private val view : LoginContract.View = mockk(relaxed = true)
     private val model : UserRepository = mockk() {
         every { isStudentValid(
-            645454, "testpass") } returns Single.just("token")
+            645454, "testpass") } returns Single.just(AuthResponse("token","","",""))
     }
 
     //init presenter object
@@ -59,7 +60,7 @@ class LoginPresenterTest {
         val user: String = "1545"
         val pass: String = "testpass"
 
-        model.isStudentValid(user.toLong(), pass).test().assertValue("token")
+        model.isStudentValid(user.toLong(), pass).test().assertValue(AuthResponse("token","","",""))
 
     }
 

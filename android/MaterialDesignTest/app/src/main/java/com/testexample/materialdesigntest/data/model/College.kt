@@ -12,7 +12,7 @@ data class College(
     @ColumnInfo(name = "college_name") val collegeName: String?,
     @ColumnInfo(name = "college_email") val collegeEmail: String?,
     @ColumnInfo(name = "college_university") val collegeUniversity: String,
-    @ColumnInfo(name = "college_phone") val collegePhone: Long,
+    @ColumnInfo(name = "college_phone") val collegePhone: String,
     @ColumnInfo(name = "college_code") val collegeCode: Long,
     @ColumnInfo(name = "college_address") val collegeAddress: String
 )

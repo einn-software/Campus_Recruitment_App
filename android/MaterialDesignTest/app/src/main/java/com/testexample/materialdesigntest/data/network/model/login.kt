@@ -10,10 +10,11 @@ data class StudentLoginRequest(
     )
 
 data class AuthResponse(
+    @SerializedName("email")val email: String,
     @SerializedName("token")val token: String,
     @SerializedName("_id")val id: String,
-    @SerializedName("email")val email: String,
-    @SerializedName("user_type")val userType: String
+    @SerializedName("user_type")val userType: String,
+    val error: ErrorResponse
 )
 
 data class UserRequest(
@@ -24,4 +25,12 @@ data class UserRequest(
 data class CollegeLoginRequest(
     @SerializedName("email")val email: String,
     @SerializedName("password")val password: String
+)
+
+data class ErrorResponse(
+    @SerializedName("status")val status: Int,
+    @SerializedName("message")val message: String,
+    @SerializedName("error_info")val errorInfo: String,
+    @SerializedName("server_msg")val serverMessage: String,
+    @SerializedName("server_error_ref")val serverReference: String
 )

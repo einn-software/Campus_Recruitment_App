@@ -3,6 +3,7 @@ package com.testexample.materialdesigntest.data.network.repository
 import com.google.android.gms.common.api.ApiException
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.network.model.*
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -44,6 +45,7 @@ class ExaminationRemoteRepoTest {
 
         val output = repository
             .callApiForQuestionPaper(studentSession.token,fetchExamRequest)
+            .handelNetworkError()
 
         output.test().assertNoErrors()
         output.subscribe(
@@ -70,6 +72,7 @@ class ExaminationRemoteRepoTest {
     fun `call Api For QuestionPaper when wrong token is passed`(){
         val output = repository
             .callApiForQuestionPaper(studentSession.token,fetchExamRequest)
+            .handelNetworkError()
 
         output.subscribe(
             {success -> fail("Verification failed because successful event recorded $success")},
@@ -85,6 +88,7 @@ class ExaminationRemoteRepoTest {
     fun callApiForQuestionTest() {
         val output = repository
             .callApiForQuestion(studentSession.token, questionId)
+            .handelNetworkError()
 
         output.test().assertNoErrors()
         output.subscribe(
@@ -105,6 +109,7 @@ class ExaminationRemoteRepoTest {
         answer = StudentAnswerRequest(studentSession.id,
             questionId, 3, questionPaperId, 1)
         val output = repository.callApiForSavingAnswer(answer)
+            .handelNetworkError()
 
         output.test().assertNoErrors()
         output.subscribe(
@@ -125,6 +130,7 @@ class ExaminationRemoteRepoTest {
     fun callApiForUpdatingAnswerTest() {
 
         val output = repository.callApiForUpdatingAnswer(updateAnswer)
+            .handelNetworkError()
 
         output.test().assertNoErrors()
         output.subscribe(
@@ -143,7 +149,7 @@ class ExaminationRemoteRepoTest {
     fun callApiForEndingExam() {
         val output = repository
             .callApiForEndingExam(EndExamRequest(studentSession.id,
-                questionPaperId))
+                questionPaperId)).handelNetworkError()
 
         output.test().assertNoErrors()
         output.subscribe(

@@ -1,6 +1,5 @@
 package com.testexample.materialdesigntest.data.database.room
 
-import androidx.annotation.VisibleForTesting
 import androidx.room.*
 import com.testexample.materialdesigntest.data.model.Student
 import io.reactivex.Completable
@@ -22,7 +21,7 @@ interface StudentDao {
     fun getAllUsers(): Flowable<List<Student>>
 
     @Query("SELECT * FROM student_table WHERE student_roll_no LIKE :rollNo AND student_password LIKE:password")
-    fun getUserByRollNoPassword(rollNo: Long,  password: String): Flowable<Student>
+    fun getUserByRollNoPassword(rollNo: String, password: String): Flowable<Student>
 
     @Query("SELECT student_email FROM student_table WHERE student_email LIKE :userEmail")
     fun getUserByEmail(userEmail: String): String

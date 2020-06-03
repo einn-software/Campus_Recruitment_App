@@ -6,13 +6,11 @@ import com.testexample.materialdesigntest.data.database.repository.IUserRoomRepo
 import com.testexample.materialdesigntest.data.database.repository.UserRoomRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.model.Student
-import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.repository.IUserRemoteRepository
 import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepository
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -64,7 +62,7 @@ class UserRepository(context: Context)
     }
 
     override fun getCollegeList(): Flowable<List<CollegeResponse>> {
-        TODO("Not yet implemented")
+        return remoteRepository.callAPIForCollegeList()
     }
 
 }

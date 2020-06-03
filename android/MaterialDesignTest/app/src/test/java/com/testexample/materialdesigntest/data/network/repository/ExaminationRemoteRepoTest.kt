@@ -70,17 +70,18 @@ class ExaminationRemoteRepoTest {
 
     @Test
     fun `call Api For QuestionPaper when wrong token is passed`(){
+        lateinit var err:String
         val output = repository
             .callApiForQuestionPaper(studentSession.token,fetchExamRequest)
             .handelNetworkError()
 
         output.subscribe(
             {success -> fail("Verification failed because successful event recorded $success")},
-            {err ->
-                assertEquals("Unauthorised user",err.localizedMessage)
+            {
+                err = it.localizedMessage!!
             }
         )
-
+        assertEquals("700 invalid token", err)
     }
 
 

@@ -5,6 +5,7 @@ import androidx.core.text.isDigitsOnly
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -61,6 +62,7 @@ class LoginPresenter(private var view: LoginContract.View?) :
             userRepository.getCollegeList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .handelNetworkError()
                 .subscribe(
                     {college ->
                         collegeList = college

@@ -1,6 +1,5 @@
 package com.testexample.materialdesigntest.data.database.repository
 
-import android.app.Application
 import android.content.Context
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.database.room.StudentDao
@@ -20,8 +19,8 @@ class RoomRepositoryTest {
     private val user =
         Student(
             "1", "sdg", "sdg@test.com",
-            "qwertyui", 545454545, 243,
-            "cse", "nitra","codes" )
+            "qwertyui", 5184854,"45454",
+            "cse", "nitra",2555 )
 
 
     private var studentDao: StudentDao = mockk(relaxed = true){

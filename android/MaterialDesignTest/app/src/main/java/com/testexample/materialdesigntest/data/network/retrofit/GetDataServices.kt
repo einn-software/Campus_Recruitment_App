@@ -16,7 +16,7 @@ interface GetDataServices {
     @POST("login/students")
     fun authStudent(@Body loginRequest: StudentLoginRequest): Single<AuthResponse>
 
-    @GET("student/{id}")
+    @GET("students/{id}")
     fun getStudent(@Header("auth-token") token: String,
                    @Path("id") studentId: String):
             Flowable<Student>

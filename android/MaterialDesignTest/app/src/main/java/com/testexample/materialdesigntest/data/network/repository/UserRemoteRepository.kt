@@ -2,10 +2,7 @@ package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.TPO
-import com.testexample.materialdesigntest.data.network.model.AuthResponse
-import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
-import com.testexample.materialdesigntest.data.network.model.UserRequest
-import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
+import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -26,12 +23,17 @@ class UserRemoteRepository: IUserRemoteRepository {
         return api.getStudent(userRequest.token, userRequest.id)
     }
 
-    override fun getTPO(userRequest: UserRequest): Flowable<TPO> {
+    override fun getTPO(userRequest: UserRequest):
+            Flowable<TPO> {
         return api.getTPO(userRequest.token, userRequest.id)
     }
 
     override fun authTPO(loginRequest: CollegeLoginRequest): Single<AuthResponse> {
         return api.authTPO(loginRequest)
+    }
+
+    override fun callAPIForCollegeList(): Flowable<List<CollegeResponse>> {
+        return api.getCollegeList()
     }
 
 

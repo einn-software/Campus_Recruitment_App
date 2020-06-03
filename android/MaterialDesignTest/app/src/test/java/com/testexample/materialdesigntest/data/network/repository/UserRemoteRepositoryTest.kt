@@ -85,18 +85,25 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun getStudentTest() {
-        var student: Student
+        lateinit var student: Student
         val getUserRequest = setToken()
         println(getUserRequest)
         val output = repository.getStudent(getUserRequest)
+            .handelNetworkError()
         output.test().assertNoErrors()
         output
-            .handelNetworkError()
-            .doOnNext{
-            println(it)
-            assertEquals(it.studentRollNo,validStudentLoginRequest.rollNo)
-            assertEquals(it.studentCollegeCode, validStudentLoginRequest.code)
-        }
+            .subscribe(
+                {
+                    println(it)
+                    student = it
+                },
+                {err->
+                    println(err)
+                },
+                { println("onComplete")}
+        )
+        assertEquals(validStudentLoginRequest.rollNo,student.studentRollNo)
+        assertEquals(validStudentLoginRequest.code, student.studentCollegeCode)
     }
 
 

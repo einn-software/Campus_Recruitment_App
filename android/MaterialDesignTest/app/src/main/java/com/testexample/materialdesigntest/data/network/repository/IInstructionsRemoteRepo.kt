@@ -6,6 +6,6 @@ import io.reactivex.Flowable
 
 
 interface IInstructionsRemoteRepo {
-    fun callInstructionsApi(token:String, code: String, date: String):
+    fun callInstructionsApi(token:String, id: String):
             Flowable<Instructions>
 }

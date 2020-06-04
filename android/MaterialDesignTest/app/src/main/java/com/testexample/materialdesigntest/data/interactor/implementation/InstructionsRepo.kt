@@ -14,9 +14,8 @@ class InstructionsRepo:
     private val remote : IInstructionsRemoteRepo = InstructionsRemoteRepo()
     override fun getInstructionsFromRemoteRepo(
         token:String,
-        code: String,
-        date: String
+        id: String
     ): Flowable<Instructions> {
-        return remote.callInstructionsApi(token, code, date)
+        return remote.callInstructionsApi(token, id)
     }
 }

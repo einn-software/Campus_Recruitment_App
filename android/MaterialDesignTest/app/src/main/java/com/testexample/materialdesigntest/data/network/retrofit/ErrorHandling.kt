@@ -35,7 +35,7 @@ fun <T> Flowable<T>.handelNetworkError() =
             is OfflineException ->
                 return@onErrorResumeNext Flowable.error(Exception("check your internet connection"))
             is SocketTimeoutException ->
-                return@onErrorResumeNext Flowable.error(Exception("server not fount"))
+                return@onErrorResumeNext Flowable.error(Exception("server not found"))
             is retrofit2.HttpException ->
             {
                 val gson = Gson()

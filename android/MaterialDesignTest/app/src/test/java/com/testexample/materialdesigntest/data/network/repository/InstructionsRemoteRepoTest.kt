@@ -87,8 +87,7 @@ class InstructionsRemoteRepoTest {
                     },
                     { error -> println("callInstructionsApi_withSpecialCharId(): ${error.localizedMessage}")
                         failure = error.message.toString()
-                    }
-                )
+                    })
 
         if (failure.isBlank()){
             fail("callInstructionsApi_withSpecialCharId(): Verification failed as received Instructions")
@@ -150,8 +149,7 @@ class InstructionsRemoteRepoTest {
                     },
                     { error -> println("callInstructionsApi_withInvalidToken(): ${error.localizedMessage}")
                         failure = error.message.toString()
-                    }
-                )
+                    })
 
         if (failure.isBlank()){
             fail("callInstructionsApi_withInvalidToken(): Verification failed as received Instructions")
@@ -171,8 +169,8 @@ class InstructionsRemoteRepoTest {
                         },
                         { error -> println("callInstructionsApi_withBlankToken(): ${error.localizedMessage}")
                             failure = error.message.toString()
-                        }
-                )
+                        })
+
         if (failure.isBlank()){
             fail("callInstructionsApi_withBlankToken(): Verification failed as received Instructions")
         }
@@ -191,8 +189,8 @@ class InstructionsRemoteRepoTest {
                         },
                         { error -> println("callInstructionsApi_withInvalidTokenNId(): ${error.localizedMessage}")
                             failure = error.message.toString()
-                        }
-                )
+                        })
+
         if (failure.isBlank()){
             fail("callInstructionsApi_withInvalidTokenNId(): Verification failed as received Instructions")
         }

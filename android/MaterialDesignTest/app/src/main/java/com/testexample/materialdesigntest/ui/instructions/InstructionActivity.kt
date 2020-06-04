@@ -31,7 +31,7 @@ class InstructionActivity : AppCompatActivity(), InstructionsContract.View {
         val calender = Calendar.getInstance()
         val date = DateFormat.getDateInstance().format(calender.time)
 
-        presenter.fetchInstructions("802", "29-06-2020")
+        presenter.fetchInstructions("802")
 
         agreeToGuidelinesCheck.setOnClickListener {
             startTestButton.isEnabled = agreeToGuidelinesCheck.isChecked

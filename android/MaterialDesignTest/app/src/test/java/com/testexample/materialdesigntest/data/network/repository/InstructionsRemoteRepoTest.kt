@@ -98,7 +98,7 @@ class InstructionsRemoteRepoTest {
     }
 
     @Test
-    fun callInstructionsApi_withNullId() {// DOUBT server not fount
+    fun callInstructionsApi_withNullId() {
         var failure = ""
         instructionRemoteRepo.callInstructionsApi(token,"")
                 .handelNetworkError()
@@ -139,8 +139,7 @@ class InstructionsRemoteRepoTest {
     }
 
     @Test
-    fun callInstructionsApi_withInvalidToken() {//?? DOUBT //ErrorResponse(status=701, message=jwt malformed, errorInfo=JsonWebTokenError, serverMessage=JsonWebTokenError : Token is invalid or expired, serverReference=15912407504612674935910)
-        //701 jwt malformed
+    fun callInstructionsApi_withInvalidToken() {
         var failure = ""
         instructionRemoteRepo.callInstructionsApi("1234567890","12345")
                 .handelNetworkError()

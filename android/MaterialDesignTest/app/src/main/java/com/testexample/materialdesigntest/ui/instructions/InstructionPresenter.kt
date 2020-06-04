@@ -20,7 +20,7 @@ class InstructionPresenter(private var view: InstructionsContract.View?):
     private var subscriptions = CompositeDisposable()
     private lateinit var sessionManager: SessionManager
 
-    override fun fetchInstructions(code: String, date: String) {
+    override fun fetchInstructions(id: String) {
 
         repository = InstructionsRepo()
         sessionManager = SessionManager(view!!.setContext())
@@ -29,15 +29,20 @@ class InstructionPresenter(private var view: InstructionsContract.View?):
         view.let {
             subscriptions.add(
                 repository
-                .getInstructionsFromRemoteRepo(sessionManager.getAuthToken()!!, code, date)
+                .getInstructionsFromRemoteRepo(sessionManager.getAuthToken()!!, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { instructions: Instructions? ->
-                        view!!.showInstructions(instructions!!)
+                    {success ->
+                        view!!.showInstructions(success)
+
+                        Log.d(TAG, "Fetching Instruction From Remote")
                     },
-                    {error -> println(error.toString())},
-                    { println("instructions fetched successfully")}
+                    {err ->
+                        println(err.localizedMessage)
+                        Log.d(TAG, "Error in fetching Instruction from Remote")
+                    }
+
                 ))
         }
     }

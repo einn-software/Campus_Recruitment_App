@@ -154,7 +154,7 @@ class InstructionsRemoteRepoTest {
             fail("callInstructionsApi_withInvalidToken(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withInvalidToken(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callInstructionsApi_withInvalidToken(): Verification Failed as received $failure", "701 Invalid Token", failure)
         }
     }
 

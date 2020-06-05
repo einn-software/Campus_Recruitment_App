@@ -4,6 +4,7 @@ import android.util.Log
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.session.SessionManager
+import com.testexample.materialdesigntest.data.session.UserSession
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -39,9 +40,10 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { token ->
+                        { response ->
+                            val session = UserSession(response.email, response.token, response.id, response.userType)
                             updateSession(
-                                token.token,
+                                session,
                                 Constants.Companion
                                     .LoggedInMode.LOGGED_IN_MODE_SERVER
                             )
@@ -54,9 +56,9 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
 
     }
 
-    private fun updateSession(token: String, loginStatus: Constants.Companion.LoggedInMode) {
+    private fun updateSession(session: UserSession, loginStatus: Constants.Companion.LoggedInMode) {
         sessionManager = SessionManager(view!!.setContext())
-        sessionManager.saveAuthToken(token)
+        sessionManager.saveUserSession(session)
     }
 
 

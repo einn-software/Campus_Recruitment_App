@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.data.session
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.R
 
 class SessionManager(context: Context):
@@ -12,17 +13,41 @@ class SessionManager(context: Context):
             Context.MODE_PRIVATE)
 
     companion object {
-        const val USER_TOKEN = "token"
+        const val USER_EMAIL = "user_email"
+        const val USER_ID = "user_id"
+        const val USER_TYPE = "user_type"
+        const val USER_TOKEN = "user_token"
     }
 
-    override fun saveAuthToken(token: String) {
-        preferences
-            .edit()
-            .putString(USER_TOKEN, token)
-            .apply()
+    override fun saveUserSession(session: UserSession) {
+        val editor = preferences.edit()
+        editor.putString(USER_EMAIL, session.email)
+        editor.putString(USER_ID, session.id)
+        editor.putString(USER_TYPE, session.userType)
+        editor.putString(USER_TOKEN, session.token)
+        editor.apply()
     }
 
-    override fun getAuthToken(): String? {
+    override fun getUserAuthToken(): String? {
         return preferences.getString(USER_TOKEN, null)
     }
+
+    override fun getUserEmail(): String? {
+        return preferences.getString(USER_EMAIL, null)
+    }
+
+    override fun getUserId(): String? {
+        return preferences.getString(USER_ID, null)
+    }
+
+    override fun getUserType(): String? {
+        return preferences.getString(USER_TYPE, null)
+    }
 }
+
+data class UserSession (
+        @SerializedName("email")val email: String,
+        @SerializedName("token")val token: String,
+        @SerializedName("_id")val id: String,
+        @SerializedName("user_type")val userType: String
+)

@@ -22,7 +22,7 @@ class ExaminationPresenter(private var view: ExaminationContract.View?):
         Log.d(TAG, "loading Exam...")
         //sessionManager = SessionManager(view!!.setContext())
         repository = ExaminationRepo(view!!.setContext())
-        repository.token = sessionManager.getAuthToken()!!
+        repository.token = sessionManager.getUserAuthToken()!!
         view.let {
             repository.loadQuestionPaperFromRoom(collegeCode, date)!!
                 .subscribeOn(Schedulers.io())

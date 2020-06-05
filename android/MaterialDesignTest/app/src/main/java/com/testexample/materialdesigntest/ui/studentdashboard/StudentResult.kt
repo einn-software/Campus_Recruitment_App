@@ -37,25 +37,25 @@ class StudentResult : Fragment(R.layout.fragment_student_result) {
         val result = requestResult!!
 
         totalQuestionsAttemptedRightValue.text = result
-            .correct_attempt.toString()
+            .noOfQuestionsCorrect.toString()
 
 
         totalQuestionsAttemptedValue.text = result
-            .question_attempt
+            .noOfQuestionsAttempted
             .toString()
 
 
         totalQuestionsAttemptedWrongValue.text = (result
-            .question_attempt - result
-            .correct_attempt)
+            .noOfQuestionsAttempted - result
+            .noOfQuestionsCorrect)
             .toString()
 
         totalMarksValue.text = result
-            .total_marks
+            .totalMarks
             .toString()
 
         totalMarksObtainedValue.text = result
-            .total_marks_scored
+            .scoredMarks
             .toString()
     }
 

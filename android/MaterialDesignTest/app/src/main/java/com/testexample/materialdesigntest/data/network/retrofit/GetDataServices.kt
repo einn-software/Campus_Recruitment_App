@@ -16,7 +16,7 @@ interface GetDataServices {
     @POST("login/students")
     fun authStudent(@Body loginRequest: StudentLoginRequest): Single<AuthResponse>
 
-    @GET("student/{id}")
+    @GET("students/{id}")
     fun getStudent(@Header("auth-token") token: String,
                    @Path("id") studentId: String):
             Flowable<Student>
@@ -72,17 +72,11 @@ interface GetDataServices {
                     @Path("id") questionId: String):
             Single<Question>
 
-    @GET("colleges/{code}/results/{question_paper_id}")
-    fun getResultFromQuesId(@Header("auth-token") token: String,
-                            @Path("code") code: Int,
-                  @Path("question_paper_id") question_paper_id: String):
-            Single<List<Result>>
-
-    @GET("colleges/{code}/results/{student-id}")
-    fun getResultFromStudentId(@Header("auth-token") token: String,
-                               @Path("code") code: Int,
-                  @Path("student_id") student_id: String):
-            Single<Result>
+    @GET("student-answers/{student-id}/{question-paper-id}/{question-id}")
+    fun getStudentResponse(@Header("auth-token") token: String ,
+                           @Path("student-id") studentId: String,
+                           @Path("question-paper-id") QuestionPaperId: String,
+                           @Path("question-id") questionId: String): Single<Question>
 
     @POST("student-answers")
     fun addStudentResponse(@Body request : StudentAnswerRequest): Single<StudentAnswerResponse>
@@ -93,6 +87,14 @@ interface GetDataServices {
 
     @POST("final-submission/")
     fun endExam(@Body endExamRequest: EndExamRequest): Single<EndExamResponse>
+
+    @GET("colleges/{code}/results/{question-paper-id}")
+    fun getStudentResultList(@Header("auth-token") token: String):
+            Flowable<List<CollegeWiseResultResponse>>
+
+
+
+
 
 
 

@@ -9,8 +9,8 @@ class InstructionsRemoteRepo: IInstructionsRemoteRepo {
 
     private val api: GetDataServices = GetDataServices.create()
 
-    override fun callInstructionsApi(token: String, code: String, date: String):
+    override fun callInstructionsApi(token: String, id: String):
             Flowable<Instructions> {
-        return api.getInstructions(token, code)
+        return api.getInstructions(token, id)
     }
 }

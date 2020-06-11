@@ -35,7 +35,8 @@ interface IUserRepository {
         token: String
     ): Flowable<TPO>
 
-    fun getCollegeList(): Flowable<List<CollegeResponse>>
+    fun getCollegeList():
+            Flowable<List<CollegeResponse>>
 
 }
 

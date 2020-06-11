@@ -5,7 +5,9 @@ import androidx.core.text.isDigitsOnly
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
+import com.testexample.materialdesigntest.data.session.UserSession
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -37,14 +39,15 @@ class LoginPresenter(private var view: LoginContract.View?) :
                           .isStudentValid(rollNo.toLong(), password).subscribeOn(Schedulers.io())
                           .observeOn(AndroidSchedulers.mainThread())
                           .subscribe(
-                              { token ->
-                                  Log.d("inside passed Auth", "updating session with token \n $token \n")
+                              { response ->
+                                  Log.d("inside passed Auth", "updating session with token \n ${response.token} \n")
+                                  val session = UserSession(response.email, response.token, response.id, response.userType)
                                   updateSession(
-                                      token.token,
+                                      session,
                                       Constants.Companion
                                           .LoggedInMode.LOGGED_IN_MODE_SERVER
                                   )
-                                  userRepository.saveStudent(token.token)
+                                  userRepository.saveStudent(response.token)
                                   view!!.openMainActivity()
                               },
                               { error -> Log.d("REQUEST FAILED !! ", error.toString()) }
@@ -61,6 +64,7 @@ class LoginPresenter(private var view: LoginContract.View?) :
             userRepository.getCollegeList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .handelNetworkError()
                 .subscribe(
                     {college ->
                         collegeList = college
@@ -76,9 +80,9 @@ class LoginPresenter(private var view: LoginContract.View?) :
 
     }
 
-    private fun updateSession(token: String, loginStatus: Constants.Companion.LoggedInMode) {
+    private fun updateSession(session: UserSession, loginStatus: Constants.Companion.LoggedInMode) {
         sessionManager = SessionManager(view!!.setContext())
-        sessionManager.saveAuthToken(token)
+        sessionManager.saveUserSession(session)
     }
 
     override fun onDestroy() {

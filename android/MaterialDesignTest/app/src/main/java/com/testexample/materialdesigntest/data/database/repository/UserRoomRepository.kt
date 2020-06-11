@@ -2,14 +2,11 @@ package com.testexample.materialdesigntest.data.database.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import com.testexample.materialdesigntest.data.database.room.ApplicationDatabase
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.database.room.StudentDao
 import com.testexample.materialdesigntest.data.model.College
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
 
 class UserRoomRepository(context: Context) :
     IUserRoomRepository {
@@ -24,8 +21,9 @@ class UserRoomRepository(context: Context) :
     }
 
     @SuppressLint("VisibleForTests")
-    override fun getUser(rollNo: Long,
-                         password: String):
+    override fun getUser(
+        rollNo: String,
+        password: String):
             Flowable<Student> {
             return studentDao.getUserByRollNoPassword(rollNo, password)
     }

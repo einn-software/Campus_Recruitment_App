@@ -24,12 +24,12 @@ class InstructionPresenter(private var view: InstructionsContract.View?):
 
         repository = InstructionsRepo()
         sessionManager = SessionManager(view!!.setContext())
-        Log.d(TAG,"fetch instructions at token ${sessionManager.getAuthToken()}")
+        Log.d(TAG,"fetch instructions at token ${sessionManager.getUserAuthToken()}")
 
         view.let {
             subscriptions.add(
                 repository
-                .getInstructionsFromRemoteRepo(sessionManager.getAuthToken()!!, id)
+                .getInstructionsFromRemoteRepo(sessionManager.getUserAuthToken()!!, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

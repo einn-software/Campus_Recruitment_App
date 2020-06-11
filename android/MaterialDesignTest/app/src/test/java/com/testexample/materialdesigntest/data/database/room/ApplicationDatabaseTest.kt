@@ -18,8 +18,8 @@ class ApplicationDatabaseTest {
     private val user =
         Student(
             "1", "sdg", "sdg@test.com",
-            "qwertyui", 545454545, 243,
-            "cse", "nitra","codes")
+            "qwertyui", 545454545, "243",
+            "cse", "nitra",253)
 
    // @get:Rule
     //val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously

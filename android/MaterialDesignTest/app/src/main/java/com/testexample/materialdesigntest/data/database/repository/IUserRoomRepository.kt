@@ -11,7 +11,7 @@ interface IUserRoomRepository {
     ): Boolean
 
     fun getUser(
-        rollNo: Long,
+        rollNo: String,
         password: String
     ): Flowable<Student>
 

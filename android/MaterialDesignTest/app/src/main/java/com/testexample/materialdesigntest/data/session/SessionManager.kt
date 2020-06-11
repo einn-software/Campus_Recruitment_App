@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.utils.Constants
 
 class SessionManager(context: Context):
     ISessionManager {
@@ -46,8 +47,8 @@ class SessionManager(context: Context):
 }
 
 data class UserSession (
-        @SerializedName("email")val email: String,
-        @SerializedName("token")val token: String,
-        @SerializedName("_id")val id: String,
-        @SerializedName("user_type")val userType: String
+        @SerializedName(Constants.EMAIL) val email: String,
+        @SerializedName(Constants.TOKEN) val token: String,
+        @SerializedName(Constants.ID) val id: String,
+        @SerializedName(Constants.USERTYPE) val userType: String
 )

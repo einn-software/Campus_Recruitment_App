@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.utils
 
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
@@ -20,6 +21,12 @@ class Constants {
         internal const val EMPTY_PASSWORD_ERROR = 1003
         internal const val LOGIN_FAILURE = 1004
         internal const val NULL_INDEX = -1L
+
+        // Constants for Session
+        internal const val EMAIL = "email"
+        internal const val TOKEN = "token"
+        internal const val ID = "_id"
+        internal const val USERTYPE = "user_type"
 
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),

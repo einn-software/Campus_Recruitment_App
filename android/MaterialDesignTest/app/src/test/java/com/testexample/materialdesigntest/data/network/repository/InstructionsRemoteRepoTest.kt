@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.data.network.repository
 
+import android.util.Log
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -17,7 +18,7 @@ class InstructionsRemoteRepoTest {
         val schedulers = RxImmediateSchedulerRule()
     }
 
-    val tag = "Testing InstructionRemoteRepo"
+    val tag = "InstructionRemoteRepo Test"
     private lateinit var instructionRemoteRepo: IInstructionsRemoteRepo
     private lateinit var token : String
     private lateinit var tokenRepository: UserRemoteRepositoryTest
@@ -40,10 +41,10 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"5ed646d0c3e2665b236111f7")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withExistingId(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withExistingId():Instruction is $success")
                         instructions = success
                     },
-                { error -> println("callInstructionsApi_withExistingId(): ${error.localizedMessage}")
+                { error -> Log.e(tag,"callInstructionsApi_withExistingId(): ${error.localizedMessage}")
                     failure = error.message.toString()
                 })
 
@@ -63,9 +64,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"123456")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withNotExistingId(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withNotExistingId(): Instruction is $success")
                     },
-                    { error -> println("callInstructionsApi_withNotExistingId(): ${error.localizedMessage}")
+                    { error -> Log.e(tag,"callInstructionsApi_withNotExistingId(): ${error.localizedMessage}")
                         failure = error.message.toString()
                     })
 
@@ -83,9 +84,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"@#%$^&")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withSpecialCharId(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withSpecialCharId(): Instruction is $success")
                     },
-                    { error -> println("callInstructionsApi_withSpecialCharId(): ${error.localizedMessage}")
+                    { error -> Log.e(tag,"callInstructionsApi_withSpecialCharId(): ${error.localizedMessage}")
                         failure = error.message.toString()
                     })
 
@@ -103,9 +104,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token,"")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withNullId(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withNullId(): Instruction is $success")
                     },
-                    { error -> println("callInstructionsApi_withNullId(): ${error.localizedMessage}")
+                    { error -> Log.e(tag,"callInstructionsApi_withNullId(): ${error.localizedMessage}")
                         failure = error.message.toString()
                     })
 
@@ -123,9 +124,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi(token," ")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withSpaceAsId(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withSpaceAsId(): Instruction is $success")
                     },
-                    { error -> println("callInstructionsApi_withSpaceAsId(): ${error.localizedMessage}")
+                    { error -> Log.e(tag,"callInstructionsApi_withSpaceAsId(): ${error.localizedMessage}")
                         failure = error.message.toString()
                     }
                 )
@@ -144,9 +145,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi("1234567890","12345")
                 .handelNetworkError()
                 .subscribe(
-                    {success -> println("callInstructionsApi_withInvalidToken(): Instruction is $success")
+                    {success -> Log.i(tag,"callInstructionsApi_withInvalidToken(): Instruction is $success")
                     },
-                    { error -> println("callInstructionsApi_withInvalidToken(): ${error.localizedMessage}")
+                    { error -> Log.e(tag,"callInstructionsApi_withInvalidToken(): ${error.localizedMessage}")
                         failure = error.message.toString()
                     })
 
@@ -164,9 +165,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi("","12345")
                 .handelNetworkError()
                 .subscribe(
-                        {success -> println("callInstructionsApi_withBlankToken(): Instruction is $success")
+                        {success -> Log.i(tag,"callInstructionsApi_withBlankToken(): Instruction is $success")
                         },
-                        { error -> println("callInstructionsApi_withBlankToken(): ${error.localizedMessage}")
+                        { error -> Log.e(tag,"callInstructionsApi_withBlankToken(): ${error.localizedMessage}")
                             failure = error.message.toString()
                         })
 
@@ -184,9 +185,9 @@ class InstructionsRemoteRepoTest {
         instructionRemoteRepo.callInstructionsApi("","12345")
                 .handelNetworkError()
                 .subscribe(
-                        {success -> println("callInstructionsApi_withInvalidTokenNId(): Instruction is $success")
+                        {success -> Log.i(tag,"callInstructionsApi_withInvalidTokenNId(): Instruction is $success")
                         },
-                        { error -> println("callInstructionsApi_withInvalidTokenNId(): ${error.localizedMessage}")
+                        { error -> Log.e(tag,"callInstructionsApi_withInvalidTokenNId(): ${error.localizedMessage}")
                             failure = error.message.toString()
                         })
 

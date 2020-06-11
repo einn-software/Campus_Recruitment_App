@@ -36,11 +36,11 @@ class InstructionPresenter(private var view: InstructionsContract.View?):
                     {success ->
                         view!!.showInstructions(success)
 
-                        Log.d(TAG, "Fetching Instruction From Remote")
+                        Log.i(TAG, "Fetching Instruction From Remote")
                     },
                     {err ->
                         println(err.localizedMessage)
-                        Log.d(TAG, "Error in fetching Instruction from Remote")
+                        Log.e(TAG, "Error in fetching Instruction from Remote")
                     }
 
                 ))

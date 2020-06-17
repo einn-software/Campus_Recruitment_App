@@ -3,7 +3,7 @@
 mongo --quiet <<EOF
 show dbs;
 
-use TestData;
+use auth;
 db.dropDatabase();
 
 EOF

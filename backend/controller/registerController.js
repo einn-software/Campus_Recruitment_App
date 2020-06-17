@@ -1,7 +1,6 @@
 const errHandler = require("./errorHandling");
-const verify = require('../config/verifyToken');
-const Constants = require('../config/constant');
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
+const Constants = require("../config/constant");
 
 //import models
 const Admin = require("../model/Admin");
@@ -15,14 +14,24 @@ const {
   tpoRegisterValidation,
 } = require("../config/validation");
 
+
+function createHashedPassword(req) {
+  //Hash password
+  const salt = bcrypt.genSalt(Constants.saltRound);
+  const hashedPassword = bcrypt.hash(req.body.password, salt);
+  return hashedPassword;
+}
+
 //To register a new admin
-const AdminRegister = async (req, res, next) => {
+const AdminRegister = (async (req, res) => {
   // VALIDATE THE DATA BEFORE WE MAKE A Admin
   const {
     error
   } = adminRegisterValidation(req.body);
   if (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the admin is already in the database
@@ -30,36 +39,38 @@ const AdminRegister = async (req, res, next) => {
     email: req.body.email,
   });
   if (emailExist) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.emailExistErrorHandler());
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.emailExistErrorHandler());
   }
-
-  //Hash password
-  const salt = await bcrypt.genSalt(10); //TODO Should be defined in macro
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   // Create a new admin
   const admin = new Admin({
     name: req.body.name,
     email: req.body.email,
-    password: hashedPassword,
+    password: createHashedPassword(req),
     phone: req.body.phone,
   });
   try {
     const user = await admin.save();
-    res.status(`${Constants.success}`).json(user);
+    return res.status(Constants.success).json(user);
   } catch (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.errorHandler(error));
   }
-};
+});
 
 // To register a new tpo
-const TpoRegister = async (req, res) => {
+const TpoRegister = (async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo
   const {
     error
   } = tpoRegisterValidation(req.body);
   if (error) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the tpo is already in the database
@@ -67,18 +78,16 @@ const TpoRegister = async (req, res) => {
     email: req.body.email,
   });
   if (emailExist) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.emailExistErrorHandler());
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.emailExistErrorHandler());
   }
-
-  //Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   // Create a new tpo
   const tpo = new Tpo({
     name: req.body.name,
     email: req.body.email,
-    password: hashedPassword,
+    password: createHashedPassword(req),
     phone: req.body.phone,
     designation: req.body.designation,
     college: req.body.college,
@@ -86,58 +95,63 @@ const TpoRegister = async (req, res) => {
   });
   try {
     const user = await tpo.save();
-    res.status(`${Constants.success}`).json(user);
+    return res.status(Constants.success).json(user);
   } catch (err) {
-    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(error));
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.errorHandler(error));
   }
-};
-
+});
 
 //To register a new student
-const StudentRegister = async (req, res) => {
+const StudentRegister = (async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
   const {
     error
   } = studentRegisterValidation(req.body);
   if (error)
-    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.validationErrorHandler(error));
 
   //Checking if the student is already in the database
   const emailExist = await Student.findOne({
     email: req.body.email,
   });
-  if (emailExist) return res.status(`${Constants.er_failure}`).json(errHandler.emailExistErrorHandler());
+  if (emailExist)
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.emailExistErrorHandler());
 
   const rollCodeExist = await Student.findOne({
     roll: req.body.roll,
     code: req.body.code,
   });
   if (rollCodeExist)
-    return res.status(`${Constants.er_failure}`).json(errHandler.codeRollErrorHandler());
-
-  //Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    return res
+      .status(Constants.er_failure)
+      .json(errHandler.codeRollErrorHandler());
 
   // Create a new student
   const student = new Student({
     name: req.body.name,
     email: req.body.email,
-    password: hashedPassword,
+    password: createHashedPassword(req),
     phone: req.body.phone,
     roll: req.body.roll,
     branch: req.body.branch,
     college: req.body.college,
     code: req.body.code,
+    exam_start_time: req.body.exam_start_time
   });
   try {
     const user = await student.save();
-    res.status(`${Constants.success}`).json(user);
+    return res.status(Constants.success).json(user);
   } catch (err) {
-    res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
+    res.status(Constants.er_failure).json(errHandler.errorHandler(err));
   }
-};
+});
 
-module.exports.AdminRegister = AdminRegister
-module.exports.StudentRegister = StudentRegister
-module.exports.TpoRegister = TpoRegister
+module.exports.AdminRegister = AdminRegister;
+module.exports.StudentRegister = StudentRegister;
+module.exports.TpoRegister = TpoRegister;

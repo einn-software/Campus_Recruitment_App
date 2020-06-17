@@ -1,14 +1,17 @@
 const jwt = require('jsonwebtoken');
+const errHandler = require("../controller/errorHandling");
+const Constants = require('./constant');
 
-module.exports = function (req, res, next) {
+module.exports = async (req, res, next) => {
     const token = req.header('auth-token');
-    if (!token) return res.status(401).send('Access Denied');
-
+    if (!token) {
+        return res.status(Constants.er_authentication_failed).json(errHandler.tokenNotFoundErrorHandler());
+    }
+    const verified = await jwt.verify(token, process.env.TOKEN_SECRET)
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
+        req.userData = verified;
         next();
     } catch (err) {
-        res.status(400).json('Invalid token');
+        return res.status(Constants.er_failure).json(errHandler.invalidTokenErrorHandler(err));
     }
 }

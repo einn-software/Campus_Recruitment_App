@@ -50,7 +50,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:elevation="2dp"
-        android:text="College Login"
+        android:text="TPO Login"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:background="@drawable/buttonshape"

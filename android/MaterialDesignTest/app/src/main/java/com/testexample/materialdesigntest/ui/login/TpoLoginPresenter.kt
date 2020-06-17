@@ -5,7 +5,6 @@ import com.testexample.materialdesigntest.data.interactor.interfaces.IUserReposi
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
-import com.testexample.materialdesigntest.data.session.UserSession
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,14 +16,14 @@ import io.reactivex.schedulers.Schedulers
  * handles the actions from the view and updates the UI as required
  */
 // Presenter Constructor takes view Instance
-class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
-    LoginContract.CollegePresenter {
+class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
+    LoginContract.TpoPresenter {
 
     private lateinit var sessionManager: SessionManager
     private lateinit var userRepository: IUserRepository
     private var subscriptions = CompositeDisposable()
 
-    override fun onCollegeLogin(email: String, password: String) {
+    override fun onTpoLogin(email: String, password: String) {
         userRepository =
             UserRepository(view!!.setContext())
 
@@ -37,24 +36,30 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
             else -> userRepository.let {
                 subscriptions.add(userRepository
-                    .isTPOValid(email, password)
+                    .isTpoValid(email, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { session ->
-                            updateSession(session)
+                        { response ->
+                            updateSession(
+                                response,
+                                Constants.Companion
+                                    .LoggedInMode.LOGGED_IN_MODE_SERVER
+                            )
                             view!!.openMainActivity()
                         },
-                        { error -> Log.d("College Login Presenter", error.toString()) }
+                        { error -> Log.e("Tpo Login Presenter", error.message.toString())
+                        }
                     ))
             }
         }
 
     }
 
-    private fun updateSession(session: AuthResponse) {
+    private fun updateSession(response: AuthResponse, loginStatus: Constants.Companion.LoggedInMode) {
         sessionManager = SessionManager(view!!.setContext())
-        sessionManager.saveUserSession(session)
+        sessionManager.saveUserSession(response)
+
     }
 
 

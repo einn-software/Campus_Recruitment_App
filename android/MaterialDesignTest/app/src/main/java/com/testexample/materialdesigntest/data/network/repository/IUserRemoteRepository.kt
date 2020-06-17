@@ -10,6 +10,6 @@ interface IUserRemoteRepository {
     fun authStudent(loginRequest: StudentLoginRequest): Single<AuthResponse>
     fun getStudent(userRequest: UserRequest): Flowable<Student>
     fun getTPO(userRequest: UserRequest): Flowable<TPO>
-    fun authTPO(loginRequest: CollegeLoginRequest): Single<AuthResponse>
+    fun authTPO(loginRequest: TpoLoginRequest): Single<AuthResponse>
     fun callAPIForCollegeList(): Flowable<List<CollegeResponse>>
 }

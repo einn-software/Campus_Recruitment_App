@@ -29,13 +29,15 @@ interface IUserRepository {
     fun forgotPasswordStudent(email: String):Single<String>
 
     fun forgotPasswordTPO(email: String):Single<String>
-
-    fun isTPOValid(
+  
+    fun isTpoValid(
         email: String,
         password: String
     ): Single<AuthResponse>
 
-    fun getTPO(userRequest: UserRequest
+
+    fun getTpo(
+        userRequest: UserRequest
     ): Flowable<TPO>
 
     fun getCollegeList():

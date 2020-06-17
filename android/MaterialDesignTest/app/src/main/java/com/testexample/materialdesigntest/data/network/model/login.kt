@@ -21,7 +21,7 @@ data class UserRequest(
     @SerializedName("_id")val id: String
 )
 
-data class CollegeLoginRequest(
+data class TpoLoginRequest(
     @SerializedName("email")val email: String,
     @SerializedName("password")val password: String
 )

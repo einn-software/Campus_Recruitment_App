@@ -28,7 +28,7 @@ class UserRemoteRepository: IUserRemoteRepository {
         return api.getTPO(userRequest.token, userRequest.id)
     }
 
-    override fun authTPO(loginRequest: CollegeLoginRequest): Single<AuthResponse> {
+    override fun authTPO(loginRequest: TpoLoginRequest): Single<AuthResponse> {
         return api.authTPO(loginRequest)
     }
 

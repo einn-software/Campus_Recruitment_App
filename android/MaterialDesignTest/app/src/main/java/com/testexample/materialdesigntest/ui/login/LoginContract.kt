@@ -22,14 +22,14 @@ interface LoginContract {
         fun generateCollegeList()
     }
 
-    interface CollegeView : BaseContract.BaseView<CollegePresenter> {
+    interface TpoView : BaseContract.BaseView<TpoPresenter> {
         fun openMainActivity()
         fun onValidationMessage(errorCode: Int)
         fun showLoading(flag: Boolean)
 
 
     }
-    interface CollegePresenter : BaseContract.BasePresenter {
-        fun onCollegeLogin(email : String, password : String)
+    interface TpoPresenter : BaseContract.BasePresenter {
+        fun onTpoLogin(email : String, password : String)
     }
 }

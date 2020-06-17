@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent2"
-    tools:context=".ui.login.CollegeLoginActivity">
+    tools:context=".ui.login.TpoLoginActivity">
 
     <include
         android:id="@+id/include5"
@@ -81,7 +81,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="College Admin Login"
+        android:text="TPO Login"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
     <TextView
-        android:id="@+id/ResetPasswordLink"
+        android:id="@+id/resetPasswordLink"
         style="@android:style/Widget.Holo.ActionButton.TextButton"
         android:layout_width="164dp"
         android:layout_height="0dp"
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <TextView
-        android:id="@+id/RegistrationLink"
+        android:id="@+id/registrationLink"
         android:layout_width="226dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"

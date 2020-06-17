@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -9,30 +10,32 @@ import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.collegeDashboard.CollegeDashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.utils.Constants
-import kotlinx.android.synthetic.main.activity_college_login.*
+import kotlinx.android.synthetic.main.activity_tpo_login.*
 
-class CollegeLoginActivity : AppCompatActivity(), LoginContract.CollegeView {
+class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
-    internal lateinit var presenter: LoginContract.CollegePresenter
+    internal lateinit var presenter: LoginContract.TpoPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_college_login)
+        setContentView(R.layout.activity_tpo_login)
 
-        presenter = CollegeLoginPresenter(this)
+        presenter = TpoLoginPresenter(this)
 
         loginButton.setOnClickListener {
-            presenter.onCollegeLogin(emailText.text.toString(),
+            presenter.onTpoLogin(emailText.text.toString(),
                 passwordText.text.toString())
         }
 
-        ResetPasswordLink.setOnClickListener {
+        resetPasswordLink.setOnClickListener {
             val intent = Intent(this, ResetAuthenticationActivity::class.java)
             startActivity(intent)
         }
 
-        RegistrationLink.setOnClickListener {
-            TODO("redirect to web")
+        registrationLink.setOnClickListener {
+            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("URL")
+            startActivity(openURL)
         }
     }
 
@@ -58,10 +61,15 @@ class CollegeLoginActivity : AppCompatActivity(), LoginContract.CollegeView {
     }
 
     override fun showLoading(flag: Boolean) {
-        TODO("Not yet implemented")
+        /*if (flag){
+            progressBar.startLoading()
+        }
+        else {
+            progressBar.stopLoading()
+        }*/
     }
 
-    override fun setPresenter(presenter: LoginContract.CollegePresenter) {
+    override fun setPresenter(presenter: LoginContract.TpoPresenter) {
         this.presenter = presenter
 
     }

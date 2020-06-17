@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.data.model.Student
-import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
+import com.testexample.materialdesigntest.data.network.model.TpoLoginRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -19,8 +19,9 @@ class UserRemoteRepositoryTest {
 //    }
 
     private lateinit var repository: IUserRemoteRepository
-    private val validCollegeLoginRequest = CollegeLoginRequest("anand@gmail.com","anand344")
-    private val validStudentLoginRequest = StudentLoginRequest("1680210025",2346, "ria2611")
+
+    private val validTpoLoginRequest = TpoLoginRequest("anand@gmail.com", "anand344")
+    private val validStudentLoginRequest = StudentLoginRequest("1680210044", 2346, "ria2611")
 
     @Before
     fun setUp() {
@@ -33,30 +34,30 @@ class UserRemoteRepositoryTest {
 
     }
 
-    fun setToken(): UserRequest{
+    fun setToken(): UserRequest {
         setUp()
-        var getUserRequest = UserRequest("","")
+        var getUserRequest = UserRequest("", "")
         repository.authStudent(validStudentLoginRequest)
-            .handelNetworkError()
-            .subscribe(
-                {success ->
-                    getUserRequest = UserRequest(success.token, success.id)
-                },
-                { error -> println(error.localizedMessage) })
+                .handelNetworkError()
+                .subscribe(
+                        { success ->
+                            getUserRequest = UserRequest(success.token, success.id)
+                        },
+                        { error -> println(error.localizedMessage) })
 
         return getUserRequest
     }
 
-    private fun setToken(request: CollegeLoginRequest): UserRequest {
+    private fun setToken(request: TpoLoginRequest): UserRequest {
         setUp()
-        var getUserRequest = UserRequest("","")
+        var getUserRequest = UserRequest("", "")
         repository.authTPO(request)
-            .handelNetworkError()
-            .subscribe(
-                {success ->
-                    getUserRequest = UserRequest(success.token, success.id)
-                },
-                { error -> println(error.localizedMessage) })
+                .handelNetworkError()
+                .subscribe(
+                        { success ->
+                            getUserRequest = UserRequest(success.token, success.id)
+                        },
+                        { error -> println(error.localizedMessage) })
 
         return getUserRequest
     }
@@ -75,7 +76,6 @@ class UserRemoteRepositoryTest {
                 { error ->
                     println(error.localizedMessage) })
 
-
         assertNotNull(getUserRequest.id)
         assertNotNull(getUserRequest.token)
     }
@@ -86,20 +86,20 @@ class UserRemoteRepositoryTest {
         val getUserRequest = setToken()
         println(getUserRequest)
         val output = repository.getStudent(getUserRequest)
-            .handelNetworkError()
+                .handelNetworkError()
         output.test().assertNoErrors()
         output
-            .subscribe(
-                {
-                    println(it)
-                    student = it
-                },
-                {err->
-                    println(err)
-                },
-                { println("onComplete")}
-        )
-        assertEquals(validStudentLoginRequest.rollNo,student.studentRollNo)
+                .subscribe(
+                        {
+                            println(it)
+                            student = it
+                        },
+                        { err ->
+                            println(err)
+                        },
+                        { println("onComplete") }
+                )
+        assertEquals(validStudentLoginRequest.rollNo, student.studentRollNo)
         assertEquals(validStudentLoginRequest.code, student.studentCollegeCode)
     }
 
@@ -107,15 +107,17 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when unregistered student roll number is supplied for login`() {
         val output = repository
-            .authStudent(StudentLoginRequest("168021067",
-                validStudentLoginRequest.code, validStudentLoginRequest.password))
+                .authStudent(StudentLoginRequest("168021067",
+                        validStudentLoginRequest.code, validStudentLoginRequest.password))
         var err: String = "none"
         output
-            .handelNetworkError()
-            .subscribe(
-                { println("success")},
-                {err = it.localizedMessage!!
-                println(err)})
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        {
+                            err = it.localizedMessage!!
+                            println(err)
+                        })
 
         assertEquals("704 Roll no. or code not found, Please register yourself", err)
 
@@ -124,14 +126,14 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when wrong password is supplied for login`() {
         val output = repository
-            .authStudent(StudentLoginRequest(validStudentLoginRequest.rollNo,
-                validStudentLoginRequest.code, "1587851"))
+                .authStudent(StudentLoginRequest(validStudentLoginRequest.rollNo,
+                        validStudentLoginRequest.code, "1587851"))
         var err: String = "none"
         output
-            .handelNetworkError()
-            .subscribe (
-            { println("success")},
-            {err = it.localizedMessage!!})
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        { err = it.localizedMessage!! })
 
         assertEquals("701 Invalid password, please try again", err)
 
@@ -141,15 +143,17 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when no roll number is supplied for login`() {
         val output = repository
-            .authStudent(StudentLoginRequest("",
-                validStudentLoginRequest.code, validStudentLoginRequest.password))
+                .authStudent(StudentLoginRequest("",
+                        validStudentLoginRequest.code, validStudentLoginRequest.password))
         var err = "none"
         output
-            .handelNetworkError()
-            .subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!
-            println(it.message)})
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        {
+                            err = it.localizedMessage!!
+                            println(it.message)
+                        })
 
         assertEquals("700 \"roll\" is not allowed to be empty", err)
 
@@ -158,14 +162,14 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when password is not supplied for login`() {
         val output = repository
-            .authStudent(StudentLoginRequest(validStudentLoginRequest.rollNo,
-                validStudentLoginRequest.code, ""))
+                .authStudent(StudentLoginRequest(validStudentLoginRequest.rollNo,
+                        validStudentLoginRequest.code, ""))
         var err = "none"
         output
-            .handelNetworkError()
-            .subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        { err = it.localizedMessage!! })
 
         assertEquals("700 \"password\" is not allowed to be empty", err)
 
@@ -174,13 +178,13 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when neither roll number nor password is supplied for login`() {
         val output = repository
-            .authStudent(StudentLoginRequest("",validStudentLoginRequest.code,""))
+                .authStudent(StudentLoginRequest("", validStudentLoginRequest.code, ""))
         var err = "none"
         output
-            .handelNetworkError()
-            .subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        { err = it.localizedMessage!! })
 
         assertEquals("700 \"roll\" is not allowed to be empty", err)
 
@@ -188,33 +192,38 @@ class UserRemoteRepositoryTest {
 
     @Test
     fun getTPOTest() {
-        val getUserRequest = setToken(validCollegeLoginRequest)
+        val getUserRequest = setToken(validTpoLoginRequest)
         println(getUserRequest)
         val output = repository.getTPO(getUserRequest).handelNetworkError()
         output.test().assertNoErrors()
         output
-            .subscribe(
-                {
-                    println("The TPO information is $it")
-                    assertEquals(it.TPOEmail, validCollegeLoginRequest.email)
-                },
-                {
-                    println(it.localizedMessage)
-                })
+                .handelNetworkError()
+                .subscribe(
+                        {
+                            println("The TPO information is $it")
+                            assertEquals(it.TPOEmail, validTpoLoginRequest.email)
+                        },
+                        {
+                            println(it.localizedMessage)
+                        })
     }
 
     @Test
     fun authTPOTest() {
-        var getUserRequest = UserRequest("","")
+        var getUserRequest = UserRequest("", "")
         val output = repository
-            .authTPO(validCollegeLoginRequest).handelNetworkError()
+                .authTPO(validTpoLoginRequest).handelNetworkError()
         output.test().assertNoErrors()
-        output.subscribe(
-                {success -> getUserRequest = UserRequest(success.token, success.id)
-                    println("Auth Response is $success")},
-                { error ->
-                    fail("Verification failed with message ${error.localizedMessage}")
-                })
+        output
+                .handelNetworkError()
+                .subscribe(
+                        { success ->
+                            getUserRequest = UserRequest(success.token, success.id)
+                            println("Auth Response is $success")
+                        },
+                        { error ->
+                            fail("Verification failed with message ${error.localizedMessage}")
+                        })
 
         assertNotNull(getUserRequest.token)
         assertNotNull(getUserRequest.id)
@@ -223,12 +232,14 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when unregistered email is supplied for college login`() {
         val output = repository
-            .authTPO(CollegeLoginRequest("xyz@abc.com",
-                validCollegeLoginRequest.password)).handelNetworkError()
+                .authTPO(TpoLoginRequest("xyz@abc.com",
+                        validTpoLoginRequest.password)).handelNetworkError()
         var err: String = "none"
-        output.subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+        output
+                .handelNetworkError()
+                .subscribe(
+                        { println("success") },
+                        { err = it.localizedMessage!! })
 
         assertEquals("704 Email not found, Please register yourself", err)
     }
@@ -236,12 +247,12 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when Wrong Password supplied for college login`() {
         val output = repository
-            .authTPO(CollegeLoginRequest(validCollegeLoginRequest.email,"157851"))
-            .handelNetworkError()
+                .authTPO(TpoLoginRequest(validTpoLoginRequest.email, "157851"))
+                .handelNetworkError()
         var err: String = "none"
         output.subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+                { println("success") },
+                { err = it.localizedMessage!! })
 
         assertEquals("701 Invalid password, please try again", err)
     }
@@ -249,12 +260,12 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when neither Email nor Password is supplied for college login`() {
         val output = repository
-            .authTPO(CollegeLoginRequest("",""))
-            .handelNetworkError()
+                .authTPO(TpoLoginRequest("", ""))
+                .handelNetworkError()
         var err: String = "none"
         output.subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+                { println("success") },
+                { err = it.localizedMessage!! })
 
         assertEquals("700 \"email\" is not allowed to be empty", err)
     }
@@ -262,12 +273,12 @@ class UserRemoteRepositoryTest {
     @Test
     fun `when email is not supplied for login`() {
         val output = repository
-            .authTPO(CollegeLoginRequest("",validCollegeLoginRequest.password))
-            .handelNetworkError()
+                .authTPO(TpoLoginRequest("", validTpoLoginRequest.password))
+                .handelNetworkError()
         var err: String = "none"
         output.subscribe(
-            { println("success")},
-            {err = it.localizedMessage!!})
+                { println("success") },
+                { err = it.localizedMessage!! })
 
         assertEquals("700 \"email\" is not allowed to be empty", err)
     }

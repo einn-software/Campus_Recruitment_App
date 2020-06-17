@@ -29,7 +29,7 @@ interface GetDataServices {
     fun studentForgotPassword(@Body email: String): Single<String>
 
     @POST("login/tpos")
-    fun authTPO(@Body loginRequest: CollegeLoginRequest): Single<AuthResponse>
+    fun authTPO(@Body loginRequest: TpoLoginRequest): Single<AuthResponse>
 
     @GET("tpos/{id}")
     fun getTPO(@Header("auth-token") token: String,

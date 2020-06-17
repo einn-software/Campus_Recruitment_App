@@ -28,7 +28,7 @@ class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
         }
 
         collegeLoginButton.setOnClickListener {
-            val intent = Intent(activity, CollegeLoginActivity::class.java)
+            val intent = Intent(activity, TpoLoginActivity::class.java)
             startActivity(intent)
         }
 

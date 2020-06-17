@@ -64,8 +64,8 @@ interface GetDataServices {
                          @Path("code") code: Int,
                          @Path("year") year: Int,
                          @Query("month") month: Int,
-                         @Query("date") date: Int):
-            Single<QuestionPaperComplete>
+                         @Query("day") date: Int ):
+            Single<QuestionPaper>
 
     @GET("questions/{id}")
     fun getQuestion(@Header("auth-token") token: String,

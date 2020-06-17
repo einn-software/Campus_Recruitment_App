@@ -1,19 +1,15 @@
 package com.testexample.materialdesigntest.data.network.repository
 
-import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.CollegeLoginRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.junit.ClassRule
 
 class UserRemoteRepositoryTest {
 //    companion object {
@@ -24,7 +20,7 @@ class UserRemoteRepositoryTest {
 
     private lateinit var repository: IUserRemoteRepository
     private val validCollegeLoginRequest = CollegeLoginRequest("anand@gmail.com","anand344")
-    private val validStudentLoginRequest = StudentLoginRequest("1680210044",2346, "ria2611")
+    private val validStudentLoginRequest = StudentLoginRequest("1680210025",2346, "ria2611")
 
     @Before
     fun setUp() {
@@ -69,9 +65,10 @@ class UserRemoteRepositoryTest {
     @Test
     fun authStudentTest() {
         var getUserRequest = UserRequest("","")
-         repository.authStudent(validStudentLoginRequest)
+         val output = repository.authStudent(validStudentLoginRequest)
              .handelNetworkError()
-             .subscribe(
+        output.test().assertNoErrors()
+        output.subscribe(
                 {success ->
                     getUserRequest = UserRequest(success.token, success.id)
                     println("Auth Response is $success")},

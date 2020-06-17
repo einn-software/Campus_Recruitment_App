@@ -19,8 +19,8 @@ class ApplicationDatabaseITest {
     private val user =
         Student(
             "1", "sdg", "sdg@test.com",
-            "qwertyui", 545454545, 243,
-            "cse", "nitra","1545"
+            "qwertyui", 545454545, "243",
+            "cse", "nitra",555
         )
 
     @get:Rule
@@ -62,7 +62,7 @@ class ApplicationDatabaseITest {
     @Throws(Exception::class)
     fun test_for_fetching_user_when_email_and_password_given() {
 
-        val test= studentDao.getUserByEmailPassword(
+        val test= studentDao.getUserByRollNoPassword(
             user.studentRollNo,
             user.studentPassword)
         assert(test == Flowable.just(user))

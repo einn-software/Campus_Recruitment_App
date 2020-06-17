@@ -20,7 +20,7 @@ class ExaminationRepo(context: Context) : IExaminationRepo {
     private val roomRepo: IExaminationRoomRepo =
         ExaminationRoomRepo(context)
 
-    override fun loadQuestionPaperFromRemote(collegeCode: String, date: String): Single<QuestionPaperComplete> {
+    override fun loadQuestionPaperFromRemote(collegeCode: String, date: String): Single<QuestionPaper> {
         return remoteRepo
             .callApiForQuestionPaper(token, FetchExamRequest(802,2020,5,29))
     }
@@ -29,9 +29,8 @@ class ExaminationRepo(context: Context) : IExaminationRepo {
        return roomRepo.addResponse(response)
     }
 
-    override fun loadQuestionPaperFromRoom(collegeCode: String, date: String): Single<QuestionPaperComplete>? {
-        return roomRepo
-            .fetchQuestionPaper(collegeCode, date)
+    override fun loadQuestionPaperFromRoom(collegeCode: String, date: String): Single<QuestionPaper>? {
+        TODO()
     }
 
     override fun fetchQuestionFromRemote(questionId: String): Single<Question> {
@@ -40,20 +39,19 @@ class ExaminationRepo(context: Context) : IExaminationRepo {
     }
 
     override fun fetchQuestionFromRoom(questionId: String): Single<Question> {
-        return roomRepo
-            .fetchQuestion(questionId)
+        TODO()
     }
 
-    override fun addQuestion(questions: List<Question>) {
+    override fun addQuestion(questions: List<QuestionForRoom>) {
         roomRepo
-            .addQuestion(questions)
+            .addQuestionForRoom(questions)
     }
 
-    override fun addQuestionPaper(questionPaper: QuestionPaperComplete) {
-        roomRepo
-            .addQuestionPaper(QuestionPaperComplete(QuestionPaper("534","name",50,
-                180,"dada",802,29,5,2020,"10:00 AM",true,1,.25),
-            listOf(Section("534", "section1",52,54, listOf("s54","545","454")))))
+    override fun addQuestionPaper(questionPaper: QuestionPaper) {
+//        roomRepo
+//            .addQuestionPaper(QuestionPaper(QuestionPaper("534","name",50,
+//                180,"dada",802,29,5,2020,"10:00 AM",true,1,.25),
+//            listOf(Section("534", "section1",52,54, listOf("s54","545","454")))))
     }
 }
 

@@ -12,7 +12,7 @@
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,28 +35,28 @@
         android:id="@+id/rollNoText"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:background="@color/colorAccent2"
         android:ems="10"
         android:hint="Enter Your Roll No"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentLoginText" />
+        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/searchableSpinnerForCollege"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:background="@color/colorAccent2"
         android:spinnerMode="dropdown"
         app:hintText="Please Select Your College..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rollNoText" />
+        app:layout_constraintTop_toBottomOf="@+id/studentLoginText" />
 
     <Button
         android:id="@+id/studentLoginButton"
@@ -80,45 +80,53 @@
         android:id="@+id/registrationLink"
         android:layout_width="98dp"
         android:layout_height="25dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="32dp"
         android:clickable="true"
         android:text="Register Here"
         android:textColor="#142688"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/notRegisteredText"
-        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink" />
 
     <TextView
         android:id="@+id/notRegisteredText"
         android:layout_width="137dp"
         android:layout_height="25dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="32dp"
         android:clickable="false"
         android:text="Not Yet Registered!"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/registrationLink"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink" />
 
     <EditText
         android:id="@+id/studentPasswordText"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:background="@color/colorAccent2"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege" />
+        app:layout_constraintTop_toBottomOf="@+id/rollNoText" />
+
+    <TextView
+        android:id="@+id/forgotPasswordLink"
+        android:layout_width="116dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
+        android:text="forgot password ?"
+        android:textColor="#142688"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.testexample.materialdesigntest.data.model.*
 
-@Database(entities = [Student::class, College::class, QuestionPaper::class,
-    Question::class, Section::class, Response::class],
+@Database(entities = [Student::class, College::class, QuestionPaperForRoom::class,
+    QuestionForRoom::class, SectionForRoom::class, Response::class],
     version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ApplicationDatabase: RoomDatabase() {

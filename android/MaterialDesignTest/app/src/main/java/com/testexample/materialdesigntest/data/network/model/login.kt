@@ -1,12 +1,11 @@
 package com.testexample.materialdesigntest.data.network.model
 
 import com.google.gson.annotations.SerializedName
-import org.json.JSONObject
 
 data class StudentLoginRequest(
-    @SerializedName("roll")val rollNo: String,
-    @SerializedName("code")val code: Int,
-    @SerializedName("password")val password: String
+    @SerializedName("roll") val rollNo: String,
+    @SerializedName("code") val code: Int,
+    @SerializedName("password") val password: String
     )
 
 data class AuthResponse(

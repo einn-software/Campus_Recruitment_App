@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.utils.Constants
 
 class SessionManager(context: Context):
@@ -13,6 +14,7 @@ class SessionManager(context: Context):
             .getString(R.string.app_name),
             Context.MODE_PRIVATE)
 
+
     companion object {
         const val USER_EMAIL = "user_email"
         const val USER_ID = "user_id"
@@ -20,7 +22,7 @@ class SessionManager(context: Context):
         const val USER_TOKEN = "user_token"
     }
 
-    override fun saveUserSession(session: UserSession) {
+    override fun saveUserSession(session: AuthResponse) {
         val editor = preferences.edit()
         editor.putString(USER_EMAIL, session.email)
         editor.putString(USER_ID, session.id)
@@ -47,8 +49,8 @@ class SessionManager(context: Context):
 }
 
 data class UserSession (
-        @SerializedName(Constants.EMAIL) val email: String,
-        @SerializedName(Constants.TOKEN) val token: String,
-        @SerializedName(Constants.ID) val id: String,
-        @SerializedName(Constants.USERTYPE) val userType: String
+    @SerializedName(Constants.EMAIL) val email: String,
+    @SerializedName(Constants.TOKEN) val token: String,
+    @SerializedName(Constants.ID) val id: String,
+    @SerializedName(Constants.USERTYPE) val userType: String
 )

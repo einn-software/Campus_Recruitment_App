@@ -32,7 +32,7 @@ class CollegeLoginActivity : AppCompatActivity(), LoginContract.CollegeView {
         }
 
         RegistrationLink.setOnClickListener {
-            //redirect to website
+            TODO("redirect to web")
         }
     }
 

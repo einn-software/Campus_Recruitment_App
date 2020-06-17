@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.data.database.room
 
 import androidx.room.*
-import com.testexample.materialdesigntest.data.model.Question
+import com.testexample.materialdesigntest.data.model.QuestionForRoom
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Response
 import com.testexample.materialdesigntest.data.model.Result

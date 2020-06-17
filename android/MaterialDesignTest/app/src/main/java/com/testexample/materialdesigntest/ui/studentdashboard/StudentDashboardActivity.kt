@@ -27,7 +27,7 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
 
         studentResult = StudentResult.newInstance(requestResult(15), 15)
 
-        resultTab.setOnClickListener {
+        examInfoTab.setOnClickListener {
             studentDashboardContainer.visibility = INVISIBLE
             supportFragmentManager
                 .beginTransaction()

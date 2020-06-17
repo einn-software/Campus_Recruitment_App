@@ -5,15 +5,15 @@ import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
+import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
+import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface IUserRepository {
 
-    fun isStudentValid(
-        rollNo: Long,
-        password: String
+    fun isStudentValid(loginRequest: StudentLoginRequest
     ): Single<AuthResponse>
 
     fun isExistingUser(
@@ -24,15 +24,18 @@ interface IUserRepository {
         token: String
     )
 
-    fun getStudent(): Flowable<Student>
+    fun getStudent(userRequest: UserRequest): Flowable<Student>
 
-    fun isCollegeValid(
+    fun forgotPasswordStudent(email: String):Single<String>
+
+    fun forgotPasswordTPO(email: String):Single<String>
+
+    fun isTPOValid(
         email: String,
         password: String
     ): Single<AuthResponse>
 
-    fun getCollege(
-        token: String
+    fun getTPO(userRequest: UserRequest
     ): Flowable<TPO>
 
     fun getCollegeList():

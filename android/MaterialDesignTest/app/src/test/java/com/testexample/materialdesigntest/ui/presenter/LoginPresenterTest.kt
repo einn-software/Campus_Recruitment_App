@@ -4,6 +4,7 @@ import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.model.ErrorResponse
+import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
 import io.mockk.every
@@ -27,8 +28,9 @@ class LoginPresenterTest {
     //mock setup
     private val view : LoginContract.View = mockk(relaxed = true)
     private val model : UserRepository = mockk() {
-        every { isStudentValid(
-            645454, "testpass") } returns Single.just(AuthResponse("token","","","",ErrorResponse(0,"","","","")
+        every {
+            isStudentValid(StudentLoginRequest("645454", 2454, "testpass"))
+        } returns Single.just(AuthResponse("token","","","",ErrorResponse(0,"","","","")
         ))
     }
 
@@ -44,16 +46,17 @@ class LoginPresenterTest {
     fun `To test the login process in presenter`() {
         val user : String = "15545"
         val pass : String = "testpass"
+        val code: Int  = 2454
         val expected : String = "success"
 
-        presenter.onStudentLogin(user, pass)
+        presenter.onStudentLogin(StudentLoginRequest(user, code ,pass))
 
 
 
         //checks to see whether the function is called
         verify(exactly = 1) {
 
-            model.isStudentValid(user.toLong(), pass)
+            model.isStudentValid(StudentLoginRequest(user,code,  pass))
         }
     }
 
@@ -61,8 +64,9 @@ class LoginPresenterTest {
     fun `To test the model call process in presenter`() {
         val user: String = "1545"
         val pass: String = "testpass"
+        val code: Int = 2454
 
-        model.isStudentValid(user.toLong(), pass).test().assertValue(AuthResponse("token","","","",
+        model.isStudentValid(StudentLoginRequest(user, code , pass)).test().assertValue(AuthResponse("token","","","",
             ErrorResponse(0,"","","","")))
 
     }

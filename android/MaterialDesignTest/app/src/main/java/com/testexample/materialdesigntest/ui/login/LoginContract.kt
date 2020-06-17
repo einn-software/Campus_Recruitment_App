@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.login
 
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
+import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.ui.base.BaseContract
 
 /**
@@ -17,7 +18,7 @@ interface LoginContract {
 
     }
     interface Presenter : BaseContract.BasePresenter {
-        fun onStudentLogin(rollNo : String, password : String)
+        fun onStudentLogin(loginRequest: StudentLoginRequest)
         fun generateCollegeList()
     }
 

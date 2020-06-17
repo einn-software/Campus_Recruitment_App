@@ -8,50 +8,30 @@ import android.util.Log
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.ui.examination.ExamDrawer
+import com.testexample.materialdesigntest.ui.login.LoginPrompt
 import kotlinx.android.synthetic.main.activity_instruction.*
 import kotlinx.android.synthetic.main.appbar.*
 import java.text.DateFormat
 import java.util.*
 
 
-class InstructionActivity : AppCompatActivity(), InstructionsContract.View {
+class InstructionActivity : AppCompatActivity() {
 
     val TAG = "Instruction Activity"
-    private lateinit var presenter: InstructionsContract.Presenter
+    private lateinit var examInfo: ExamInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG," on create")
+        Log.d(TAG, " on create")
         setContentView(R.layout.activity_instruction)
 
         setSupportActionBar(appActionBar)
 
-        presenter = InstructionPresenter(this)
-
-        val calender = Calendar.getInstance()
-        val date = DateFormat.getDateInstance().format(calender.time)
-
-        presenter.fetchInstructions("802")
-
-        agreeToGuidelinesCheck.setOnClickListener {
-            startTestButton.isEnabled = agreeToGuidelinesCheck.isChecked
-        }
-
-        startTestButton.setOnClickListener {
-
-            startActivity(Intent(this,ExamDrawer::class.java))
-        }
-    }
-
-    override fun showInstructions(instruction: Instructions) {
-        guidelinesText.text = instruction.message
-    }
-
-    override fun setPresenter(presenter: InstructionsContract.Presenter) {
-        this.presenter = presenter
-    }
-
-    override fun setContext(): Context {
-        return this.baseContext
+        examInfo = ExamInfo.newInstance()
+        supportFragmentManager
+                .beginTransaction()
+                .add(R.id.instructionsFragmentContainer, examInfo)
+                .addToBackStack(examInfo.toString())
+                .commit()
     }
 }

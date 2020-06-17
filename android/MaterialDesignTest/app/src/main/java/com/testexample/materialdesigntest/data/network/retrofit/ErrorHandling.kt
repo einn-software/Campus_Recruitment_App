@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.testexample.materialdesigntest.data.network.model.ErrorResponse
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.exceptions.UndeliverableException
 import java.io.IOException
 import java.net.SocketTimeoutException
 
@@ -35,7 +36,7 @@ fun <T> Flowable<T>.handelNetworkError() =
             is OfflineException ->
                 return@onErrorResumeNext Flowable.error(Exception("check your internet connection"))
             is SocketTimeoutException ->
-                return@onErrorResumeNext Flowable.error(Exception("server not found"))
+                return@onErrorResumeNext Flowable.error(Exception("server not fount"))
             is retrofit2.HttpException ->
             {
                 val gson = Gson()

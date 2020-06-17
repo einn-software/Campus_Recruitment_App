@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.data.model.Question
-import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
+import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import io.reactivex.Single
@@ -13,7 +13,7 @@ class ExaminationRemoteRepo: IExaminationRemoteRepo {
     override fun callApiForQuestionPaper(
         token: String,
         fetchExamRequest: FetchExamRequest
-    ): Single<QuestionPaperComplete> {
+    ): Single<QuestionPaper> {
         return api.getQuestionPaper(token,fetchExamRequest.code,
             fetchExamRequest.year, fetchExamRequest.month, fetchExamRequest.date)
     }

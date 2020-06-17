@@ -6,7 +6,7 @@ data class FetchExamRequest(
     @SerializedName("code")val code: Int,
     @SerializedName("year")val year: Int,
     @SerializedName("month")val month: Int,
-    @SerializedName("date")val date: Int
+    @SerializedName("day")val date: Int
 )
 
 data class EndExamRequest(

@@ -1,6 +1,5 @@
 package com.testexample.materialdesigntest.data.network.repository
 
-import com.google.android.gms.common.api.ApiException
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -31,7 +30,7 @@ class ExaminationRemoteRepoTest {
     fun setUp() {
         tokenRepository = UserRemoteRepositoryTest()
         studentSession = tokenRepository.setToken()
-        fetchExamRequest = FetchExamRequest(802,2020,5,29)
+        fetchExamRequest = FetchExamRequest(2346,2020,12,23)
         answer = StudentAnswerRequest(studentSession.id,"none",0,"none",0)
         updateAnswer = StudentAnswerResponse("none", answer)
     }
@@ -46,33 +45,30 @@ class ExaminationRemoteRepoTest {
         val output = repository
             .callApiForQuestionPaper(studentSession.token,fetchExamRequest)
             .handelNetworkError()
-
-        output.test().assertNoErrors()
         output.subscribe(
             {success ->
-                println(" Result is $success")
-                assertEquals(success.questionPaper.collegeCode, fetchExamRequest.code)
-                assertEquals(success.questionPaper.date, fetchExamRequest.date)
-                assertEquals(success.questionPaper.month,fetchExamRequest.month)
-                assertEquals(success.questionPaper.year,fetchExamRequest.year)
+                println(" Result is $success \n")
+                assertEquals(success.collegeCode, fetchExamRequest.code)
+                assertEquals(success.date, fetchExamRequest.date)
+                assertEquals(success.month,fetchExamRequest.month)
+                assertEquals(success.year,fetchExamRequest.year)
                 assertTrue(success.sections.count() > 0)
-                assertTrue(success.sections[0].questionIdList.count() > 0)
-                questionId = success.sections[0].questionIdList[0]
-                questionPaperId = success.questionPaper.questionPaperId
+                assertTrue(success.sections[0].questionsList.count() > 0)
+                questionId = success.sections[0].questionsList[0].questionId
+                questionPaperId = success.questionPaperId
             },
             {err ->
-                println(err.localizedMessage)
-                fail("Verification failed with message: ${err.message}")
+                println("Error log: " + err.localizedMessage)
+
             })
-
-
+        println(questionId)
     }
 
     @Test
     fun `call Api For QuestionPaper when wrong token is passed`(){
         lateinit var err:String
         val output = repository
-            .callApiForQuestionPaper(studentSession.token,fetchExamRequest)
+            .callApiForQuestionPaper("none",fetchExamRequest)
             .handelNetworkError()
 
         output.subscribe(
@@ -81,12 +77,14 @@ class ExaminationRemoteRepoTest {
                 err = it.localizedMessage!!
             }
         )
-        assertEquals("700 invalid token", err)
+        assertEquals("701 Invalid Token", err)
     }
 
 
     @Test
     fun callApiForQuestionTest() {
+        callApiForQuestionPaperTest()
+        println(questionId + "  " + studentSession.token)
         val output = repository
             .callApiForQuestion(studentSession.token, questionId)
             .handelNetworkError()
@@ -97,7 +95,7 @@ class ExaminationRemoteRepoTest {
                 println("question is $success")
                 assertEquals(success.questionId, questionId)
                 assertTrue(success.questionText.isNotEmpty())
-                assertTrue(success.option.count() > 0)
+                assertTrue(success.options.count() > 0)
             },
             {err ->
                 println(err.localizedMessage)

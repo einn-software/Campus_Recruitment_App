@@ -1,17 +1,14 @@
 package com.testexample.materialdesigntest.data.database.room
 
 import androidx.room.*
-import com.testexample.materialdesigntest.data.model.Question
-import com.testexample.materialdesigntest.data.model.QuestionPaper
-import com.testexample.materialdesigntest.data.model.QuestionPaperComplete
-import com.testexample.materialdesigntest.data.model.Section
+import com.testexample.materialdesigntest.data.model.*
 import io.reactivex.Single
 
 
 @Dao
 abstract class QuestionPaperDao {
 
-    fun insertSectionsForQuestionPaper(questionPaper: QuestionPaper, sections: List<Section>){
+    fun insertSectionsForQuestionPaper(questionPaper: QuestionPaperForRoom, sections: List<SectionForRoom>){
         for (section in sections) {
             section.id = questionPaper.questionPaperId
         }
@@ -19,23 +16,23 @@ abstract class QuestionPaperDao {
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertSections(sections: List<Section>)
+    abstract fun insertSections(sections: List<SectionForRoom>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertQuestionPaper(questionPaper: QuestionPaper)
+    abstract fun insertQuestionPaper(questionPaper: QuestionPaperForRoom)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertQuestions(questions: List<Question>)
+    abstract fun insertQuestionForRooms(questions: List<QuestionForRoom>)
 
     @Delete
-    abstract fun deleteQuestionPaper(questionPaper: QuestionPaper)
+    abstract fun deleteQuestionPaper(questionPaper: QuestionPaperForRoom)
 
     @Transaction
-    @Query("SELECT * FROM QuestionPaper WHERE collegeCode = :collegeCode AND date = :examDate")
-    abstract fun getQuestionPaper(collegeCode: String, examDate: String): Single<QuestionPaperComplete>
+    @Query("SELECT * FROM QuestionPaperForRoom WHERE collegeCode = :collegeCode AND date = :examDate")
+    abstract fun getQuestionPaper(collegeCode: String, examDate: String): Single<QuestionPaperCompleteForRoom>
 
     @Query("SELECT * FROM questions_table WHERE questionId = :questionId")
-    abstract fun getQuestion(questionId: String): Single<Question>
+    abstract fun getQuestion(questionId: String): Single<QuestionForRoom>
 
 
 }

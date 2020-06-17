@@ -5,7 +5,7 @@ import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import io.reactivex.Flowable
 
 
-class InstructionsRemoteRepo: IInstructionsRemoteRepo {
+class PreExamInstructionsRemoteRepo: IPreExamInstructionsRemoteRepo {
 
     private val api: GetDataServices = GetDataServices.create()
 

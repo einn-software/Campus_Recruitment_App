@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CollegeResponse(
     @SerializedName("_id") val collegeId: String,
     @SerializedName("name") val collegeName: String?,
-    @SerializedName("code") val collegeCode: Long,
+    @SerializedName("code") val collegeCode: Int,
     @SerializedName("address") val collegeAddress: String,
     @SerializedName("university") val collegeUniversity: String
 )

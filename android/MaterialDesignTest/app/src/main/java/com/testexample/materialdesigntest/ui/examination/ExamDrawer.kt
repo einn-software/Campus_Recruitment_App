@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.testexample.materialdesigntest.R
 import kotlinx.android.synthetic.main.activity_exam_drawer.*
+import kotlinx.android.synthetic.main.appbar.*
+
+private const val QUESTION_PAPER_ID = "question_paper_id"
 
 class ExamDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,11 +26,17 @@ class ExamDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     lateinit var section1Fragment: ExamSectionFragment
     lateinit var section2Fragment: ExamSectionFragment
     lateinit var section3Fragment: ExamSectionFragment
+    private lateinit var questionPaperId: String
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam_drawer)
+        Log.d(TAG, "onCreate")
+        setSupportActionBar(appActionBar)
+
+        val bundle: Bundle? = intent.extras
+        questionPaperId = bundle?.getString(QUESTION_PAPER_ID).toString()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         setSupportActionBar(drawerToolbar)
@@ -35,7 +44,7 @@ class ExamDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             setDefaultDisplayHomeAsUpEnabled(true)
             setDisplayHomeAsUpEnabled(false)
         }
-        var toggle = ActionBarDrawerToggle(
+        val toggle = ActionBarDrawerToggle(
             this, drawerLayout, drawerToolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close)

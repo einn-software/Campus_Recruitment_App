@@ -3,6 +3,7 @@ package com.testexample.materialdesigntest.ui.login
 import android.util.Log
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.data.session.UserSession
 import com.testexample.materialdesigntest.utils.Constants
@@ -36,17 +37,12 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
             else -> userRepository.let {
                 subscriptions.add(userRepository
-                    .isCollegeValid(email, password)
+                    .isTPOValid(email, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { response ->
-                            val session = UserSession(response.email, response.token, response.id, response.userType)
-                            updateSession(
-                                session,
-                                Constants.Companion
-                                    .LoggedInMode.LOGGED_IN_MODE_SERVER
-                            )
+                        { session ->
+                            updateSession(session)
                             view!!.openMainActivity()
                         },
                         { error -> Log.d("College Login Presenter", error.toString()) }
@@ -56,7 +52,7 @@ class CollegeLoginPresenter(private var view: LoginContract.CollegeView?) :
 
     }
 
-    private fun updateSession(session: UserSession, loginStatus: Constants.Companion.LoggedInMode) {
+    private fun updateSession(session: AuthResponse) {
         sessionManager = SessionManager(view!!.setContext())
         sessionManager.saveUserSession(session)
     }

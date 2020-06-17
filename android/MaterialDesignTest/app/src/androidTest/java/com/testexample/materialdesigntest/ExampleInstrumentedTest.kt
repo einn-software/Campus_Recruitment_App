@@ -48,9 +48,8 @@ class ExampleInstrumentedTest {
     @Test
     fun student_can_input_credential() {
         user_hits_join_test_button()
-        //rule.activity.supportFragmentManager.beginTransaction().replace(R.id.loginFragment,StudentLogin.newInstance()).commit()
         onView(withId(R.id.rollNoText)).perform(typeText("123456789"), closeSoftKeyboard())
-        //onView(withId(R.id.studentPasswordText)).perform(typeText("15787851"))
+        onView(withId(R.id.studentPasswordText)).perform(typeText("15787851"), closeSoftKeyboard())
         onView(withId(R.id.studentLoginButton)).perform(click())
     }
 

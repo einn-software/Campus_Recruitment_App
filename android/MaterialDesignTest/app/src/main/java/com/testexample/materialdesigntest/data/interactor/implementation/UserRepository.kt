@@ -25,8 +25,8 @@ class UserRepository(context: Context)
 
     private val roomRepository: IUserRoomRepository = UserRoomRepository(context)
 
-    override fun isStudentValid(rollNo: Long, password: String): Single<AuthResponse> {
-        return remoteRepository.authStudent(StudentLoginRequest(rollNo.toString(),802,password))
+    override fun isStudentValid(loginRequest: StudentLoginRequest): Single<AuthResponse> {
+        return remoteRepository.authStudent(loginRequest)
     }
 
     override fun isExistingUser(userEmail: String): Boolean {
@@ -49,16 +49,24 @@ class UserRepository(context: Context)
             )
     }
 
-    override fun getStudent(): Flowable<Student> {
+    override fun getStudent(userRequest: UserRequest): Flowable<Student> {
+        return remoteRepository.getStudent(userRequest)
+    }
+
+    override fun forgotPasswordStudent(email: String): Single<String> {
         TODO("Not yet implemented")
     }
 
-    override fun isCollegeValid(email: String, password: String): Single<AuthResponse> {
+    override fun forgotPasswordTPO(email: String): Single<String> {
+        TODO("Not yet implemented")
+    }
+
+    override fun isTPOValid(email: String, password: String): Single<AuthResponse> {
         return remoteRepository.authTPO(CollegeLoginRequest(email, password))
     }
 
-    override fun getCollege(token: String): Flowable<TPO> {
-        return remoteRepository.getTPO(UserRequest(token,""))
+    override fun getTPO(userRequest: UserRequest): Flowable<TPO> {
+        return remoteRepository.getTPO(userRequest)
     }
 
     override fun getCollegeList(): Flowable<List<CollegeResponse>> {

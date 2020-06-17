@@ -6,33 +6,41 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class QuestionPaper(
-    @SerializedName("_id") val questionPaperId:String,
+
+@Entity
+data class QuestionPaperForRoom(
+    @PrimaryKey
+    @SerializedName("_id") @ColumnInfo(name = "question_paper_id") val questionPaperId:String,
     @SerializedName("paper_name") val questionPaperName:String,
     @SerializedName("max_marks") val maxMarks:Int,
     @SerializedName("max_time") val maxTime:Int,
     @SerializedName("instructions_id") val instructionId: String,
     @SerializedName("code") val collegeCode: Int,
-    @SerializedName("day") val date: Int,
+    @SerializedName("date") val date: Int,
     @SerializedName("month") val month: Int,
     @SerializedName("year") val year: Int,
     @SerializedName("start_time") val startTime: String  ,
     @SerializedName("enabled") val enabled: Boolean,
     @SerializedName("trigger_type") val trigger: Int,
-    @SerializedName("negative_marking_ratio") val negativeMarkingRatio: Double,
-    @SerializedName("sections") val sections: List<Section>
+    @SerializedName("negative_marking_ratio") val negativeMarkingRatio: Double
+
 )
 
-
-data class Section(
+@Entity
+data class SectionForRoom(
+    @PrimaryKey
+    @ColumnInfo(name = "section_id") var id: String,
     @SerializedName("name")val sectionName: String,
     @SerializedName("marks")val marks: Int,
     @SerializedName("num_of_questions")val noOfQuestion: Int,
-    @SerializedName("question_list") val questionsList: List<QuestionsList>
+    val questionIdList: List<String>
 )
 
+@Entity
+data class QuestionPaperCompleteForRoom(
+    @Embedded var questionPaper: QuestionPaperForRoom,
+    @Relation(parentColumn = "question_paper_id", entityColumn = "section_id" )
+    var sections: List<SectionForRoom>
+){
 
-data class QuestionsList(
-        @SerializedName("question_id")val questionId: String,
-        @SerializedName("marks")val marks: Int
-)
+}

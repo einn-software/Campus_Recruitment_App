@@ -16,8 +16,8 @@ class StudentDaoTest {
     private val user =
         Student(
             "1", "sdg", "sdg@test.com",
-            "qwertyui", 545454545, 243,
-            "cse", "nitra","656")
+            "qwertyui", 545454545, "243",
+            "cse", "nitra",454)
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule() // for executing tasks synchronously

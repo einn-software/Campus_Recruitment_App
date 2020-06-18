@@ -314,16 +314,9 @@ const answerSheetPutValidation = (data) => {
   return studentAnswerSheetPutSchema.validate(data);
 };
 
-
-const reqEmailBodyValidation = (data) => {
-  const reqEmailBodySchema = Joi.object({
-    email: Joi.string().min(Constants.email_min_length).required().max(Constants.email_max_length).email(),
-  });
-  return reqEmailBodySchema.validate(data);
-};
 const reqPasswordBodyValidation = (data) => {
   const reqPasswordBodySchema = Joi.object({
-    newPassword: Joi.string().min(Constants.phone_min_length).max(Constants.phone_max_length)
+    newPassword: Joi.string().min(Constants.password_min_length).max(Constants.password_max_length)
   });
   return reqPasswordBodySchema.validate(data);
 };
@@ -357,7 +350,6 @@ module.exports.answerSheetPutValidation = answerSheetPutValidation;
 module.exports.tpoPutValidation = tpoPutValidation;
 module.exports.adminPutValidation = adminPutValidation;
 module.exports.collegePutValidation = collegePutValidation;
-module.exports.reqEmailBodyValidation = reqEmailBodyValidation;
 module.exports.reqPasswordBodyValidation = reqPasswordBodyValidation;
 module.exports.answerSheetPutValidation = answerSheetPutValidation;
 module.exports.reqPasswordBodyValidation = reqPasswordBodyValidation;

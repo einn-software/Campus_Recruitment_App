@@ -128,12 +128,12 @@ function tokenNotFoundErrorHandler() {
   return err;
 }
 
-function resetLinkNotFoundErrorHandler() {
+function userNotFoundErrorHandler() {
   const err = {
     status: Constants.er_not_found, //404
-    message: "Please provide a valid resetLink",
-    error_info: "Not Found Error, As resetLink is not found",
-    server_msg: "Can't change the password as Reset Link is not found",
+    message: "User does not exist",
+    error_info: "Not Found Error",
+    server_msg: "Can't change the password as user with this token does not exist",
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -263,7 +263,7 @@ module.exports = {
   noRouteErrorHandler,
   validationErrorHandler,
   invalidTokenErrorHandler,
-  resetLinkNotFoundErrorHandler,
+  userNotFoundErrorHandler,
   tokenNotFoundErrorHandler,
   answerExistErrorHandler,
   questionExistErrorHandler,

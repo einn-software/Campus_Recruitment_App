@@ -2,38 +2,22 @@ const nodemailer = require("nodemailer");
 const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Constants = require('../config/constant');
+const Constants = require("../config/constant");
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
 const Student = require("../model/Student");
 // import validations
 const {
-  reqEmailBodyValidation,
   reqPasswordBodyValidation
 } = require("../config/validation");
+const {
+  er_not_found
+} = require("../config/constant");
+const {
+  Console
+} = require("winston/lib/winston/transports");
 
-function emailValidation(request, response, next) {
-  const {
-    error
-  } = reqEmailBodyValidation(request.body);
-  if (error) {
-    return response.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
-  }
-  next();
-}
-
-function passwordValidation(request, response, next) {
-  const {
-    error
-  } = reqPasswordBodyValidation(request.body);
-  if (error) {
-    return response.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
-  }
-  next();
-}
-
-function transporterSendeMail(request, response, user) {
-  /* Create a password reset token */
+function createToken(user) {
   const token = jwt.sign({
       _id: user._id,
     },
@@ -41,6 +25,10 @@ function transporterSendeMail(request, response, user) {
       expiresIn: "20m",
     }
   );
+  return token;
+}
+
+function createTransporter() {
   // create reusable transporter object using the gmail transport
   //transporter is going to be an object of transport that is able to send mail
   const transporter = nodemailer.createTransport({
@@ -50,7 +38,11 @@ function transporterSendeMail(request, response, user) {
       pass: process.env.EINN_EMAIL_PASSWORD, // generated ethereal password
     },
   });
-  // data(mailOptions) defines the mail content
+  return transporter;
+}
+
+async function createMailOptions(request, user) {
+  const token = await createToken(user);
   const mailOptions = {
     from: process.env.EINN_EMAIL,
     to: request.body.email,
@@ -60,144 +52,164 @@ function transporterSendeMail(request, response, user) {
       `http://45.122.120.109:3800/admin/reset_pssword/${token}\n\n` +
       "If you did not request this, please ignore this email and your password will remain unchanged.\n",
   };
-  request.session.email = request.body.email
-  request.session.resetLink = token
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      return response.status(Constants.er_failue).json(errorHandler(error));
-    } else {
-      return response.status(Constants.success).json({
-        Message: "Recovery email sent, Please check your email inbox and spam folder",
-      });
-    }
-  });
+  request.session.email = request.body.email;
+  request.session.resetLink = token;
+  return mailOptions;
 }
 
-function resetPassword(request, response) {
-  (err, user) => {
-    if (err) {
-      return response.status(Constants.er_failue).json(errorHandler(error));
-    }
-    if (!user) {
-      return response.status(Constants.er_not_found).json(emailNotFoundErrorHandler());
-    } else {
-      /* Once again store password securely */
-      const salt = bcrypt.genSaltSync(Constants.saltRound);
-      const hashedNewPassword = bcrypt.hashSync(
-        request.body.newPassword,
-        salt
-      );
-      /* Save to database */
-      user.password = hashedNewPassword;
-      /* Now reset the token */
-      request.session.resetLink = null;
-      request.session.email = null;
-      user.save();
-      return response.status(Constants.success).json({
-        Message: `Password for ${user.email} successfully reset`
-      });
-    }
+async function resetPassword(request, response, err, user) {
+  if (err || !user) {
+    return response.status(Constants.er_not_found).json(errHandler.userNotFoundErrorHandler());
+  } else {
+    const {
+      error
+    } = reqPasswordBodyValidation(request.body);
+    if (error) return response.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+    /* Once again store password securely */
+    const salt = bcrypt.genSaltSync(10);
+    const hashedNewPassword = bcrypt.hashSync(
+      request.body.newPassword,
+      salt
+    );
+    /* Save to database */
+    user.password = hashedNewPassword;
+    /* Now reset the token */
+    request.session.resetLink = null;
+    request.session.email = null;
+    user.save();
   }
-}
-
-function verifyToken(request, response, next) {
-  jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
-    if (err) {
-      return response.status(Constants.er_failure).json(errHandler.invalidTokenErrorHandler(err));
-    }
-    next();
+  return response.status(Constants.success).json({
+    Message: `Password for ${user.email} successfully reset`
   });
 }
 
 // Admin forgot and reset Pssword
 /* Request a password reset email and make a reset password token */
-const AdminForgotPassword = async function (request, response, next) {
-  await emailValidation(request, response, next);
+
+const AdminForgotPassword = async (request, response) => {
   const user = await Admin.findOne({
     email: request.body.email,
   });
-  if (!user) {
-    return response.status(Constants.er_not_found).json(emailNotFoundErrorHandler());
-  } else {
-    await transporterSendeMail(request, response, user);
+  if (user === null) {
+    response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
+  const transporter = await createTransporter();
+  const mailOptions = await createMailOptions(request, user);
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
+    return response.status(Constants.success).json({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    });
+  })
 }
 
-
 /* Reset a password using */
-const AdminResetPassword = async function (request, response, next) {
-  await passwordValidation(request, response, next);
+const AdminResetPassword = async (request, response) => {
   if (request.session.resetLink) {
-    await verifyToken(request, response, next);
-    await Admin.findOne({
-        email: request.session.email
-      },
-      await resetPassword(request, response)
-    );
+    jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
+      if (err) {
+        return res.status(Constants.er_failure)
+          .json(errHandler.invalidTokenErrorHandler(err));
+      }
+      Admin.findOne({
+          email: request.session.email
+        },
+        async (err, user) => {
+          await resetPassword(request, response, err, user)
+        }
+      );
+    })
   } else {
-    return response.status(Constants.er_not_found).json(errHandler.resetLinkNotFoundErrorHandler());
+    return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };
-
 
 // Tpo forgot and reset Pssword
 /* Request a password reset email and make a reset password token */
-const TpoForgotPassword = async function (request, response, next) {
-  await emailValidation(request, response, next);
+const TpoForgotPassword = async (request, response) => {
   const user = await Tpo.findOne({
     email: request.body.email,
   });
-  if (!user) {
-    return response.status(Constants.er_not_found).json(emailNotFoundErrorHandler());
-  } else {
-    await transporterSendeMail(request, response, user);
+  if (user === null) {
+    response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
+  const transporter = await createTransporter();
+  const mailOptions = await createMailOptions(request, user);
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
+    return response.status(Constants.success).json({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    });
+  })
 }
 
-
 /* Reset a password using */
-const TpoResetPassword = async function (request, response, next) {
-  await passwordValidation(request, response, next);
+const TpoResetPassword = async (request, response) => {
   if (request.session.resetLink) {
-    await verifyToken(request, response, next);
-    await Tpo.findOne({
-        email: request.session.email
-      },
-      await resetPassword(request, response)
-    );
+    jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
+      if (err) {
+        return res.status(Constants.er_failure)
+          .json(errHandler.invalidTokenErrorHandler(err));
+      }
+      Tpo.findOne({
+          email: request.session.email
+        },
+        async (err, user) => {
+          await resetPassword(request, response, err, user)
+        }
+      );
+    })
   } else {
-    return response.status(Constants.er_not_found).json(errHandler.resetLinkNotFoundErrorHandler());
+    return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };
 
-
 // Student foegot and reset Pssword
 /* Request a password reset email and make a reset password token */
-const StudentForgotPassword = async function (request, response, next) {
-  await emailValidation(request, response, next);
+const StudentForgotPassword = async (request, response) => {
   const user = await Student.findOne({
     email: request.body.email,
   });
-  if (!user) {
-    return response.status(Constants.er_not_found).json(emailNotFoundErrorHandler());
-  } else {
-    await transporterSendeMail(request, response, user);
+  if (user === null) {
+    response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
+  const transporter = await createTransporter();
+  const mailOptions = await createMailOptions(request, user);
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
+    return response.status(Constants.success).json({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    });
+  })
 }
 
-
 /* Reset a password using */
-const StudentResetPassword = async function (request, response, next) {
-  await passwordValidation(request, response, next);
+const StudentResetPassword = async (request, response) => {
   if (request.session.resetLink) {
-    await verifyToken(request, response, next);
-    await Student.findOne({
-        email: request.session.email
-      },
-      await resetPassword(request, response)
-    );
+    jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
+      if (err) {
+        return res.status(Constants.er_failure)
+          .json(errHandler.invalidTokenErrorHandler(err));
+      }
+      Student.findOne({
+          email: request.session.email
+        },
+        async (err, user) => {
+          await resetPassword(request, response, err, user)
+        }
+      );
+    })
   } else {
-    return response.status(Constants.er_not_found).json(errHandler.resetLinkNotFoundErrorHandler());
+    return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };
 
@@ -207,5 +219,5 @@ module.exports = {
   TpoResetPassword,
   TpoForgotPassword,
   StudentResetPassword,
-  StudentForgotPassword
-}
+  StudentForgotPassword,
+};

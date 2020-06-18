@@ -39,19 +39,14 @@ async function createToken(user) {
   );
 }
 
-async function createAndSendSession(req, res, user, token, user_type) {
+function createAndSendSession(req, res, user, token, user_type) {
   //To store or access session data, we use the request property req.session, which is (generally) serialized as JSON by the store.
   req.session.email = user.email,
     req.session._id = user._id,
     req.session.token = token,
     req.session.user_type = user_type
 
-  return res.status(Constants.success).header("auth-token", token).json({
-    email: req.session.email,
-    _id: req.session._id,
-    token: req.session.token,
-    user_type: req.session.user_type
-  });
+
 }
 
 //Admin Login
@@ -76,6 +71,12 @@ const AdminLogin = (async (req, res) => {
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
+  return res.status(Constants.success).header("auth-token", token).json({
+    email: req.session.email,
+    _id: req.session._id,
+    token: req.session.token,
+    user_type: req.session.user_type
+  });
 });
 
 //Student Login
@@ -101,6 +102,12 @@ const StudentLogin = (async (req, res) => {
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
+  return res.status(Constants.success).header("auth-token", token).json({
+    email: req.session.email,
+    _id: req.session._id,
+    token: req.session.token,
+    user_type: req.session.user_type
+  });
 });
 
 //Tpo Login
@@ -125,6 +132,12 @@ const TpoLogin = (async (req, res) => {
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
+  return res.status(Constants.success).header("auth-token", token).json({
+    email: req.session.email,
+    _id: req.session._id,
+    token: req.session.token,
+    user_type: req.session.user_type
+  });
 });
 
 module.exports.StudentLogin = StudentLogin

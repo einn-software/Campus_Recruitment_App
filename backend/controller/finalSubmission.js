@@ -6,7 +6,7 @@ const {
 } = require("../config/validation");
 
 const {
-    ResultAdd
+    SaveResult
 } = require("./resultController");
 const {
     response
@@ -19,7 +19,7 @@ const FinalSubmissionPost = (async (req, res) => {
     } = finalSubmissionValidation(req.body);
     if (error) return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
 
-    await ResultAdd(req, res);
+    await SaveResult(req, res);
     try {
         return res.status(Constants.success).json({
             "message": "Your exam submission is successful. Thank you for your time"

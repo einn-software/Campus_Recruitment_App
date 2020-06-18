@@ -13,10 +13,14 @@ const {
 const jwt = require("jsonwebtoken");
 const errHandler = require("./errorHandling");
 const Constants = require("../config/constant");
+const {
+  func
+} = require("@hapi/joi");
 
 //Result Post
-const ResultAdd = async function (req, res) {
-  // LETS VALIDATE THE DATA BEFORE WE ADD A RESULT
+
+async function resultCal(req, res) {
+
   const {
     error
   } = resultValidation(req.body);
@@ -47,6 +51,22 @@ const ResultAdd = async function (req, res) {
     correct_attempt: array[1],
     total_marks_scored: array[0],
   });
+  return result;
+}
+
+
+const ResultAdd = async function (req, res) {
+  const result = await resultCal(req, res);
+  try {
+    await result.save();
+    return res.status(Constants.success).json(result);
+  } catch (err) {
+    return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+  }
+};
+
+const SaveResult = async function (req, res) {
+  const result = await resultCal(req, res);
   try {
     await result.save();
     return;
@@ -108,4 +128,5 @@ module.exports = {
   ResultAdd,
   ResultGetByPaperIdAndCode,
   ResultGetByPaperIdRollAndCode,
+  SaveResult
 };

@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  res.status(Constants.er_failure).json(errHandler.noRouteErrorHandler(error));
+  return res.status(Constants.er_failure).json(errHandler.noRouteErrorHandler(error));
 });
 
 module.exports = app;

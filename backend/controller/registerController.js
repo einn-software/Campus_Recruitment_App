@@ -17,8 +17,8 @@ const {
 
 function createHashedPassword(req) {
   //Hash password
-  const salt = bcrypt.genSalt(Constants.saltRound);
-  const hashedPassword = bcrypt.hash(req.body.password, salt);
+  const salt = bcrypt.genSaltSync(Constants.saltRound);
+  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
   return hashedPassword;
 }
 
@@ -48,7 +48,7 @@ const AdminRegister = (async (req, res) => {
   const admin = new Admin({
     name: req.body.name,
     email: req.body.email,
-    password: createHashedPassword(req),
+    password: await createHashedPassword(req),
     phone: req.body.phone,
   });
   try {
@@ -87,7 +87,7 @@ const TpoRegister = (async (req, res) => {
   const tpo = new Tpo({
     name: req.body.name,
     email: req.body.email,
-    password: createHashedPassword(req),
+    password: await createHashedPassword(req),
     phone: req.body.phone,
     designation: req.body.designation,
     college: req.body.college,
@@ -136,7 +136,7 @@ const StudentRegister = (async (req, res) => {
   const student = new Student({
     name: req.body.name,
     email: req.body.email,
-    password: createHashedPassword(req),
+    password: await createHashedPassword(req),
     phone: req.body.phone,
     roll: req.body.roll,
     branch: req.body.branch,

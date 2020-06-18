@@ -72,7 +72,7 @@ const {
 } = require("../controller/studentAnswerSheet");
 
 const {
-  //ResultAdd,
+  ResultAdd,
   ResultGetByPaperIdAndCode,
   ResultGetByPaperIdRollAndCode
 } = require("../controller/resultController");
@@ -168,12 +168,12 @@ router.delete("/student-answers/:id", verified, AnswerSheetDeleteById);
 router.delete("/student-answer/:student_id/:question_paper_id", verified, AnswerSheetDeleteByStudentId);
 
 //Result API
-//router.post("/results", verified, ResultAdd);
+router.post("/results", verified, ResultAdd);
 router.get("/colleges/:code/results/:question_paper_id", verified, ResultGetByPaperIdAndCode);
 router.get("/colleges/:code/results/:roll/question-papers/:question_paper_id", verified, ResultGetByPaperIdRollAndCode);
 
 // Forgot and Reset Password API
-router.post("/forgot-password", AdminForgotPassword);
+router.post("/forgot-password/admins", AdminForgotPassword);
 router.post("/reset-password/admins", AdminResetPassword);
 router.post("/forgot-password/tpos", TpoForgotPassword);
 router.post("/reset-password/tpos", TpoResetPassword);

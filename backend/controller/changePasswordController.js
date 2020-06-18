@@ -13,9 +13,6 @@ const {
 const {
   er_not_found
 } = require("../config/constant");
-const {
-  Console
-} = require("winston/lib/winston/transports");
 
 function createToken(user) {
   const token = jwt.sign({

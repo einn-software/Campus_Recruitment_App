@@ -425,6 +425,10 @@ mongo --quiet <<EOF
      var QstId2 = db.questioncollections.find({})[1]._id;
      var QstId3 = db.questioncollections.find({})[2]._id;
      var QstId4 = db.questioncollections.find({})[3]._id;
+     var QstId5 = db.questioncollections.find({})[4]._id;
+     var QstId6 = db.questioncollections.find({})[5]._id;
+     var QstId7 = db.questioncollections.find({})[6]._id;
+     var QstId8 = db.questioncollections.find({})[7]._id;
  
 
     db.questionpapers.insertMany([
@@ -450,7 +454,20 @@ mongo --quiet <<EOF
                 {"question_id":QstId2, "question_marks" : 5},
                 {"question_id":QstId3, "question_marks" : 5},
                 {"question_id":QstId4, "question_marks" : 5}
-              ]}]
+              ]},
+              {
+             "section_name":"B",
+             "section_marks" : 20,
+             "num_of_questions" : 4,
+             "question_list":[
+                {"question_id":QstId5, "question_marks" : 5},
+                {"question_id":QstId6, "question_marks" : 5},
+                {"question_id":QstId7, "question_marks" : 5},
+                {"question_id":QstId8, "question_marks" : 5}
+              ]}
+              
+              
+              ]
 
 },
 {
@@ -475,7 +492,18 @@ mongo --quiet <<EOF
                 {"question_id":"QstId2", "question_marks" : 5},
                 {"question_id":"QstId3", "question_marks" : 5},
                 {"question_id":"QstId4", "question_marks" : 5}
-             ]}]
+             ]},
+             {
+             "section_name":"A",
+             "section_marks" : 20,
+             "num_of_questions" : 4,
+             "question_list":[
+                {"question_id":QstId5, "question_marks" : 5},
+                {"question_id":QstId6, "question_marks" : 5},
+                {"question_id":QstId7, "question_marks" : 5},
+                {"question_id":QstId8, "question_marks" : 5}
+              ]}
+             ]
  }
 ]);
 

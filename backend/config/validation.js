@@ -91,9 +91,9 @@ const instructionValidation = (data) => {
 const resultValidation = (data) => {
   const resultSchema = Joi.object({
     student_id: Joi.objectId().required(),
-    roll: Joi.string().min(Constants.roll_min_length).max(Constants.roll_max_length).required(),
-    name: Joi.string().min(Constants.name_min_length).required().max(Constants.name_max_length),
-    code: Joi.number().min(Constants.code_min_length).max(Constants.code_max_length).required(),
+    roll: Joi.string().min(Constants.roll_min_length).max(Constants.roll_max_length),
+    name: Joi.string().min(Constants.name_min_length).max(Constants.name_max_length),
+    code: Joi.number().min(Constants.code_min_length).max(Constants.code_max_length),
     question_paper_id: Joi.objectId().required(),
     question_attempt: Joi.number().min(Constants.question_attempt_min_length).max(Constants.question_attempt_max_length),
     correct_attempt: Joi.number().min(Constants.correct_attempt_min_length).max(Constants.correct_attempt_max_length),
@@ -177,10 +177,7 @@ const studentAnswerSheetValidation = (data) => {
 const finalSubmissionValidation = (data) => {
   const finalSubmissionSchema = Joi.object({
     question_paper_id: Joi.objectId().required(),
-    student_id: Joi.objectId().required(),
-    roll: Joi.string().min(Constants.roll_min_length).max(Constants.roll_max_length).required(),
-    name: Joi.string().min(Constants.name_min_length).required().max(Constants.name_max_length),
-    code: Joi.number().min(Constants.code_min_length).max(Constants.code_max_length).required()
+    student_id: Joi.objectId().required()
   });
   return finalSubmissionSchema.validate(data);
 };

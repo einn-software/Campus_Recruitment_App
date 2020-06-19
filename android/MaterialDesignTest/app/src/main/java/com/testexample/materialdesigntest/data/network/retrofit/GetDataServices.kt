@@ -89,10 +89,17 @@ interface GetDataServices {
     fun endExam(@Body endExamRequest: EndExamRequest): Single<EndExamResponse>
 
     @GET("colleges/{code}/results/{question-paper-id}")
-    fun getStudentResultList(@Header("auth-token") token: String):
+    fun getStudentResultList(@Header("auth-token") token: String,
+                            @Path("code") code: Int,
+                            @Path("question-paper-id") question_paper_id: String):
             Flowable<List<CollegeWiseResultResponse>>
 
-
+    @GET("colleges/{code}/results/{roll}/question-papers/{question-paper-id}")
+    fun getStudentResult(@Header("auth-token") token: String,
+                         @Path("code") code: Int,
+                         @Path("roll") roll: String,
+                         @Path("question-paper-id") question_paper_id: String):
+            Single<Result>
 
 
 

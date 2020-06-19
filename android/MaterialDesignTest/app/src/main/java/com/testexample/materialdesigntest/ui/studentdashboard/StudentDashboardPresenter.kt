@@ -6,7 +6,7 @@ class StudentDashboardPresenter(private var view: StudentDashboardContract.View)
     StudentDashboardContract.Presenter {
 
     override fun fetchResult(studentRollNo: Long): Result {
-        return Result("1455","774","name","1545",15,10,154,121)
+        return Result("ABC","123456789",803,"1545",15,10,154,121,100)
     }
 
     override fun onDestroy() {

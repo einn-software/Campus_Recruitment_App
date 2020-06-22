@@ -41,5 +41,6 @@
     <string name="agreement_text">I have read and agree to the guidelines</string>
     <string name="exam_info_header">Available Exams</string>
     <string name="exam_guidelines_header">Exam Guidelines:</string>
+    <string name="college_code">Code: %d</string>
 
 </resources>

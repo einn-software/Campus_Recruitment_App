@@ -1,5 +1,6 @@
 //import model
 const Result = require("../model/Result");
+const Student = require("../model/Student");
 
 const {
   totalAttemptQuestions,
@@ -40,12 +41,19 @@ async function resultCal(req, res) {
       .status(Constants.er_failure)
       .json(errHandler.studentExistErrorHandler());
 
+  const student = await Student.findOne({
+    _id: req.body.student_id
+  }, (err, std) => {
+    if (err) return res.status(Constants.er_failure).json(errHandler.idNotFoundErrorHandler());
+    return std;
+  })
+
   // Create Result
   const result = new Result({
     student_id: req.body.student_id,
-    roll: req.body.roll,
-    name: req.body.name,
-    code: req.body.code,
+    roll: student.roll,
+    name: student.name,
+    code: student.code,
     question_paper_id: req.body.question_paper_id,
     question_attempt: await totalAttemptQuestions(req, res),
     correct_attempt: array[1],

@@ -1,5 +1,6 @@
-require("should");
-const request = require("supertest");
+"use strict";
+require("should"); //should is an expressive, readable, framework-agnostic assertion library. require('should')) should extends the Object.prototype with a single non-enumerable getter that allows you to express how that object should behave
+const request = require("supertest"); //provide a high-level abstraction for testing HTTP,
 const mongoose = require("mongoose");
 const app = require("../index");
 
@@ -26,22 +27,6 @@ const agent = request.agent(app);
 
 describe("Registeration Tests and Login Tests:", () => {
   describe("Admin Registration Testing:", () => {
-    it("should return a registered admin:", (done) => {
-      const admin = {
-        name: "Riya Singhal",
-        email: "riya@gmail.com",
-        password: "YeahcoolItIs",
-        phone: "7586958412",
-      };
-      agent
-        .post("/register/admins")
-        .send(admin)
-        .expect(200)
-        .end((err, results) => {
-          results.body.should.have.property("_id");
-          done();
-        });
-    });
     it("should return validation error:", (done) => {
       const admin = {
         name: "Riya Singhal",
@@ -58,9 +43,32 @@ describe("Registeration Tests and Login Tests:", () => {
           done();
         });
     });
+    it("should return a registered admin:", (done) => {
+      const admin = {
+        name: "Riya Singhal",
+        email: "riya@gmail.com",
+        password: "YeahcoolItIs",
+        phone: "7586958412",
+      };
+      agent
+        .post("/register/admins")
+        .send(admin)
+        .expect(200)
+        .end((err, results) => {
+          results.body.should.have.property("_id");
+          done();
+        });
+    });
   });
   describe("Admin Login Testing:", () => {
     it("should return a session having field token:", (done) => {
+      const adminReg = new Admin({
+        name: "Riya Singhal",
+        email: "riya@gmail.com",
+        password: "YeahcoolItIs",
+        phone: "7586958412",
+      });
+      adminReg.save();
       const admin = {
         email: "riya@gmail.com",
         password: "YeahcoolItIs",
@@ -70,8 +78,7 @@ describe("Registeration Tests and Login Tests:", () => {
         .send(admin)
         .expect(200)
         .end((err, results) => {
-          results.body.should.have.property("user_type");
-          const body = results.body;
+          results.body.should.have.property("token");
           done();
         });
     });
@@ -101,7 +108,7 @@ describe("Registeration Tests and Login Tests:", () => {
         phone: "7586958412",
         designation: "Director and Teacher",
         college: "Nitra Technical Campus",
-        code: "54796543",
+        code: "5473",
       };
       agent
         .post("/register/tpos")
@@ -120,7 +127,7 @@ describe("Registeration Tests and Login Tests:", () => {
         phone: "7586958412",
         designation: "Director and Teacher",
         college: "Nitra Technical Campus",
-        code: "54796543",
+        code: "5473",
       };
       agent
         .post("/register/tpos")
@@ -173,7 +180,7 @@ describe("Registeration Tests and Login Tests:", () => {
         roll: "124578",
         branch: "Computer Science",
         college: "Nitra Technical Campus",
-        code: "54796543",
+        code: "5473",
       };
       agent
         .post("/register/students")
@@ -192,7 +199,7 @@ describe("Registeration Tests and Login Tests:", () => {
         phone: "7586958412",
         roll: "124578",
         college: "Nitra Technical Campus",
-        code: "54796543",
+        code: "5473",
       };
       agent
         .post("/register/students")
@@ -207,7 +214,7 @@ describe("Registeration Tests and Login Tests:", () => {
   describe("Student Login Testing:", () => {
     it("should return a session having field token:", (done) => {
       const student = {
-        code: "54796543",
+        code: "5473",
         roll: "124578",
         password: "YeahcoolItIs",
       };
@@ -222,7 +229,7 @@ describe("Registeration Tests and Login Tests:", () => {
     });
     it("should return a validation error - password is required:", (done) => {
       const student = {
-        code: "54796543",
+        code: "5473",
         roll: "124578",
       };
       agent
@@ -236,13 +243,13 @@ describe("Registeration Tests and Login Tests:", () => {
     });
   });
   after((done) => {
-    Tpo.findByIdAndDelete({
+    Tpo.findOneAndDelete({
       email: "riya@gmail.com"
     }).exec();
-    Admin.findByIdAndDelete({
+    Admin.findOneAndDelete({
       email: "riya@gmail.com"
     }).exec();
-    Student.findByIdAndDelete({
+    Student.findOneAndDelete({
       email: "riya@gmail.com"
     }).exec();
     done();

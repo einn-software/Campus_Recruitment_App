@@ -29,6 +29,11 @@ class Constants {
         internal const val ID = "_id"
         internal const val USERTYPE = "user_type"
 
+        // Constants in Results
+        internal const val CODE = "code"
+        internal const val ROLL = "roll"
+        internal const val QUESTION_PAPER_ID = "QuestionPaperId"
+
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),
             LOGGED_IN_MODE_SERVER(1)

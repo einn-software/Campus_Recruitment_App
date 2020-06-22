@@ -11,19 +11,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Result Section"
-        android:textColor="#090909"
+        android:text="Result"
+        android:textColor="#3aa8c1"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/resultTable"
         android:layout_width="357dp"
-        android:layout_height="335dp"
+        android:layout_height="385dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -32,9 +32,66 @@
 
 
         <TextView
+            android:id="@+id/rollNoText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Roll No."
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/rollNoValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/rollNoValue"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="123456789012345"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/rollNoText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/userNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Name"
+            android:textColor="#090909"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/userNameValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rollNoText" />
+
+        <TextView
+            android:id="@+id/userNameValue"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:text="Kirti"
+            android:textAlignment="viewEnd"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/userNameText"
+            app:layout_constraintTop_toBottomOf="@+id/rollNoValue" />
+
+        <TextView
             android:id="@+id/totalMarksText"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:layout_marginTop="24dp"
             android:text="Total Marks"
             android:textColor="#090909"
             android:textSize="16sp"
@@ -42,80 +99,51 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/userNameText" />
 
         <TextView
             android:id="@+id/totalMarksValue"
-            android:layout_width="55dp"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:text="100"
+            android:layout_marginTop="24dp"
+            android:text="50"
             android:textAlignment="viewEnd"
             android:textColor="#090909"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/totalMarksText"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/totalQuestionsText"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginTop="24dp"
-            android:text="Total Number of Questions"
-            android:textColor="#090909"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/totalQuestionsValue"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalMarksText" />
-
-        <TextView
-            android:id="@+id/totalQuestionsValue"
-            style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="24dp"
-            android:text="50"
-            android:textAlignment="viewEnd"
-            android:textColor="#090909"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/totalQuestionsText"
-            app:layout_constraintTop_toBottomOf="@+id/totalMarksValue" />
-
+            app:layout_constraintTop_toBottomOf="@+id/userNameValue" />
 
         <TextView
             android:id="@+id/totalQuestionsAttemptedText"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
-            android:text="Total Number of Attempted Questions"
+            android:text="Question Attempt"
             android:textColor="#090909"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedValue"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsText" />
+            app:layout_constraintTop_toBottomOf="@+id/totalMarksText" />
 
         <TextView
             android:id="@+id/totalQuestionsAttemptedValue"
             style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
-            android:text="50"
+            android:text="50/100"
             android:textAlignment="viewEnd"
             android:textColor="#090909"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/totalQuestionsAttemptedText"
-            app:layout_constraintTop_toBottomOf="@+id/totalQuestionsValue" />
+            app:layout_constraintTop_toBottomOf="@+id/totalMarksValue" />
 
 
         <TextView
@@ -123,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
-            android:text="Total Questions Attempted Right"
+            android:text="Correct Attempt"
             android:textColor="#090909"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedRightValue"
@@ -135,7 +163,7 @@
         <TextView
             android:id="@+id/totalQuestionsAttemptedRightValue"
             style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:text="50"
@@ -153,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
-            android:text="Total Questions Attempted Wrong"
+            android:text="Wrong Attempt"
             android:textColor="#090909"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/totalQuestionsAttemptedWrongValue"
@@ -165,7 +193,7 @@
         <TextView
             android:id="@+id/totalQuestionsAttemptedWrongValue"
             style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:text="50"
@@ -195,7 +223,7 @@
         <TextView
             android:id="@+id/totalMarksObtainedValue"
             style="@style/Widget.MaterialComponents.MaterialCalendar.DayTextView"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:text="50"

@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
@@ -49,6 +50,8 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
                             view!!.openMainActivity()
                         },
                         { error -> Log.e("Tpo Login Presenter", error.message.toString())
+                            Toast.makeText(view!!.setContext(), error.message.toString(),
+                                    Toast.LENGTH_LONG).show()
                         }
                     ))
             }

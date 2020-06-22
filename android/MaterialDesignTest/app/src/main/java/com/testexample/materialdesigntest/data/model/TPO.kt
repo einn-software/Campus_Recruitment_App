@@ -9,7 +9,7 @@ data class TPO(
     @SerializedName("email") @ColumnInfo(name = "email") val TPOEmail: String?,
     @SerializedName("password") @ColumnInfo(name = "password") val TPOPassword: String,
     @SerializedName("phone") @ColumnInfo(name = "phone") val TPOPhone: String,
-    @SerializedName("code") @ColumnInfo(name = "code") val TPOCollegeCode: Long,
+    @SerializedName("code") @ColumnInfo(name = "code") val TPOCollegeCode: Int,
     @SerializedName("college") @ColumnInfo(name = "college") val TPOCollegeName: String,
     @SerializedName("designation") @ColumnInfo(name = "designation") val TPODesignation: String
 )

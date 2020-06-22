@@ -26,3 +26,11 @@ data class StudentAnswerResponse(
     @SerializedName("_id") val id: String,
     @Embedded val studentAnswer: StudentAnswerRequest
 )
+
+data class UpdateCollegeDetails(
+        @SerializedName("name") val name: String,
+        @SerializedName("address") val address: String,
+        @SerializedName("university") val university: String,
+        @SerializedName("email") val email: String,
+        @SerializedName("phone") val phone: String
+)

@@ -50,7 +50,8 @@ class LoginPresenter(private var view: LoginContract.View?) :
                                   view!!.showLoading(false)
                                   view!!.openMainActivity()
                               },
-                              { error -> Log.d("REQUEST FAILED !! ", error.toString()) }
+                              { error -> Log.d("REQUEST FAILED !! ", error.message.toString())
+                              }
                           ))
           }
         }

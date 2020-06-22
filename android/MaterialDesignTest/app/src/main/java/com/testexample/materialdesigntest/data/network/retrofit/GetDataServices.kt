@@ -53,11 +53,9 @@ interface GetDataServices {
 
     @PUT("colleges/{code}")
     fun updateCollege(@Header("auth-token") token: String,
-                      @Path("name") collegeName: String,
-                      @Path("address") address: String,
-                      @Path("university") university: String,
-                      @Path("email") email: String,
-                      @Path("phone") phone: String):
+                      @Path("code") code: Int,
+                      @Body collegeDetails: UpdateCollegeDetails
+                      ):
             Single<College>
 
     @GET("instructions/{id}")

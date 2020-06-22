@@ -1,12 +1,15 @@
 package com.testexample.materialdesigntest.ui.TPODashboard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.College
-import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import kotlinx.android.synthetic.main.fragment_college_details.*
 
 
@@ -15,36 +18,20 @@ import kotlinx.android.synthetic.main.fragment_college_details.*
  * Use the [CollegeDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CollegeDetailsFragment : Fragment(), TPODashboardContract.View {
+@SuppressLint("ResourceType")
+class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPODashboardContract.View {
 
     private lateinit var presenter: TPODashboardContract.Presenter
     val TAG = "CollegeDetailsFragment"
-
-    private var name: String? = null
-    private var address: String? = null
-    private var university: String? = null
-    private var email: String? = null
-    private var phone: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG,"<< onCreate()")
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            name = it.getString(Constants.COLLEGE_NAME)
-            address = it.getString(Constants.COLLEGE_ADDRESS)
-            university = it.getString(Constants.COLLEGE_UNIVERSITY)
-            email = it.getString(Constants.COLLEGE_EMAIL)
-            phone = it.getString(Constants.COLLEGE_PHONE)
-        }
-        Log.d(TAG,">> onCreate()")
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG,"<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
         presenter = TPODashboardPresenter(this)
+        (presenter as TPODashboardPresenter).fetchCollegeDetails(2346)
 
         editCollegeButton.setOnClickListener() {
+            Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
             val meditCollegeName = collegeNameValue
             meditCollegeName.isEnabled = true
             val meditCollegeAddress = collegeAddressValue
@@ -55,15 +42,17 @@ class CollegeDetailsFragment : Fragment(), TPODashboardContract.View {
             meditCollegeEmail.isEnabled = true
             val meditCollegePhone = collegePhoneValue
             meditCollegePhone.isEnabled = true
+            Log.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
         saveCollegeButton.setOnClickListener(){
-            name = collegeNameValue.toString()
-            address = collegeAddressValue.toString()
-            university = collegeUniversityValue.toString()
-            email = collegeEmailValue.toString()
-            phone = collegePhoneValue.toString()
-            name?.let { it1 -> address?.let { it2 -> university?.let { it3 -> email?.let { it4 -> phone?.let { it5 -> presenter.saveCollegeDetails(it1, it2, it3, it4, it5) } } } } }
+            Log.d(TAG,"<< saveCollegeButton| setOnClickListener()")
+            val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(), collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(), collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
+            presenter.saveCollegeDetails(2346,collegeDetails)
+            Toast.makeText(this.requireContext(), "Successfully Updated College Details",
+                    Toast.LENGTH_LONG).show()
+            presenter.fetchCollegeDetails(2346)
+            Log.d(TAG,">> saveCollegeButton| setOnClickListener()")
         }
         Log.d(TAG,">> onViewCreated()")
     }
@@ -71,10 +60,15 @@ class CollegeDetailsFragment : Fragment(), TPODashboardContract.View {
     override fun showCollegeDetails(college: College) {
         Log.d(TAG,"<< showCollegeDetails()")
         collegeNameValue.setText(college.name)
+        collegeNameValue.isEnabled = false
         collegeAddressValue.setText(college.address)
+        collegeAddressValue.isEnabled = false
         collegeUniversityValue.setText(college.university)
+        collegeUniversityValue.isEnabled = false
         collegeEmailValue.setText(college.email)
+        collegeEmailValue.isEnabled = false
         collegePhoneValue.setText(college.phone)
+        collegePhoneValue.isEnabled = false
         Log.d(TAG,">> showCollegeDetails()")
     }
 
@@ -102,15 +96,11 @@ class CollegeDetailsFragment : Fragment(), TPODashboardContract.View {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(name: String, address: String, university: String, email: String, phone: String) =
+        fun newInstance() =
                 CollegeDetailsFragment().apply {
                     arguments = Bundle().apply {
-                        putString(Constants.COLLEGE_NAME, name)
-                        putString(Constants.COLLEGE_ADDRESS, address)
-                        putString(Constants.COLLEGE_UNIVERSITY, university)
-                        putString(Constants.COLLEGE_EMAIL, email)
-                        putString(Constants.COLLEGE_PHONE, phone)
                     }
                 }
+
     }
 }

@@ -26,8 +26,6 @@
         </activity>
 
         <activity android:name=".ui.login.LoginActivity" />
-        <activity
-            android:name=".ui.collegeDashboard.CollegeDashboard" />
 
         <activity android:name=".ui.examination.ExamDrawer">
         </activity>
@@ -42,7 +40,7 @@
         <activity android:name=".ui.login.TpoLoginActivity" />
 
         <activity
-            android:name=".ui.collegeDashboard.CollegeDashboard"
+            android:name=".ui.TPODashboard.TPODashboard"
             android:exported="true">
       </activity>
 

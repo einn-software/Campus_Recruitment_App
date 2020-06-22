@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.collegeDashboard.CollegeDashboard
+import com.testexample.materialdesigntest.ui.TPODashboard.TPODashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_login.*
@@ -40,7 +40,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     }
 
     override fun openMainActivity() {
-        startActivity(Intent(this, CollegeDashboard::class.java))
+        startActivity(Intent(this, TPODashboard::class.java))
     }
 
     override fun onValidationMessage(errorCode: Int) {

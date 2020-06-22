@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.collegeDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +21,15 @@ class CollegeDashboard : AppCompatActivity() {
 
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.collegeDashboardFragment, dataUpload)
+                addToBackStack(dataUpload.toString())
+                commit()
+            }
+        }
+
+        collegeTabText.setOnClickListener {
+            collegeDashboardContainer.visibility = INVISIBLE
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.collegeDetailsTable, dataUpload)
                 addToBackStack(dataUpload.toString())
                 commit()
             }

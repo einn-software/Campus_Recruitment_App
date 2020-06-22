@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TPODashboard.CollegeDashboard">
+    tools:context=".ui.TPODashboard.TPODashboard">
 
     <include
         android:id="@+id/include4"
@@ -12,7 +12,7 @@
 
 
     <FrameLayout
-        android:id="@+id/collegeDashboardFragment"
+        android:id="@+id/tpoDashboardFragment"
         android:layout_width="395dp"
         android:layout_height="677dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/include">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/collegeDashboardContainer"
+            android:id="@+id/tpoDashboardContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -37,7 +37,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/collegeDashboard"
+                app:layout_constraintTop_toBottomOf="@+id/tpoDashboard"
                 app:layout_constraintVertical_bias="0.18">
 
                 <androidx.cardview.widget.CardView
@@ -64,7 +64,7 @@
                         <TextView
                             android:id="@+id/uploadDataTabText"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="50dp"
                             android:gravity="center"
                             android:text="Upload Data"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -79,11 +79,11 @@
             </GridLayout>
 
             <TextView
-                android:id="@+id/collegeDashboard"
+                android:id="@+id/tpoDashboard"
                 android:layout_width="207dp"
                 android:layout_height="38dp"
                 android:layout_marginTop="80dp"
-                android:text="College Dashboard"
+                android:text="TPO Dashboard"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"

@@ -15,6 +15,6 @@ interface ResultDao {
     @Delete
     fun deleteQuestionPaper(result: Result)
 
-    @Query("SELECT * FROM student_result_table WHERE studentId = :rollNo")
+    @Query("SELECT * FROM student_result_table WHERE roll = :rollNo")
     fun getStudentResult(rollNo: Long): Flowable<Result>
 }

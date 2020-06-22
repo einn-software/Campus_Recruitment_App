@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.collegeDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
-import kotlinx.android.synthetic.main.activity_college_dashboard.*
+import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 
 /**
  * Data Upload [Fragment] subclass.
@@ -28,7 +28,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload) {
     override fun onDetach() {
         Log.d(TAG, "onDetach")
         super.onDetach()
-        collegeDashboardContainer.visibility = VISIBLE
+        tpoDashboardContainer.visibility = VISIBLE
     }
 
     companion object {

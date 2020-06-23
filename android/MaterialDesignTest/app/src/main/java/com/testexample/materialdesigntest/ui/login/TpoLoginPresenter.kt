@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,13 +13,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-
 /**\
  * handles the actions from the view and updates the UI as required
  */
 // Presenter Constructor takes view Instance
 class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
-    LoginContract.TpoPresenter {
+        LoginContract.TpoPresenter {
 
     private lateinit var sessionManager: SessionManager
     private lateinit var userRepository: IUserRepository
@@ -26,7 +26,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
 
     override fun onTpoLogin(email: String, password: String) {
         userRepository =
-            UserRepository(view!!.setContext())
+                UserRepository(view!!.setContext())
 
         when {
             email.isEmpty() ->
@@ -37,23 +37,25 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
             else -> userRepository.let {
                 subscriptions.add(userRepository
-                    .isTpoValid(email, password)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { response ->
-                            updateSession(
-                                response,
-                                Constants.Companion
-                                    .LoggedInMode.LOGGED_IN_MODE_SERVER
-                            )
-                            view!!.openMainActivity()
-                        },
-                        { error -> Log.e("Tpo Login Presenter", error.message.toString())
-                            Toast.makeText(view!!.setContext(), error.message.toString(),
-                                    Toast.LENGTH_LONG).show()
-                        }
-                    ))
+                        .isTpoValid(email, password)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .handelNetworkError()
+                        .subscribe(
+                                { response ->
+                                    updateSession(
+                                            response,
+                                            Constants.Companion
+                                                    .LoggedInMode.LOGGED_IN_MODE_SERVER
+                                    )
+                                    view!!.openMainActivity()
+                                },
+                                { error ->
+                                    Log.e("Tpo Login Presenter", error.message.toString())
+                                    Toast.makeText(view!!.setContext(), error.message.toString(),
+                                            Toast.LENGTH_LONG).show()
+                                }
+                        ))
             }
         }
 
@@ -68,7 +70,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
 
     override fun onDestroy() {
         subscriptions.clear()
-        view  = null
+        view = null
     }
 
 

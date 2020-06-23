@@ -18,17 +18,30 @@ import kotlinx.android.synthetic.main.fragment_college_details.*
  * Use the [CollegeDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@SuppressLint("ResourceType")
-class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPODashboardContract.View {
 
-    private lateinit var presenter: TPODashboardContract.Presenter
+@SuppressLint("ResourceType")
+class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPODashboardContract.CollegeDetailsView {
+
+    private lateinit var presenter: TPODashboardContract.CollegeDetailsPresenter
     val TAG = "CollegeDetailsFragment"
+
+    override fun setPresenter(presenter: TPODashboardContract.CollegeDetailsPresenter) {
+        Log.d(TAG,"<< setPresenter()")
+        this.presenter = presenter
+        Log.d(TAG,">> setPresenter()")
+    }
+
+    override fun setContext(): Context {
+        Log.d(TAG,"<< setContext()")
+        Log.d(TAG,">> setContext()")
+        return this.requireContext()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG,"<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
-        presenter = TPODashboardPresenter(this)
-        (presenter as TPODashboardPresenter).fetchCollegeDetails(2346)
+        presenter = CollegeDetailsPresenter(this)
+        presenter .fetchCollegeDetails(2346)
 
         editCollegeButton.setOnClickListener() {
             Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
@@ -71,19 +84,6 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPOD
         collegePhoneValue.isEnabled = false
         Log.d(TAG,">> showCollegeDetails()")
     }
-
-    override fun setPresenter(presenter: TPODashboardContract.Presenter) {
-        Log.d(TAG,"<< setPresenter()")
-        this.presenter = presenter
-        Log.d(TAG,">> setPresenter()")
-    }
-
-    override fun setContext(): Context {
-        Log.d(TAG,"<< setContext()")
-        Log.d(TAG,">> setContext()")
-        return this.requireContext()
-    }
-
 
     companion object {
         /**

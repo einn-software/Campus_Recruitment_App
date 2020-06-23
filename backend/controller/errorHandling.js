@@ -73,6 +73,17 @@ function emailExistErrorHandler() {
   return err;
 }
 
+function thisEmailExistErrorHandler(email) {
+  const err = {
+    status: Constants.er_failure, //400
+    message: `Already registered with ${email}, Please try to login`,
+    error_info: "Registeration Error",
+    server_msg: `${email} already exist in the database, So can't register the same user twice`,
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
 function answerExistErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
@@ -254,6 +265,7 @@ function studentExistErrorHandler() {
 module.exports = {
   errorHandler,
   emailExistErrorHandler,
+  thisEmailExistErrorHandler,
   emailNotFoundErrorHandler,
   codeRollErrorHandler,
   notFoundRollCodeErrorHandler,

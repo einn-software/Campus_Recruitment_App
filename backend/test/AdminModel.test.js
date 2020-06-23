@@ -27,8 +27,6 @@ beforeEach((done) => {
 
 describe("Create Tests for Admin Model", () => {
     it("Create Admin", (done) => {
-        // assert(true);
-
         const Registration = new Admins({
             name: "Shikha",
             email: "gshikha@gmail.com",

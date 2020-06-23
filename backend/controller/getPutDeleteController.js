@@ -73,24 +73,28 @@ const AdminPut = function (req, res) {
     const hashedPassword = bcrypt.hashSync(body.password, salt);
     body.password = hashedPassword;
     Admin.findOneAndUpdate({
-          _id: req.params.id,
-        },
-        body
-      )
-      .then((results) => {
-        if (!results) {
-          return res
-            .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
-        } else {
-          res.status(Constants.success).json(results);
-        }
-      })
-      .catch((err) => {
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.errorHandler(err));
-      });
+        _id: req.params.id,
+      },
+      body
+    )
+    try {
+      Admin.findOne({
+          _id: req.params.id
+        }).then((results) => {
+          if (!results) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.codeNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(results);
+          }
+        })
+        .catch((err) => {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        });
+    } catch (err) {
+      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -189,24 +193,28 @@ const TpoPut = function (req, res) {
     const hashedPassword = bcrypt.hashSync(body.password, salt);
     body.password = hashedPassword;
     Tpo.findOneAndUpdate({
-          _id: req.params.id,
-        },
-        body
-      )
-      .then((results) => {
-        if (!results) {
-          return res
-            .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
-        } else {
-          res.status(Constants.success).json(results);
-        }
-      })
-      .catch((err) => {
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.errorHandler(err));
-      });
+        _id: req.params.id,
+      },
+      body
+    )
+    try {
+      Tpo.findOne({
+          _id: req.params.id
+        }).then((results) => {
+          if (!results) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.codeNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(results);
+          }
+        })
+        .catch((err) => {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        });
+    } catch (err) {
+      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -313,24 +321,28 @@ const StudentPut = function (req, res) {
     const hashedPassword = bcrypt.hashSync(body.password, salt);
     body.password = hashedPassword;
     Student.findOneAndUpdate({
-          _id: req.params.id,
-        },
-        body
-      )
-      .then((results) => {
-        if (!results) {
-          return res
-            .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
-        } else {
-          res.status(Constants.success).json(results);
-        }
-      })
-      .catch((err) => {
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.errorHandler(err));
-      });
+        _id: req.params.id
+      },
+      body
+    )
+    try {
+      Student.findOne({
+          _id: req.params.id
+        }).then((results) => {
+          if (!results) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.codeNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(results);
+          }
+        })
+        .catch((err) => {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        });
+    } catch (err) {
+      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
   } else {
     return res
       .status(Constants.er_authorization_failed)

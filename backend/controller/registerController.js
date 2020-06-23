@@ -151,7 +151,52 @@ const StudentRegister = (async (req, res) => {
     res.status(Constants.er_failure).json(errHandler.errorHandler(err));
   }
 });
+//To register a new student
+const StudentListRegister = (async (req, res) => {
+  if (req.session.user_type == Constants.tpo) {
+    let arr = [];
+    // Create a new student
+    const docs = req.body;
+    for (var i = 0; i < docs.length; i++) {
+      // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
+      const {
+        error
+      } = studentRegisterValidation(docs[i]);
+      if (error)
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.validationErrorHandler(error));
+      //Checking if the student is already in the database
+      const mail = docs[i].email
+      const emailExist = await Student.findOne({
+        email: mail,
+      });
+      if (emailExist)
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.thisEmailExistErrorHandler(mail));
+
+      const rollCodeExist = await Student.findOne({
+        roll: docs[i].roll,
+        code: docs[i].code,
+      });
+      if (rollCodeExist)
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.codeRollErrorHandler());
+      const student = new Student(docs[i]);
+      const user = await student.save();
+      arr.push(user);
+    }
+    return res.status(Constants.success).json(arr);
+  } else {
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+});
 
 module.exports.AdminRegister = AdminRegister;
 module.exports.StudentRegister = StudentRegister;
 module.exports.TpoRegister = TpoRegister;
+module.exports.StudentListRegister = StudentListRegister;

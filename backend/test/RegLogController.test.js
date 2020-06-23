@@ -3,30 +3,43 @@ require("should"); //should is an expressive, readable, framework-agnostic asser
 const request = require("supertest"); //provide a high-level abstraction for testing HTTP,
 const mongoose = require("mongoose");
 const app = require("../index");
-
-process.env.ENV = "Test";
-if ((process.env.ENV = "Test")) {
-  console.log("Testing database");
-  mongoose.connect(process.env.TEST_DB_CONNECT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  mongoose.connection
-    .once("open", () => {
-      console.log("started");
-    })
-    .on("error", (error) => {
-      console.log("your error", error);
-    });
-}
-
 const Admin = mongoose.model("Admin");
 const Tpo = mongoose.model("Tpo");
 const Student = mongoose.model("Student");
 const agent = request.agent(app);
 
+before((done) => {
+  mongoose.connect("mongodb://localhost/", {
+    useNewUrlParser: true, // To remove Depreciation warnings
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  });
+  mongoose.connection
+    .once("open", () => logger.log("info", "Connected to db!")) //Event Listeners 
+    .on("error", (error) => {
+      logger.log("error", error);
+    });
+});
+
 describe("Registeration Tests and Login Tests:", () => {
   describe("Admin Registration Testing:", () => {
+    it("should return a registered admin:", (done) => {
+      const admin = {
+        name: "Riya Singhal",
+        email: "riyasinghal@gmail.com",
+        password: "YeahcoolItIs",
+        phone: "7586958412"
+      };
+      agent
+        .post("/register/admins")
+        .send(admin)
+        .expect(200)
+        .end((err, results) => {
+          results.body.should.have.property("_id");
+          done();
+        });
+    });
     it("should return validation error:", (done) => {
       const admin = {
         name: "Riya Singhal",
@@ -43,34 +56,11 @@ describe("Registeration Tests and Login Tests:", () => {
           done();
         });
     });
-    it("should return a registered admin:", (done) => {
-      const admin = {
-        name: "Riya Singhal",
-        email: "riya@gmail.com",
-        password: "YeahcoolItIs",
-        phone: "7586958412",
-      };
-      agent
-        .post("/register/admins")
-        .send(admin)
-        .expect(200)
-        .end((err, results) => {
-          results.body.should.have.property("_id");
-          done();
-        });
-    });
   });
   describe("Admin Login Testing:", () => {
     it("should return a session having field token:", (done) => {
-      const adminReg = new Admin({
-        name: "Riya Singhal",
-        email: "riya@gmail.com",
-        password: "YeahcoolItIs",
-        phone: "7586958412",
-      });
-      adminReg.save();
       const admin = {
-        email: "riya@gmail.com",
+        email: "riyasinghal@gmail.com",
         password: "YeahcoolItIs",
       };
       agent
@@ -78,6 +68,7 @@ describe("Registeration Tests and Login Tests:", () => {
         .send(admin)
         .expect(200)
         .end((err, results) => {
+          if (err) console.log(err);
           results.body.should.have.property("token");
           done();
         });
@@ -242,16 +233,17 @@ describe("Registeration Tests and Login Tests:", () => {
         });
     });
   });
-  after((done) => {
-    Tpo.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    Admin.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    Student.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    done();
-  });
+})
+after((done) => {
+  Tpo.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  Admin.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  Student.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  done();
 });
+// });

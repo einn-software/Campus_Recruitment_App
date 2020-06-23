@@ -129,8 +129,7 @@ const QuestionPut = function (req, res) {
         } else {
           const updated = await QuestionCollections.findOne({
             _id: req.params.id
-          }
-          )
+          })
           return res.status(Constants.success).json(updated);
         }
       })
@@ -227,7 +226,7 @@ const QuestionPaperAdd = async (req, res) => {
 
 //Get QuestionPaper
 
-const QuestionPaperGet =  (req, res) => {
+const QuestionPaperGet = (req, res) => {
   if (req.session.user_type == Constants.student || Constants.admin) {
     QuestionPapers.findOne({
         code: req.params.code,
@@ -237,6 +236,35 @@ const QuestionPaperGet =  (req, res) => {
       },
       (err, results) => {
         if (err || !results) {
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.dataNotFoundErrorHandler());
+        }
+        return res.status(Constants.success).json(results);
+      }
+    );
+  } else {
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
+
+//Get QuestionPaper by Tpo using code
+
+const QuestionPaperIdGetByTpo = (req, res) => {
+  if (req.session.user_type == Constants.tpo || Constants.admin) {
+    QuestionPapers.find({
+        code: req.params.code
+      }, {
+        _id: 1,
+        year: 1,
+        month: 1,
+        day: 1,
+        paper_name: 1
+      },
+      (err, results) => {
+        if (err || !results || results.length == 0) {
           return res
             .status(Constants.er_not_found)
             .json(errHandler.dataNotFoundErrorHandler());
@@ -287,12 +315,12 @@ const QuestionPaperPut = function (req, res) {
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
-     QuestionPapers.findByIdAndUpdate({
+    QuestionPapers.findByIdAndUpdate({
           _id: req.params.id,
         },
         body
       )
-      .then(async(results) => {
+      .then(async (results) => {
         if (!results) {
           return res
             .status(Constants.er_not_found)
@@ -300,8 +328,7 @@ const QuestionPaperPut = function (req, res) {
         } else {
           const updated = await QuestionPapers.findOne({
             _id: req.params.id
-          }
-          )
+          })
           return res.status(Constants.success).json(updated);
         }
       })
@@ -326,7 +353,7 @@ const QuestionPaperPatch = function (req, res) {
       error
     } = questionPaperPatchValidation(body);
     if (error) {
-      return res 
+      return res
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
@@ -335,7 +362,7 @@ const QuestionPaperPatch = function (req, res) {
         },
         body
       )
-      .then(async(results) => {
+      .then(async (results) => {
         if (!results) {
           return res
             .status(Constants.er_not_found)
@@ -343,8 +370,7 @@ const QuestionPaperPatch = function (req, res) {
         } else {
           const updated = await QuestionPapers.findOne({
             _id: req.params.id
-          }
-          )
+          })
           return res.status(Constants.success).json(updated);
         }
       })
@@ -397,6 +423,7 @@ module.exports = {
   QuestionDelete,
   QuestionPaperAdd,
   QuestionPaperGet,
+  QuestionPaperIdGetByTpo,
   QuestionPaperGetById,
   QuestionPaperPut,
   QuestionPaperPatch,

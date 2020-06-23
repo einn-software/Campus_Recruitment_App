@@ -91,8 +91,8 @@ module.exports = {
 
   option_min_length: 1,
 
-  answer_min_length: 0,
-  answer_max_length: 10,
+  answer_min_length: 1,
+  answer_max_length: 4,
 
   weight_min_length: 0,
   weight_max_length: 100,

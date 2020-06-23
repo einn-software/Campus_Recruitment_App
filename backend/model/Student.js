@@ -53,4 +53,5 @@ const studentSchema = new mongoose.Schema({
     type: Date
   }
 });
+
 module.exports = mongoose.model("Student", studentSchema);

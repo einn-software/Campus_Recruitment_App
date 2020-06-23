@@ -6,8 +6,12 @@ const verified = require("../config/verifyToken");
 
 //importing functions from Controller files
 const {
+  UploadFile
+} = require("../controller/uploadAndRegisterStudent");
+const {
   AdminRegister,
   StudentRegister,
+  StudentListRegister,
   TpoRegister,
 } = require("../controller/registerController");
 
@@ -57,6 +61,7 @@ const {
   QuestionDelete,
   QuestionPaperAdd,
   QuestionPaperGet,
+  QuestionPaperIdGetByTpo,
   QuestionPaperGetById,
   QuestionPaperPut,
   QuestionPaperPatch,
@@ -102,6 +107,8 @@ router.use(
   })
 );
 
+router.post("/upload", verified, UploadFile);
+
 //Admin Register API
 router.post("/register/admins", AdminRegister);
 router.get("/admins", verified, AdminGet);
@@ -111,6 +118,7 @@ router.delete("/admins/:id", verified, AdminDelete);
 
 //Student Register API
 router.post("/register/students", StudentRegister);
+router.post("/register/students/list", verified, StudentListRegister);
 router.get("/colleges/:code/students", verified, StudentGet);
 router.get("/students/:id", verified, StudentGetById);
 router.put("/students/:id", verified, StudentPut);
@@ -153,6 +161,7 @@ router.delete("/questions/:id", verified, QuestionDelete);
 //Question Paper API
 router.post("/question-papers", verified, QuestionPaperAdd);
 router.get("/colleges/:code/question-papers/:year", verified, QuestionPaperGet);
+router.get("/question-papers/:code", verified, QuestionPaperIdGetByTpo);
 router.get("/question-papers/:id/questions", verified, QuestionPaperGetById);
 router.put("/question-papers/:id", verified, QuestionPaperPut);
 router.delete("/question-papers/:id", verified, QuestionPaperDelete);

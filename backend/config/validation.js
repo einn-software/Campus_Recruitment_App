@@ -157,7 +157,7 @@ const questionPaperValidation = (data) => {
 
 // Post StudentAnswerSheet Validation
 const states = [Constants.answered, Constants.markedForReview, Constants.unmarked];
-const match = [0, 1, 2, 3];
+const match = [1, 2, 3, 4];
 const studentAnswerSheetValidation = (data) => {
   const studentAnswerSheetSchema = Joi.object({
     student_id: Joi.objectId().required(),

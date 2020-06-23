@@ -8,6 +8,11 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
+app/.idea
+app/gradle/
+app/gradlew
+app/gradlew.bat
+app/local.properties
 /build
 /captures
 .externalNativeBuild

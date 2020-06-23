@@ -42,5 +42,10 @@
     <string name="exam_info_header">Available Exams</string>
     <string name="exam_guidelines_header">Exam Guidelines:</string>
     <string name="college_code">Code: %d</string>
+    <string name="student_data_upload">Student Data Upload</string>
+    <string name="data_upload_message">important messag here</string>
+    <string name="upload_button">UPLOAD</string>
+    <string name="splash_header">Einn campus recruitment</string>
+    <string name="designed_by">Designed by Einn</string>
 
 </resources>

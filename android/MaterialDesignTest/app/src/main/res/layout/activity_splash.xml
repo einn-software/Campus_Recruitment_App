@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,45 +9,41 @@
     tools:context=".ui.splash.SplashActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/splashLogo"
         android:layout_width="match_parent"
         android:layout_height="135dp"
         android:layout_marginTop="200dp"
         android:src="@drawable/logo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/splashHeaderText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
         android:gravity="center"
         android:padding="30dp"
-        android:text="Einn campus recruitment"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:text="@string/splash_header"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/splashProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:indeterminateTint="@color/black" />
+        android:indeterminateTint="@color/colorAccent" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/designByText"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/progressBar"
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Designed by Einn"
+        android:text="@string/designed_by"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
 </LinearLayout>

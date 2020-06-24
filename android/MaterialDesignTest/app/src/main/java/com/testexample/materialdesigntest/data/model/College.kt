@@ -12,7 +12,7 @@ data class College(
         @PrimaryKey
         @SerializedName("_id")val id: String,
         val name: String,
-        val code: Int,
+        val code: String?,
         val address: String,
         val university: String,
         val email: String,

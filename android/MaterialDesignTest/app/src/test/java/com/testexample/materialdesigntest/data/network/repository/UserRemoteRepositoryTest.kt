@@ -48,7 +48,7 @@ class UserRemoteRepositoryTest {
         return getUserRequest
     }
 
-    fun setToken(request: TpoLoginRequest): UserRequest {
+    private fun setToken(request: TpoLoginRequest): UserRequest {
         setUp()
         var getUserRequest = UserRequest("", "")
         repository.authTPO(request)

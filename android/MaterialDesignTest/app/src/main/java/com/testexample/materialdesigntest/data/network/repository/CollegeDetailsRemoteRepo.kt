@@ -20,10 +20,10 @@ class CollegeDetailsRemoteRepo: ICollegeDetailsRemoteRepo {
     }
 
     @SuppressLint("LongLogTag")
-    override fun callApiForUpdateCollegeDetails(token: String, code: Int, collegeDetail: UpdateCollegeDetails): Single<College> {
+    override fun callApiForUpdateCollegeDetails(token: String, code: Int, updateCollegeDetails: UpdateCollegeDetails): Single<College> {
         Log.d(TAG,"<< callApiForUpdateCollegeDetails()")
         Log.d(TAG,">> callApiForUpdateCollegeDetails()")
-        return api.updateCollege(token, code, collegeDetail)
+        return api.updateCollege(token, code, updateCollegeDetails)
     }
 
 

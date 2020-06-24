@@ -11,15 +11,16 @@ import io.reactivex.Single
 class CollegeDetails: ICollegeDetails {
     private val TAG = "CollegeDetails"
     private val remoteRepo: ICollegeDetailsRemoteRepo = CollegeDetailsRemoteRepo()
+
     override fun getCollegeDetails(token: String, code: Int): Single<College> {
         Log.d(TAG,"<< updateCollegeDetails()")
         Log.d(TAG,">> updateCollegeDetails()")
         return remoteRepo.callApiForGetCollegeDetails(token, code)
     }
 
-    override fun updateCollegeDetails(token: String, code: Int, updatecollegeDetails: UpdateCollegeDetails): Single<College> {
+    override fun updateCollegeDetails(token: String, code: Int, updateCollegeDetails: UpdateCollegeDetails): Single<College> {
         Log.d(TAG,"<< updateCollegeDetails()")
         Log.d(TAG,">> updateCollegeDetails()")
-        return remoteRepo.callApiForUpdateCollegeDetails(token, code, updatecollegeDetails)
+        return remoteRepo.callApiForUpdateCollegeDetails(token, code, updateCollegeDetails)
     }
 }

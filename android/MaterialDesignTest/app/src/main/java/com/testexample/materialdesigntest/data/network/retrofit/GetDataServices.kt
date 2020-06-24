@@ -105,6 +105,11 @@ interface GetDataServices {
                          @Path("question-paper-id") question_paper_id: String):
             Single<Result>
 
+    @GET("question-papers/{code}")
+    fun getQuestionPaperList(@Header("auth-token") token: String,
+                             @Path("code") code: Int):
+            Flowable<List<QuestionPaperListResponse>>
+
 
 
 

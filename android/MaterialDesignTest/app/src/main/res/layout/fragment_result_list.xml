@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="horizontal|vertical"
+    android:scrollbarStyle="outsideInset"
+    android:fillViewport="true"
+    tools:context=".ui.TPODashboard.TPODashboard">
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalView"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal|vertical"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dip">
+
+
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1"
+        tools:ignore="MissingConstraints" />
+
+    </HorizontalScrollView>
+
+</ScrollView>

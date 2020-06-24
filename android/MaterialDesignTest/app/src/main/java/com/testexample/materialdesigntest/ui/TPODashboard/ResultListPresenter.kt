@@ -2,46 +2,46 @@ package com.testexample.materialdesigntest.ui.TPODashboard
 
 import android.util.Log
 import android.widget.Toast
-import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
-import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
-import com.testexample.materialdesigntest.data.network.model.UserRequest
+import com.testexample.materialdesigntest.data.interactor.implementation.ResultRepo
+import com.testexample.materialdesigntest.data.interactor.interfaces.IResultRepo
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TPODashboardPresenter(private var view: TPODashboardContract.View?) : TPODashboardContract.Presenter {
+class ResultListPresenter(private var view: TPODashboardContract.ResultListView?): TPODashboardContract.ResultListPresenter{
 
-    val TAG = "TPODashboardPresenter"
+    val TAG = "ResultListPresenter"
     private lateinit var sessionManager: SessionManager
-    private lateinit var repository: IUserRepository
+    private lateinit var repository: IResultRepo
 
-    override fun fetchTpoDetails(token: String, id: String) {
-        Log.d(TAG,"<< fetchTpoDetails()")
-        repository = UserRepository(view!!.setContext())
+    override fun fetchResultList(code: Int, question_paper_id: String) {
+        Log.d(TAG,"<< fetchResultList()")
+        repository = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
             sessionManager.getUserAuthToken()?.let { it1 ->
-                repository.getTpo(UserRequest(it1, id))
+                repository.getStudentResultListFromRemoteRepo(it1, code, question_paper_id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .handelNetworkError()
                         .subscribe(
                                 { success ->
-                                    view!!.showTpoDetails(success)
-                                    Log.i(TAG, "Successfully Get TPO details.")
+                                    view!!.showResultList(success)
+                                    Log.i(TAG, "Successfully Get Student Result List.")
                                 },
                                 { error ->
-                                    Log.e(TAG, "Failed to get TPO Details with reason: ${error.message.toString()}")
+                                    Log.e(TAG, "Failed to get Student Result List with reason: ${error.message.toString()}")
                                     Toast.makeText(view!!.setContext(), error.message.toString(), Toast.LENGTH_LONG).show()
                                 })
             }
 
         }
-        Log.d(TAG,">> fetchTpoDetails()")
+        Log.d(TAG,">> fetchResultList()")
     }
 
     override fun onDestroy() {
         TODO("Not yet implemented")
     }
+
 }

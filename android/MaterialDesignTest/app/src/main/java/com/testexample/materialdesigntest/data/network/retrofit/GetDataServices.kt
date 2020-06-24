@@ -6,6 +6,8 @@ import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -104,6 +106,13 @@ interface GetDataServices {
                          @Path("roll") roll: String,
                          @Path("question-paper-id") question_paper_id: String):
             Single<Result>
+
+    @Multipart
+    @POST("")
+    fun uploadFile(
+            @Part("tpo_details_for_upload_file") details: RequestBody,
+            @Part file: MultipartBody.Part
+    ): Single<String>
 
 
 

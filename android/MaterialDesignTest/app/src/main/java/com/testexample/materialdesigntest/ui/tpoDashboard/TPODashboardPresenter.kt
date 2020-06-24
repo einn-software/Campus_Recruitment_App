@@ -1,10 +1,7 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.annotation.SuppressLint
 import android.util.Log
-import com.testexample.materialdesigntest.data.interactor.implementation.CollegeDetails
 import com.testexample.materialdesigntest.data.interactor.interfaces.ICollegeDetails
-import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepository
 import com.testexample.materialdesigntest.data.session.SessionManager

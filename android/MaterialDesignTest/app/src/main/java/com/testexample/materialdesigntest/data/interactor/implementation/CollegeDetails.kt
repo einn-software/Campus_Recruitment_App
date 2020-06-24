@@ -17,9 +17,10 @@ class CollegeDetails: ICollegeDetails {
         return remoteRepo.callApiForGetCollegeDetails(token, code)
     }
 
-    override fun updateCollegeDetails(token: String, code: Int, updatecollegeDetails: UpdateCollegeDetails): Single<College> {
+    override fun updateCollegeDetails(token: String, code: Int, collegeDetails: UpdateCollegeDetails): Single<College> {
         Log.d(TAG,"<< updateCollegeDetails()")
+
         Log.d(TAG,">> updateCollegeDetails()")
-        return remoteRepo.callApiForUpdateCollegeDetails(token, code, updatecollegeDetails)
+        return remoteRepo.callApiForUpdateCollegeDetails(token, code, collegeDetails)
     }
 }

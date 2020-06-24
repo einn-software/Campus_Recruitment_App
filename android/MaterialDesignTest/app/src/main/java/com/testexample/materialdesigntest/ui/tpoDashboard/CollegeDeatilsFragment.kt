@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.fragment_college_details.*
  */
 
 @SuppressLint("ResourceType")
-class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPODashboardContract.CollegeDetailsView {
+class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
+        TPODashboardContract.CollegeDetailsView {
 
     private lateinit var presenter: TPODashboardContract.CollegeDetailsPresenter
     val TAG = "CollegeDetailsFragment"
@@ -45,26 +46,27 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPOD
 
         editCollegeButton.setOnClickListener() {
             Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
-            val meditCollegeName = collegeNameValue
-            meditCollegeName.isEnabled = true
+            val mEditCollegeName = collegeNameValue
+            mEditCollegeName.isEnabled = true
             val meditCollegeAddress = collegeAddressValue
             meditCollegeAddress.isEnabled = true
-            val meditCollegeUniversity = collegeUniversityValue
-            meditCollegeUniversity.isEnabled = true
-            val meditCollegeEmail = collegeEmailValue
-            meditCollegeEmail.isEnabled = true
-            val meditCollegePhone = collegePhoneValue
-            meditCollegePhone.isEnabled = true
+            val mEditCollegeUniversity = collegeUniversityValue
+            mEditCollegeUniversity.isEnabled = true
+            val mEditCollegeEmail = collegeEmailValue
+            mEditCollegeEmail.isEnabled = true
+            val mEditCollegePhone = collegePhoneValue
+            mEditCollegePhone.isEnabled = true
             Log.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
         saveCollegeButton.setOnClickListener(){
             Log.d(TAG,"<< saveCollegeButton| setOnClickListener()")
-            val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(), collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(), collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
+            val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(),
+                    collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(),
+                    collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
             presenter.saveCollegeDetails(2346,collegeDetails)
             Toast.makeText(this.requireContext(), "Successfully Updated College Details",
                     Toast.LENGTH_LONG).show()
-            presenter.fetchCollegeDetails(2346)
             Log.d(TAG,">> saveCollegeButton| setOnClickListener()")
         }
         Log.d(TAG,">> onViewCreated()")

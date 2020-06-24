@@ -23,7 +23,6 @@ const {
 const {
   AdminRegister,
   StudentRegister,
-  StudentListRegister,
   TpoRegister,
 } = require("../controller/registerController");
 
@@ -130,7 +129,6 @@ router.delete("/admins/:id", verified, AdminDelete);
 
 //Student Register API
 router.post("/register/students", StudentRegister);
-router.post("/register/students/list", verified, StudentListRegister);
 router.get("/colleges/:code/students", verified, StudentGet);
 router.get("/students/:id", verified, StudentGetById);
 router.put("/students/:id", verified, StudentPut);

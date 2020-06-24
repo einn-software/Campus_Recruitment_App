@@ -35,13 +35,19 @@ class Constants {
         internal const val CODE = "code"
         internal const val ROLL = "roll"
         internal const val QUESTION_PAPER_ID = "QuestionPaperId"
-	
-	//Constants for College
-	internal const val COLLEGE_EMAIL = "email"
+
+        //Constants for College
+        internal const val COLLEGE_EMAIL = "email"
         internal const val COLLEGE_NAME = "name"
         internal const val COLLEGE_ADDRESS = "address"
         internal const val COLLEGE_UNIVERSITY = "university"
         internal const val COLLEGE_PHONE = "phone"
+
+        //Constants for Result table column
+        internal const val NAME = "Name"
+        internal const val QUESTION_ATTEMPT = "Question Attempt"
+        internal const val CORRECT_ATTEMPT = "Correct Attempt"
+        internal const val TOTAL_MARKS = "Total Marks"
 
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),

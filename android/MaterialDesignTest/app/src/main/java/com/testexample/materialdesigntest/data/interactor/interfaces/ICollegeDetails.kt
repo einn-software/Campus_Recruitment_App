@@ -6,5 +6,5 @@ import io.reactivex.Single
 
 interface ICollegeDetails {
     fun getCollegeDetails(token: String, code: Int): Single<College>
-    fun updateCollegeDetails(token: String, code: Int, collegeDetails: UpdateCollegeDetails): Single<College>
+    fun updateCollegeDetails(token: String, code: Int, updateCollegeDetails: UpdateCollegeDetails): Single<College>
 }

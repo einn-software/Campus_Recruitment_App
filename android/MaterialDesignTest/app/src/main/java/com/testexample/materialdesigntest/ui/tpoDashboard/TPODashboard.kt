@@ -1,12 +1,10 @@
-package com.testexample.materialdesigntest.ui.tpoDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
-import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.session.SessionManager
@@ -18,7 +16,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
     val TAG = "TPODashboard"
     private lateinit var presenter: TPODashboardContract.Presenter
-    val code = 0
+    private var code: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "<< onCreate()")
@@ -27,12 +25,17 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         setContentView(R.layout.activity_tpo_dashboard)
         setSupportActionBar(appActionBar)
 
-        var sessionManager = SessionManager(this)
+        val sessionManager = SessionManager(this)
         presenter = TPODashboardPresenter(this)
         presenter.fetchTpoDetails(sessionManager.getUserAuthToken().toString(), "5eeb257218b0eeb44966b3b5")
 
+<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/TPODashboard.kt
         val dataUpload = DataUpload.newInstance(sessionManager.getUserEmail()!!)
         val collegeDetails = CollegeDetailsFragment.newInstance()
+=======
+
+        val dataUpload = DataUpload.newInstance()
+>>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/TPODashboard.kt
 
         uploadDataTab.setOnClickListener {
             Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
@@ -51,12 +54,26 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
             tpoDashboardContainer.visibility = INVISIBLE
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, collegeDetails)
-                addToBackStack(collegeDetails.toString())
+                replace(R.id.tpoDashboardFragment, CollegeDetailsFragment.newInstance(code))
+                addToBackStack(TAG)
                 commit()
             }
             Log.d(TAG, ">> updateCollegeTab | setOnClickListener")
         }
+
+        collegeResultTab.setOnClickListener {
+            Log.d(TAG, "<< resultTabText | setOnClickListener")
+
+            tpoDashboardContainer.visibility = INVISIBLE
+
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code))
+                addToBackStack("tpoDashboardFragment")
+                commit()
+            }
+            Log.d(TAG, ">> resultTabText | setOnClickListener")
+        }
+
         Log.d(TAG, ">> onCreate()")
     }
 
@@ -65,6 +82,8 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         tpoNameText.text = tpo.TPOName
         tpoEmailText.text = tpo.TPOEmail
         tpoCollegeCode.text = tpo.TPOCollegeCode.toString()
+        tpoCollegeText.text = tpo.TPOCollegeName
+        code = tpo.TPOCollegeCode
         Log.d(TAG, ">> showTpoDetails()")
     }
 

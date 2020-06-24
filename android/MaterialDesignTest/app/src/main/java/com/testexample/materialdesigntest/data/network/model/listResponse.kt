@@ -26,3 +26,12 @@ data class CollegeWiseResultResponse(
     @SerializedName("correct_attempt") val correctAttempted: Int,
     @SerializedName("total_marks_scored") val totalMarksScored: Int
 )
+
+data class QuestionPaperListResponse(
+        @SerializedName("_id") val questionPaperId: String,
+        @SerializedName("year") val year: Int,
+        @SerializedName("month") val month: Int,
+        @SerializedName("day") val day: Int,
+        @SerializedName("paper_name") val paper_name: String
+)
+

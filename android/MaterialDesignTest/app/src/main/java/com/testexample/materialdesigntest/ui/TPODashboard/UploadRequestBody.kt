@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.tpoDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
 import android.os.Handler
 import android.os.Looper

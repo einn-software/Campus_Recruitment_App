@@ -1,14 +1,14 @@
-package com.testexample.materialdesigntest.ui.tpoDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.CollegeDetails
 import com.testexample.materialdesigntest.data.interactor.interfaces.ICollegeDetails
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDetailsView?) : TPODashboardContract.CollegeDetailsPresenter {
@@ -16,8 +16,6 @@ class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDeta
     val TAG = "CollegeDetailsPresenter"
     private lateinit var sessionManager: SessionManager
     private lateinit var repository: ICollegeDetails
-    private var subscriptions = CompositeDisposable()
-    //var code: Int = 0
 
     @SuppressLint("LongLogTag")
     override fun fetchCollegeDetails(code: Int){
@@ -29,6 +27,7 @@ class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDeta
                 repository.getCollegeDetails(it1, code)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .handelNetworkError()
                         .subscribe(
                                 { college ->
                                     view!!.showCollegeDetails(college)
@@ -36,6 +35,7 @@ class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDeta
                                 },
                                 { error ->
                                     Log.e(TAG, "Failed to get college Details with reason: ${error.message.toString()}")
+                                    Toast.makeText(view!!.setContext(), error.message.toString(), Toast.LENGTH_LONG).show()
                                 })
             }
 

@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.tpoDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_college_details.*
 
 
@@ -24,6 +25,7 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
         TPODashboardContract.CollegeDetailsView {
 
     private lateinit var presenter: TPODashboardContract.CollegeDetailsPresenter
+    private var code : Int = 0
     val TAG = "CollegeDetailsFragment"
 
     override fun setPresenter(presenter: TPODashboardContract.CollegeDetailsPresenter) {
@@ -41,10 +43,15 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG,"<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
-        presenter = CollegeDetailsPresenter(this)
-        presenter .fetchCollegeDetails(2346)
 
-        editCollegeButton.setOnClickListener() {
+        arguments?.let {
+            code = it.getInt(Constants.CODE)
+        }
+
+        presenter = CollegeDetailsPresenter(this)
+        presenter .fetchCollegeDetails(code)
+
+        editCollegeButton.setOnClickListener {
             Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
             val mEditCollegeName = collegeNameValue
             mEditCollegeName.isEnabled = true
@@ -59,14 +66,22 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
             Log.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
-        saveCollegeButton.setOnClickListener(){
+        saveCollegeButton.setOnClickListener{
             Log.d(TAG,"<< saveCollegeButton| setOnClickListener()")
+<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/CollegeDeatilsFragment.kt
             val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(),
                     collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(),
                     collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
             presenter.saveCollegeDetails(2346,collegeDetails)
             Toast.makeText(this.requireContext(), "Successfully Updated College Details",
                     Toast.LENGTH_LONG).show()
+=======
+            val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(), collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(), collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
+            presenter.saveCollegeDetails(code,collegeDetails)
+            Toast.makeText(this.requireContext(), "Successfully Updated College Details",
+                    Toast.LENGTH_LONG).show()
+            presenter.fetchCollegeDetails(code)
+>>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/CollegeDeatilsFragment.kt
             Log.d(TAG,">> saveCollegeButton| setOnClickListener()")
         }
         Log.d(TAG,">> onViewCreated()")
@@ -88,21 +103,12 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CollegeDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(code: Int) =
                 CollegeDetailsFragment().apply {
                     arguments = Bundle().apply {
+                        putInt(Constants.CODE,code)
                     }
                 }
-
     }
 }

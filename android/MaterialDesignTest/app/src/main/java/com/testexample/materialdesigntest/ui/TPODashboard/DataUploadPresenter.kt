@@ -1,7 +1,5 @@
-package com.testexample.materialdesigntest.ui.tpoDashboard
+package com.testexample.materialdesigntest.ui.TPODashboard
 
-import android.content.ContentResolver
-import android.net.Uri
 import android.util.Log
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import io.reactivex.android.schedulers.AndroidSchedulers

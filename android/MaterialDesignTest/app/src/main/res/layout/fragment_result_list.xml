@@ -6,7 +6,7 @@
     android:scrollbars="horizontal|vertical"
     android:scrollbarStyle="outsideInset"
     android:fillViewport="true"
-    tools:context=".ui.TPODashboard.TPODashboard">
+    tools:context=".ui.tpoDashboard.TPODashboard">
 
     <HorizontalScrollView
         android:id="@+id/horizontalView"

@@ -21,6 +21,8 @@ class Constants {
         internal const val EMPTY_PASSWORD_ERROR = 1003
         internal const val INVALID_CODE_ERROR = 1005
         internal const val LOGIN_FAILURE = 1004
+        internal const val PERMISSION_CODE = 1101
+        internal const val REQUEST_CODE_PICK_FILE = 101
         internal const val NULL_INDEX = -1L
 
         // Constants for Session

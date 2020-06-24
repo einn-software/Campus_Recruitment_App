@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,7 +21,8 @@ import kotlinx.android.synthetic.main.fragment_college_details.*
  */
 
 @SuppressLint("ResourceType")
-class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPODashboardContract.CollegeDetailsView {
+class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
+        TPODashboardContract.CollegeDetailsView {
 
     private lateinit var presenter: TPODashboardContract.CollegeDetailsPresenter
     private var code : Int = 0
@@ -52,26 +53,35 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details), TPOD
 
         editCollegeButton.setOnClickListener {
             Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
-            val meditCollegeName = collegeNameValue
-            meditCollegeName.isEnabled = true
+            val mEditCollegeName = collegeNameValue
+            mEditCollegeName.isEnabled = true
             val meditCollegeAddress = collegeAddressValue
             meditCollegeAddress.isEnabled = true
-            val meditCollegeUniversity = collegeUniversityValue
-            meditCollegeUniversity.isEnabled = true
-            val meditCollegeEmail = collegeEmailValue
-            meditCollegeEmail.isEnabled = true
-            val meditCollegePhone = collegePhoneValue
-            meditCollegePhone.isEnabled = true
+            val mEditCollegeUniversity = collegeUniversityValue
+            mEditCollegeUniversity.isEnabled = true
+            val mEditCollegeEmail = collegeEmailValue
+            mEditCollegeEmail.isEnabled = true
+            val mEditCollegePhone = collegePhoneValue
+            mEditCollegePhone.isEnabled = true
             Log.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
         saveCollegeButton.setOnClickListener{
             Log.d(TAG,"<< saveCollegeButton| setOnClickListener()")
+<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/CollegeDeatilsFragment.kt
+            val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(),
+                    collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(),
+                    collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
+            presenter.saveCollegeDetails(2346,collegeDetails)
+            Toast.makeText(this.requireContext(), "Successfully Updated College Details",
+                    Toast.LENGTH_LONG).show()
+=======
             val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(), collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(), collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
             presenter.saveCollegeDetails(code,collegeDetails)
             Toast.makeText(this.requireContext(), "Successfully Updated College Details",
                     Toast.LENGTH_LONG).show()
             presenter.fetchCollegeDetails(code)
+>>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/CollegeDeatilsFragment.kt
             Log.d(TAG,">> saveCollegeButton| setOnClickListener()")
         }
         Log.d(TAG,">> onViewCreated()")

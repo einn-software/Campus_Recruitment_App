@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.TPO
@@ -6,6 +6,7 @@ import com.testexample.materialdesigntest.data.network.model.CollegeWiseResultRe
 import com.testexample.materialdesigntest.data.network.model.QuestionPaperListResponse
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.ui.base.BaseContract
+import java.io.File
 
 interface TPODashboardContract {
     interface View : BaseContract.BaseView<Presenter> {
@@ -25,6 +26,17 @@ interface TPODashboardContract {
         fun saveCollegeDetails(code: Int, collegeDetails: UpdateCollegeDetails)
     }
 
+<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/TPODashboardContract.kt
+    interface DataUploadView: BaseContract.BaseView<DataUploadPresenter>{
+        fun updateProgressBar(percentage: Int)
+        fun showMessage(message: String)
+
+    }
+
+    interface DataUploadPresenter : BaseContract.BasePresenter {
+        fun uploadFile(tpoEmail: String, file: File)
+
+=======
     interface ResultListView : BaseContract.BaseView<ResultListPresenter> {
         fun showResultList(result: List<CollegeWiseResultResponse>)
     }
@@ -39,5 +51,6 @@ interface TPODashboardContract {
 
     interface QuestionPaperListPresenter : BaseContract.BasePresenter {
         fun fetchQuestionPaperList(code: Int)
+>>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/TPODashboardContract.kt
     }
 }

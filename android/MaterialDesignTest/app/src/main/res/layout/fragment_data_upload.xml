@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutDataUpload"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/colorAccent2"
     android:padding="20dp"
-    tools:context=".ui.TPODashboard.DataUpload">
+    tools:context=".ui.tpoDashboard.DataUpload">
 
 
     <TextView
@@ -69,6 +70,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataUploadMessage" />
+
+    <ProgressBar
+        android:id="@+id/uploadProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:max="100"
+        tools:progress="40"
+        android:progressTint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/uploadFileButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectFileText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

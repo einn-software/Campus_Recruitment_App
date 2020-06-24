@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.util.Log
 import android.widget.Toast

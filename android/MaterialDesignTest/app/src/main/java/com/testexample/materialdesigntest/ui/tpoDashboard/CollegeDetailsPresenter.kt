@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -29,9 +29,9 @@ class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDeta
                         .observeOn(AndroidSchedulers.mainThread())
                         .handelNetworkError()
                         .subscribe(
-                                { success ->
-                                    view!!.showCollegeDetails(success)
-                                    Log.i(TAG, "Successfully displayed college details.")
+                                { college ->
+                                    view!!.showCollegeDetails(college)
+                                    Log.i(TAG, "Successfully displayed college details. $college")
                                 },
                                 { error ->
                                     Log.e(TAG, "Failed to get college Details with reason: ${error.message.toString()}")
@@ -48,7 +48,20 @@ class CollegeDetailsPresenter(private var view: TPODashboardContract.CollegeDeta
         Log.d(TAG,"<< saveCollegeDetails()")
         repository = CollegeDetails()
         sessionManager = SessionManager(view!!.setContext())
-        sessionManager.getUserAuthToken()?.let { repository.updateCollegeDetails(it, code, collegeDetails) }
+        Log.d(TAG, " new college details $collegeDetails")
+        sessionManager.getUserAuthToken()?.let {
+            repository.updateCollegeDetails(it, code, collegeDetails)
+                    .handelNetworkError()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {college ->
+                                view!!.showCollegeDetails(college)
+                                Log.i(TAG, "Successfully updated college details. $college")
+                            },
+                            {error ->
+                                Log.e(TAG, "Failed to update college Details with reason: ${error.message.toString()}")
+                            })}
         Log.d(TAG,">> saveCollegeDetails()")
     }
 

@@ -72,8 +72,6 @@ const StudentListRegister = async (data, res) => {
             }
         }
     }
-    console.log(arr);
-
 };
 
 module.exports.UploadFile = UploadFile;

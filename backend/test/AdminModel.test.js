@@ -104,7 +104,6 @@ describe("Update Tests", () => {
 
 describe("Delete Tests", () => {
     let deleter;
-
     beforeEach((done) => {
         deleter = new Admins({
             name: "Shikha",

@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.instructions
 
 import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.model.QuestionPaper
+import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.ui.base.BaseContract
 
@@ -16,12 +17,13 @@ interface InstructionsContract {
     }
 
     interface ExamInfoView: BaseContract.BaseView<ExamInfoPresenter>{
-        fun showExamInfo(QuestionPaper: QuestionPaper?)
+        fun showExamInfo(questionPaper: QuestionPaper?)
         fun showLoading(flag: Boolean)
-        fun openNextFragment(instructionsId: String, questionPaperId: String)
+        fun openNextFragment(questionPaper: QuestionPaper, student: Student)
     }
 
     interface ExamInfoPresenter: BaseContract.BasePresenter{
+        var  student: Student
         fun fetchExamInfo(request: FetchExamRequest)
         fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int)
 

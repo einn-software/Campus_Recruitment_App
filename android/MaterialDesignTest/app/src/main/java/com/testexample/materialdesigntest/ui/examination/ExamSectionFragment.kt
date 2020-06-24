@@ -1,55 +1,204 @@
 package com.testexample.materialdesigntest.ui.examination
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
+import android.net.wifi.hotspot2.pps.Credential
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.annotation.RequiresApi
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.data.model.Options
+import com.testexample.materialdesigntest.data.model.Question
+import com.testexample.materialdesigntest.data.model.Section
+import com.testexample.materialdesigntest.data.network.model.EndExamRequest
+import com.testexample.materialdesigntest.data.network.model.StudentAnswerRequest
+import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
+import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.*
 import kotlinx.android.synthetic.main.fragment_exam.*
+import kotlinx.android.synthetic.main.questionview.*
+import org.jetbrains.anko.firstChild
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val SECTION = "section"
+private const val CREDENTIALS = "credentials"
 
-class ExamSectionFragment : Fragment(R.layout.fragment_exam) {
+class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContract.FragmentView {
 
-    val TAG = "Exam Fragment" + this.id
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var currentAnswerId: String
+    val TAG = "Exam Section Fragment " + this.tag
+    private lateinit var section: Section
+    private lateinit var studentCredential: EndExamRequest
+    private lateinit var presenter:ExaminationContract.FragmentPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            section = it.getParcelable(SECTION)!!
+            studentCredential = it.getParcelable(CREDENTIALS)!!
         }
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        questionNumber.text = "Question $param1"
+        setPresenter(ExaminationSectionPresenter(this))
+
+        for ((index, question) in section.questionsList.withIndex()) {
+            questionTab.addTab(questionTab.newTab()
+                    .setText((index+1).toString())
+                    .setTag(question.questionId))
+            // tab tag is assigned the question id
+        }
+
+        questionTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val index = tab!!.position
+                Log.d(TAG, "tab called is $index")
+                presenter.loadQuestion(index,tab.tag as String)
+                questionMMarks.text = getString(R.string.m_m,
+                        section
+                        .questionsList[index]
+                        .marks)
+            }
+        })
+
+        kotlin.run {
+            questionTab.selectTab(questionTab.getTabAt(0))
+            presenter.loadQuestion(0,questionTab.getTabAt(0)!!.tag as String)
+            questionMMarks.text = getString(R.string.m_m,
+                    section
+                            .questionsList[0]
+                            .marks)
+            Log.d(TAG, "default tag called")
+        }
+
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            saveAndNextButton.isEnabled = checkedId != -1
+        }
+
+        saveAndNextButton.setOnClickListener {
+            questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_attempted)!!
+            this.moveToNextTab(4)
+        }
+
+        markReviewButton.setOnClickListener {
+            questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked_for_review)!!
+            this.moveToNextTab(5)
+        }
+
+        exitTestButton.setOnClickListener{
+            val builder = AlertDialog.Builder(requireContext())
+                    .apply {
+                setMessage(getString(R.string.end_test_message))
+                setCancelable(true)
+                setNegativeButton("Yes") { dialog, _ ->
+                    (activity as ExamDrawer).endExam()
+                    dialog!!.cancel()
+                }
+                setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }
+            }
+            val alertForEndingExam = builder.create()
+            alertForEndingExam.show()
+        }
+    }
+
+    override fun createResponse(state: Int): StudentAnswerResponse {
+        val index = questionTab.selectedTabPosition
+        val selectedOption = (radioGroup.checkedRadioButtonId + 1) % radioGroup[0].id
+        Log.d(TAG, "option selected  $selectedOption")
+        val questionId = questionTab.getTabAt(index)!!.tag.toString()
+        val maxMarksForQuestion =  section.questionsList[index].marks
+        return StudentAnswerResponse(
+                id = currentAnswerId,
+                studentAnswer = StudentAnswerRequest(
+                        studentId = studentCredential.studentId,
+                        questionId = questionId,
+                        selectedOption = selectedOption,
+                        questionPaperId = studentCredential.questionPaperId,
+                        state = state,
+                        questionMaxMarks = maxMarksForQuestion
+                )
+        )
+    }
+
+    override fun setQuestion(viewId: Int, question: Question, answer: Answer) {
+        radioGroup.clearCheck()
+        this.questionText.text = question.questionText
+        setOptions(radioButton1,question.options[0])
+        setOptions(radioButton2,question.options[1])
+        setOptions(radioButton3,question.options[2])
+        setOptions(radioButton4,question.options[3])
+        if (answer.optionSelected > 0){
+        radioGroup.check(radioGroup[answer.optionSelected].id - 1)
+        }
+        questionNumber.text = getString(R.string.QuestionNum,
+                questionTab.getTabAt(viewId)!!.text)
+        currentAnswerId = answer.answerSheetId
+        Log.d(TAG, "The Question clicked is " + questionTab.getTabAt(viewId)!!.text.toString())
+    }
+
+    override fun setPresenter(presenter: ExaminationContract.FragmentPresenter) {
+        this.presenter = presenter
+    }
+
+    override fun setContext(): Context {
+        return requireContext()
+    }
+
+    private fun setOptions(radioButton: RadioButton, option: Options){
+        radioButton.apply {
+            text = option.option
+            tag = option.index
+        }
+    }
+
+    private fun moveToNextTab(state: Int){
+        val answerResponse = createResponse(state)
+        presenter.saveResponse(answerResponse)
+        if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
+            questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
+    }
+
+    fun setClock(timeLeftInTimer: Long) {
+        val minutes = (timeLeftInTimer / 60000).toInt()
+        val seconds = ((timeLeftInTimer % 60000) / 1000).toInt()
+        var timeLeftText: String = ""
+        timeLeftText  += "$minutes:"
+        if (seconds < 10){
+            timeLeftText += "0"
+        }
+        timeLeftText += seconds.toString()
+        timerText.text = timeLeftText
     }
 
     override fun onResume() {
-        Log.d(TAG, "onResume $param1")
+        Log.d(TAG, "onResume ${section.sectionName}")
         super.onResume()
     }
 
     companion object {
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExamSectionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        fun newInstance(section: Section, credentials: EndExamRequest) =
+                ExamSectionFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(SECTION, section)
+                        putParcelable(CREDENTIALS, credentials )
+                    }
                 }
-            }
     }
 }

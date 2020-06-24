@@ -1,14 +1,17 @@
 package com.testexample.materialdesigntest.data.model
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 
 @Entity(tableName = "student_table")
+@Parcelize
 data class Student(
     @NonNull @PrimaryKey
     @SerializedName("_id")@ColumnInfo(name = "student_Id") val studentId:String = "",
@@ -20,6 +23,6 @@ data class Student(
     @SerializedName("branch")@ColumnInfo(name = "student_branch") val studentBranch: String = "",
     @SerializedName("college")@ColumnInfo(name = "student_college") val studentCollege: String = "",
     @SerializedName("code")@ColumnInfo(name = "student_college_code") val studentCollegeCode: Int = 0
-)
+) : Parcelable
 
 

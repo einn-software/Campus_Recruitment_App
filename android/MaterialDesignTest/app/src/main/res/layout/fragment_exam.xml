@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".ui.examination.ExaminationActivity">
+    tools:context=".ui.examination.ExamSectionFragment">
 
 
     <com.google.android.material.tabs.TabLayout
@@ -18,41 +18,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/colorAccent"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorGravity="top"
+        app:tabIndicatorHeight="2dp"
+        app:tabMinWidth="70dp"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/colorPrimary">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3" />
-    </com.google.android.material.tabs.TabLayout>
-
+        app:tabRippleColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/timerText"
@@ -60,7 +33,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="50:00"
+        android:text="@string/timer"
         android:textAlignment="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +62,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="M.M.:"
+        android:text="@string/m_m"
         app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -98,14 +71,14 @@
 
     <include
         layout="@layout/questionview"
-        android:layout_width="362dp"
+        android:layout_width="0dp"
         android:layout_height="503dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionMMarks"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.402" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

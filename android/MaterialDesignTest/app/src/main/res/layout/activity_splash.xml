@@ -24,7 +24,7 @@
         android:gravity="center"
         android:padding="30dp"
         android:text="Einn campus recruitment"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
         android:layout_below="@id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:indeterminateTint="@color/black" />
+        android:indeterminateTint="@android:color/black" />
 
     <TextView
         android:id="@+id/textView1"
@@ -47,7 +47,7 @@
         android:padding="10dp"
         android:text="Designed by Einn"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:textSize="15dp"
         android:textStyle="bold" />
 

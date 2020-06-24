@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.examination
 import android.util.Log
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
-import com.testexample.materialdesigntest.data.model.Response
+import com.testexample.materialdesigntest.data.network.model.EndExamRequest
+import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.session.SessionManager
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -13,61 +13,58 @@ import io.reactivex.schedulers.Schedulers
 class ExaminationPresenter(private var view: ExaminationContract.View?):
     ExaminationContract.Presenter {
 
-    private lateinit var sessionManager: SessionManager
+    private var sessionManager: SessionManager = SessionManager(view!!.setContext())
     val TAG = "Examination Presenter"
     private lateinit var repository: IExaminationRepo
     private var subscriptions = CompositeDisposable()
+    private val token = sessionManager.getUserAuthToken()!!
 
-    override fun loadExam(collegeCode: String, date: String) {
+    override fun loadExam(fetchExamRequest: FetchExamRequest) {
         Log.d(TAG, "loading Exam...")
-        //sessionManager = SessionManager(view!!.setContext())
-        repository = ExaminationRepo(view!!.setContext())
-        repository.token = sessionManager.getUserAuthToken()!!
+        repository = ExaminationRepo()
         view.let {
-            repository.loadQuestionPaperFromRoom(collegeCode, date)!!
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {success ->
-                        if (success != null){
-                            view!!.setExamPaper(success)
-                            Log.d(TAG, "Exam Found in Room")
-                        }
-                        else {
-                            repository.loadQuestionPaperFromRemote(collegeCode, date)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    {scs ->
-                                        view!!.setExamPaper(scs)
-
-                                        Log.d(TAG, "Fetching Exam From Remote")
+            subscriptions.add(
+                    repository.loadQuestionPaperFromRemote(token, fetchExamRequest)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {questionPaper ->
+                                        if (questionPaper != null){
+                                            view!!.setExamPaper(questionPaper)
+                                            Log.d(TAG, "Exam Found")
+                                        }
                                     },
-                                    {err ->
-                                        println(err.localizedMessage)
-                                        Log.d(TAG, "Error fetching from Remote")
+                                    {error ->
+                                        println(error.localizedMessage)
+                                        Log.d(TAG, "Error fetching Exam")
                                     })
-                        }
-                    },
-                    {error ->
-                        println(error.localizedMessage)
-                        Log.d(TAG, "Error fetching from Room")
-                    })
+            )
         }
     }
 
-    override fun saveResponse(response: Response) {
-        repository = ExaminationRepo(view!!.setContext())
-        subscriptions.add(repository
-            .saveResponseInRoom(response)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {Log.d(TAG, "Response Saved")},
-                {err -> println(err.localizedMessage)}))
+    override fun endExam(endExamRequest: EndExamRequest) {
+        repository = ExaminationRepo()
+        subscriptions.clear()
+        view!!.showLoading(true)
+        subscriptions.add(
+                repository.stopExam(token, endExamRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view!!.showLoading(false)
+                                    view!!.openNextActivity()
+                                },
+                                { error->
+                                    println(error.localizedMessage)
+                                }
+                        )
+        )
     }
 
     override fun onDestroy() {
-        TODO("Not yet implemented")
+        subscriptions.clear()
+        view = null
     }
+
 }

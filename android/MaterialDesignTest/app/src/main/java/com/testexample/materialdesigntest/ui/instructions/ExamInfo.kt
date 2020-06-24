@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.QuestionPaper
+import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_exam_info.*
@@ -19,8 +20,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     private lateinit var presenter: InstructionsContract.ExamInfoPresenter
     private lateinit var progressBar: ProgressBar
     val TAG = "ExamInfo Fragment"
-    private lateinit var instructionsId: String
-    private lateinit var questionPaperId: String
+    private lateinit var questionPaper: QuestionPaper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,28 +32,30 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         val month : Int = calender.get(Calendar.MONTH)
         val dayOfMonth : Int = calender.get(Calendar.DAY_OF_MONTH)
         presenter = ExamInfoPresenter(this)
+
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {
-            openNextFragment(instructionsId, questionPaperId)
+            openNextFragment(questionPaper = this.questionPaper,
+                    student = presenter.student)
         }
     }
 
-    override fun showExamInfo(QuestionPaper: QuestionPaper?) {
+    override fun showExamInfo(questionPaper: QuestionPaper?) {
         val message: String
-        if (null == QuestionPaper) {
+        if (null == questionPaper) {
             message = Constants.NO_EXAM_FOUND
         } else {
-            message = "Your Exam for " + QuestionPaper.questionPaperName
-            instructionsId = QuestionPaper.instructionId
-            questionPaperId = QuestionPaper.questionPaperId
+            this.questionPaper = questionPaper
+            message = "Your Exam for " + questionPaper.questionPaperName
+
         }
         availableExamsTabText.text = message
     }
 
-    override fun openNextFragment(instructionsId: String, questionPaperId: String){
+    override fun openNextFragment(questionPaper: QuestionPaper, student: Student){
         instructionsFragment = InstructionsFragment
-                .newInstance(instructionsId, questionPaperId)
+                .newInstance(questionPaper, student)
         requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.instructionsFragmentContainer, instructionsFragment)

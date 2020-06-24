@@ -35,8 +35,9 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
             password.isEmpty() ->
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
             else -> userRepository.let {
+                view!!.showLoading(true)
                 subscriptions.add(userRepository
-                    .isTpoValid(email, password)
+                        .isTPOValid(email, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -46,6 +47,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) :
                                 Constants.Companion
                                     .LoggedInMode.LOGGED_IN_MODE_SERVER
                             )
+                            view!!.showLoading(false)
                             view!!.openMainActivity()
                         },
                         { error -> Log.e("Tpo Login Presenter", error.message.toString())

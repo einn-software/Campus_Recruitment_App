@@ -19,7 +19,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
-    <string name="QuestionNum">Question: 1</string>
+    <string name="QuestionNum">Question: %s</string>
 
     <string name="empty_email_error_message">Email cannot be blank</string>
     <string name="empty_roll_no_error_message">Roll number cannot be blank</string>
@@ -41,5 +41,17 @@
     <string name="agreement_text">I have read and agree to the guidelines</string>
     <string name="exam_info_header">Available Exams</string>
     <string name="exam_guidelines_header">Exam Guidelines:</string>
+    <string name="question_text">This is a test question to get the idea of how along text behaves in a small screen space and wraps around in lines nicely This is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a</string>
+    <string name="m_m">M.M.: %d</string>
+    <string name="save_and_next">Save and Next</string>
+    <string name="mark_for_review">Mark For Review</string>
+    <string name="loading">Loading…</string>
+    <string name="end_test_message">Are you sure you want to End the Test ?</string>
+    <string name="college_code">Code: %s</string>
+    <string name="roll_no">ROll No</string>
+    <string name="student_name">student name</string>
+    <string name="question_paper_max_marks">M.M: %d</string>
+    <string name="attempted_question_ratio">%d / %d</string>
+    <string name="timer">50:00</string>
 
 </resources>

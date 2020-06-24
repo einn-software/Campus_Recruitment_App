@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -50,7 +51,9 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
         }
 
         registrationLink.setOnClickListener {
-            TODO()
+            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("URL")
+            startActivity(openURL)
         }
     }
 
@@ -72,7 +75,7 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
             Constants.LOGIN_FAILURE ->
                 Toast.makeText(activity, getString(R.string.login_failure),
                     Toast.LENGTH_LONG).show()
-            Constants.INVALID_CODE_ERROR ->
+            Constants.EMPTY_CODE_ERROR ->
                 Toast.makeText(activity, getString(R.string.invalid_code),
                     Toast.LENGTH_LONG).show()
         }

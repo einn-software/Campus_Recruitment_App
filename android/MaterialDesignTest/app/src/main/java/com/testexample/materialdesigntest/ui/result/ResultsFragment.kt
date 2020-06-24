@@ -40,13 +40,14 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
     }
 
     override fun showResults(result: Result) {
-        rollNoValue.text = result.roll
-        userNameValue.text = result.name
-        totalMarksValue.text = result.total_marks.toString()
-        totalQuestionsAttemptedValue.text = result.question_attempt.toString() + "/" + result.total_question
-        totalQuestionsAttemptedRightValue.text = result.correct_attempt.toString()
-        totalQuestionsAttemptedWrongValue.text = (result.question_attempt - result.correct_attempt).toString()
-        totalMarksObtainedValue.text = result.total_marks_scored.toString()
+        rollNoValue.text = result.studentRollNo
+        userNameValue.text = result.studentName
+        totalMarksValue.text = result.totalMarks.toString()
+        totalQuestionsAttemptedValue.text = getString(R.string.attempted_question_ratio,
+                result.noOfQuestionsAttempted,result.totalNoOfQuestions)
+        totalQuestionsAttemptedRightValue.text = result.noOfQuestionsCorrect.toString()
+        totalQuestionsAttemptedWrongValue.text = (result.noOfQuestionsAttempted - result.noOfQuestionsCorrect).toString()
+        totalMarksObtainedValue.text = result.scoredMarks.toString()
     }
 
     override fun setPresenter(presenter: ResultsContract.Presenter) {

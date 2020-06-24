@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.collegeDashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.os.Bundle
 import android.util.Log

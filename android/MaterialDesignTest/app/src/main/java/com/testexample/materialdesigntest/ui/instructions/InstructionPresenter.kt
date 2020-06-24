@@ -35,6 +35,7 @@ class InstructionPresenter(private var view: InstructionsContract.View?):
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { instructions ->
+                        Log.d(TAG, "Found $instructions")
                         view!!.showInstructions(instructions!!)
                     },
                     {error -> println(error.toString())},

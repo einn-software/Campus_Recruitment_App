@@ -8,18 +8,21 @@ import io.reactivex.Single
 
 interface IExaminationRemoteRepo {
 
-    fun callApiForQuestionPaper(token:String, fetchExamRequest: FetchExamRequest ):
+    fun callApiForQuestionPaper(token: String, fetchExamRequest: FetchExamRequest ):
             Single<QuestionPaper>
 
     fun callApiForQuestion(token: String, questionId: String):
             Single<Question>
 
-    fun callApiForSavingAnswer(request: StudentAnswerRequest)
+    fun callApiForSavingAnswer(token: String,
+                               request: StudentAnswerRequest)
             : Single<StudentAnswerResponse>
 
-    fun callApiForUpdatingAnswer(request: StudentAnswerResponse)
+    fun callApiForUpdatingAnswer(token: String,
+                                 request: StudentAnswerResponse)
             : Single<StudentAnswerResponse>
 
-    fun callApiForEndingExam(endRequest: EndExamRequest)
+    fun callApiForEndingExam(token: String,
+                             endRequest: EndExamRequest)
             : Single<EndExamResponse>
 }

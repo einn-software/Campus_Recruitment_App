@@ -75,31 +75,34 @@ interface GetDataServices {
     @GET("student-answers/{student-id}/{question-paper-id}/{question-id}")
     fun getStudentResponse(@Header("auth-token") token: String ,
                            @Path("student-id") studentId: String,
-                           @Path("question-paper-id") QuestionPaperId: String,
+                           @Path("question-paper-id") questionPaperId: String,
                            @Path("question-id") questionId: String): Single<Question>
 
     @POST("student-answers")
-    fun addStudentResponse(@Body request : StudentAnswerRequest): Single<StudentAnswerResponse>
+    fun addStudentResponse(@Header("auth-token") token: String ,
+                           @Body request : StudentAnswerRequest): Single<StudentAnswerResponse>
 
     @PUT("student-answers/{id}")
-    fun updateStudentResponse(@Path("id") id: String,
+    fun updateStudentResponse(@Header("auth-token") token: String ,
+                              @Path("id") id: String,
                               @Body request: StudentAnswerRequest): Single<StudentAnswerResponse>
 
-    @POST("final-submission/")
-    fun endExam(@Body endExamRequest: EndExamRequest): Single<EndExamResponse>
-
-    @GET("colleges/{code}/results/{question-paper-id}")
-    fun getStudentResultList(@Header("auth-token") token: String,
-                            @Path("code") code: Int,
-                            @Path("question-paper-id") question_paper_id: String):
-            Flowable<List<CollegeWiseResultResponse>>
+    @POST("final-submission")
+    fun endExam(@Header("auth-token") token: String ,
+                @Body endExamRequest: EndExamRequest): Single<EndExamResponse>
 
     @GET("colleges/{code}/results/{roll}/question-papers/{question-paper-id}")
     fun getStudentResult(@Header("auth-token") token: String,
                          @Path("code") code: Int,
                          @Path("roll") roll: String,
-                         @Path("question-paper-id") question_paper_id: String):
+                         @Path("question-paper-id") questionPaperId: String):
             Single<Result>
+
+    @GET("colleges/{code}/results/{question-paper-id}")
+    fun getStudentResultList(@Header("auth-token") token: String):
+            Flowable<List<CollegeWiseResultResponse>>
+
+
 
 
 

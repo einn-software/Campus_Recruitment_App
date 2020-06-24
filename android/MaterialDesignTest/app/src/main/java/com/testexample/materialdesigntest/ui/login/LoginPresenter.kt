@@ -32,8 +32,8 @@ class LoginPresenter(private var view: LoginContract.View?) :
                 view!!.onValidationMessage(Constants.INVALID_ROLL_NO_ERROR)
             loginRequest.password.isEmpty()->
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
-            !loginRequest.code.toString().isDigitsOnly()->
-                view!!.onValidationMessage(Constants.INVALID_CODE_ERROR)
+            loginRequest.code.toString().isEmpty() ->
+                view!!.onValidationMessage(Constants.EMPTY_CODE_ERROR)
           else -> userRepository.let{
               Log.d("LoginPresenter", "subscription started")
               view!!.showLoading(true)

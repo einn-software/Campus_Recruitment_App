@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.collegeDashboard.CollegeDashboard">
+    tools:context=".ui.tpoDashboard.CollegeDashboard">
 
     <include
         android:id="@+id/include4"
@@ -31,7 +31,7 @@
                 android:layout_height="293dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="32dp"
-                android:columnCount="1"
+                android:columnCount="2"
                 android:padding="16dp"
                 android:rowCount="2"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.collegeDashboard.CollegeDashboard
+import com.testexample.materialdesigntest.ui.ProgressBar
+import com.testexample.materialdesigntest.ui.tpoDashboard.TpoDashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_login.*
@@ -15,12 +16,14 @@ import kotlinx.android.synthetic.main.activity_tpo_login.*
 class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
     internal lateinit var presenter: LoginContract.TpoPresenter
+    lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tpo_login)
 
         presenter = TpoLoginPresenter(this)
+        progressBar = ProgressBar(this)
 
         loginButton.setOnClickListener {
             presenter.onTpoLogin(emailText.text.toString(),
@@ -40,7 +43,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     }
 
     override fun openMainActivity() {
-        startActivity(Intent(this, CollegeDashboard::class.java))
+        startActivity(Intent(this, TpoDashboard::class.java))
     }
 
     override fun onValidationMessage(errorCode: Int) {
@@ -61,12 +64,12 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     }
 
     override fun showLoading(flag: Boolean) {
-        /*if (flag){
+        if (flag){
             progressBar.startLoading()
         }
         else {
             progressBar.stopLoading()
-        }*/
+        }
     }
 
     override fun setPresenter(presenter: LoginContract.TpoPresenter) {

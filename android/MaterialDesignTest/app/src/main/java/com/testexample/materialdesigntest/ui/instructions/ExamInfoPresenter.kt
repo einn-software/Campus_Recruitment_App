@@ -6,6 +6,7 @@ import com.testexample.materialdesigntest.data.interactor.implementation.UserRep
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.model.QuestionPaper
+import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -26,6 +27,8 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
     private lateinit var studentRepo: IUserRepository
     private var subscriptions = CompositeDisposable()
     private lateinit var sessionManager: SessionManager
+    override lateinit var student: Student
+
 
     override fun fetchExamInfo(request: FetchExamRequest) {
         repository = PreExamInstructionsRepo()
@@ -34,7 +37,6 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
         Log.d(TAG,"fetch ExamInfo at token ${sessionManager.getUserAuthToken()}")
 
         view?.let {
-            subscriptions.add(
                 repository
                     .getExamInfoFromRemoteRepo(sessionManager.getUserAuthToken()!!,
                         request)
@@ -49,7 +51,6 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
                             view!!.showExamInfo(null)
                         }
                     )
-            )
         }
     }
 
@@ -67,6 +68,8 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
                     {success->
                         fetchExamInfo(FetchExamRequest(success.studentCollegeCode,
                             year, month, dayOfMonth))
+                        this.student = success
+                        Log.d(TAG, "Fetch college code for student found $success")
                     },
                     {
                         error->

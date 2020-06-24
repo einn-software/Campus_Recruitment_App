@@ -1,13 +1,13 @@
-package com.testexample.materialdesigntest.ui.collegeDashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.INVISIBLE
+import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
 import kotlinx.android.synthetic.main.activity_college_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
 
-class CollegeDashboard : AppCompatActivity() {
+class TpoDashboard : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

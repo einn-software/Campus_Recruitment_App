@@ -63,7 +63,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code))
-                addToBackStack(TAG)
+                addToBackStack("tpoDashboardFragment")
                 commit()
             }
             Log.d(TAG, ">> resultTabText | setOnClickListener")
@@ -77,6 +77,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         tpoNameText.text = tpo.TPOName
         tpoEmailText.text = tpo.TPOEmail
         tpoCollegeCode.text = tpo.TPOCollegeCode.toString()
+        tpoCollegeText.text = tpo.TPOCollegeName
         code = tpo.TPOCollegeCode
         Log.d(TAG, ">> showTpoDetails()")
     }

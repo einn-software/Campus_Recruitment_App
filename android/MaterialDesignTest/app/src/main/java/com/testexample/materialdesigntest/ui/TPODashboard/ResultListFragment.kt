@@ -99,11 +99,11 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
         val tl: TableLayout = table
         val tr = TableRow(this.context)
         tr.layoutParams = getLayoutParams()
-        tr.addView(getTextView(0, Constants.ROLL, Color.WHITE, Typeface.BOLD, Color.BLUE))
-        tr.addView(getTextView(0, Constants.NAME, Color.WHITE, Typeface.BOLD, Color.BLUE))
-        tr.addView(getTextView(0, Constants.QUESTION_ATTEMPT, Color.WHITE, Typeface.BOLD, Color.BLUE))
-        tr.addView(getTextView(0, Constants.CORRECT_ATTEMPT, Color.WHITE, Typeface.BOLD, Color.BLUE))
-        tr.addView(getTextView(0, Constants.TOTAL_MARKS, Color.WHITE, Typeface.BOLD, Color.BLUE))
+        tr.addView(getTextView(0, Constants.ROLL, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
+        tr.addView(getTextView(0, Constants.NAME, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
+        tr.addView(getTextView(0, Constants.QUESTION_ATTEMPT, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
+        tr.addView(getTextView(0, Constants.CORRECT_ATTEMPT, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
+        tr.addView(getTextView(0, Constants.TOTAL_MARKS, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
         tl.addView(tr, getTblLayoutParams())
     }
 
@@ -113,11 +113,11 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
         for (i in 0 until numResults) {
             val tr = TableRow(this.context)
             tr.layoutParams = getLayoutParams()
-            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].studentRollNo, Color.WHITE, Typeface.NORMAL, it) })
-            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { result[i].studentName?.let { it1 -> getTextView(i + numResults, it1, Color.WHITE, Typeface.NORMAL, it) } })
-            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].questionAttended.toString(), Color.WHITE, Typeface.NORMAL, it) })
-            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].correctAttempted.toString(), Color.WHITE, Typeface.NORMAL, it) })
-            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].totalMarksScored.toString(), Color.WHITE, Typeface.NORMAL, it) })
+            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].studentRollNo, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary), Typeface.NORMAL, it) })
+            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { result[i].studentName?.let { it1 -> getTextView(i + numResults, it1, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary), Typeface.NORMAL, it) } })
+            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].questionAttended.toString(), ContextCompat.getColor(this.requireContext(), R.color.colorPrimary), Typeface.NORMAL, it) })
+            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].correctAttempted.toString(), ContextCompat.getColor(this.requireContext(), R.color.colorPrimary), Typeface.NORMAL, it) })
+            tr.addView(this.context?.let { ContextCompat.getColor(it, R.color.colorAccent) }?.let { getTextView(i + 1, result[i].totalMarksScored.toString(), ContextCompat.getColor(this.requireContext(), R.color.colorPrimary), Typeface.NORMAL, it) })
             tl.addView(tr, getTblLayoutParams())
         }
     }

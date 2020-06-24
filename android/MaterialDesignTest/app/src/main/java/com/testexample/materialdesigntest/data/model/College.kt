@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class College(
         @PrimaryKey val id: String,
         val name: String,
-        val code: String?,
+        val code: Int,
         val address: String,
         val university: String,
         val email: String,

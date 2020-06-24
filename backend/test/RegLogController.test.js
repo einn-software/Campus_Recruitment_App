@@ -24,22 +24,6 @@ before((done) => {
 
 describe("Registeration Tests and Login Tests:", () => {
   describe("Admin Registration Testing:", () => {
-    it("should return a registered admin:", (done) => {
-      const admin = {
-        name: "Riya Singhal",
-        email: "riyasinghal@gmail.com",
-        password: "YeahcoolItIs",
-        phone: "7586958412"
-      };
-      agent
-        .post("/register/admins")
-        .send(admin)
-        .expect(200)
-        .end((err, results) => {
-          results.body.should.have.property("_id");
-          done();
-        });
-    });
     it("should return validation error:", (done) => {
       const admin = {
         name: "Riya Singhal",
@@ -56,9 +40,32 @@ describe("Registeration Tests and Login Tests:", () => {
           done();
         });
     });
+    it("should return a registered admin:", (done) => {
+      const admin = {
+        name: "Riya Singhal",
+        email: "riya@gmail.com",
+        password: "YeahcoolItIs",
+        phone: "7586958412",
+      };
+      agent
+        .post("/register/admins")
+        .send(admin)
+        .expect(200)
+        .end((err, results) => {
+          results.body.should.have.property("_id");
+          done();
+        });
+    });
   });
   describe("Admin Login Testing:", () => {
     it("should return a session having field token:", (done) => {
+      const adminReg = new Admin({
+        name: "Riya Singhal",
+        email: "riya@gmail.com",
+        password: "YeahcoolItIs",
+        phone: "7586958412",
+      });
+      adminReg.save();
       const admin = {
         email: "riyasinghal@gmail.com",
         password: "YeahcoolItIs",
@@ -246,4 +253,3 @@ after((done) => {
   }).exec();
   done();
 });
-// });

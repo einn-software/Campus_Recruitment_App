@@ -154,4 +154,3 @@ const StudentRegister = async (req, res) => {
 module.exports.AdminRegister = AdminRegister;
 module.exports.StudentRegister = StudentRegister;
 module.exports.TpoRegister = TpoRegister;
-module.exports.createHashedPassword = createHashedPassword;

@@ -50,7 +50,7 @@ const UploadFile = async function (req, res) {
     // const file1 = req.file.originalname
     FileConversion(req, res, email);
     res.json({
-      message: "Successfull",
+      message: "File successfully uploaded",
     });
   } else {
     return res
@@ -77,9 +77,9 @@ const FileConversion = async (req, res, email) => {
     xlsx.utils.book_append_sheet(
       newErrorWB,
       newErrorWS,
-      "Unregistered students list"
+      "Unregistered students sheet"
     );
-    xlsx.utils.book_append_sheet(newWB, newWS, "Registeration Sheet");
+    xlsx.utils.book_append_sheet(newWB, newWS, "Registeration sheet");
     xlsx.writeFile(newErrorWB, "./unregistered/Unregistered Students.xlsx");
     xlsx.writeFile(newWB, "./registered/Registered Students.xlsx");
     sendMail(req, res, email);

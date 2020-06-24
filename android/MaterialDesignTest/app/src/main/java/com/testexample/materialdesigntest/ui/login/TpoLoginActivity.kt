@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.TPODashboard.TPODashboard
+import com.testexample.materialdesigntest.ui.tpoDashboard.TPODashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_login.*

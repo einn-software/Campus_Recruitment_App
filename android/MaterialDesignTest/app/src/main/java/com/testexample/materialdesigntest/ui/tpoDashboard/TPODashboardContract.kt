@@ -1,4 +1,4 @@
-package com.testexample.materialdesigntest.ui.TPODashboard
+package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.model.TPO

@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:background="@color/colorAccent2"
     android:padding="20dp"
-    tools:context=".ui.TPODashboard.DataUpload">
+    tools:context=".ui.tpoDashboard.DataUpload">
 
 
     <TextView

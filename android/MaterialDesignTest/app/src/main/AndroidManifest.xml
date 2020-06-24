@@ -42,7 +42,7 @@
         <activity android:name=".ui.login.TpoLoginActivity" />
 
         <activity
-            android:name=".ui.TPODashboard.TPODashboard"
+            android:name=".ui.tpoDashboard.TPODashboard"
             android:exported="true">
       </activity>
 

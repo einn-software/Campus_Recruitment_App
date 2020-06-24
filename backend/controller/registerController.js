@@ -14,7 +14,6 @@ const {
   tpoRegisterValidation,
 } = require("../config/validation");
 
-
 function createHashedPassword(req) {
   //Hash password
   const salt = bcrypt.genSaltSync(Constants.saltRound);
@@ -23,7 +22,7 @@ function createHashedPassword(req) {
 }
 
 //To register a new admin
-const AdminRegister = (async (req, res) => {
+const AdminRegister = async (req, res) => {
   // VALIDATE THE DATA BEFORE WE MAKE A Admin
   const {
     error
@@ -59,10 +58,10 @@ const AdminRegister = (async (req, res) => {
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
   }
-});
+};
 
 // To register a new tpo
-const TpoRegister = (async (req, res) => {
+const TpoRegister = async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo
   const {
     error
@@ -101,10 +100,10 @@ const TpoRegister = (async (req, res) => {
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
   }
-});
+};
 
 //To register a new student
-const StudentRegister = (async (req, res) => {
+const StudentRegister = async (req, res) => {
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
   const {
     error
@@ -142,7 +141,7 @@ const StudentRegister = (async (req, res) => {
     branch: req.body.branch,
     college: req.body.college,
     code: req.body.code,
-    exam_start_time: req.body.exam_start_time
+    exam_start_time: req.body.exam_start_time,
   });
   try {
     const user = await student.save();
@@ -150,53 +149,9 @@ const StudentRegister = (async (req, res) => {
   } catch (err) {
     res.status(Constants.er_failure).json(errHandler.errorHandler(err));
   }
-});
-//To register a new student
-const StudentListRegister = (async (req, res) => {
-  if (req.session.user_type == Constants.tpo) {
-    let arr = [];
-    // Create a new student
-    const docs = req.body;
-    for (var i = 0; i < docs.length; i++) {
-      // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
-      const {
-        error
-      } = studentRegisterValidation(docs[i]);
-      if (error)
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.validationErrorHandler(error));
-      //Checking if the student is already in the database
-      const mail = docs[i].email
-      const emailExist = await Student.findOne({
-        email: mail,
-      });
-      if (emailExist)
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.thisEmailExistErrorHandler(mail));
-
-      const rollCodeExist = await Student.findOne({
-        roll: docs[i].roll,
-        code: docs[i].code,
-      });
-      if (rollCodeExist)
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.codeRollErrorHandler());
-      const student = new Student(docs[i]);
-      const user = await student.save();
-      arr.push(user);
-    }
-    return res.status(Constants.success).json(arr);
-  } else {
-    return res
-      .status(Constants.er_authorization_failed)
-      .json(errHandler.unauthorizedErrorHandler());
-  }
-});
+};
 
 module.exports.AdminRegister = AdminRegister;
 module.exports.StudentRegister = StudentRegister;
 module.exports.TpoRegister = TpoRegister;
-module.exports.StudentListRegister = StudentListRegister;
+module.exports.createHashedPassword = createHashedPassword;

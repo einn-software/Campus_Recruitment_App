@@ -96,22 +96,28 @@ const InstructionPut =
     }
     if (req.session.user_type == Constants.admin) {
       Instructions.findOneAndUpdate({
-            _id: req.params.id,
-          },
-          body
-        )
-        .then((results) => {
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
-          } else {
-            res.status(Constants.success).json(results);
+          _id: req.params.id,
+        },
+        body, async (err, result) => {
+          if (err) {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
           }
+          await Instructions.findOne({
+              _id: req.params.id
+            })
+            .then((results) => {
+              if (!results) {
+                return res
+                  .status(Constants.er_not_found)
+                  .json(errHandler.idNotFoundErrorHandler());
+              } else {
+                res.status(Constants.success).json(results);
+              }
+            })
+            .catch((err) => {
+              return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+            });
         })
-        .catch((err) => {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        });
     } else {
       return res
         .status(Constants.er_authorization_failed)

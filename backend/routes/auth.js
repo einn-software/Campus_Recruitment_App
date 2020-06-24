@@ -3,6 +3,18 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session); //MongoDB session store for Connect and Express
 const mongoose = require("mongoose");
 const verified = require("../config/verifyToken");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+})
+const upload = multer({
+  storage: storage
+});
 
 //importing functions from Controller files
 const {
@@ -11,7 +23,6 @@ const {
 const {
   AdminRegister,
   StudentRegister,
-  StudentListRegister,
   TpoRegister,
 } = require("../controller/registerController");
 
@@ -107,7 +118,8 @@ router.use(
   })
 );
 
-router.post("/upload", verified, UploadFile);
+
+router.post("/upload", verified, upload.single('file'), UploadFile);
 
 //Admin Register API
 router.post("/register/admins", AdminRegister);
@@ -118,7 +130,6 @@ router.delete("/admins/:id", verified, AdminDelete);
 
 //Student Register API
 router.post("/register/students", StudentRegister);
-router.post("/register/students/list", verified, StudentListRegister);
 router.get("/colleges/:code/students", verified, StudentGet);
 router.get("/students/:id", verified, StudentGetById);
 router.put("/students/:id", verified, StudentPut);

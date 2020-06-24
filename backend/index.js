@@ -1,7 +1,6 @@
 const express = require("express");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
-const fileUpload = require("express-fileupload");
 const logger = require("./config/logger");
 const dotenv = require("dotenv"); // The dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 const app = express(); // Create the Express application
@@ -25,8 +24,6 @@ mongoose.connection
     logger.log("error", error);
   });
 
-// enable files upload
-app.use(fileUpload());
 //Middleware
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 app.use(express.json());

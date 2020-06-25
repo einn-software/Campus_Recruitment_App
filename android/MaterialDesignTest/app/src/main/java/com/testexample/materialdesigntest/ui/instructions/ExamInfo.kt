@@ -22,8 +22,8 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     private lateinit var presenter: InstructionsContract.ExamInfoPresenter
     private lateinit var progressBar: ProgressBar
     val TAG = "ExamInfo"
-    private lateinit var student: Student
-    private lateinit var questionPaper: QuestionPaper
+    private  var student: Student? = null
+    private  var questionPaper: QuestionPaper? = null
     
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {
-            if (this.questionPaper.questionPaperId.isBlank()){
+            if (questionPaper == null){
                 startActivity(Intent(activity, LoginActivity::class.java).apply {
                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -48,7 +48,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                 requireActivity().finish()
             }
             else
-                openNextFragment(this.questionPaper, presenter.student)
+                openNextFragment(this.questionPaper!!, presenter.student)
         }
         Log.d(TAG, ">> onViewCreated")
     }

@@ -41,7 +41,7 @@ class UserRemoteRepositoryTest {
                 .handelNetworkError()
                 .subscribe(
                         { success ->
-                            getUserRequest = UserRequest(success.token, success.id)
+                            getUserRequest = success.token?.let { success.id?.let { it1 -> UserRequest(it, it1) } }!!
                         },
                         { error -> println(error.localizedMessage) })
 
@@ -55,7 +55,7 @@ class UserRemoteRepositoryTest {
                 .handelNetworkError()
                 .subscribe(
                         { success ->
-                            getUserRequest = UserRequest(success.token, success.id)
+                            getUserRequest = success.token?.let { success.id?.let { it1 -> UserRequest(it, it1) } }!!
                         },
                         { error -> println(error.localizedMessage) })
 
@@ -71,7 +71,7 @@ class UserRemoteRepositoryTest {
         output.test().assertNoErrors()
         output.subscribe(
                 {success ->
-                    getUserRequest = UserRequest(success.token, success.id)
+                    getUserRequest = success.token?.let { success.id?.let { it1 -> UserRequest(it, it1) } }!!
                     println("Auth Response is $success")},
                 { error ->
                     println(error.localizedMessage) })
@@ -218,7 +218,7 @@ class UserRemoteRepositoryTest {
                 .handelNetworkError()
                 .subscribe(
                         { success ->
-                            getUserRequest = UserRequest(success.token, success.id)
+                            getUserRequest = success.token?.let { success.id?.let { it1 -> UserRequest(it, it1) } }!!
                             println("Auth Response is $success")
                         },
                         { error ->

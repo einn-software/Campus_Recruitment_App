@@ -75,6 +75,7 @@ describe("Registeration Tests and Login Tests:", () => {
         .send(admin)
         .expect(200)
         .end((err, results) => {
+          if (err) console.log(err);
           results.body.should.have.property("token");
           done();
         });
@@ -239,17 +240,16 @@ describe("Registeration Tests and Login Tests:", () => {
         });
     });
   });
-
-  after((done) => {
-    Tpo.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    Admin.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    Student.findOneAndDelete({
-      email: "riya@gmail.com"
-    }).exec();
-    done();
-  });
+})
+after((done) => {
+  Tpo.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  Admin.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  Student.findOneAndDelete({
+    email: "riya@gmail.com"
+  }).exec();
+  done();
 });

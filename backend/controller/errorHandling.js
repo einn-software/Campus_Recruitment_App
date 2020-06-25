@@ -28,6 +28,17 @@ function validationErrorHandler(error) {
   return err;
 }
 
+function validationWithEmailErrorHandler(error, email) {
+  const err = {
+    status: Constants.er_failure,
+    message: error.details[0].message + ` for the student ${email}`,
+    error_info: error.name,
+    server_msg: "This error is generated because" + error.message,
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
 function noRouteErrorHandler(error) {
   const err = {
     status: Constants.er_failure,
@@ -76,9 +87,20 @@ function emailExistErrorHandler() {
 function thisEmailExistErrorHandler(email) {
   const err = {
     status: Constants.er_failure, //400
-    message: `Already registered with ${email}, Please try to login`,
+    message: `The student (${email}) is already registered`,
     error_info: "Registeration Error",
     server_msg: `${email} already exist in the database, So can't register the same user twice`,
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
+function codeRollWithEmailErrorHandler(email, roll, code) {
+  const err = {
+    status: Constants.er_failure, //400
+    message: `Found duplicate Roll number(${roll}), please check the data of the student ${email}`,
+    error_info: "Registertion Error",
+    server_msg: `Registeration Error: Either Roll no. (${roll}) or code (${code}) must be unique of the user ${email}`,
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -266,6 +288,8 @@ module.exports = {
   errorHandler,
   emailExistErrorHandler,
   thisEmailExistErrorHandler,
+  validationWithEmailErrorHandler,
+  codeRollWithEmailErrorHandler,
   emailNotFoundErrorHandler,
   codeRollErrorHandler,
   notFoundRollCodeErrorHandler,

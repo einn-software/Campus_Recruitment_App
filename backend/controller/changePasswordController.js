@@ -10,9 +10,6 @@ const Student = require("../model/Student");
 const {
   reqPasswordBodyValidation
 } = require("../config/validation");
-const {
-  er_not_found
-} = require("../config/constant");
 
 function createToken(user) {
   const token = jwt.sign({

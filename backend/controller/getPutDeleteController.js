@@ -56,8 +56,7 @@ const AdminGetById = function (req, res) {
 };
 
 //To change or update the admin's data by using their id
-const AdminPut = function (req, res) {
-
+const AdminPut = async function (req, res) {
   const body = req.body;
   if (req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA BEFORE WE MAKE A Admin
@@ -69,32 +68,33 @@ const AdminPut = function (req, res) {
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
-    const salt = bcrypt.genSaltSync(Constants.saltRound);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
-    Admin.findOneAndUpdate({
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
+    await Admin.findOneAndUpdate({
         _id: req.params.id,
       },
-      body
-    )
-    try {
-      Admin.findOne({
-          _id: req.params.id
-        }).then((results) => {
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.codeNotFoundErrorHandler());
-          } else {
-            res.status(Constants.success).json(results);
-          }
-        })
-        .catch((err) => {
+      body, async (err, result) => {
+        if (err) {
           return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        });
-    } catch (err) {
-      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-    }
+        }
+        await Admin.findOne({
+            _id: req.params.id
+          }).then((results) => {
+            if (!results) {
+              return res
+                .status(Constants.er_not_found)
+                .json(errHandler.codeNotFoundErrorHandler());
+            } else {
+              res.status(Constants.success).json(results);
+            }
+          })
+          .catch((err) => {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          });
+      })
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -189,32 +189,33 @@ const TpoPut = function (req, res) {
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
-    const salt = bcrypt.genSaltSync(Constants.saltRound);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
     Tpo.findOneAndUpdate({
         _id: req.params.id,
       },
-      body
-    )
-    try {
-      Tpo.findOne({
-          _id: req.params.id
-        }).then((results) => {
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.codeNotFoundErrorHandler());
-          } else {
-            res.status(Constants.success).json(results);
-          }
-        })
-        .catch((err) => {
+      body, async (err, result) => {
+        if (err) {
           return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        });
-    } catch (err) {
-      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-    }
+        }
+        await Tpo.findOne({
+            _id: req.params.id
+          }).then((results) => {
+            if (!results) {
+              return res
+                .status(Constants.er_not_found)
+                .json(errHandler.codeNotFoundErrorHandler());
+            } else {
+              res.status(Constants.success).json(results);
+            }
+          })
+          .catch((err) => {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          });
+      })
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -303,7 +304,7 @@ const StudentGet = function (req, res) {
 };
 
 //Update student's info
-const StudentPut = function (req, res) {
+const StudentPut = async function (req, res) {
 
   const body = req.body;
 
@@ -317,32 +318,33 @@ const StudentPut = function (req, res) {
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
-    const salt = bcrypt.genSaltSync(Constants.saltRound);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
-    Student.findOneAndUpdate({
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
+    await Student.findOneAndUpdate({
         _id: req.params.id
       },
-      body
-    )
-    try {
-      Student.findOne({
-          _id: req.params.id
-        }).then((results) => {
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.codeNotFoundErrorHandler());
-          } else {
-            res.status(Constants.success).json(results);
-          }
-        })
-        .catch((err) => {
+      body, async (err, result) => {
+        if (err) {
           return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        });
-    } catch (err) {
-      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-    }
+        }
+        await Student.findOne({
+            _id: req.params.id
+          }).then((results) => {
+            if (!results) {
+              return res
+                .status(Constants.er_not_found)
+                .json(errHandler.codeNotFoundErrorHandler());
+            } else {
+              res.status(Constants.success).json(results);
+            }
+          })
+          .catch((err) => {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          });
+      })
   } else {
     return res
       .status(Constants.er_authorization_failed)

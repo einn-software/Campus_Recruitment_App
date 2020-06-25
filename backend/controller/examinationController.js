@@ -117,27 +117,33 @@ const QuestionPut = function (req, res) {
         .json(errHandler.validationErrorHandler(error));
     }
     QuestionCollections.findOneAndUpdate({
-          _id: req.params.id,
-        },
-        body
-      )
-      .then(async (results) => {
-        if (!results) {
-          return res
-            .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
-        } else {
-          const updated = await QuestionCollections.findOne({
+        _id: req.params.id,
+      },
+      body, async (err, result) => {
+        if (err) {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        }
+        await QuestionCollections.findOne({
             _id: req.params.id
           })
-          return res.status(Constants.success).json(updated);
-        }
+          .then(async (results) => {
+            if (!results) {
+              return res
+                .status(Constants.er_not_found)
+                .json(errHandler.idNotFoundErrorHandler());
+            } else {
+              const updated = await QuestionCollections.findOne({
+                _id: req.params.id
+              })
+              return res.status(Constants.success).json(updated);
+            }
+          })
+          .catch((err) => {
+            return res
+              .status(Constants.er_failure)
+              .json(errHandler.errorHandler(err));
+          });
       })
-      .catch((err) => {
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.errorHandler(err));
-      });
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -316,27 +322,33 @@ const QuestionPaperPut = function (req, res) {
         .json(errHandler.validationErrorHandler(error));
     }
     QuestionPapers.findByIdAndUpdate({
-          _id: req.params.id,
-        },
-        body
-      )
-      .then(async (results) => {
-        if (!results) {
-          return res
-            .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
-        } else {
-          const updated = await QuestionPapers.findOne({
+        _id: req.params.id,
+      },
+      body, async (err, result) => {
+        if (err) {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        }
+        await QuestionPapers.findOne({
             _id: req.params.id
           })
-          return res.status(Constants.success).json(updated);
-        }
+          .then(async (results) => {
+            if (!results) {
+              return res
+                .status(Constants.er_not_found)
+                .json(errHandler.idNotFoundErrorHandler());
+            } else {
+              const updated = await QuestionPapers.findOne({
+                _id: req.params.id
+              })
+              return res.status(Constants.success).json(updated);
+            }
+          })
+          .catch((err) => {
+            return res
+              .status(Constants.er_failure)
+              .json(errHandler.errorHandler(err));
+          });
       })
-      .catch((err) => {
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.errorHandler(err));
-      });
   } else {
     return res
       .status(Constants.er_authorization_failed)

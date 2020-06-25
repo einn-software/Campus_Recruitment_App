@@ -101,25 +101,25 @@ const CollegePut =
             College.findOneAndUpdate({
                     code: req.params.code,
                 },
-                body);
-            try {
-                College.findOne({
-                        code: req.params.code
-                    }).then((results) => {
-                        if (!results) {
-                            return res
-                                .status(Constants.er_not_found)
-                                .json(errHandler.codeNotFoundErrorHandler());
-                        } else {
-                            res.status(Constants.success).json(results);
-                        }
-                    })
-                    .catch((err) => {
+                body, (err, result) => {
+                    if (err) {
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-                    });
-            } catch (err) {
-                return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-            }
+                    }
+                    College.findOne({
+                            code: req.params.code
+                        }).then((results) => {
+                            if (!results) {
+                                return res
+                                    .status(Constants.er_not_found)
+                                    .json(errHandler.codeNotFoundErrorHandler());
+                            } else {
+                                res.status(Constants.success).json(results);
+                            }
+                        })
+                        .catch((err) => {
+                            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+                        });
+                })
         } else {
             return res
                 .status(Constants.er_authorization_failed)

@@ -88,29 +88,35 @@ const AnswerSheetPut = function (req, res) {
       .json(errHandler.validationErrorHandler(error));
   }
   AnswerSheet.findOneAndUpdate({
-        _id: req.params.id,
-      },
-      body
-    )
-    .then(async (results) => {
-      if (!results) {
-        return res
-          .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
-      } else {
-        const answer = await AnswerSheet.findOne({
-          _id: req.params.id
-        }, {
-          "marks": 0
-        })
-        return res.status(Constants.success).json(answer);
+      _id: req.params.id,
+    },
+    body, async (err, result) => {
+      if (err) {
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
       }
+      await AnswerSheet.findOne({
+          _id: req.params.id
+        })
+        .then(async (results) => {
+          if (!results) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler());
+          } else {
+            const answer = await AnswerSheet.findOne({
+              _id: req.params.id
+            }, {
+              "marks": 0
+            })
+            return res.status(Constants.success).json(answer);
+          }
+        })
+        .catch((err) => {
+          return res
+            .status(Constants.er_failure)
+            .json(errHandler.errorHandler(err));
+        });
     })
-    .catch((err) => {
-      return res
-        .status(Constants.er_failure)
-        .json(errHandler.errorHandler(err));
-    });
 };
 
 //To delete the answerSheet's data by using their id

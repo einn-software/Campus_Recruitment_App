@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
@@ -18,6 +19,7 @@ import io.reactivex.schedulers.Schedulers
 class LoginPresenter(private var view: LoginContract.View?) :
     LoginContract.Presenter {
 
+    private val TAG = "LoginPresenter"
     private lateinit var sessionManager: SessionManager
     private lateinit var userRepository: IUserRepository
     private var subscriptions = CompositeDisposable()
@@ -35,22 +37,28 @@ class LoginPresenter(private var view: LoginContract.View?) :
             !loginRequest.code.toString().isDigitsOnly()->
                 view!!.onValidationMessage(Constants.INVALID_CODE_ERROR)
           else -> userRepository.let{
-              Log.d("LoginPresenter", "subscription started")
               view!!.showLoading(true)
+              Log.d("LoginPresenter", "isStudentValid ")
               subscriptions
                   .add(
                       userRepository
-                          .isStudentValid(loginRequest).subscribeOn(Schedulers.io())
+                          .isStudentValid(loginRequest)
+                              .handelNetworkError()
+                              .subscribeOn(Schedulers.io())
                           .observeOn(AndroidSchedulers.mainThread())
                           .subscribe(
                               { session ->
-                                  Log.d("inside passed Auth", "updating session with email \n ${session.email} \n")
+                                  Log.d(TAG, "updating session with email \n ${session.email} \n")
                                   updateSession(session)
                                   userRepository.saveStudent(session.token!!)
                                   view!!.showLoading(false)
                                   view!!.openMainActivity()
                               },
-                              { error -> Log.d("REQUEST FAILED !! ", error.message.toString())
+                              { error ->
+                                  Log.d(TAG, "REQUEST FAILED :  " + error.localizedMessage!!)
+                                  view!!.showLoading(false)
+                                  Toast.makeText(view!!.setContext(),
+                                          error.localizedMessage, Toast.LENGTH_SHORT).show()
                               }
                           ))
           }

@@ -138,7 +138,6 @@ class  StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.V
         fun newInstance():StudentLogin {
             val fragment = StudentLogin()
             val args = Bundle()
-
             return fragment
         }
     }

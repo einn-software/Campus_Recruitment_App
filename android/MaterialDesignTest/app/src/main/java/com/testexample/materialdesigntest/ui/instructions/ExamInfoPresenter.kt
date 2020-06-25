@@ -28,26 +28,27 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
         repository = PreExamInstructionsRepo()
 
         sessionManager = SessionManager(view!!.setContext())
-        Log.d(TAG,"fetch ExamInfo at token ${sessionManager.getUserAuthToken()}")
-
-        view?.let {
+        Log.d(TAG,"fetch ExamInfo at token ${sessionManager.getUserAuthToken()}, with Request: $request")
             subscriptions.add(
                 repository
                     .getExamInfoFromRemoteRepo(sessionManager.getUserAuthToken()!!,
                         request)
+                        .handelNetworkError()
                     .subscribeOn(Schedulers.io())
-                    .handelNetworkError()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {questionPaper ->
+                            Log.d(TAG, "Found Question Paper $questionPaper")
+                            view!!.showLoading(false)
                             view!!.showExamInfo(questionPaper)
                         },
-                        {
+                        {error->
+                            Log.d(TAG, "Error Finding Question Paper:  ${error.localizedMessage!!}")
+                            view!!.showLoading(false)
                             view!!.showExamInfo(null)
                         }
                     )
             )
-        }
     }
 
     override fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int){
@@ -56,8 +57,9 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
         sessionManager = SessionManager(view!!.setContext())
         val userId = sessionManager.getUserId()!!
         val token = sessionManager.getUserAuthToken()!!
+        view!!.showLoading(true)
         subscriptions.add(
-            studentRepo.getStudent(UserRequest(token,userId))
+            studentRepo.getStudent(UserRequest(token, userId))
                 .handelNetworkError()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,10 +71,11 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
                     },
                     {
                         error->
-                        println(error.localizedMessage)
+                        Log.d(TAG, error.localizedMessage!!)
+                        view!!.showLoading(false)
                     },
                     {
-                        println("on Complete")
+                        Log.d(TAG, "on Complete")
                     }
                 )
         )

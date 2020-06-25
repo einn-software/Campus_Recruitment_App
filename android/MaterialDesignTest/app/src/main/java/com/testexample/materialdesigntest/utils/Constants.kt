@@ -1,19 +1,12 @@
 package com.testexample.materialdesigntest.utils
 
-import com.google.gson.GsonBuilder
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-
 class Constants {
     companion object {
         internal const val BASE_URL = "http://45.122.120.109:3800/"
         internal const val API_KEY = ""
         internal const val APP_DB_NAME = ""
         internal const val PREF_NAME = ""
-        internal const val NO_EXAM_FOUND = "You have no Upcoming Exams yet!, please comeback later"
+        internal const val NO_EXAM_FOUND = "You have No upcoming Exams yet!,\n Please comeback later"
         internal const val EMPTY_EMAIL_ERROR = 1001
         internal const val EMPTY_ROLL_NO_ERROR = 1001
         internal const val INVALID_EMAIL_ERROR = 1002

@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.instructions
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.ui.ProgressBar
+import com.testexample.materialdesigntest.ui.login.LoginActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_exam_info.*
 import java.util.*
@@ -19,7 +21,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     private lateinit var presenter: InstructionsContract.ExamInfoPresenter
     private lateinit var progressBar: ProgressBar
     val TAG = "ExamInfo Fragment"
-    private lateinit var instructionsId: String
+    private var instructionsId: String? = null
     private var questionPaperId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,10 +38,14 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
 
         availableExamsTab.setOnClickListener {
             if (questionPaperId == null){
-
+                startActivity(Intent(activity, LoginActivity::class.java).apply {
+                   flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                })
+                requireActivity().finish()
             }
             else
-                openNextFragment(instructionsId, questionPaperId!!)
+                openNextFragment(instructionsId!!, questionPaperId!!)
         }
     }
 

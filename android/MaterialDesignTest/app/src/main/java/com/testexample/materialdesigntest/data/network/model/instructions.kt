@@ -24,6 +24,5 @@ data class EndExamRequest(
 ) : Parcelable
 
 data class EndExamResponse(
-    @SerializedName("message")val message: String,
-    @SerializedName("status")val status: Int
+    @SerializedName("message")val message: String
 )

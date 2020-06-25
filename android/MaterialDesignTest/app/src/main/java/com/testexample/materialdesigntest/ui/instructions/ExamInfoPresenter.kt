@@ -5,13 +5,11 @@ import com.testexample.materialdesigntest.data.interactor.implementation.PreExam
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
-import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
-import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -26,7 +24,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
     private lateinit var studentRepo: IUserRepository
     private var subscriptions = CompositeDisposable()
     private lateinit var sessionManager: SessionManager
-
+    override lateinit var student: Student
 
     override fun fetchExamInfo(request: FetchExamRequest) {
         Log.d(TAG, "<< fetchExamInfo")
@@ -41,12 +39,12 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             { questionPaper ->
- 				view!!.showLoading(false)
+ 				                view!!.showLoading(false)
                                 view!!.showExamInfo(questionPaper)
                                 Log.i(TAG, "Successfully fetch exam info")
                             },
                             {
-			    	view!!.showLoading(false)
+			    	            view!!.showLoading(false)
                                 view!!.showExamInfo(null)
                                 Log.e(TAG, "Error in fetching exam info: ${it.message.toString()}")
                             }
@@ -57,7 +55,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
 
     override fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int) {
         Log.d(TAG, "<< fetchCollegeCode")
-        studentRepo = UserRepository(view!!.setContext())
+        studentRepo = UserRepository()
         sessionManager = SessionManager(view!!.setContext())
         val userId = sessionManager.getUserId()!!
         val token = sessionManager.getUserAuthToken()!!
@@ -70,12 +68,13 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                         .subscribe(
                                 { success ->
                                     fetchExamInfo(FetchExamRequest(success.studentCollegeCode, year, month, dayOfMonth))
-
+                                    student = success
                                     Log.i(TAG, "Successfully fetch college code for student")
                                 },
                                 { error ->
                                     Log.e("TAG", "Error in fetching Student: ${error.message.toString()}")
-				    view!!.showLoading(false)
+				                    view!!.showLoading(false)
+
                                 },
                                 {
                                     Log.d(TAG, "getStudent Query completed")

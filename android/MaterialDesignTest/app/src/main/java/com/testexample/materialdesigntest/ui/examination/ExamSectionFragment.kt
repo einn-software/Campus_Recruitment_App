@@ -2,15 +2,11 @@ package com.testexample.materialdesigntest.ui.examination
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.graphics.Color
-import android.net.wifi.hotspot2.pps.Credential
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
@@ -22,10 +18,9 @@ import com.testexample.materialdesigntest.data.model.Section
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
-import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.*
+import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.Answer
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.questionview.*
-import org.jetbrains.anko.firstChild
 
 private const val SECTION = "section"
 private const val CREDENTIALS = "credentials"
@@ -94,13 +89,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         }
 
         saveAndNextButton.setOnClickListener {
-            questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_attempted)!!
-            this.moveToNextTab(4)
+            this.sendAnswer(4)
         }
 
         markReviewButton.setOnClickListener {
-            questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked_for_review)!!
-            this.moveToNextTab(5)
+            this.sendAnswer(5)
         }
 
         exitTestButton.setOnClickListener {
@@ -177,15 +170,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         Log.d(TAG, ">> setOptions")
     }
 
-    private fun moveToNextTab(state: Int) {
-        Log.d(TAG, "<< moveToNextTab")
+    private fun sendAnswer(state: Int) {
+        Log.d(TAG, "<< sendAnswer")
         val answerResponse = createResponse(state)
         presenter.saveResponse(answerResponse)
-
-        if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
-            questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
-
-        Log.d(TAG, ">> moveToNextTab")
+        Log.d(TAG, ">> sendAnswer")
     }
 
     fun setClock(timeLeftInTimer: Long) {
@@ -202,6 +191,17 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         timeLeftText += seconds.toString()
         timerText.text = timeLeftText
         Log.d(TAG, ">> setClock")
+    }
+
+    override fun markTabAndMoveNext(state: Int) {
+        Log.d(TAG, "<< nextTab()")
+        when (state){
+            4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_attempted)!!
+            5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked_for_review)!!
+        }
+        if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
+            questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
+        Log.d(TAG, ">> nextTab()")
     }
 
     override fun onResume() {

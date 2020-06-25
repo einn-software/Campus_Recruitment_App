@@ -1,6 +1,5 @@
 package com.testexample.materialdesigntest.data.network.retrofit
 
-import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.data.model.*
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
@@ -86,12 +85,12 @@ interface GetDataServices {
 
     @POST("student-answers")
     fun addStudentResponse(@Header("auth-token") token: String ,
-                           @Body request : StudentAnswerRequest): Single<StudentAnswerResponse>
+                           @Body request : StudentAnswerRequest): Single<StudentAnswerResponsePlain>
 
     @PUT("student-answers/{id}")
     fun updateStudentResponse(@Header("auth-token") token: String ,
                               @Path("id") id: String,
-                              @Body request: StudentAnswerRequest): Single<StudentAnswerResponse>
+                              @Body request: StudentAnswerRequest): Single<StudentAnswerResponsePlain>
 
     @POST("final-submission")
     fun endExam(@Header("auth-token") token: String ,

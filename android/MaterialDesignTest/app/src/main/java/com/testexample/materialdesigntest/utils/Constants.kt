@@ -27,6 +27,7 @@ class Constants {
 
         //Constants for Activities
         internal const val QUESTION_PAPER = "question_paper"
+        internal const val INSTRUCTION_ID = "instructions_id"
         internal const val STUDENT = "student"
         internal const val CODE = "college_code"
         internal const val ROLL = "roll_no"

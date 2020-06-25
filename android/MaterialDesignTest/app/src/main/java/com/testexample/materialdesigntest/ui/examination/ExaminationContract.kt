@@ -17,6 +17,7 @@ interface ExaminationContract {
     interface  FragmentView: BaseContract.BaseView<FragmentPresenter>{
         fun createResponse(state: Int): StudentAnswerResponse
         fun setQuestion(viewId: Int, question: Question, answer: ExaminationSectionPresenter.Answer)
+        fun markTabAndMoveNext(state: Int)
     }
 
     interface FragmentPresenter: BaseContract.BasePresenter{

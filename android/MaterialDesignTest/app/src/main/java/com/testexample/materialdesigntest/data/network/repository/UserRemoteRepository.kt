@@ -44,5 +44,16 @@ class UserRemoteRepository : IUserRemoteRepository {
         return api.getCollegeList()
     }
 
-
+    override fun callForgotPasswordApi(email: String, userType: String): Single<String> {
+        var request : Single<String> = Single.just("")
+        when (userType) {
+            "student" -> {
+                request = api.studentForgotPassword(email)
+            }
+            "tpo" -> {
+                request = api.tpoForgotPassword(email)
+            }
+        }
+        return request
+    }
 }

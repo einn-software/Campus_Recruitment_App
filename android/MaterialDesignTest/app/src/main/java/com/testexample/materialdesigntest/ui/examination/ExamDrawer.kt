@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.QuestionPaper
-import com.testexample.materialdesigntest.data.model.QuestionsList
 import com.testexample.materialdesigntest.data.model.Section
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
@@ -29,9 +28,6 @@ import com.testexample.materialdesigntest.ui.result.ResultActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_exam_drawer.*
 import kotlinx.android.synthetic.main.appbar.*
-import kotlinx.android.synthetic.main.drawer_header.*
-import org.jetbrains.anko.contentView
-import org.w3c.dom.Text
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -254,7 +250,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     override fun openNextActivity() {
         Log.d(TAG, "<< openNextActivity")
-        startActivity(Intent(this, ResultActivity::class.java))
+        startActivity(Intent(this, ResultActivity::class.java)
+                .apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        this@ExamDrawer.finish()
         Log.d(TAG, ">> openNextActivity")
     }
 

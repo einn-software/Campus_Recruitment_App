@@ -1,8 +1,8 @@
 package com.testexample.materialdesigntest.data.interactor.interfaces
 
-import com.testexample.materialdesigntest.data.model.*
+import com.testexample.materialdesigntest.data.model.Question
+import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.network.model.*
-import io.reactivex.Completable
 import io.reactivex.Single
 
 interface IExaminationRepo {
@@ -11,9 +11,9 @@ interface IExaminationRepo {
     fun loadQuestionPaperFromRemote(token: String, fetchExamRequest: FetchExamRequest)
             : Single<QuestionPaper>
     fun saveResponse(token: String, response: StudentAnswerRequest)
-            : Single<StudentAnswerResponse>
+            : Single<StudentAnswerResponsePlain>
     fun updateResponse(token: String, response: StudentAnswerResponse)
-            : Single<StudentAnswerResponse>
+            : Single<StudentAnswerResponsePlain>
     fun stopExam(token: String, endExamRequest: EndExamRequest): Single<EndExamResponse>
 
 }

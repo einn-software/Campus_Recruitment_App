@@ -1,54 +1,24 @@
 package com.testexample.materialdesigntest.data.interactor.implementation
 
-import android.content.Context
 import android.util.Log
-import com.testexample.materialdesigntest.data.database.repository.IUserRoomRepository
-import com.testexample.materialdesigntest.data.database.repository.UserRoomRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.repository.IUserRemoteRepository
 import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepository
-import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
-// makes a singleton, has a single instance running at a time
-class UserRepository(context: Context) : IUserRepository {
+class UserRepository() : IUserRepository {
 
     private val TAG = "UserRepository"
     private val remoteRepository: IUserRemoteRepository = UserRemoteRepository()
-
-    private val roomRepository: IUserRoomRepository = UserRoomRepository(context)
 
     override fun isStudentValid(loginRequest: StudentLoginRequest): Single<AuthResponse> {
         Log.d(TAG, "<< isStudentValid()")
         Log.d(TAG, ">> isStudentValid()")
         return remoteRepository.authStudent(loginRequest)
-    }
-
-    override fun isExistingUser(userEmail: String): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveStudent(token: String) {
-        Log.d(TAG, "<< saveStudent")
-        val student = remoteRepository.getStudent(UserRequest(token, ""))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .handelNetworkError()
-                .subscribe(
-                        { student ->
-                            roomRepository.saveUser(student!!)
-                            Log.i(TAG, "get student data successfully")
-                        },
-                        { error -> Log.e(TAG, error.toString()) },
-                        { Log.d(TAG, "getStudent query completed ") }
-                )
-        Log.d(TAG, ">> saveStudent")
     }
 
     override fun getStudent(userRequest: UserRequest): Flowable<Student> {
@@ -57,12 +27,10 @@ class UserRepository(context: Context) : IUserRepository {
         return remoteRepository.getStudent(userRequest)
     }
 
-    override fun forgotPasswordStudent(email: String): Single<String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun forgotPasswordTPO(email: String): Single<String> {
-        TODO("Not yet implemented")
+    override fun forgotPassword(email: String, userTpe: String): Single<String> {
+        Log.d(TAG, "<< forgotPassword()")
+        Log.d(TAG, ">> forgotPassword()")
+        return remoteRepository.callForgotPasswordApi(email, userTpe)
     }
 
     override fun isTpoValid(email: String, password: String): Single<AuthResponse> {

@@ -1,18 +1,10 @@
 package com.testexample.materialdesigntest.ui.instructions
 
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.data.model.Instructions
-import com.testexample.materialdesigntest.ui.examination.ExamDrawer
-import com.testexample.materialdesigntest.ui.login.LoginPrompt
-import kotlinx.android.synthetic.main.activity_instruction.*
 import kotlinx.android.synthetic.main.appbar.*
-import java.text.DateFormat
-import java.util.*
 
 
 class InstructionActivity : AppCompatActivity() {

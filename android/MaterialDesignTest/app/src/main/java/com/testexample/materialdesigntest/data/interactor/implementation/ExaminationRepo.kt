@@ -26,13 +26,13 @@ class ExaminationRepo() : IExaminationRepo {
         return remoteRepo.callApiForQuestion(token, questionId)
     }
 
-    override fun saveResponse(token: String, response: StudentAnswerRequest): Single<StudentAnswerResponse> {
+    override fun saveResponse(token: String, response: StudentAnswerRequest): Single<StudentAnswerResponsePlain> {
         Log.d(TAG, "<< saveResponse()")
         Log.d(TAG, ">> saveResponse()")
         return remoteRepo.callApiForSavingAnswer(token, response)
     }
 
-    override fun updateResponse(token: String, response: StudentAnswerResponse): Single<StudentAnswerResponse> {
+    override fun updateResponse(token: String, response: StudentAnswerResponse): Single<StudentAnswerResponsePlain> {
         Log.d(TAG, "<< updateResponse()")
         Log.d(TAG, ">> updateResponse()")
         return remoteRepo.callApiForUpdatingAnswer(token, response)

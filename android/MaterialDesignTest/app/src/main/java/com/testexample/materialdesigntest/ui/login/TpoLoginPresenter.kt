@@ -2,8 +2,8 @@ package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
 import android.widget.Toast
-import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
@@ -12,11 +12,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-
-/**\
- * handles the actions from the view and updates the UI as required
- */
-// Presenter Constructor takes view Instance
 class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContract.TpoPresenter {
 
     private val TAG = "TpoLoginPresenter"
@@ -26,7 +21,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
 
     override fun onTpoLogin(email: String, password: String) {
         Log.d(TAG, "<< onTpoLogin")
-        userRepository = UserRepository(view!!.setContext())
+        userRepository = UserRepository()
 
         when {
             email.isEmpty() ->
@@ -35,7 +30,8 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                 view!!.onValidationMessage(Constants.INVALID_ROLL_NO_ERROR)
             password.isEmpty() ->
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
-            else -> userRepository.let {
+            else ->
+                userRepository.let {
                 view!!.showLoading(true)
                 subscriptions.add(userRepository
                         .isTpoValid(email, password)
@@ -45,14 +41,14 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                         .subscribe(
                                 { response ->
                                     Log.i(TAG, "Successfully validate user")
-                                    updateSession(response, Constants.Companion.LoggedInMode.LOGGED_IN_MODE_SERVER)
+                                    updateSession(response)
                                     view!!.showLoading(false)
                                     view!!.openMainActivity()
                                 },
                                 { error ->
                                     Log.e(TAG, "Error in validating TPO: ${error.message.toString()}")
-					Toast.makeText(view!!.setContext(), error.message.toString(),
-                                            Toast.LENGTH_LONG).show()
+					                Toast.makeText(view!!.setContext(),
+                                            error.localizedMessage, Toast.LENGTH_LONG).show()
                                 }
                         ))
             }
@@ -60,7 +56,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
         Log.d(TAG, ">> onTpoLogin")
     }
 
-    private fun updateSession(response: AuthResponse, loginStatus: Constants.Companion.LoggedInMode) {
+    private fun updateSession(response: AuthResponse) {
         Log.d(TAG, "<< updateSession")
         sessionManager = SessionManager(view!!.setContext())
         sessionManager.saveUserSession(response)

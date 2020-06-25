@@ -19,7 +19,7 @@ interface InstructionsContract {
     interface ExamInfoView: BaseContract.BaseView<ExamInfoPresenter>{
         fun showExamInfo(questionPaper: QuestionPaper?)
         fun showLoading(flag: Boolean)
-        fun openNextFragment(instructionsId: String, questionPaperId: String)
+        fun openNextFragment(questionPaper: QuestionPaper, student: Student)
     }
 
     interface ExamInfoPresenter: BaseContract.BasePresenter{

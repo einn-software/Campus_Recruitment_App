@@ -18,7 +18,7 @@ class TPODashboardPresenter(private var view: TPODashboardContract.View?) : TPOD
 
     override fun fetchTpoDetails(token: String, id: String) {
         Log.d(TAG,"<< fetchTpoDetails()")
-        repository = UserRepository(view!!.setContext())
+        repository = UserRepository()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
             sessionManager.getUserAuthToken()?.let { it1 ->

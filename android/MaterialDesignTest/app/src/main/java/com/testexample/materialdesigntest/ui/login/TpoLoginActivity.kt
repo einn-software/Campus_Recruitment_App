@@ -3,14 +3,14 @@ package com.testexample.materialdesigntest.ui.login
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
-import com.testexample.materialdesigntest.ui.tpoDashboard.TpoDashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
+import com.testexample.materialdesigntest.ui.tpoDashboard.TPODashboard
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_login.*
 
@@ -18,7 +18,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
     private val TAG = "TpoLoginActivity"
     internal lateinit var presenter: LoginContract.TpoPresenter
-    lateinit var progressBar: ProgressBar
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "<< onCreate")
@@ -35,11 +35,12 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
         resetPasswordLink.setOnClickListener {
             val intent = Intent(this, ResetAuthenticationActivity::class.java)
+            intent.putExtra("user_type", "tpo")
             startActivity(intent)
         }
 
         registrationLink.setOnClickListener {
-            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse("URL")
             startActivity(openURL)
         }

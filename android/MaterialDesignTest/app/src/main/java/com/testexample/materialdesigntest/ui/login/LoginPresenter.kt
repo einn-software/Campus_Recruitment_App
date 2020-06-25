@@ -1,9 +1,10 @@
 package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.core.text.isDigitsOnly
-import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
@@ -24,7 +25,7 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
 
     override fun onStudentLogin(loginRequest: StudentLoginRequest) {
         Log.d(TAG, "<< onStudentLogin")
-        userRepository = UserRepository(view!!.setContext())
+        userRepository = UserRepository()
 
         when {
             loginRequest.rollNo.isEmpty() ->
@@ -38,26 +39,25 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
             else -> userRepository.let {
                 Log.d("LoginPresenter", "subscription started")
                 view!!.showLoading(true)
-                subscriptions
-                        .add(
-                                userRepository
-                                        .isStudentValid(loginRequest)
-					.handelNetworkError()
-					.subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                { session ->
-                                                    updateSession(session)
-                                                    userRepository.saveStudent(session.token)
-                                                    view!!.showLoading(false)
-                                                    view!!.openMainActivity()
-                                                    Log.i(TAG, "Successfully validate Student")
-                                                },
-                                                { error -> Log.e(TAG, "Error in validate student: ${error.toString()}") }
- view!!.showLoading(false)
-                                  Toast.makeText(view!!.setContext(),
-                                          error.localizedMessage, Toast.LENGTH_SHORT).show()
-                                        ))
+                subscriptions.add(
+                        userRepository
+                                .isStudentValid(loginRequest)
+                                .handelNetworkError()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        { session ->
+                                            updateSession(session)
+                                            view!!.showLoading(false)
+                                            view!!.openMainActivity()
+                                            Log.i(TAG, "Successfully validate Student")
+                                        },
+                                        { error ->
+                                            Log.e(TAG, "Error in validate student: ${error.localizedMessage}")
+                                            view!!.showLoading(false)
+                                            Toast.makeText(view!!.setContext(),
+                                                    error.localizedMessage, Toast.LENGTH_SHORT).show()
+                                        } ))
             }
         }
         Log.d(TAG, ">> onStudentLogin")
@@ -66,7 +66,7 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
     override fun generateCollegeList() {
         Log.d(TAG, "<< generateCollegeList")
         var collegeList: List<CollegeResponse> = emptyList()
-        userRepository = UserRepository(view!!.setContext())
+        userRepository = UserRepository()
 
         view.let {
             userRepository.getCollegeList()

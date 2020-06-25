@@ -25,13 +25,13 @@ class ExaminationRemoteRepo : IExaminationRemoteRepo {
         return api.getQuestion(token, questionId)
     }
 
-    override fun callApiForSavingAnswer(token: String, request: StudentAnswerRequest): Single<StudentAnswerResponse> {
+    override fun callApiForSavingAnswer(token: String, request: StudentAnswerRequest): Single<StudentAnswerResponsePlain> {
         Log.d(TAG, "<< callApiForSavingAnswer()")
         Log.d(TAG, ">> callApiForSavingAnswer()")
         return api.addStudentResponse(token, request)
     }
 
-    override fun callApiForUpdatingAnswer(token: String, request: StudentAnswerResponse): Single<StudentAnswerResponse> {
+    override fun callApiForUpdatingAnswer(token: String, request: StudentAnswerResponse): Single<StudentAnswerResponsePlain> {
         Log.d(TAG, "<< callApiForUpdatingAnswer()")
         Log.d(TAG, ">> callApiForUpdatingAnswer()")
         return api.updateStudentResponse(token, request.id, request.studentAnswer)

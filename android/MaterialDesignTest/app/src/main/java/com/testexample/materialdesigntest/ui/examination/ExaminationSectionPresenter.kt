@@ -1,11 +1,12 @@
 package com.testexample.materialdesigntest.ui.examination
 
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
-import com.testexample.materialdesigntest.data.network.model.EndExamRequest
-import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
+import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponsePlain
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,29 +23,37 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
     private var subscriptions = CompositeDisposable()
     private val token = sessionManager.getUserAuthToken()!!
 
-    override fun saveResponse(response: StudentAnswerResponse) {
+    override fun saveResponse(newResponse: StudentAnswerResponse) {
         Log.d(TAG, "<< saveResponse")
         repository = ExaminationRepo()
 
-        val saveMethod: Single<StudentAnswerResponse> = if (answerMap.containsKey(response.studentAnswer.questionId)) {
-            repository.updateResponse(token, response)
-        } else {
-            repository.saveResponse(token, response.studentAnswer)
-        }
+        val saveMethod: Single<StudentAnswerResponsePlain> =
+                if (answerMap.containsKey(newResponse.studentAnswer.questionId))
+                {
+                    repository.updateResponse(token, newResponse)
+                } else {
+                    repository.saveResponse(token, newResponse.studentAnswer)
+                }
 
-        subscriptions.add(saveMethod.subscribeOn(Schedulers.io())
+        subscriptions.add(saveMethod
+                .handelNetworkError()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { answer ->
-                            if (!answerMap.containsKey(answer.studentAnswer.questionId)) {
-                                answerMap[answer
-                                        .studentAnswer.questionId] = Answer(answer.id,
-                                        answer.studentAnswer.state, answer.studentAnswer.selectedOption)
+                            if (!answerMap.containsKey(answer.questionId)) {
+                                answerMap[answer.questionId] = Answer(answer.id,
+                                        answer.state, answer.selectedOption)
+
                             }
+                            view!!.markTabAndMoveNext(answer.state)
                             Log.i(TAG, "Successfully save response")
                         },
                         { error ->
                             Log.e(TAG, "Error in saving response with reason ${error.message.toString()}")
+                            Toast.makeText(view!!.setContext(),
+                                    "Counldn't Save the Answer, Please Try Again!!",
+                                    Toast.LENGTH_LONG).show()
                         }
                 )
         )
@@ -68,7 +77,11 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                     Log.i(TAG, "Successfully fetch questions from remote")
                                 },
                                 { error ->
-                                    Log.d(TAG, "Error in fetching questions from remote with reason ${error.message.toString()}")
+                                    Log.d(TAG,
+                                            "Error in fetching questions from remote with reason ${error.message.toString()}")
+                                    Toast.makeText(view!!.setContext(),
+                                            "Counldn't Load the Question, Please Try Again!!",
+                                            Toast.LENGTH_LONG).show()
                                 }
                         )
         )

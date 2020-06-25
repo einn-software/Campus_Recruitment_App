@@ -16,11 +16,11 @@ interface IExaminationRemoteRepo {
 
     fun callApiForSavingAnswer(token: String,
                                request: StudentAnswerRequest)
-            : Single<StudentAnswerResponse>
+            : Single<StudentAnswerResponsePlain>
 
     fun callApiForUpdatingAnswer(token: String,
                                  request: StudentAnswerResponse)
-            : Single<StudentAnswerResponse>
+            : Single<StudentAnswerResponsePlain>
 
     fun callApiForEndingExam(token: String,
                              endRequest: EndExamRequest)

@@ -53,7 +53,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
         }
 
         registrationLink.setOnClickListener {
-            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse("URL")
             startActivity(openURL)
         }
@@ -62,7 +62,11 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
 
     override fun openMainActivity() {
         Log.d(TAG, "<< openMainActivity")
-        startActivity(Intent(activity, InstructionActivity::class.java))
+        startActivity(Intent(activity, InstructionActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        requireActivity().finish()
         Log.d(TAG, ">> openMainActivity")
     }
 
@@ -101,7 +105,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
     override fun loadSpinner(collegeList: List<CollegeResponse>) {
         Log.d(TAG, "<< loadSpinner")
         val collegeNameList = getCollegeNameList(collegeList)
-        searchableSpinnerForCollege.adapter = ArrayAdapter<String>(requireActivity(),
+        searchableSpinnerForCollege.adapter = ArrayAdapter(requireActivity(),
                 android.R.layout.simple_spinner_item, collegeNameList)
 
         //set code
@@ -154,7 +158,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
     companion object {
         fun newInstance(): StudentLogin {
             val fragment = StudentLogin()
-            val args = Bundle()
+            Bundle()
 
             return fragment
         }

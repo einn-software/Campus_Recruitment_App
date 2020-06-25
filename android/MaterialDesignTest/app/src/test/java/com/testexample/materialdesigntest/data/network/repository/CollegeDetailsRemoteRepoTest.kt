@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.junit.ClassRule
 
 class CollegeDetailsRemoteRepoTest {
 
@@ -38,9 +37,9 @@ class CollegeDetailsRemoteRepoTest {
     //test function for callApiForGetCollegeDetails
     @Test
     fun callApiForGetCollegeDetails_withValidParams() {
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
-        resultRemoteRepo.callApiForGetCollegeDetails(token,code)
+        resultRemoteRepo.callApiForGetCollegeDetails(token, code)
                 .handelNetworkError()
                 .subscribe({ success ->
                     Log.i(TAG, "callApiForGetCollegeDetails_withValidParams(): College Details is $success")
@@ -52,7 +51,7 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertFalse("callApiForGetCollegeDetails_withValidParams(): Received Invalid College Details",response.name.isBlank() && response.code <2000 && response.address.isBlank()&& response.email.isBlank() && response.phone.isBlank())
+            assertFalse("callApiForGetCollegeDetails_withValidParams(): Received Invalid College Details", response.name.isBlank() && response.code < 2000 && response.address.isBlank() && response.email.isBlank() && response.phone.isBlank())
         } else {
             fail("callApiForGetCollegeDetails_withValidParams(): Verification failed with message: $failure")
         }
@@ -61,7 +60,7 @@ class CollegeDetailsRemoteRepoTest {
     @Test
     fun callApiForGetCollegeDetails_withInvalidToken() {
         var failure = ""
-        resultRemoteRepo.callApiForGetCollegeDetails("",code)
+        resultRemoteRepo.callApiForGetCollegeDetails("", code)
                 .handelNetworkError()
                 .subscribe(
                         { success ->
@@ -104,11 +103,11 @@ class CollegeDetailsRemoteRepoTest {
     // Test functions for updating college details
     @Test
     fun callApiForUpdateCollegeDetails_withAllParams() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -122,11 +121,11 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
         } else {
             fail("callApiForUpdateCollegeDetails_withAllParams(): Verification failed with message: $failure")
         }
@@ -134,11 +133,11 @@ class CollegeDetailsRemoteRepoTest {
 
     @Test
     fun callApiForUpdateCollegeDetails_withName() {
-        val req =  UpdateCollegeDetails("Nitra1 Technical Campus",
+        val req = UpdateCollegeDetails("Nitra1 Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -152,22 +151,23 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)        } else {
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
+        } else {
             fail("callApiForUpdateCollegeDetails_withName(): Verification failed with message: $failure")
         }
     }
 
     @Test
     fun callApiForUpdateCollegeDetails_withAdddress() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay1 Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -181,22 +181,23 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)        } else {
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
+        } else {
             fail("callApiForUpdateCollegeDetails_withAdddress(): Verification failed with message: $failure")
         }
     }
 
     @Test
     fun callApiForUpdateCollegeDetails_withUniversity() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ1 Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ1 Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -210,22 +211,23 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)        } else {
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
+        } else {
             fail("callApiForUpdateCollegeDetails_withUniversity(): Verification failed with message: $failure")
         }
     }
 
     @Test
     fun callApiForUpdateCollegeDetails_withEmail() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra1802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra1802@ntc.ac.in",
                 "8090778901")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -239,22 +241,23 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)        } else {
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
+        } else {
             fail("callApiForUpdateCollegeDetails_withEmail(): Verification failed with message: $failure")
         }
     }
 
     @Test
     fun callApiForUpdateCollegeDetails_withPhone() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901111")
-        var response = College("","",0,"","","","")
+        var response = College("", "", 0, "", "", "", "")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
@@ -268,20 +271,21 @@ class CollegeDetailsRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name",response.name, req.name)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address",response.address, req.address)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university",response.university, req.university)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email",response.email, req.email)
-            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone",response.phone, req.phone)        } else {
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid name", req.name, response.name)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid address", req.address, response.address)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid university", req.university, response.university)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid email", req.email, response.email)
+            assertEquals("callApiForUpdateCollegeDetails_withAllParams() received invalid phone", req.phone, response.phone)
+        } else {
             fail("callApiForUpdateCollegeDetails_withPhone(): Verification failed with message: $failure")
         }
     }
 
     @Test
     fun callApiForUpdateCollegeDetails_withInvalidToken() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
         var failure = ""
         resultRemoteRepo.callApiForUpdateCollegeDetails("", code, req)
@@ -304,12 +308,12 @@ class CollegeDetailsRemoteRepoTest {
 
     @Test
     fun callApiForUpdateCollegeDetails_withInvalidCode() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","nitra802@ntc.ac.in",
+                "APJ Abdul Kalam University", "nitra802@ntc.ac.in",
                 "8090778901")
         var failure = ""
-        resultRemoteRepo.callApiForUpdateCollegeDetails(token,122, req)
+        resultRemoteRepo.callApiForUpdateCollegeDetails(token, 122, req)
                 .handelNetworkError()
                 .subscribe(
                         { success ->
@@ -329,12 +333,12 @@ class CollegeDetailsRemoteRepoTest {
 
     @Test
     fun callApiForUpdateCollegeDetails_withInvalidEmailFormat() {
-        val req =  UpdateCollegeDetails("Nitra Technical Campus",
+        val req = UpdateCollegeDetails("Nitra Technical Campus",
                 "Sanjay Nagar, Ghaziabad",
-                "APJ Abdul Kalam University","cbcdefg.in",
+                "APJ Abdul Kalam University", "cbcdefg.in",
                 "8090778901")
         var failure = ""
-        resultRemoteRepo.callApiForUpdateCollegeDetails(token,code, req)
+        resultRemoteRepo.callApiForUpdateCollegeDetails(token, code, req)
                 .handelNetworkError()
                 .subscribe(
                         { success ->

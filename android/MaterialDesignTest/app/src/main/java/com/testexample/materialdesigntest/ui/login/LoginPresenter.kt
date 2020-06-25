@@ -15,14 +15,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 // Presenter Constructor takes view Instance
-class LoginPresenter(private var view: LoginContract.View?) :
-    LoginContract.Presenter {
+class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Presenter {
 
+    private val TAG = "LoginPresenter"
     private lateinit var sessionManager: SessionManager
     private lateinit var userRepository: IUserRepository
     private var subscriptions = CompositeDisposable()
 
     override fun onStudentLogin(loginRequest: StudentLoginRequest) {
+        Log.d(TAG, "<< onStudentLogin")
         userRepository = UserRepository(view!!.setContext())
 
         when {
@@ -30,67 +31,71 @@ class LoginPresenter(private var view: LoginContract.View?) :
                 view!!.onValidationMessage(Constants.EMPTY_ROLL_NO_ERROR)
             !loginRequest.rollNo.isDigitsOnly() ->
                 view!!.onValidationMessage(Constants.INVALID_ROLL_NO_ERROR)
-            loginRequest.password.isEmpty()->
+            loginRequest.password.isEmpty() ->
                 view!!.onValidationMessage(Constants.EMPTY_PASSWORD_ERROR)
             loginRequest.code.toString().isEmpty() ->
                 view!!.onValidationMessage(Constants.EMPTY_CODE_ERROR)
-          else -> userRepository.let{
-              Log.d("LoginPresenter", "subscription started")
-              view!!.showLoading(true)
-              subscriptions
-                  .add(
-                      userRepository
-                          .isStudentValid(loginRequest).subscribeOn(Schedulers.io())
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .subscribe(
-                              { session ->
-                                  Log.d("inside passed Auth", "updating session with email \n ${session.email} \n")
-                                  updateSession(session)
-                                  userRepository.saveStudent(session.token)
-                                  view!!.showLoading(false)
-                                  view!!.openMainActivity()
-                              },
-                              { error -> Log.d("REQUEST FAILED !! ", error.toString()) }
-                          ))
-          }
+            else -> userRepository.let {
+                Log.d("LoginPresenter", "subscription started")
+                view!!.showLoading(true)
+                subscriptions
+                        .add(
+                                userRepository
+                                        .isStudentValid(loginRequest).subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(
+                                                { session ->
+                                                    updateSession(session)
+                                                    userRepository.saveStudent(session.token)
+                                                    view!!.showLoading(false)
+                                                    view!!.openMainActivity()
+                                                    Log.i(TAG, "Successfully validate Student")
+                                                },
+                                                { error -> Log.e(TAG, "Error in validate student: ${error.toString()}") }
+                                        ))
+            }
         }
+        Log.d(TAG, ">> onStudentLogin")
     }
 
     override fun generateCollegeList() {
-        Log.d("Presenter","generate College List")
+        Log.d(TAG, "<< generateCollegeList")
         var collegeList: List<CollegeResponse> = emptyList()
         userRepository = UserRepository(view!!.setContext())
 
         view.let {
             userRepository.getCollegeList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .handelNetworkError()
-                .subscribe(
-                    {college ->
-                        Log.d("generate college List","onNext")
-                        collegeList = college
-                    },
-                    {error ->
-                        Log.d("generate college List","onError")
-                        println(error.localizedMessage)
-                    },
-                    {
-                        Log.d("generate college List","onComplete")
-                        view!!.loadSpinner(collegeList)
-                    }
-                )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .handelNetworkError()
+                    .subscribe(
+                            { college ->
+                                Log.i(TAG, "Successfully fetch college list")
+                                collegeList = college
+                            },
+                            { error ->
+                                Log.e(TAG, "Error in fetching college list ${error.message.toString()}")
+
+                            },
+                            {
+                                Log.d(TAG, "Fetch query for college list completed")
+                                view!!.loadSpinner(collegeList)
+                            }
+                    )
         }
+        Log.d(TAG, ">> generateCollegeList")
 
     }
 
     private fun updateSession(session: AuthResponse) {
+        Log.d(TAG, "<< updateSession")
         sessionManager = SessionManager(view!!.setContext())
         sessionManager.saveUserSession(session)
+        Log.d(TAG, ">> updateSession")
     }
 
     override fun onDestroy() {
         subscriptions.clear()
-        view  = null
+        view = null
     }
 }

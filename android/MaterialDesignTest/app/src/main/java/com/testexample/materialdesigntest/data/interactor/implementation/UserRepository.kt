@@ -10,22 +10,23 @@ import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.data.network.repository.IUserRemoteRepository
 import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepository
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 // makes a singleton, has a single instance running at a time
-class UserRepository(context: Context)
-    : IUserRepository {
+class UserRepository(context: Context) : IUserRepository {
 
-    private val TAG = "User Repository"
-    private val remoteRepository:
-            IUserRemoteRepository = UserRemoteRepository()
+    private val TAG = "UserRepository"
+    private val remoteRepository: IUserRemoteRepository = UserRemoteRepository()
 
     private val roomRepository: IUserRoomRepository = UserRoomRepository(context)
 
     override fun isStudentValid(loginRequest: StudentLoginRequest): Single<AuthResponse> {
+        Log.d(TAG, "<< isStudentValid()")
+        Log.d(TAG, ">> isStudentValid()")
         return remoteRepository.authStudent(loginRequest)
     }
 
@@ -34,22 +35,25 @@ class UserRepository(context: Context)
     }
 
     override fun saveStudent(token: String) {
-        Log.d(TAG, "save Student")
-        val student = remoteRepository.getStudent(UserRequest(token,""))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { student ->
-                    Log.d(TAG, "user data saved")
-                    roomRepository.saveUser(student!!)
-                    println(student)
-                },
-                {error -> Log.d(TAG, error.toString())},
-                { println("fetch query completed ")}
-            )
+        Log.d(TAG, "<< saveStudent")
+        val student = remoteRepository.getStudent(UserRequest(token, ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .handelNetworkError()
+                .subscribe(
+                        { student ->
+                            roomRepository.saveUser(student!!)
+                            Log.i(TAG, "get student data successfully")
+                        },
+                        { error -> Log.e(TAG, error.toString()) },
+                        { Log.d(TAG, "getStudent query completed ") }
+                )
+        Log.d(TAG, ">> saveStudent")
     }
 
     override fun getStudent(userRequest: UserRequest): Flowable<Student> {
+        Log.d(TAG, "<< getStudent()")
+        Log.d(TAG, ">> getStudent()")
         return remoteRepository.getStudent(userRequest)
     }
 
@@ -62,14 +66,20 @@ class UserRepository(context: Context)
     }
 
     override fun isTPOValid(email: String, password: String): Single<AuthResponse> {
+        Log.d(TAG, "<< isTPOValid()")
+        Log.d(TAG, ">> isTPOValid()")
         return remoteRepository.authTPO(TpoLoginRequest(email, password))
     }
 
     override fun getTPO(userRequest: UserRequest): Flowable<TPO> {
+        Log.d(TAG, "<< getTPO()")
+        Log.d(TAG, ">> getTPO()")
         return remoteRepository.getTPO(userRequest)
     }
 
     override fun getCollegeList(): Flowable<List<CollegeResponse>> {
+        Log.d(TAG, "<< getCollegeList()")
+        Log.d(TAG, ">> getCollegeList()")
         return remoteRepository.callAPIForCollegeList()
     }
 

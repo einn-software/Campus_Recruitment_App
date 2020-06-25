@@ -14,12 +14,11 @@ import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.examination.ExamDrawer
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_instructions.*
-import com.testexample.materialdesigntest.ui.instructions.TAG as InstructionsTAG
 
-private const val TAG = "Instruction Fragment"
 
 class  InstructionsFragment : Fragment(R.layout.fragment_instructions), InstructionsContract.View{
 
+    private val TAG = "InstructionsFragment"
     private lateinit var presenter: InstructionsContract.Presenter
     private lateinit var progressBar: ProgressBar
     private lateinit var questionPaper: QuestionPaper
@@ -27,20 +26,22 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "<< onCreate")
 
         arguments?.let {
             questionPaper = it.getParcelable(Constants.QUESTION_PAPER)!!
             student = it.getParcelable(Constants.STUDENT)!!
         }
+        Log.d(TAG, ">> onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(InstructionsTAG," on viewCreated")
+        Log.d(TAG,"<< onViewCreated")
+
         progressBar = ProgressBar(requireActivity())
         presenter = InstructionPresenter(this)
-        Log.d(InstructionsTAG, questionPaper.toString() + student.toString())
         presenter.fetchInstructions(questionPaper.instructionId)
 
         agreeToGuidelinesCheck.setOnClickListener {
@@ -54,10 +55,13 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
                     putExtra(Constants.STUDENT, student)
                     })
         }
+        Log.d(TAG,">> onViewCreated")
     }
 
     override fun showInstructions(instruction: Instructions) {
+        Log.d(TAG,"<< showInstructions")
         guidelinesText.text = instruction.message
+        Log.d(TAG,">> showInstructions")
     }
 
     override fun setPresenter(presenter: InstructionsContract.Presenter) {

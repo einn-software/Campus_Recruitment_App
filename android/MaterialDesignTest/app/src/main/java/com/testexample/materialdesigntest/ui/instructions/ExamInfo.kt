@@ -19,18 +19,18 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     private lateinit var instructionsFragment: InstructionsFragment
     private lateinit var presenter: InstructionsContract.ExamInfoPresenter
     private lateinit var progressBar: ProgressBar
-    val TAG = "ExamInfo Fragment"
+    val TAG = "ExamInfo"
     private lateinit var questionPaper: QuestionPaper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG,"on view created")
+        Log.d(TAG, "<< onViewCreated")
 
         progressBar = ProgressBar(requireActivity())
         val calender = Calendar.getInstance()
-        val year : Int = calender.get(Calendar.YEAR)
-        val month : Int = calender.get(Calendar.MONTH)
-        val dayOfMonth : Int = calender.get(Calendar.DAY_OF_MONTH)
+        val year: Int = calender.get(Calendar.YEAR)
+        val month: Int = calender.get(Calendar.MONTH)
+        val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
         presenter = ExamInfoPresenter(this)
 
         presenter.fetchCollegeCode(year, month, dayOfMonth)
@@ -39,10 +39,13 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
             openNextFragment(questionPaper = this.questionPaper,
                     student = presenter.student)
         }
+        Log.d(TAG, ">> onViewCreated")
     }
 
     override fun showExamInfo(questionPaper: QuestionPaper?) {
+        Log.d(TAG, "<< showExamInfo")
         val message: String
+
         if (null == questionPaper) {
             message = Constants.NO_EXAM_FOUND
         } else {
@@ -51,9 +54,11 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
 
         }
         availableExamsTabText.text = message
+        Log.d(TAG, ">> showExamInfo")
     }
 
-    override fun openNextFragment(questionPaper: QuestionPaper, student: Student){
+    override fun openNextFragment(questionPaper: QuestionPaper, student: Student) {
+        Log.d(TAG, "<< openNextFragment")
         instructionsFragment = InstructionsFragment
                 .newInstance(questionPaper, student)
         requireActivity().supportFragmentManager
@@ -62,15 +67,18 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
+
+        Log.d(TAG, ">> openNextFragment")
     }
 
     override fun showLoading(flag: Boolean) {
-        if (flag){
+        Log.d(TAG, "<< showLoading")
+        if (flag) {
             progressBar.startLoading()
-        }
-        else {
+        } else {
             progressBar.stopLoading()
         }
+        Log.d(TAG, ">> openNextFragment")
     }
 
     override fun setPresenter(presenter: InstructionsContract.ExamInfoPresenter) {
@@ -84,8 +92,8 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     companion object {
         @JvmStatic
         fun newInstance() =
-            ExamInfo().apply {
-                arguments = Bundle()
-            }
+                ExamInfo().apply {
+                    arguments = Bundle()
+                }
     }
 }

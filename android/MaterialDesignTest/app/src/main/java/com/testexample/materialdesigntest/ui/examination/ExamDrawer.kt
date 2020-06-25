@@ -35,7 +35,7 @@ import org.w3c.dom.Text
 import java.util.*
 import kotlin.properties.Delegates
 
-class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatActivity(), ExaminationContract.View{
+class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatActivity(), ExaminationContract.View {
 
     val TAG = "EXAM DRAWER"
 
@@ -51,15 +51,15 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam_drawer)
-        Log.d(TAG, "onCreate")
         setSupportActionBar(appActionBar)
 
         val calender = Calendar.getInstance()
-        val year : Int = calender.get(Calendar.YEAR)
-        val month : Int = calender.get(Calendar.MONTH)
-        val dayOfMonth : Int = calender.get(Calendar.DAY_OF_MONTH)
+        val year: Int = calender.get(Calendar.YEAR)
+        val month: Int = calender.get(Calendar.MONTH)
+        val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
 
         setPresenter(ExaminationPresenter(this))
 
@@ -67,18 +67,17 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         questionPaper = bundle?.getParcelable(Constants.QUESTION_PAPER)!!
         student = bundle.getParcelable(Constants.STUDENT)!!
 
-        credentials =  EndExamRequest(questionPaper.questionPaperId,
+        credentials = EndExamRequest(questionPaper.questionPaperId,
                 student.studentId)
 
-        if (!questionPaper.instructionId.isBlank()){
+        if (!questionPaper.instructionId.isBlank()) {
             setExamPaper(questionPaper)
-        }
-        else {
+        } else {
             presenter.loadExam(FetchExamRequest(student.studentCollegeCode,
                     year, month, dayOfMonth))
         }
 
-        timeLeftInTimer = (questionPaper.maxTime*60*1000).toLong()
+        timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         setSupportActionBar(drawerToolbar)
@@ -88,9 +87,9 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, drawerToolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close)
+                this, drawerLayout, drawerToolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close)
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -99,116 +98,132 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         sectionNavigationView.setNavigationItemSelectedListener(this)
         //Default Page
         onNavigationItemSelected(sectionNavigationView.menu.getItem(0).setChecked(true))
+
+        Log.d(TAG, ">> onCreate")
     }
 
-     private fun onCreateNavigationMenu(sections: List<Section>){
-         Log.d(TAG, "on Create Navigation Menu")
-         val  menu: Menu = sectionNavigationView.menu
-         for (item in 0 until sections.count()) {
-             menu.add(0,item,item,sections[item].sectionName)
-         }
-     }
+    private fun onCreateNavigationMenu(sections: List<Section>) {
+        Log.d(TAG, "<< onCreateNavigationMenu")
+        val menu: Menu = sectionNavigationView.menu
+
+        for (item in 0 until sections.count()) {
+            menu.add(0, item, item, sections[item].sectionName)
+        }
+
+        Log.d(TAG, ">> onCreateNavigationMenu")
+    }
 
     override fun onNavigationItemSelected(currentItem: MenuItem): Boolean {
-        Log.d(TAG, "Selected Section is ${currentItem.title}")
+
+        Log.d(TAG, "<< onNavigationItemSelected")
+
         currentItem.let {
             if (supportFragmentManager
-                            .findFragmentByTag(currentItem.title.toString()) == null)
-            {
+                            .findFragmentByTag(currentItem.title.toString()) == null) {
                 if (!sectionFragments.containsKey(currentItem.itemId)) {
 
                     sectionFragments[currentItem.itemId] = ExamSectionFragment
                             .newInstance(questionPaper.sections[currentItem.itemId], credentials)
 
                     initFragment(sectionFragments[currentItem.itemId]!!, currentItem.title.toString())
-                    Log.d(TAG, " init new fragment")
                 }
-            }
-            else
-            {
-               loadExistingFragment(sectionFragments[currentItem.itemId]!!)
-                Log.d(TAG, " load fragment")
+            } else {
+                loadExistingFragment(sectionFragments[currentItem.itemId]!!)
                 sectionNavigationView.menu.forEach { section ->
                     if (section.itemId != currentItem.itemId &&
-                            sectionFragments[currentItem.itemId] != null)
-                    {
+                            sectionFragments[currentItem.itemId] != null) {
                         hideFragment(sectionFragments[section.itemId]!!)
                     }
                 }
             }
+
             supportFragmentManager.executePendingTransactions()
-            Log.d(TAG, "current fragment is for section " + sectionFragments[currentItem.itemId]!!.tag)
             activeFragment = sectionFragments[currentItem.itemId]!!
         }
         drawer.closeDrawer(GravityCompat.START)
         true.countDownStart()
+
+        Log.d(TAG, ">> onNavigationItemSelected")
         return true
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "onBackPressed")
+        Log.d(TAG, "<< onBackPressed")
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         }
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START)
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
+        Log.d(TAG, ">> onBackPressed")
     }
 
     private fun initFragment(fragment: Fragment, tag: String) {
+
+        Log.d(TAG, "<< initFragment")
+
         supportFragmentManager
-            .beginTransaction().apply {
-                if (supportFragmentManager.fragments.size > 0)
-                {
-                    hide(supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1])
+                .beginTransaction().apply {
+                    if (supportFragmentManager.fragments.size > 0) {
+                        hide(supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1])
+                    }
+                    add(R.id.drawerContainer, fragment, tag)
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    commit()
                 }
-                add(R.id.drawerContainer, fragment, tag)
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                commit()
-            }
-        Log.d(TAG, "tag is " + fragment.tag)
+        Log.d(TAG, ">> initFragment")
     }
 
     private fun loadExistingFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction().apply {
-                show(fragment)
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                commit()
-            }
+        Log.d(TAG, "<< loadExistingFragment")
+
+        supportFragmentManager.beginTransaction().apply {
+            show(fragment)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            commit()
+        }
+
+        Log.d(TAG, ">> loadExistingFragment")
     }
 
     private fun hideFragment(fragment: Fragment) {
-            supportFragmentManager.beginTransaction().apply {
-                hide(fragment)
-                commit()
-            }
+        Log.d(TAG, "<< hideFragment")
+        supportFragmentManager.beginTransaction().apply {
+            hide(fragment)
+            commit()
+        }
+        Log.d(TAG, ">> hideFragment")
     }
 
     private fun Boolean.countDownStart() {
+
+        Log.d(TAG, "<< countDownStart")
+
         if (this) {
-             timer = object : CountDownTimer(timeLeftInTimer, 1000) {
+            timer = object : CountDownTimer(timeLeftInTimer, 1000) {
                 override fun onFinish() {
                     endExam()
                 }
+
                 override fun onTick(millisUntilFinished: Long) {
                     timeLeftInTimer = millisUntilFinished
                     activeFragment.setClock(timeLeftInTimer)
                 }
             }.start()
-        }
-        else {
+        } else {
             timer.cancel()
         }
-
+        Log.d(TAG, ">> countDownStart")
     }
 
     override fun setExamPaper(questionPaper: QuestionPaper) {
-        println(questionPaper)
+
+        Log.d(TAG, "<< setExamPaper")
         val headerView = sectionNavigationView.getHeaderView(0)
+
         headerView.findViewById<TextView>(R.id.studentNameText)
                 .text = student.studentName
         headerView.findViewById<TextView>(R.id.studentCollegeCodeText)
@@ -219,21 +234,28 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         headerView.findViewById<TextView>(R.id.maxMarksText)
                 .text = getString(R.string.question_paper_max_marks,
                 questionPaper.maxMarks)
+
+        Log.d(TAG, ">> setExamPaper")
     }
 
     override fun showLoading(flag: Boolean) {
+        Log.d(TAG, "<< showLoading")
+
         if (flag) {
             progressBar = ProgressBar(this)
             progressBar.setLoadingText("Time is Over, Please Wait While Result is loaded")
             setContentView(R.layout.activity_exam_drawer)
             progressBar.startLoading()
-        }
-        else
+        } else
             progressBar.stopLoading()
+
+        Log.d(TAG, ">> showLoading")
     }
 
     override fun openNextActivity() {
-        startActivity(Intent(this,ResultActivity::class.java))
+        Log.d(TAG, "<< openNextActivity")
+        startActivity(Intent(this, ResultActivity::class.java))
+        Log.d(TAG, ">> openNextActivity")
     }
 
     override fun setPresenter(presenter: ExaminationContract.Presenter) {
@@ -244,8 +266,9 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         return this.baseContext
     }
 
-    fun endExam(){
-        presenter.endExam(EndExamRequest(questionPaper.questionPaperId,
-                student.studentId))
+    fun endExam() {
+        Log.d(TAG, "<< endExam")
+        presenter.endExam(EndExamRequest(questionPaper.questionPaperId, student.studentId))
+        Log.d(TAG, ">> endExam")
     }
 }

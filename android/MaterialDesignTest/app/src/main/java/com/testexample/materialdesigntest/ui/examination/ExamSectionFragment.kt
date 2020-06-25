@@ -36,30 +36,32 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     val TAG = "Exam Section Fragment " + this.tag
     private lateinit var section: Section
     private lateinit var studentCredential: EndExamRequest
-    private lateinit var presenter:ExaminationContract.FragmentPresenter
+    private lateinit var presenter: ExaminationContract.FragmentPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate")
+        Log.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         arguments?.let {
             section = it.getParcelable(SECTION)!!
             studentCredential = it.getParcelable(CREDENTIALS)!!
         }
+        Log.d(TAG, ">> onCreate")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "<< onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         setPresenter(ExaminationSectionPresenter(this))
 
         for ((index, question) in section.questionsList.withIndex()) {
             questionTab.addTab(questionTab.newTab()
-                    .setText((index+1).toString())
+                    .setText((index + 1).toString())
                     .setTag(question.questionId))
             // tab tag is assigned the question id
         }
 
-        questionTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        questionTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
@@ -69,17 +71,17 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val index = tab!!.position
                 Log.d(TAG, "tab called is $index")
-                presenter.loadQuestion(index,tab.tag as String)
+                presenter.loadQuestion(index, tab.tag as String)
                 questionMMarks.text = getString(R.string.m_m,
                         section
-                        .questionsList[index]
-                        .marks)
+                                .questionsList[index]
+                                .marks)
             }
         })
 
         kotlin.run {
             questionTab.selectTab(questionTab.getTabAt(0))
-            presenter.loadQuestion(0,questionTab.getTabAt(0)!!.tag as String)
+            presenter.loadQuestion(0, questionTab.getTabAt(0)!!.tag as String)
             questionMMarks.text = getString(R.string.m_m,
                     section
                             .questionsList[0]
@@ -101,28 +103,31 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             this.moveToNextTab(5)
         }
 
-        exitTestButton.setOnClickListener{
+        exitTestButton.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
                     .apply {
-                setMessage(getString(R.string.end_test_message))
-                setCancelable(true)
-                setNegativeButton("Yes") { dialog, _ ->
-                    (activity as ExamDrawer).endExam()
-                    dialog!!.cancel()
-                }
-                setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }
-            }
+                        setMessage(getString(R.string.end_test_message))
+                        setCancelable(true)
+                        setNegativeButton("Yes") { dialog, _ ->
+                            (activity as ExamDrawer).endExam()
+                            dialog!!.cancel()
+                        }
+                        setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }
+                    }
             val alertForEndingExam = builder.create()
             alertForEndingExam.show()
         }
+
+        Log.d(TAG, ">> onViewCreated")
     }
 
     override fun createResponse(state: Int): StudentAnswerResponse {
+        Log.d(TAG, "<< createResponse")
         val index = questionTab.selectedTabPosition
         val selectedOption = (radioGroup.checkedRadioButtonId + 1) % radioGroup[0].id
-        Log.d(TAG, "option selected  $selectedOption")
         val questionId = questionTab.getTabAt(index)!!.tag.toString()
-        val maxMarksForQuestion =  section.questionsList[index].marks
+        val maxMarksForQuestion = section.questionsList[index].marks
+        Log.d(TAG, ">> createResponse")
         return StudentAnswerResponse(
                 id = currentAnswerId,
                 studentAnswer = StudentAnswerRequest(
@@ -137,19 +142,22 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     override fun setQuestion(viewId: Int, question: Question, answer: Answer) {
+        Log.d(TAG, "<< setQuestion")
         radioGroup.clearCheck()
         this.questionText.text = question.questionText
-        setOptions(radioButton1,question.options[0])
-        setOptions(radioButton2,question.options[1])
-        setOptions(radioButton3,question.options[2])
-        setOptions(radioButton4,question.options[3])
-        if (answer.optionSelected > 0){
-        radioGroup.check(radioGroup[answer.optionSelected].id - 1)
+        setOptions(radioButton1, question.options[0])
+        setOptions(radioButton2, question.options[1])
+        setOptions(radioButton3, question.options[2])
+        setOptions(radioButton4, question.options[3])
+
+        if (answer.optionSelected > 0) {
+            radioGroup.check(radioGroup[answer.optionSelected].id - 1)
         }
+
         questionNumber.text = getString(R.string.QuestionNum,
                 questionTab.getTabAt(viewId)!!.text)
         currentAnswerId = answer.answerSheetId
-        Log.d(TAG, "The Question clicked is " + questionTab.getTabAt(viewId)!!.text.toString())
+        Log.d(TAG, ">> setQuestion")
     }
 
     override fun setPresenter(presenter: ExaminationContract.FragmentPresenter) {
@@ -160,35 +168,46 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         return requireContext()
     }
 
-    private fun setOptions(radioButton: RadioButton, option: Options){
+    private fun setOptions(radioButton: RadioButton, option: Options) {
+        Log.d(TAG, "<< setOptions")
         radioButton.apply {
             text = option.option
             tag = option.index
         }
+        Log.d(TAG, ">> setOptions")
     }
 
-    private fun moveToNextTab(state: Int){
+    private fun moveToNextTab(state: Int) {
+        Log.d(TAG, "<< moveToNextTab")
         val answerResponse = createResponse(state)
         presenter.saveResponse(answerResponse)
+
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
+
+        Log.d(TAG, ">> moveToNextTab")
     }
 
     fun setClock(timeLeftInTimer: Long) {
+        Log.d(TAG, "<< setClock")
         val minutes = (timeLeftInTimer / 60000).toInt()
         val seconds = ((timeLeftInTimer % 60000) / 1000).toInt()
         var timeLeftText: String = ""
-        timeLeftText  += "$minutes:"
-        if (seconds < 10){
+        timeLeftText += "$minutes:"
+
+        if (seconds < 10) {
             timeLeftText += "0"
         }
+
         timeLeftText += seconds.toString()
         timerText.text = timeLeftText
+        Log.d(TAG, ">> setClock")
     }
 
     override fun onResume() {
-        Log.d(TAG, "onResume ${section.sectionName}")
+        Log.d(TAG, "<< onResume")
         super.onResume()
+        Log.d(TAG, ">> onResume")
     }
 
     companion object {
@@ -197,7 +216,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                 ExamSectionFragment().apply {
                     arguments = Bundle().apply {
                         putParcelable(SECTION, section)
-                        putParcelable(CREDENTIALS, credentials )
+                        putParcelable(CREDENTIALS, credentials)
                     }
                 }
     }

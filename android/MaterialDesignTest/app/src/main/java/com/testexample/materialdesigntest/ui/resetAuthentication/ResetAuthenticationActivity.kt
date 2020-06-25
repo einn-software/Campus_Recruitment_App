@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.ui.resetAuthentication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,18 +13,19 @@ import kotlinx.android.synthetic.main.appbar.*
 
 class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationContract.View {
 
-    val tag = "Reset Authentication"
+    private val TAG = "ResetAuthenticationActivity"
     private lateinit var presenter: ResetAuthenticationContract.Presenter
-    private var userType : String = ""
+    private var userType: String = ""
 
+    @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_authentication)
-        Log.d(tag, "on Create")
         setSupportActionBar(appActionBar)
 
         //get user type from previous activity
-        val  bundle: Bundle? = intent.extras
+        val bundle: Bundle? = intent.extras
         userType = bundle?.getString("user_type").toString()
 
         presenter = ResetAuthenticationPresenter(this)
@@ -36,9 +38,10 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
             presenter.onResetPasswordRequest(resetEmailText.text.toString(), userType)
         }
 
-        loginRedirectButton.setOnClickListener{
+        loginRedirectButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
+        Log.d(TAG, ">> onCreate")
     }
 
     override fun setPresenter(presenter: ResetAuthenticationContract.Presenter) {
@@ -49,16 +52,18 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
         return this.baseContext
     }
 
+    @SuppressLint("LongLogTag")
     override fun onResetRequestComplete(message: String) {
+        Log.d(TAG, "<< onResetRequestComplete")
         if (!message.toBoolean()) {
             resetPasswordProcessText.text = getString(R.string.email_not_registered_message,
-                resetEmailText.text.toString())
-        }
-        else {
+                    resetEmailText.text.toString())
+        } else {
             resetPasswordProcessText.text = message
         }
         requestResetButton.isEnabled = false
         loginRedirectButton.isEnabled = true
+        Log.d(TAG, ">> onResetRequestComplete")
     }
 
     override fun onDestroy() {

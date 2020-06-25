@@ -22,7 +22,7 @@ class InstructionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, " on create")
+        Log.d(TAG, "<< onCreate")
         setContentView(R.layout.activity_instruction)
 
         setSupportActionBar(appActionBar)
@@ -33,5 +33,7 @@ class InstructionActivity : AppCompatActivity() {
                 .add(R.id.instructionsFragmentContainer, examInfo)
                 .addToBackStack(examInfo.toString())
                 .commit()
+
+        Log.d(TAG, ">> onCreate")
     }
 }

@@ -2,18 +2,15 @@ package com.testexample.materialdesigntest.data.session
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.annotations.SerializedName
+import android.util.Log
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
-import com.testexample.materialdesigntest.utils.Constants
 
-class SessionManager(context: Context):
-    ISessionManager {
-    private var preferences: SharedPreferences
-            = context.getSharedPreferences(context
-            .getString(R.string.app_name),
-            Context.MODE_PRIVATE)
+class SessionManager(context: Context) : ISessionManager {
 
+    private val TAG = "SessionManager"
+    private var preferences: SharedPreferences = context.getSharedPreferences(context
+            .getString(R.string.app_name), Context.MODE_PRIVATE)
 
     companion object {
         const val USER_EMAIL = "user_email"
@@ -23,34 +20,37 @@ class SessionManager(context: Context):
     }
 
     override fun saveUserSession(session: AuthResponse) {
+        Log.d(TAG, "<< saveUserSession()")
         val editor = preferences.edit()
         editor.putString(USER_EMAIL, session.email)
         editor.putString(USER_ID, session.id)
         editor.putString(USER_TYPE, session.userType)
         editor.putString(USER_TOKEN, session.token)
         editor.apply()
+        Log.d(TAG, ">> saveUserSession()")
     }
 
     override fun getUserAuthToken(): String? {
+        Log.d(TAG, "<< getUserAuthToken()")
+        Log.d(TAG, ">> getUserAuthToken()")
         return preferences.getString(USER_TOKEN, null)
     }
 
     override fun getUserEmail(): String? {
+        Log.d(TAG, "<< getUserEmail()")
+        Log.d(TAG, ">> getUserEmail()")
         return preferences.getString(USER_EMAIL, null)
     }
 
     override fun getUserId(): String? {
+        Log.d(TAG, "<< getUserEmail()")
+        Log.d(TAG, ">> getUserEmail()")
         return preferences.getString(USER_ID, null)
     }
 
     override fun getUserType(): String? {
+        Log.d(TAG, "<< getUserType()")
+        Log.d(TAG, ">> getUserType()")
         return preferences.getString(USER_TYPE, null)
     }
 }
-
-data class UserSession (
-    @SerializedName(Constants.EMAIL) val email: String,
-    @SerializedName(Constants.TOKEN) val token: String,
-    @SerializedName(Constants.ID) val id: String,
-    @SerializedName(Constants.USERTYPE) val userType: String
-)

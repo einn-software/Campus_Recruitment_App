@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
@@ -15,10 +16,12 @@ import kotlinx.android.synthetic.main.activity_tpo_login.*
 
 class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
+    private val TAG = "TpoLoginActivity"
     internal lateinit var presenter: LoginContract.TpoPresenter
     lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tpo_login)
 
@@ -27,7 +30,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
         loginButton.setOnClickListener {
             presenter.onTpoLogin(emailText.text.toString(),
-                passwordText.text.toString())
+                    passwordText.text.toString())
         }
 
         resetPasswordLink.setOnClickListener {
@@ -40,36 +43,42 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
             openURL.data = Uri.parse("URL")
             startActivity(openURL)
         }
+        Log.d(TAG, ">> onCreate")
     }
 
     override fun openMainActivity() {
+        Log.d(TAG, "<< openMainActivity")
         startActivity(Intent(this, TpoDashboard::class.java))
+        Log.d(TAG, ">> openMainActivity")
     }
 
     override fun onValidationMessage(errorCode: Int) {
+        Log.d(TAG, "<< onValidationMessage")
         when (errorCode) {
             Constants.EMPTY_EMAIL_ERROR ->
                 Toast.makeText(this, getString(R.string.empty_email_error_message),
-                    Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_LONG).show()
             Constants.INVALID_EMAIL_ERROR ->
                 Toast.makeText(this, getString(R.string.invalid_email_error_message),
-                    Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_LONG).show()
             Constants.EMPTY_PASSWORD_ERROR ->
                 Toast.makeText(this, getString(R.string.empty_password_error_message),
-                    Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_LONG).show()
             Constants.LOGIN_FAILURE ->
                 Toast.makeText(this, getString(R.string.login_failure),
-                    Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_LONG).show()
         }
+        Log.d(TAG, ">> onValidationMessage")
     }
 
     override fun showLoading(flag: Boolean) {
-        if (flag){
+        Log.d(TAG, "<< showLoading")
+        if (flag) {
             progressBar.startLoading()
-        }
-        else {
+        } else {
             progressBar.stopLoading()
         }
+        Log.d(TAG, ">> showLoading")
     }
 
     override fun setPresenter(presenter: LoginContract.TpoPresenter) {

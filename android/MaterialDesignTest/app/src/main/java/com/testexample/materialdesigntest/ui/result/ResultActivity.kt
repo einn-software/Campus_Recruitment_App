@@ -14,8 +14,8 @@ class ResultActivity : AppCompatActivity() {
     private lateinit var presenter: ResultsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
-        Log.d(TAG, " on create")
         setContentView(R.layout.activity_result)
 
         setSupportActionBar(appActionBar)
@@ -31,6 +31,8 @@ class ResultActivity : AppCompatActivity() {
                 .add(R.id.resultsFragmentContainer, resultInfo)
                 .addToBackStack(resultInfo.toString())
                 .commit()
+
+        Log.d(TAG, ">> onCreate")
     }
 
 }

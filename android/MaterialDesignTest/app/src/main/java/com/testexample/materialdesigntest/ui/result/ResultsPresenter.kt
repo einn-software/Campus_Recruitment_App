@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class ResultsPresenter(private var view: ResultsContract.View?) :
         ResultsContract.Presenter {
 
-    val TAG = "Result Presenter"
+    val TAG = "ResultsPresenter"
 
     private lateinit var repository: IResultRepo
     private var subscriptions = CompositeDisposable()
@@ -21,9 +21,9 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
 
     override fun fetchStudentResult(code: Int, roll: String, question_paper_id: String) {
 
+        Log.d(TAG, "<< fetchStudentResult")
         repository = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
-        Log.d(TAG, "fetch Result for id:  ${sessionManager.getUserId()}")
 
         view.let {
             subscriptions.add(
@@ -32,16 +32,16 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     { success ->
-                                        view!!.showResults(success)
-
                                         Log.i(TAG, "Successfully Fetched Result From Remote")
+                                        view!!.showResults(success)
                                     },
                                     { error ->
-                                        Log.e(TAG, "Error in fetching Result from Remote ${error.message.toString()}")
+                                        Log.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
                                     }
 
                             ))
         }
+        Log.d(TAG, ">> fetchStudentResult")
     }
 
     override fun onDestroy() {

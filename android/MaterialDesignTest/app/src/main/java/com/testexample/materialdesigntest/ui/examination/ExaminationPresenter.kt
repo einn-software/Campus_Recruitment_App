@@ -10,8 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ExaminationPresenter(private var view: ExaminationContract.View?):
-    ExaminationContract.Presenter {
+class ExaminationPresenter(private var view: ExaminationContract.View?) : ExaminationContract.Presenter {
 
     private var sessionManager: SessionManager = SessionManager(view!!.setContext())
     val TAG = "Examination Presenter"
@@ -20,7 +19,7 @@ class ExaminationPresenter(private var view: ExaminationContract.View?):
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun loadExam(fetchExamRequest: FetchExamRequest) {
-        Log.d(TAG, "loading Exam...")
+        Log.d(TAG, "<< loadExam")
         repository = ExaminationRepo()
         view.let {
             subscriptions.add(
@@ -28,24 +27,26 @@ class ExaminationPresenter(private var view: ExaminationContract.View?):
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                    {questionPaper ->
-                                        if (questionPaper != null){
+                                    { questionPaper ->
+                                        if (questionPaper != null) {
                                             view!!.setExamPaper(questionPaper)
-                                            Log.d(TAG, "Exam Found")
+                                            Log.i(TAG, "Successfully get question paper from remote")
                                         }
                                     },
-                                    {error ->
-                                        println(error.localizedMessage)
-                                        Log.d(TAG, "Error fetching Exam")
+                                    { error ->
+                                        Log.e(TAG, "Error fetching question paper from remote with reason ${error.message.toString()}")
                                     })
             )
         }
+        Log.d(TAG, ">> loadExam")
     }
 
     override fun endExam(endExamRequest: EndExamRequest) {
+        Log.d(TAG, "<< endExam")
         repository = ExaminationRepo()
         subscriptions.clear()
         view!!.showLoading(true)
+
         subscriptions.add(
                 repository.stopExam(token, endExamRequest)
                         .subscribeOn(Schedulers.io())
@@ -54,12 +55,14 @@ class ExaminationPresenter(private var view: ExaminationContract.View?):
                                 {
                                     view!!.showLoading(false)
                                     view!!.openNextActivity()
+                                    Log.i(TAG, "Successfully stopped exam")
                                 },
-                                { error->
-                                    println(error.localizedMessage)
+                                { error ->
+                                    Log.e(TAG, "Error stop exam with reason ${error.message.toString()}")
                                 }
                         )
         )
+        Log.d(TAG, ">> endExam")
     }
 
     override fun onDestroy() {

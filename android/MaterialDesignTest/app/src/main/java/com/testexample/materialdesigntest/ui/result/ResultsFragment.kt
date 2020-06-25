@@ -22,24 +22,27 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate")
+        Log.d(TAG, "<< onCreate")
+
         arguments?.let {
             code = it.getInt(Constants.CODE)
             roll = it.getString(Constants.ROLL)
             questionPaperId = it.getString(Constants.QUESTION_PAPER_ID)
         }
+        Log.d(TAG, ">> onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d(TAG, " onViewCreated")
+        Log.d(TAG, "<< onViewCreated")
 
         presenter = ResultsPresenter(this)
         code?.let { roll?.let { it1 -> questionPaperId?.let { it2 -> presenter.fetchStudentResult(it, it1, it2) } } }
+        Log.d(TAG, ">> onViewCreated")
     }
 
     override fun showResults(result: Result) {
+        Log.d(TAG, "<< showResults")
         rollNoValue.text = result.studentRollNo
         userNameValue.text = result.studentName
         totalMarksValue.text = result.totalMarks.toString()
@@ -48,6 +51,7 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
         totalQuestionsAttemptedRightValue.text = result.noOfQuestionsCorrect.toString()
         totalQuestionsAttemptedWrongValue.text = (result.noOfQuestionsAttempted - result.noOfQuestionsCorrect).toString()
         totalMarksObtainedValue.text = result.scoredMarks.toString()
+        Log.d(TAG, ">> showResults")
     }
 
     override fun setPresenter(presenter: ResultsContract.Presenter) {

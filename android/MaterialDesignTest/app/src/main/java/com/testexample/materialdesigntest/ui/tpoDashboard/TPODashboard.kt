@@ -1,13 +1,16 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.TPO
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
+import com.testexample.materialdesigntest.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -15,6 +18,7 @@ import kotlinx.android.synthetic.main.appbar.*
 class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODashboardContract.View {
 
     val TAG = "TPODashboard"
+    var fragmentTag = ""
     private lateinit var presenter: TPODashboardContract.Presenter
     private var code: Int = 0
 
@@ -36,10 +40,10 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         uploadDataTab.setOnClickListener {
             Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
             tpoDashboardContainer.visibility = INVISIBLE
-
+            fragmentTag = "dataUpload"
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, dataUpload)
-                addToBackStack(dataUpload.toString())
+                replace(R.id.tpoDashboardFragment, dataUpload, fragmentTag)
+                addToBackStack(fragmentTag)
                 commit()
             }
             Log.d(TAG, ">> updateCollegeTab | setOnClickListener")
@@ -47,11 +51,11 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         updateCollegeTab.setOnClickListener {
             Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
-
+            fragmentTag = "CollegeDetailsFragment"
             tpoDashboardContainer.visibility = INVISIBLE
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, CollegeDetailsFragment.newInstance(code))
-                addToBackStack(TAG)
+                replace(R.id.tpoDashboardFragment, collegeDetails, fragmentTag)
+                addToBackStack(fragmentTag)
                 commit()
             }
             Log.d(TAG, ">> updateCollegeTab | setOnClickListener")
@@ -59,15 +63,25 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         collegeResultTab.setOnClickListener {
             Log.d(TAG, "<< resultTabText | setOnClickListener")
-
             tpoDashboardContainer.visibility = INVISIBLE
+            fragmentTag = "QuestionPaperListFragment"
 
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code))
-                addToBackStack("tpoDashboardFragment")
+                replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code),fragmentTag)
+                addToBackStack(fragmentTag)
                 commit()
             }
             Log.d(TAG, ">> resultTabText | setOnClickListener")
+        }
+
+        tpoLogOutButton.setOnClickListener {
+            Log.d(TAG, "<< logoutButton | setOnClickListener")
+            sessionManager.saveUserSession(AuthResponse("","","",""))
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+            Log.d(TAG, ">> logoutButton | setOnClickListener")
         }
 
         Log.d(TAG, ">> onCreate()")

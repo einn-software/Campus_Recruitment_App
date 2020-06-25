@@ -5,12 +5,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.utils.Constants
+import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_college_details.*
 
 
@@ -38,6 +40,13 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
         Log.d(TAG,"<< setContext()")
         Log.d(TAG,">> setContext()")
         return this.requireContext()
+    }
+
+    override fun onDetach() {
+        Log.d(TAG, "onDetach()")
+        requireActivity().tpoDashboardContainer.visibility = VISIBLE
+        super.onDetach()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.QuestionPaperListResponse
 import com.testexample.materialdesigntest.utils.Constants
+import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_question_paper_list.*
 
 
@@ -69,11 +70,18 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
             val questionPaperId = (view.findViewById(R.id.description) as TextView).text
             requireActivity().supportFragmentManager.beginTransaction().apply {
                 replace((requireView().parent as ViewGroup).id, ResultListFragment.newInstance(code, questionPaperId as String),"ResultListFragment")
-                addToBackStack("QuestionPaperList")
+                addToBackStack("ResultListFragment")
                 commit()
             }
         }
         Log.d(TAG, ">> onViewCreated()")
+    }
+
+    @SuppressLint("LongLogTag")
+    override fun onDetach() {
+        Log.d(TAG, "onDetach")
+        super.onDetach()
+        requireActivity().tpoDashboardContainer.visibility = View.VISIBLE
     }
 
     companion object {

@@ -26,7 +26,8 @@ import java.io.FileOutputStream
 /**
  * Data Upload [Fragment] subclass.
  */
-class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract.DataUploadView {
+class DataUpload : Fragment(R.layout.fragment_data_upload),
+        TPODashboardContract.DataUploadView {
 
     private lateinit var tpoEmail: String
     private lateinit var presenter: TPODashboardContract.DataUploadPresenter
@@ -35,19 +36,15 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     private var file: File? = null
     private lateinit var progressBar: ProgressBar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate")
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "onViewCreated")
+        super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             tpoEmail = it.getString("tpo_email").toString()
             Log.d(TAG, "email $tpoEmail")
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onViewCreated")
-        super.onViewCreated(view, savedInstanceState)
         uploadFileButton.isEnabled = false
         setPresenter(DataUploadPresenter(this))
         progressBar = ProgressBar(requireActivity())
@@ -80,7 +77,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     override fun onDetach() {
         Log.d(TAG, "onDetach")
         super.onDetach()
-        tpoDashboardContainer.visibility = VISIBLE
+        requireActivity().tpoDashboardContainer.visibility = VISIBLE
     }
 
 
@@ -148,15 +145,15 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     }
 
     companion object {
-        fun newInstance(tpoEmail:String):DataUpload {
-            val fragment = DataUpload()
-            Bundle().apply {
-                putString("tpo_email", tpoEmail)
-            }
-
-            return fragment
-        }
+        @JvmStatic
+        fun newInstance(tpoEmail:String) =
+                DataUpload().apply {
+                    arguments = Bundle().apply {
+                        putString("tpo_email", tpoEmail)
+                    }
+                }
     }
+
 
     override fun updateProgressBar(percentage: Int) {
         uploadProgressBar.progress = percentage

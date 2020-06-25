@@ -84,7 +84,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             Log.d(TAG, "default tag called")
         }
 
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             saveAndNextButton.isEnabled = checkedId != -1
         }
 

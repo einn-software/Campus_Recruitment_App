@@ -40,7 +40,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {
-            if (this.questionPaper.questionPaperId == null){
+            if (this.questionPaper.questionPaperId.isBlank()){
                 startActivity(Intent(activity, LoginActivity::class.java).apply {
                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK

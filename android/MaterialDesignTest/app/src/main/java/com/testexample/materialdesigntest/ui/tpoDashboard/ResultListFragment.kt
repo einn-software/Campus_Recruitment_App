@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.CollegeWiseResultResponse
+import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_result_list.*
 import java.util.*
@@ -27,6 +28,7 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
     private lateinit var presenter: TPODashboardContract.ResultListPresenter
     private var code: Int = 0
     private var questionPaperId: String =  ""
+    private lateinit var progressBar: ProgressBar
 
     override fun setPresenter(presenter: TPODashboardContract.ResultListPresenter) {
         Log.d(TAG,"<< setPresenter()")
@@ -50,6 +52,7 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
         }
 
         presenter = ResultListPresenter(this)
+        progressBar = ProgressBar(requireActivity())
         presenter .fetchResultList(code, questionPaperId)
         Log.d(TAG,">> onViewCreated()")
     }
@@ -124,6 +127,15 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
     override fun showResultList(result: List<CollegeWiseResultResponse>) {
         addHeaders()
         addData(result)
+    }
+
+    override fun showLoading(flag: Boolean) {
+        if (flag){
+            progressBar.startLoading()
+        }
+        else {
+            progressBar.stopLoading()
+        }
     }
 
 }

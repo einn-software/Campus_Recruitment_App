@@ -12,8 +12,7 @@ class ProgressBar(private val activity: Activity) {
 
         val inflater =  activity.layoutInflater
         builder.setView(inflater.inflate(R.layout.custom_progress,null))
-        builder.setCancelable(true)
-
+        builder.setCancelable(false)
         progressBox = builder.create()
         progressBox.show()
     }

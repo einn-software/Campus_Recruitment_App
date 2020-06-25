@@ -48,5 +48,6 @@
     <string name="splash_header">Einn campus recruitment</string>
     <string name="designed_by">Designed by Einn</string>
     <string name="verify">Verify</string>
+    <string name="result">Result</string>
 
 </resources>

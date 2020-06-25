@@ -40,6 +40,7 @@ interface TPODashboardContract {
 
     interface ResultListView : BaseContract.BaseView<ResultListPresenter> {
         fun showResultList(result: List<CollegeWiseResultResponse>)
+        fun showLoading(flag: Boolean)
     }
 
     interface ResultListPresenter : BaseContract.BasePresenter {

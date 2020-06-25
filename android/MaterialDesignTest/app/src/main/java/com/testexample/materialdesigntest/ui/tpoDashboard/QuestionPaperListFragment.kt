@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
@@ -64,13 +65,10 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         presenter = QuestionPaperListPresenter(this)
         presenter.fetchQuestionPaperList(code)
 
-        list.setOnItemClickListener { adapterView, view, position, id ->
-            val itemAtPos = adapterView.getItemAtPosition(position)
-            val itemIdAtPos = adapterView.getItemIdAtPosition(position)
+        list.setOnItemClickListener { _, view, _, _ ->
             val questionPaperId = (view.findViewById(R.id.description) as TextView).text
-
             requireActivity().supportFragmentManager.beginTransaction().apply {
-                replace(R.id.questionPaperList, ResultListFragment.newInstance(code, questionPaperId as String))
+                replace((requireView().parent as ViewGroup).id, ResultListFragment.newInstance(code, questionPaperId as String),"ResultListFragment")
                 addToBackStack("QuestionPaperList")
                 commit()
             }
@@ -83,7 +81,7 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         fun newInstance(code: Int) =
                 QuestionPaperListFragment().apply {
                     arguments = Bundle().apply {
-                        putInt(Constants.Companion.CODE, code)
+                        putInt(Constants.CODE, code)
                     }
                 }
     }

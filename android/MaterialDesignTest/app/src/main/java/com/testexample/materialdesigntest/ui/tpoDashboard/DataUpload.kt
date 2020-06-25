@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
 import com.testexample.materialdesigntest.utils.getFileName
 import com.testexample.materialdesigntest.utils.snackbar
@@ -30,6 +32,8 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     private lateinit var presenter: TPODashboardContract.DataUploadPresenter
     private val TAG = "Data Upload"
     private var selectedFIleUri: Uri? = null
+    private var file: File? = null
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
@@ -37,20 +41,38 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
 
         arguments?.let {
             tpoEmail = it.getString("tpo_email").toString()
+            Log.d(TAG, "email $tpoEmail")
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
+        uploadFileButton.isEnabled = false
+        setPresenter(DataUploadPresenter(this))
+        progressBar = ProgressBar(requireActivity())
 
         selectFileText.setOnClickListener{
+            Log.d(TAG, "onClick : selectFileText")
             checkFilePermission()
             fileSelector()
         }
 
+        verifyFileButton.setOnClickListener {
+            Log.d(TAG, "onClick: Verify Button")
+            file = prepareFileUpload()
+            if (presenter.verifyFile(file)) {
+                layoutDataUpload.snackbar("Ready To Upload!")
+                uploadFileButton.isEnabled = true
+            } else {
+                showProgressBar(false)
+                layoutDataUpload.snackbar("Invalid File!!")
+            }
+        }
+
         uploadFileButton.setOnClickListener {
-            prepareFileUpload()
+            Log.d(TAG, "onClick: upload button")
+            file?.let { it1 -> presenter.uploadFile(tpoEmail, it1) }
         }
 
     }
@@ -61,13 +83,13 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
         tpoDashboardContainer.visibility = VISIBLE
     }
 
+
     private fun fileSelector() {
         Log.d(TAG, "fileSelector")
         Intent(Intent.ACTION_GET_CONTENT).also {
             it.type = "application/*"
             val mimeType = arrayOf("application/vnd.ms-excel",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "application/pdf")
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             it.putExtra(Intent.EXTRA_MIME_TYPES, mimeType)
             it.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(it, Constants.REQUEST_CODE_PICK_FILE)
@@ -88,15 +110,15 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
         }
     }
 
-    private fun prepareFileUpload(){
-        Log.d(TAG , "uploadFile")
+    private fun prepareFileUpload(): File?{
+        Log.d(TAG , "prepareFile")
         if (selectedFIleUri == null){
             layoutDataUpload.snackbar("Select an Excel File First")
-            return
+            return null
         }
         val parcelFileDescriptor =
                 requireActivity().contentResolver.openFileDescriptor(selectedFIleUri!!, "r", null)
-                        ?: return
+                        ?: return null
 
         val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
         val file = File(requireActivity().cacheDir,
@@ -105,8 +127,9 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
         inputStream.copyTo(outputStream)
 
         uploadProgressBar.progress = 0
+        Log.d(TAG, "chached file is  ${file.name}")
 
-        presenter.uploadFile(tpoEmail!!, file)
+        return file
     }
 
     private fun checkFilePermission(){
@@ -126,7 +149,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     companion object {
         fun newInstance(tpoEmail:String):DataUpload {
             val fragment = DataUpload()
-            val args = Bundle().apply {
+            Bundle().apply {
                 putString("tpo_email", tpoEmail)
             }
 
@@ -139,7 +162,12 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
     }
 
     override fun showMessage(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showProgressBar(flag: Boolean) = when {
+        flag -> progressBar.startLoading()
+        else -> progressBar.stopLoading()
     }
 
     override fun setPresenter(presenter: TPODashboardContract.DataUploadPresenter) {

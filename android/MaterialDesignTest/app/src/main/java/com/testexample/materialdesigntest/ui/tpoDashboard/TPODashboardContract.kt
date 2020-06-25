@@ -26,17 +26,18 @@ interface TPODashboardContract {
         fun saveCollegeDetails(code: Int, collegeDetails: UpdateCollegeDetails)
     }
 
-<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/TPODashboardContract.kt
     interface DataUploadView: BaseContract.BaseView<DataUploadPresenter>{
         fun updateProgressBar(percentage: Int)
         fun showMessage(message: String)
+        fun showProgressBar(flag: Boolean)
 
     }
 
     interface DataUploadPresenter : BaseContract.BasePresenter {
         fun uploadFile(tpoEmail: String, file: File)
+        fun verifyFile(file: File?): Boolean
+    }
 
-=======
     interface ResultListView : BaseContract.BaseView<ResultListPresenter> {
         fun showResultList(result: List<CollegeWiseResultResponse>)
     }
@@ -51,6 +52,5 @@ interface TPODashboardContract {
 
     interface QuestionPaperListPresenter : BaseContract.BasePresenter {
         fun fetchQuestionPaperList(code: Int)
->>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/TPODashboardContract.kt
     }
 }

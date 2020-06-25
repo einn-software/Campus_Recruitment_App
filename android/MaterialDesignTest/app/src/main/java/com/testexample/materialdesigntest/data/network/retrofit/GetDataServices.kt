@@ -1,6 +1,5 @@
 package com.testexample.materialdesigntest.data.network.retrofit
 
-import com.google.gson.annotations.SerializedName
 import com.testexample.materialdesigntest.data.model.*
 import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
@@ -107,21 +106,17 @@ interface GetDataServices {
                          @Path("question-paper-id") question_paper_id: String):
             Single<Result>
 
-<<<<<<< HEAD
     @Multipart
     @POST("")
     fun uploadFile(
             @Part("tpo_details_for_upload_file") details: RequestBody,
             @Part file: MultipartBody.Part
     ): Single<String>
-=======
+
     @GET("question-papers/{code}")
     fun getQuestionPaperList(@Header("auth-token") token: String,
                              @Path("code") code: Int):
             Flowable<List<QuestionPaperListResponse>>
->>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a
-
-
 
 
 

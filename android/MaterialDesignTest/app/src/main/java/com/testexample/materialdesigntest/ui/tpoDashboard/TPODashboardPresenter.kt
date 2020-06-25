@@ -1,12 +1,9 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.util.Log
-<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/TPODashboardPresenter.kt
-=======
 import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
->>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/TPODashboardPresenter.kt
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager

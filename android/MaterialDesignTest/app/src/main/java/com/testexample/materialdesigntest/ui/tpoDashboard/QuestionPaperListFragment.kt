@@ -69,8 +69,11 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
             val itemIdAtPos = adapterView.getItemIdAtPosition(position)
             val questionPaperId = (view.findViewById(R.id.description) as TextView).text
 
-            requireActivity().supportFragmentManager.beginTransaction().apply {
-                replace(R.id.questionPaperList, ResultListFragment.newInstance(code, questionPaperId as String))
+            requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .apply {
+                replace(R.id.questionPaperList,
+                        ResultListFragment.newInstance(code, questionPaperId as String))
                 addToBackStack("QuestionPaperList")
                 commit()
             }
@@ -83,7 +86,7 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         fun newInstance(code: Int) =
                 QuestionPaperListFragment().apply {
                     arguments = Bundle().apply {
-                        putInt(Constants.Companion.CODE, code)
+                        putInt(Constants.CODE, code)
                     }
                 }
     }

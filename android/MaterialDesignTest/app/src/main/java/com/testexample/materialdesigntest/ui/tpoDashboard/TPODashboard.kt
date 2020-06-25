@@ -27,15 +27,11 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         val sessionManager = SessionManager(this)
         presenter = TPODashboardPresenter(this)
-        presenter.fetchTpoDetails(sessionManager.getUserAuthToken().toString(), "5eeb257218b0eeb44966b3b5")
+        presenter.fetchTpoDetails(sessionManager.getUserAuthToken().toString(),
+                sessionManager.getUserId().toString())
 
-<<<<<<< HEAD:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/tpoDashboard/TPODashboard.kt
         val dataUpload = DataUpload.newInstance(sessionManager.getUserEmail()!!)
-        val collegeDetails = CollegeDetailsFragment.newInstance()
-=======
-
-        val dataUpload = DataUpload.newInstance()
->>>>>>> f3d79ebc1893867388b4555e10c123e2c0a2789a:android/MaterialDesignTest/app/src/main/java/com/testexample/materialdesigntest/ui/TPODashboard/TPODashboard.kt
+        val collegeDetails = CollegeDetailsFragment.newInstance(code)
 
         uploadDataTab.setOnClickListener {
             Log.d(TAG, "<< updateCollegeTab | setOnClickListener")

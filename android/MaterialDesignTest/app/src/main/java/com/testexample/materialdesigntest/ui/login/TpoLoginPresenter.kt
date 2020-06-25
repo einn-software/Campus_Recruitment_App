@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
@@ -37,7 +38,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
             else -> userRepository.let {
                 view!!.showLoading(true)
                 subscriptions.add(userRepository
-                        .isTPOValid(email, password)
+                        .isTpoValid(email, password)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .handelNetworkError()
@@ -50,6 +51,8 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                                 },
                                 { error ->
                                     Log.e(TAG, "Error in validating TPO: ${error.message.toString()}")
+					Toast.makeText(view!!.setContext(), error.message.toString(),
+                                            Toast.LENGTH_LONG).show()
                                 }
                         ))
             }

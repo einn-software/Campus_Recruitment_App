@@ -15,22 +15,24 @@ import com.testexample.materialdesigntest.ui.examination.ExamDrawer
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_instructions.*
 
+private const val QUESTION_PAPER_ID = "question_paper_id"
+private const val INSTRUCTION_ID = "instructions_id"
 
 class  InstructionsFragment : Fragment(R.layout.fragment_instructions), InstructionsContract.View{
 
     private val TAG = "InstructionsFragment"
     private lateinit var presenter: InstructionsContract.Presenter
     private lateinit var progressBar: ProgressBar
-    private lateinit var questionPaper: QuestionPaper
-    private lateinit var student: Student
+    private var questionPaperId: String? = null
+    private var instructionId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "<< onCreate")
 
         arguments?.let {
-            questionPaper = it.getParcelable(Constants.QUESTION_PAPER)!!
-            student = it.getParcelable(Constants.STUDENT)!!
+            instructionId = it.getString(INSTRUCTION_ID)
+            questionPaperId = it.getString(QUESTION_PAPER_ID)
         }
         Log.d(TAG, ">> onCreate")
     }
@@ -50,10 +52,7 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
 
         startTestButton.setOnClickListener {
             startActivity(Intent(activity, ExamDrawer::class.java)
-                    .apply {
-                    putExtra(Constants.QUESTION_PAPER, questionPaper)
-                    putExtra(Constants.STUDENT, student)
-                    })
+                    .putExtra(QUESTION_PAPER_ID,questionPaperId))
         }
         Log.d(TAG,">> onViewCreated")
     }
@@ -79,13 +78,13 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
 
 
     companion object {
-        fun newInstance(questionPaper: QuestionPaper, student: Student):
+        fun newInstance(instructionId: String, questionPaperId: String):
                 InstructionsFragment {
 
             return InstructionsFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(Constants.QUESTION_PAPER, questionPaper)
-                    putParcelable(Constants.STUDENT, student)
+                    putString(INSTRUCTION_ID, instructionId)
+                    putString(QUESTION_PAPER_ID, questionPaperId)
                 }
             }
         }

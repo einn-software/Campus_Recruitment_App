@@ -21,7 +21,7 @@ class ResultRemoteRepo : IResultRemoteRepo {
     override fun callApiForStudentResultList(token: String, code: Int, question_paper_id: String): Flowable<List<CollegeWiseResultResponse>> {
         Log.d(TAG, "<< callApiForStudentResult()")
         Log.d(TAG, ">> callApiForStudentResult()")
-        return api.getStudentResultList(token)
+        return api.getStudentResultList(token, code, question_paper_id)
     }
 
     override fun saveResult(result: Result) {

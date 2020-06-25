@@ -65,13 +65,13 @@ class UserRepository(context: Context) : IUserRepository {
         TODO("Not yet implemented")
     }
 
-    override fun isTPOValid(email: String, password: String): Single<AuthResponse> {
+    override fun isTpoValid(email: String, password: String): Single<AuthResponse> {
         Log.d(TAG, "<< isTPOValid()")
         Log.d(TAG, ">> isTPOValid()")
         return remoteRepository.authTPO(TpoLoginRequest(email, password))
     }
 
-    override fun getTPO(userRequest: UserRequest): Flowable<TPO> {
+    override fun getTpo(userRequest: UserRequest): Flowable<TPO> {
         Log.d(TAG, "<< getTPO()")
         Log.d(TAG, ">> getTPO()")
         return remoteRepository.getTPO(userRequest)

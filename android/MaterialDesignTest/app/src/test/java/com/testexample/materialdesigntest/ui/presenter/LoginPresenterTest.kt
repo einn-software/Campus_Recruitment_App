@@ -30,7 +30,7 @@ class LoginPresenterTest {
     private val model : UserRepository = mockk() {
         every {
             isStudentValid(StudentLoginRequest("645454", 2454, "testpass"))
-        } returns Single.just(AuthResponse("token","","","",ErrorResponse(0,"","","","")
+        } returns Single.just(AuthResponse("token","","",""
         ))
     }
 
@@ -66,8 +66,7 @@ class LoginPresenterTest {
         val pass: String = "testpass"
         val code: Int = 2454
 
-        model.isStudentValid(StudentLoginRequest(user, code , pass)).test().assertValue(AuthResponse("token","","","",
-            ErrorResponse(0,"","","","")))
+        model.isStudentValid(StudentLoginRequest(user, code , pass)).test().assertValue(AuthResponse("token","","",""))
 
     }
 

@@ -53,5 +53,13 @@
     <string name="question_paper_max_marks">M.M: %d</string>
     <string name="attempted_question_ratio">%d / %d</string>
     <string name="timer">50:00</string>
+    <string name="college_code">Code: %d</string>
+    <string name="student_data_upload">Student Data Upload</string>
+    <string name="data_upload_message">important messag here</string>
+    <string name="upload_button">UPLOAD</string>
+    <string name="splash_header">Einn campus recruitment</string>
+    <string name="designed_by">Designed by Einn</string>
+    <string name="verify">Verify</string>
+    <string name="result">Result</string>
 
 </resources>

@@ -26,7 +26,6 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
     private lateinit var studentRepo: IUserRepository
     private var subscriptions = CompositeDisposable()
     private lateinit var sessionManager: SessionManager
-    override lateinit var student: Student
 
 
     override fun fetchExamInfo(request: FetchExamRequest) {
@@ -42,10 +41,12 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             { questionPaper ->
+ 				view!!.showLoading(false)
                                 view!!.showExamInfo(questionPaper)
                                 Log.i(TAG, "Successfully fetch exam info")
                             },
                             {
+			    	view!!.showLoading(false)
                                 view!!.showExamInfo(null)
                                 Log.e(TAG, "Error in fetching exam info: ${it.message.toString()}")
                             }
@@ -60,6 +61,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
         sessionManager = SessionManager(view!!.setContext())
         val userId = sessionManager.getUserId()!!
         val token = sessionManager.getUserAuthToken()!!
+        view!!.showLoading(true)
         subscriptions.add(
                 studentRepo.getStudent(UserRequest(token, userId))
                         .handelNetworkError()
@@ -68,11 +70,12 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                         .subscribe(
                                 { success ->
                                     fetchExamInfo(FetchExamRequest(success.studentCollegeCode, year, month, dayOfMonth))
-                                    this.student = success
+
                                     Log.i(TAG, "Successfully fetch college code for student")
                                 },
                                 { error ->
                                     Log.e("TAG", "Error in fetching Student: ${error.message.toString()}")
+				    view!!.showLoading(false)
                                 },
                                 {
                                     Log.d(TAG, "getStudent Query completed")

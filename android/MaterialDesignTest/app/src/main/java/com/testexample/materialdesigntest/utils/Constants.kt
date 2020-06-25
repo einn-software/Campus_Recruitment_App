@@ -1,12 +1,5 @@
 package com.testexample.materialdesigntest.utils
 
-import com.google.gson.GsonBuilder
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-
 class Constants {
     companion object {
 
@@ -22,6 +15,8 @@ class Constants {
         internal const val EMPTY_PASSWORD_ERROR = 1003
         internal const val EMPTY_CODE_ERROR = 1005
         internal const val LOGIN_FAILURE = 1004
+        internal const val PERMISSION_CODE = 1101
+        internal const val REQUEST_CODE_PICK_FILE = 101
         internal const val NULL_INDEX = -1L
 
         // Constants for Session
@@ -36,6 +31,19 @@ class Constants {
         internal const val CODE = "college_code"
         internal const val ROLL = "roll_no"
         internal const val QUESTION_PAPER_ID = "question_paper_id"
+	
+	//Constants for College
+        internal const val COLLEGE_EMAIL = "email"
+        internal const val COLLEGE_NAME = "name"
+        internal const val COLLEGE_ADDRESS = "address"
+        internal const val COLLEGE_UNIVERSITY = "university"
+        internal const val COLLEGE_PHONE = "phone"
+	
+	//Constants for Result table column
+        internal const val NAME = "Name"
+        internal const val QUESTION_ATTEMPT = "Question Attempt"
+        internal const val CORRECT_ATTEMPT = "Correct Attempt"
+        internal const val TOTAL_MARKS = "Total Marks"
 
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),

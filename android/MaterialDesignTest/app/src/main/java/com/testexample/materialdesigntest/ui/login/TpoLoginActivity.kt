@@ -47,9 +47,11 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     }
 
     override fun openMainActivity() {
-        Log.d(TAG, "<< openMainActivity")
-        startActivity(Intent(this, TpoDashboard::class.java))
-        Log.d(TAG, ">> openMainActivity")
+        startActivity(Intent(this, TPODashboard::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        this@TpoLoginActivity.finish()
     }
 
     override fun onValidationMessage(errorCode: Int) {

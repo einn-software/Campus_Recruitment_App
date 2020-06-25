@@ -1,18 +1,20 @@
 package com.testexample.materialdesigntest.data.model
 
-import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "college_table")
+@Parcelize
 data class College(
-    @NonNull @PrimaryKey
-    @ColumnInfo(name = "college_Id") val collegeId: String,
-    @ColumnInfo(name = "college_name") val collegeName: String?,
-    @ColumnInfo(name = "college_email") val collegeEmail: String?,
-    @ColumnInfo(name = "college_university") val collegeUniversity: String,
-    @ColumnInfo(name = "college_phone") val collegePhone: String,
-    @ColumnInfo(name = "college_code") val collegeCode: Long,
-    @ColumnInfo(name = "college_address") val collegeAddress: String
-)
+        @PrimaryKey
+        @SerializedName("_id")val id: String,
+        val name: String,
+        val code: Int,
+        val address: String,
+        val university: String,
+        val email: String,
+        val phone: String
+): Parcelable

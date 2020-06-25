@@ -6,6 +6,8 @@ import com.testexample.materialdesigntest.data.network.model.*
 import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Flowable
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -51,8 +53,12 @@ interface GetDataServices {
                    @Path("code") code: Int ):
             Single<College>
 
-    @PUT("colleges/{id}")
-    fun updateCollege()
+    @PUT("colleges/{code}")
+    fun updateCollege(@Header("auth-token") token: String,
+                      @Path("code") code: Int,
+                      @Body collegeDetails: UpdateCollegeDetails
+                      ):
+            Single<College>
 
     @GET("instructions/{id}")
     fun getInstructions(@Header("auth-token") token: String ,
@@ -91,6 +97,12 @@ interface GetDataServices {
     fun endExam(@Header("auth-token") token: String ,
                 @Body endExamRequest: EndExamRequest): Single<EndExamResponse>
 
+    @GET("colleges/{code}/results/{question-paper-id}")
+    fun getStudentResultList(@Header("auth-token") token: String,
+                            @Path("code") code: Int,
+                            @Path("question-paper-id") question_paper_id: String):
+            Flowable<List<CollegeWiseResultResponse>>
+
     @GET("colleges/{code}/results/{roll}/question-papers/{question-paper-id}")
     fun getStudentResult(@Header("auth-token") token: String,
                          @Path("code") code: Int,
@@ -98,13 +110,17 @@ interface GetDataServices {
                          @Path("question-paper-id") questionPaperId: String):
             Single<Result>
 
-    @GET("colleges/{code}/results/{question-paper-id}")
-    fun getStudentResultList(@Header("auth-token") token: String):
-            Flowable<List<CollegeWiseResultResponse>>
+    @Multipart
+    @POST("")
+    fun uploadFile(
+            @Part("tpo_details_for_upload_file") details: RequestBody,
+            @Part file: MultipartBody.Part
+    ): Single<String>
 
-
-
-
+    @GET("question-papers/{code}")
+    fun getQuestionPaperList(@Header("auth-token") token: String,
+                             @Path("code") code: Int):
+            Flowable<List<QuestionPaperListResponse>>
 
 
 

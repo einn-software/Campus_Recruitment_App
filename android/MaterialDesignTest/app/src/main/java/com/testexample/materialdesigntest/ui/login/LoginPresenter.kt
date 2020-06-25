@@ -41,7 +41,9 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
                 subscriptions
                         .add(
                                 userRepository
-                                        .isStudentValid(loginRequest).subscribeOn(Schedulers.io())
+                                        .isStudentValid(loginRequest)
+					.handelNetworkError()
+					.subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(
                                                 { session ->
@@ -52,6 +54,9 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
                                                     Log.i(TAG, "Successfully validate Student")
                                                 },
                                                 { error -> Log.e(TAG, "Error in validate student: ${error.toString()}") }
+ view!!.showLoading(false)
+                                  Toast.makeText(view!!.setContext(),
+                                          error.localizedMessage, Toast.LENGTH_SHORT).show()
                                         ))
             }
         }

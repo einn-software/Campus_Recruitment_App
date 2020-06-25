@@ -25,11 +25,11 @@ function sendMail(req, res, email) {
     attachments: [
       {
         filename: "Registered Students.xlsx",
-        path: "./registered/Registered Students.xlsx",
+        path: "./studentList/Registered Students.xlsx",
       },
       {
         filename: "Unregistered Students.xlsx",
-        path: "./unregistered/Unregistered Students.xlsx",
+        path: "./studentList/Unregistered Students.xlsx",
       },
     ],
   };
@@ -80,8 +80,8 @@ const FileConversion = async (req, res, email) => {
       "Unregistered students sheet"
     );
     xlsx.utils.book_append_sheet(newWB, newWS, "Registeration sheet");
-    xlsx.writeFile(newErrorWB, "./unregistered/Unregistered Students.xlsx");
-    xlsx.writeFile(newWB, "./registered/Registered Students.xlsx");
+    xlsx.writeFile(newErrorWB, "./studentList/Unregistered Students.xlsx");
+    xlsx.writeFile(newWB, "./studentList/Registered Students.xlsx");
     sendMail(req, res, email);
     req.session.fileName = null;
   }

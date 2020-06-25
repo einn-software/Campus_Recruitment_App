@@ -3,12 +3,12 @@ package com.testexample.materialdesigntest.ui.login
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.tpoDashboard.TPODashboard
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
+import com.testexample.materialdesigntest.ui.tpoDashboard.TPODashboard
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_login.*
 
@@ -33,14 +33,18 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
         }
 
         registrationLink.setOnClickListener {
-            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+            val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse("URL")
             startActivity(openURL)
         }
     }
 
     override fun openMainActivity() {
-        startActivity(Intent(this, TPODashboard::class.java))
+        startActivity(Intent(this, TPODashboard::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        this@TpoLoginActivity.finish()
     }
 
     override fun onValidationMessage(errorCode: Int) {

@@ -5,16 +5,13 @@ import com.testexample.materialdesigntest.data.interactor.implementation.PreExam
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
-import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
-import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-
 
 
 class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
@@ -54,6 +51,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
     }
 
     override fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int){
+        Log.d(TAG, "fetchCollegeCode")
         studentRepo = UserRepository(view!!.setContext())
         sessionManager = SessionManager(view!!.setContext())
         val userId = sessionManager.getUserId()!!
@@ -65,6 +63,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?):
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {success->
+                        Log.d(TAG, "fetchCollegeCode: Code is ${success.studentCollegeCode}")
                         fetchExamInfo(FetchExamRequest(success.studentCollegeCode,
                             year, month, dayOfMonth))
                     },

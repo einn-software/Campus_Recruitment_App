@@ -20,7 +20,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     private lateinit var progressBar: ProgressBar
     val TAG = "ExamInfo Fragment"
     private lateinit var instructionsId: String
-    private lateinit var questionPaperId: String
+    private var questionPaperId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +35,11 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {
-            openNextFragment(instructionsId, questionPaperId)
+            if (questionPaperId == null){
+
+            }
+            else
+                openNextFragment(instructionsId, questionPaperId!!)
         }
     }
 

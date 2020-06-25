@@ -51,7 +51,6 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
 
         presenter = ResultListPresenter(this)
         presenter .fetchResultList(code, questionPaperId)
-
         Log.d(TAG,">> onViewCreated()")
     }
 
@@ -97,7 +96,7 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
 
     private fun addHeaders() {
         val tl: TableLayout = table
-        val tr = TableRow(this.context)
+        val tr = TableRow(this.requireContext())
         tr.layoutParams = getLayoutParams()
         tr.addView(getTextView(0, Constants.ROLL, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))
         tr.addView(getTextView(0, Constants.NAME, Color.WHITE, Typeface.BOLD, ContextCompat.getColor(this.requireContext(), R.color.colorPrimary)))

@@ -9,10 +9,10 @@ data class StudentLoginRequest(
     )
 
 data class AuthResponse(
-    @SerializedName("email")val email: String,
-    @SerializedName("token")val token: String,
-    @SerializedName("_id")val id: String,
-    @SerializedName("user_type")val userType: String
+        @SerializedName("email") val email: String?,
+        @SerializedName("token") val token: String?,
+        @SerializedName("_id") val id: String?,
+        @SerializedName("user_type") val userType: String?
 )
 
 data class UserRequest(

@@ -76,10 +76,11 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         tpoLogOutButton.setOnClickListener {
             Log.d(TAG, "<< logoutButton | setOnClickListener")
-            sessionManager.saveUserSession(AuthResponse("","","",""))
+            sessionManager.saveUserSession(AuthResponse(null,null,null,null))
             startActivity(Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                this@TPODashboard.finish()
             })
             Log.d(TAG, ">> logoutButton | setOnClickListener")
         }

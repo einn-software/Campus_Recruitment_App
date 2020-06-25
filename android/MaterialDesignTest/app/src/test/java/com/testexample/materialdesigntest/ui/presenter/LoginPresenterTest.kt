@@ -3,14 +3,12 @@ package com.testexample.materialdesigntest.ui.presenter
 import com.testexample.materialdesigntest.RxImmediateSchedulerRule
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
-import com.testexample.materialdesigntest.data.network.model.ErrorResponse
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.ui.login.LoginContract
 import com.testexample.materialdesigntest.ui.login.LoginPresenter
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.reactivex.Flowable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.ClassRule
@@ -30,7 +28,7 @@ class LoginPresenterTest {
     private val model : UserRepository = mockk() {
         every {
             isStudentValid(StudentLoginRequest("645454", 2454, "testpass"))
-        } returns Single.just(AuthResponse("token","","","",ErrorResponse(0,"","","","")
+        } returns Single.just(AuthResponse("token","","",""
         ))
     }
 
@@ -66,8 +64,7 @@ class LoginPresenterTest {
         val pass: String = "testpass"
         val code: Int = 2454
 
-        model.isStudentValid(StudentLoginRequest(user, code , pass)).test().assertValue(AuthResponse("token","","","",
-            ErrorResponse(0,"","","","")))
+        model.isStudentValid(StudentLoginRequest(user, code , pass)).test().assertValue(AuthResponse("token","","",""))
 
     }
 

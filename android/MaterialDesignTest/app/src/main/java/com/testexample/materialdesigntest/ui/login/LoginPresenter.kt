@@ -2,8 +2,8 @@ package com.testexample.materialdesigntest.ui.login
 
 import android.util.Log
 import androidx.core.text.isDigitsOnly
-import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
+import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
@@ -46,7 +46,7 @@ class LoginPresenter(private var view: LoginContract.View?) :
                               { session ->
                                   Log.d("inside passed Auth", "updating session with email \n ${session.email} \n")
                                   updateSession(session)
-                                  userRepository.saveStudent(session.token)
+                                  userRepository.saveStudent(session.token!!)
                                   view!!.showLoading(false)
                                   view!!.openMainActivity()
                               },

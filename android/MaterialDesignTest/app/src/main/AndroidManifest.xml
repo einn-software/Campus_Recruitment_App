@@ -29,7 +29,7 @@
 
         <activity android:name=".ui.login.LoginActivity" />
         <activity
-            android:name=".ui.tpoDashboard.TpoDashboard" 
+            android:name=".ui.tpoDashboard.TPODashboard"
 	    android:exported="true" />
 
         <activity android:name=".ui.examination.ExamDrawer"/>
@@ -38,7 +38,6 @@
         <activity android:name=".ui.login.TpoLoginActivity" />
         <activity android:name=".ui.result.ResultActivity" />
         <activity android:name=".ui.resetAuthentication.ResetAuthenticationActivity"/>
-        <activity android:name=".ui.studentdashboard.StudentDashboardActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

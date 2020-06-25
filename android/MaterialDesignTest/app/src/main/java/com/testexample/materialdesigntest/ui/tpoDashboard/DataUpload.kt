@@ -125,6 +125,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload), TPODashboardContract
                 requireActivity().contentResolver.getFileName(selectedFIleUri!!))
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
+        parcelFileDescriptor.close()
 
         uploadProgressBar.progress = 0
         Log.d(TAG, "chached file is  ${file.name}")

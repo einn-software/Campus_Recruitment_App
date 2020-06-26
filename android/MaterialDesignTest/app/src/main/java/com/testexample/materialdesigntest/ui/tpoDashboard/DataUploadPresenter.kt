@@ -93,41 +93,41 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     private fun validateEntry(type: String, data: String): String{
         Log.d(TAG, "validateEntry: $type : $data")
         if (data.isEmpty()){
-            return "Please do not provide blank data!"
+            return "Please do not provide blank data in $type Field!"
         }
         when (type){
             "name" , "Name" -> {
-                if (!data.matches(Regex("^[a-zA-Z]*$")))
-                    return "Name should only contain alphabets!"
+                if (!data.matches(Regex("^[a-zA-Z_ ]*$")))
+                    return "Name field should only contain alphabets!"
             }
             "email", "Email" -> {
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(data).matches())
-                    return "Please Provide Valid Emails"
+                    return "Please Provide Valid Emails in $type Field"
             }
             "phone", "Phone" ->{
                 try {
                     if (data.toDouble().roundToInt() <= 0)
-                        return "Please Provide Valid Phone Numbers"
+                        return "Please Provide Valid Phone Numbers in $type Field"
                 }
                 catch (e:NumberFormatException){
-                    return "Please Provide Valid Phone Numbers"
+                    return "Please Provide Valid Phone Numbers in $type Field"
                 }
             }
             "college", "College", "collegeName" ->{
                 if (data.length < 3)
-                    return "Please Provide Valid College Name"
+                    return "Please Provide Valid College Name in $type Field"
             }
             "code", "Code", "collegecode"-> {
                 try {
                     if (data.toDouble().roundToInt() <= 2000)
-                        return "Please Provide Valid College Code"
+                        return "Please Provide Valid College Code in $type Field"
                 } catch (e: NumberFormatException) {
-                    return "Please Provide Valid College Code"
+                    return "Please Provide Valid College Code in $type Field"
                 }
             }
             "password", "Password" ->
                 if (data.length < 6)
-                    return "Password is Too short!"
+                    return "Password is Too short in $type Field!"
         }
         Log.d(TAG, "validateEntry: Exit()")
         return SUCCESS

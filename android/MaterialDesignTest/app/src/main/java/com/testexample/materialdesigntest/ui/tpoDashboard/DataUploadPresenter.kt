@@ -2,6 +2,8 @@ package com.testexample.materialdesigntest.ui.tpoDashboard
 
 import android.util.Log
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
+import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,7 +22,8 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
 
     private val TAG = "DataUpload Presenter"
     private val api: GetDataServices = GetDataServices.create()
-    private lateinit var subscriptions: CompositeDisposable
+    private var subscriptions = CompositeDisposable()
+    private val sessionManager = SessionManager(view!!.setContext())
     private lateinit var workbook: XSSFWorkbook
 
     override fun uploadFile(tpoEmail: String, file: File) {
@@ -32,7 +35,8 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                 file.name, requestFile)
 
         subscriptions.add(
-            api.uploadFile(details, parts)
+            api.uploadFile(sessionManager.getUserAuthToken()!!, details, parts)
+                .handelNetworkError()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                             {success ->

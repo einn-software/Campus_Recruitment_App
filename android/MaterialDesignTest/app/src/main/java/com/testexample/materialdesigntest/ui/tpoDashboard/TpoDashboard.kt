@@ -31,11 +31,9 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         val sessionManager = SessionManager(this)
         presenter = TPODashboardPresenter(this)
-        presenter.fetchTpoDetails(sessionManager.getUserAuthToken().toString(),
-                sessionManager.getUserId().toString())
+        presenter.fetchTpoDetails(sessionManager.getUserAuthToken().toString(), sessionManager.getUserId().toString())
 
         val dataUpload = DataUpload.newInstance(sessionManager.getUserEmail()!!)
-        val collegeDetails = CollegeDetailsFragment.newInstance(code)
 
         uploadDataTab.setOnClickListener {
             Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
@@ -54,7 +52,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
             fragmentTag = "CollegeDetailsFragment"
             tpoDashboardContainer.visibility = INVISIBLE
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, collegeDetails, fragmentTag)
+                replace(R.id.tpoDashboardFragment, CollegeDetailsFragment.newInstance(code), fragmentTag)
                 addToBackStack(fragmentTag)
                 commit()
             }
@@ -67,7 +65,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
             fragmentTag = "QuestionPaperListFragment"
 
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code),fragmentTag)
+                replace(R.id.tpoDashboardFragment, QuestionPaperListFragment.newInstance(code), fragmentTag)
                 addToBackStack(fragmentTag)
                 commit()
             }
@@ -76,7 +74,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         tpoLogOutButton.setOnClickListener {
             Log.d(TAG, "<< logoutButton | setOnClickListener")
-            sessionManager.saveUserSession(AuthResponse(null,null,null,null))
+            sessionManager.saveUserSession(AuthResponse(null, null, null, null))
             startActivity(Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK

@@ -19,7 +19,7 @@ data class StudentResponse(
 )
 
 data class CollegeWiseResultResponse(
-    @SerializedName("_id") val studentId: String,
+    @SerializedName("student_id") val studentId: String,
     @SerializedName("roll") val studentRollNo: String,
     @SerializedName("name") val studentName: String?,
     @SerializedName("question_attempt") val questionAttended: Int,

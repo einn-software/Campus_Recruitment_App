@@ -12,7 +12,8 @@ class ResultRemoteRepo : IResultRemoteRepo {
     private val TAG = "ResultRemoteRepo"
     private val api: GetDataServices = GetDataServices.create()
 
-    override fun callApiForStudentResult(token: String, code: Int, roll: String, question_paper_id: String): Single<Result> {
+    override fun callApiForStudentResult(token: String, code: Int, roll: String, question_paper_id: String)
+            : Single<Result> {
         Log.d(TAG, "<< callApiForStudentResult()")
         Log.d(TAG, ">> callApiForStudentResult()")
         return api.getStudentResult(token, code, roll, question_paper_id)
@@ -24,7 +25,4 @@ class ResultRemoteRepo : IResultRemoteRepo {
         return api.getStudentResultList(token, code, question_paper_id)
     }
 
-    override fun saveResult(result: Result) {
-        TODO("Not yet implemented")
-    }
 }

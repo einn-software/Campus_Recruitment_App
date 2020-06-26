@@ -39,7 +39,7 @@ class ResultRemoteRepoTest {
 
     @Test
     fun callApiForStudentResultList_withValidTokenCodeQuesId() {
-        var response = CollegeWiseResultResponse("", "", "", 0, 0, 0)
+        var response = CollegeWiseResultResponse("", "", "", 0, 0, 0.0)
         var failure = ""
         resultRemoteRepo.callApiForStudentResultList(token, 2346, "5eeb257218b0eeb44966b3ca")
                 .handelNetworkError()
@@ -227,8 +227,8 @@ class ResultRemoteRepoTest {
     @Test
     fun callApiForStudentResult_withValidParams() {
         var failure = ""
-        var response = Result("", "","", "", 0, 0, 0, 10, 10)
-        resultRemoteRepo.callApiForStudentResult(token, 2346, "1680210676", "5eeb257218b0eeb44966b3ca")
+        var response = Result("", "","", "", 0, 0, 0, 0, 0.0)
+        resultRemoteRepo.callApiForStudentResult(token, 2346, "1680210025", "5eeb257218b0eeb44966b3ca")
                 .handelNetworkError()
                 .subscribe(
                         { success ->

@@ -24,7 +24,7 @@ data class CollegeWiseResultResponse(
     @SerializedName("name") val studentName: String?,
     @SerializedName("question_attempt") val questionAttended: Int,
     @SerializedName("correct_attempt") val correctAttempted: Int,
-    @SerializedName("total_marks_scored") val totalMarksScored: Int
+    @SerializedName("total_marks_scored") val totalMarksScored: Double
 )
 
 data class QuestionPaperListResponse(

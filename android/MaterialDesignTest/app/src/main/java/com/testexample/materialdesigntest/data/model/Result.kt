@@ -15,7 +15,7 @@ data class Result(
     val noOfQuestionsCorrect: Int,
     val totalNoOfQuestions: Int,
     val totalMarks: Int,
-    val scoredMarks: Int
+    val scoredMarks: Double
 ) : Parcelable
 
 

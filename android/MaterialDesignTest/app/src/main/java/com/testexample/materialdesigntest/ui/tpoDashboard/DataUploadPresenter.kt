@@ -47,7 +47,6 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     }
     override fun verifyFile(file: File?): Boolean{
         Log.d(TAG , "verifyFile <-")
-        view!!.showProgressBar(true)
         if (file == null){
             Log.d(TAG , "verifyFile <- null file")
             view!!.showMessage("Select an Excel File First")
@@ -83,7 +82,6 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                 }
             }
         }
-        view!!.showProgressBar(false)
         view!!.showMessage("Successfully Validated")
         return true
     }

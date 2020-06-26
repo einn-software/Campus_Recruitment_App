@@ -7,11 +7,10 @@ import com.testexample.materialdesigntest.data.model.Result
 import com.testexample.materialdesigntest.data.network.model.CollegeWiseResultResponse
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import org.junit.After
-import org.junit.Before
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.ClassRule
+import org.junit.Test
 
 class ResultRemoteRepoTest {
     companion object {
@@ -228,7 +227,7 @@ class ResultRemoteRepoTest {
     @Test
     fun callApiForStudentResult_withValidParams() {
         var failure = ""
-        var response = Result("", "", 0, "", 0, 0, 0, 10, 10)
+        var response = Result("", "","", "", 0, 0, 0, 10, 10)
         resultRemoteRepo.callApiForStudentResult(token, 2346, "1680210676", "5eeb257218b0eeb44966b3ca")
                 .handelNetworkError()
                 .subscribe(
@@ -242,7 +241,7 @@ class ResultRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values", response.roll.isBlank() && response.name.isBlank() && response.code < 2000 && response.question_paper_id.isBlank() && response.question_attempt < 0 && response.correct_attempt < 0)
+            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values", response.studentRollNo.isBlank() && response.studentName.isBlank()  && response.questionPaperId.isBlank() && response.noOfQuestionsAttempted < 0 && response.noOfQuestionsCorrect < 0)
         } else {
             fail("callApiForStudentResult_withInvalidParams(): Verification Failed! as not received Result")
         }

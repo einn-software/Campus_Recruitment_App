@@ -62,7 +62,6 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
                 layoutDataUpload.snackbar("Ready To Upload!")
                 uploadFileButton.isEnabled = true
             } else {
-                showProgressBar(false)
                 layoutDataUpload.snackbar("Invalid File!!")
             }
         }

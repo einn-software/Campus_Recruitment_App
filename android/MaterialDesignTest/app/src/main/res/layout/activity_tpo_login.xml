@@ -114,7 +114,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
         android:text="New User!"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
@@ -123,7 +123,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ResetPasswordLink" />
+        app:layout_constraintTop_toBottomOf="@+id/resetPasswordLink" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

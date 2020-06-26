@@ -1,15 +1,14 @@
 package com.testexample.materialdesigntest.data.network.repository
 
 import com.testexample.materialdesigntest.data.model.Student
+import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.data.network.model.TpoLoginRequest
 import com.testexample.materialdesigntest.data.network.model.UserRequest
-import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class UserRemoteRepositoryTest {
 //    companion object {
@@ -21,7 +20,7 @@ class UserRemoteRepositoryTest {
     private lateinit var repository: IUserRemoteRepository
 
     private val validTpoLoginRequest = TpoLoginRequest("anand@gmail.com", "anand344")
-    private val validStudentLoginRequest = StudentLoginRequest("1680210044", 2346, "ria2611")
+    private val validStudentLoginRequest = StudentLoginRequest("1680210025", 2346, "ria2611")
 
     @Before
     fun setUp() {

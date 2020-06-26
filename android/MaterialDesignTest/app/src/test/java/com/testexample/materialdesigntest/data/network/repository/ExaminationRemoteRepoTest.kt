@@ -31,8 +31,8 @@ class ExaminationRemoteRepoTest {
         tokenRepository = UserRemoteRepositoryTest()
         studentSession = tokenRepository.setToken()
         fetchExamRequest = FetchExamRequest(2346,2020,12,23)
-        answer = StudentAnswerRequest(studentSession.id,"",0,"",0,0.0,10)
-        updateAnswer = StudentAnswerResponse("", answer)
+        answer = StudentAnswerRequest(studentSession.id,questionId,2,questionPaperId,5,10)
+        updateAnswer = StudentAnswerResponse("5eec8f5d32d95a2a1065eaca", answer)
     }
 
     @After
@@ -104,7 +104,7 @@ class ExaminationRemoteRepoTest {
     @Test
     fun callApiForSavingAnswerTest() {
         answer = StudentAnswerRequest(studentSession.id,
-            questionId,3, questionPaperId, 5, 0.00, 5 )
+            questionId,3, questionPaperId, 5, 5 )
         val output = repository.callApiForSavingAnswer(studentSession.token,answer)
             .handelNetworkError()
 
@@ -113,8 +113,7 @@ class ExaminationRemoteRepoTest {
             {success ->
                 println("Answer Submitted is $success")
                 assertTrue(success.id.isNotEmpty())
-                assertEquals(success.studentAnswer, answer)
-                updateAnswer = StudentAnswerResponse(success.id,success.studentAnswer)
+                assertEquals(success.questionId, answer.questionId)
             },
             {err ->
                 println(err.localizedMessage)
@@ -133,7 +132,7 @@ class ExaminationRemoteRepoTest {
         output.subscribe(
             {success ->
                 println("Answer Submitted is $success")
-                assertEquals(success.studentAnswer, answer)
+                assertEquals(success, updateAnswer)
             },
             { err ->
                 println(err.localizedMessage)
@@ -144,7 +143,7 @@ class ExaminationRemoteRepoTest {
 
     @Test
     fun callApiForEndingExam() {
-        println(studentSession.id + studentSession.token)
+        println(studentSession.id +" : "+ questionPaperId + "    "+ studentSession.token)
         val output = repository
             .callApiForEndingExam(studentSession.token, EndExamRequest(studentSession.id,
                 questionPaperId)).handelNetworkError()
@@ -153,7 +152,7 @@ class ExaminationRemoteRepoTest {
         output.subscribe(
             {success ->
                 println(success.message)
-                assertEquals(success.status, 200 )
+                assert(success.message.isNullOrBlank())
             },
             {err ->
                 println(err.localizedMessage)

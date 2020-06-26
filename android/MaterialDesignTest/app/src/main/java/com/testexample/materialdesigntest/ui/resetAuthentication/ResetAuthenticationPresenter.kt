@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.resetAuthentication
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -18,27 +19,46 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
     @SuppressLint("LongLogTag")
     override fun onResetPasswordRequest(email: String, userType: String) {
 
-        Log.d(TAG,"<< onResetPasswordRequest")
+        Log.d(TAG, "<< onResetPasswordRequest")
         userRepository = UserRepository()
 
-        view?.let {
-            subscriptions.add(userRepository
-                            .forgotPassword(email, userType)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .handelNetworkError().subscribe(
-                                    {success->
-                                        Log.i(TAG, "Successfully requested for reset password link")
-                                        view!!.onResetRequestComplete(success)
-                                    },
-                                    {
-                                        Log.e(TAG,"Error in sending reset password link: ${it.message.toString()}")
-                                        view!!.onResetRequestComplete(false.toString())
-                                    }
-                            )
-            )
+        when {
+            email.isEmpty() -> Toast.makeText(
+                view!!.setContext(),
+                "Email can not be Empty! ",
+                Toast.LENGTH_SHORT
+            ).show()
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                Toast.makeText(
+                    view!!.setContext(),
+                    "Please Provide a valid Email ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> {
+                view?.let {
+                    subscriptions.add(userRepository
+                        .forgotPassword(email, userType)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .handelNetworkError().subscribe(
+                            { success ->
+                                Log.i(TAG, "Successfully requested for reset password link")
+                                view!!.onResetRequestComplete(success)
+                            },
+                            {
+                                Log.e(
+                                    TAG,
+                                    "Error in sending reset password link: ${it.message.toString()}"
+                                )
+                                view!!.onResetRequestComplete(false.toString())
+                            }
+                        )
+                    )
+                }
+                Log.d(TAG, ">> onResetPasswordRequest")
+            }
         }
-        Log.d(TAG,">> onResetPasswordRequest")
     }
 
     override fun onDestroy() {

@@ -47,6 +47,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                                 },
                                 { error ->
                                     Log.e(TAG, "Error in validating TPO: ${error.message.toString()}")
+                                    view!!.showLoading(false)
 					                Toast.makeText(view!!.setContext(),
                                             error.localizedMessage, Toast.LENGTH_LONG).show()
                                 }
@@ -63,11 +64,8 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
         Log.d(TAG, ">> updateSession")
     }
 
-
     override fun onDestroy() {
         subscriptions.clear()
         view = null
     }
-
-
 }

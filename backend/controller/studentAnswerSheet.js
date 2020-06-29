@@ -47,7 +47,7 @@ const AnswerSheetAdd = async (req, res) => {
     const answer = await AnswerSheet.findOne({
       question_id: req.body.question_id
     }, {
-      "marks": 0
+      "marks_rewarded": 0
     })
     return res.status(Constants.success).json(answer);
   } catch (err) {
@@ -61,7 +61,7 @@ const AnswerSheetGetById = function (req, res) {
       student_id: req.params.student_id,
       question_paper_id: req.params.question_paper_id,
     }, {
-      "marks": 0
+      "marks_rewarded": 0
     },
     (err, results) => {
       if (err || !results) {
@@ -106,7 +106,7 @@ const AnswerSheetPut = function (req, res) {
             const answer = await AnswerSheet.findOne({
               _id: req.params.id
             }, {
-              "marks": 0
+              "marks_rewarded": 0
             })
             return res.status(Constants.success).json(answer);
           }

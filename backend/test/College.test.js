@@ -1,134 +1,203 @@
-/*const request = require('supertest');
-const { expect } = require('chai');
-const app = require('../index');
-const mongoose = require('mongoose');
-const College = require('../model/College');
-mongoose.Promise = global.Promise;
-const Registration = new College({name:"Suchitra" ,email:"singhsuchi@gmail.com", password:"ssssss44", phone:7878787878, code:223 ,address:"avantika" });
+"use strict";
+require("should");
+const request = require("supertest");
+const app = require("../index");
+const mongoose = require("mongoose");
+const agent = request.agent(app);
 
-before((done) =>{
-    mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
-    mongoose.connection
-       .once('open', () => {
-         console.log("started");
-          done();  
-       })    
-       .on('error', (error) => {
-
-           console.log("your error" ,error);
-       });
-});
-before((done)=>{
-  mongoose.connection.collections.colleges.drop(()=>{
-  done();
-})
-});
-describe("Create Tests", () => {
-    it('It should not require extra path code', async () => {
-  
-        const response = await request(app)
-        .post('/register/college')
-        .send({ 
-                name:'suchitra',
-                email:'singh@email.com',
-                password:'rsrsrs',
-                phone:'9494949497',
-                code: '223',
-                address: "Avantika",
-                designation: "TPO"
-            })
-        .expect(400);
-        expect(response.text).to.equal('"designation" is not allowed');
-    });
-
-    it("Register a new College", () => {
-            
-        request(app)
-                .post('/register/college')
-                .send(Registration)
-                .expect(200)
-              Registration.save();
-    });
-})
-
-
-describe('POST /login/college', () => {
-    it('should require a email', async () => {
-      const response = await request(app)
-        .post('/login/college')
-        .send({
-          email:"l@gmail.com",
-          password:"testtesttest"
-        })
-        .expect(400);
-      expect(response.text).to.equal('Email not found');
-    });
-    it('should require a valid email', async () => {
-      const response = await request(app)
-        .post('/login/college')
-        .send({ email: 'testuser' })
-        .expect(400);
-      expect(response.text).to.equal('Unable to login - the email must be a valid email');
-    });
-    it('should not allow the user having wrong password', async () => {
-      const response = await request(app)
-        .post('/login/college')
-        .send({ email: 'singhsuchi@gmail.com', password: 'rgsfdgr' })
-        .expect(400);
-      expect(response.text).to.equal('Invalid password');
-    });
-    // it('should only allow valid users to login', async () => {
-    //   const newUser = {
-    //     email:"singhsuchi@gmail.com",
-    //     password:"ssssss44"
-    //   }
-    //   const response = await request(app)
-    //     .post('/login/admin')
-    //     .send(newUser)
-    //     .expect(200);
-    // expect(response.text).to.contain.keys('token');
-    // });
-  }); 
-
-  describe('The GET method', ()=>{
-    it('should get the college', () => {
-      Registration.save().then((user)=>{
-          const id = Registration._id
-          request(app)
-          .get(`/college/${id}`)
-          .send()
-          College.findByIdAndDelete({_id:id}).then(()=>{
-            expect(200)
-          })
-      })
-    })
+before((done) => {
+  mongoose.connect("mongodb://localhost/Testing", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
+  mongoose.connection
+    .once('open', () => {
+      console.log("started");
+      done();
+    })
+    .on('error', (error) => {
 
-    describe('The DELETE method', ()=>{
-      it('should delete the college', () => {
-        Registration.save().then((user)=>{
-            const id = Registration._id
-            request(app)
-            .delete(`/admin/${id}`)
-            .send()
-            College.findByIdAndDelete({_id:id}).then(()=>{
-              expect(200)
-            })
-        })
-      })
+      console.log("your error", error);
     });
+});
 
-    describe('The Update method', async()=>{
-      it('should update the college', () => {
-        Registration.save().then((user)=>{
-            const id = Registration._id
-             request(app)
-            .put(`/college/${id}`)
-            .send({name:"Riya"})
-              Registration.set({name:"riya"})
-              Registration.save()
-              expect(200)
-            })
-        })
+var loggedInToken = '';
+var id = '';
+var code = 0;
+var admin_id = '';
+
+before((done) => {
+  const admin = {
+    name: "Riya Singhal",
+    email: "riyasinghal@gmail.com",
+    password: "YeahcoolItIs",
+    phone: "7586958412",
+  };
+  agent
+    .post("/register/admins")
+    .send(admin)
+    .expect(200)
+    .end((err, results) => {
+      if (err) console.log(err);
+      admin_id = results.body._id;
+      done();
+    })
+});
+before((done) => {
+  const adminLogin = {
+    email: "riyasinghal@gmail.com",
+    password: "YeahcoolItIs",
+  };
+  agent
+    .post("/login/admins")
+    .send(adminLogin)
+    .expect(200)
+    .end((err, results) => {
+      if (err) console.log(err);
+      loggedInToken = results.body.token;
+      done();
+    })
+})
+
+describe("Add college Testing:", () => {
+  const college = {
+    "name": "Nitra Technical Campus",
+    "email": "nitra802@ntc.ac.in",
+    "phone": "8090778901",
+    "university": "APJ Abdul Kalam University",
+    "address": "Sanjay Nagar, Ghaziabad"
+  };
+  it("should return access denied:", (done) => {
+    agent
+      .post("/colleges")
+      .set('auth-token', '')
+      .send(college)
+      .expect(400)
+      .end((err, results) => {
+        results.body.should.have.property("error_info");
+        done();
+      });
+  });
+  it("should return a registered college:", (done) => {
+    agent
+      .post("/colleges")
+      .set('auth-token', loggedInToken)
+      .send(college)
+      .expect(200)
+      .end((err, results) => {
+        id = results.body._id;
+        code = results.body.code;
+        results.body.should.have.property("_id");
+        done();
+      });
+  });
+});
+
+describe("GET college Testing:", () => {
+  it("should return a list of colleges:", (done) => {
+    agent
+      .get("/colleges")
+      .expect(200)
+      .end((err, results) => {
+        if (err) console.log(err);
+        results.body.should.be.an.Array();
+        done();
       })
-*/
+  });
+  it("should return a error: Path not defined:", (done) => {
+    agent
+      .get("/collees")
+      .expect(404)
+      .end((err, results) => {
+        results.body.should.have.property("error_info");
+        done();
+      });
+  });
+});
+
+describe("GET college by code Testing:", () => {
+  it("should return a college:", (done) => {
+    agent
+      .get(`/colleges/${code}`)
+      .set('auth-token', loggedInToken)
+      .expect(200)
+      .end((err, results) => {
+        if (err) console.log(err);
+        results.body.should.have.property("name");
+        done();
+      })
+  });
+  it("should return a error: Id not found:", (done) => {
+    agent
+      .get(`/colleges/58465464613545`)
+      .set('auth-token', loggedInToken)
+      .expect(200)
+      .end((err, results) => {
+        results.body.should.have.property("error_info");
+        done();
+      });
+  });
+});
+
+describe("Change(PUT) college's data by Id Testing:", () => {
+  const body = {
+    name: "RKGIT"
+  }
+  it("should return a college after changing it's data:", (done) => {
+    agent
+      .set('auth-token', loggedInToken)
+      .put(`/colleges/${code}`)
+      .send(body)
+      .expect(200)
+      .end((err, results) => {
+        if (err) console.log(err);
+        results.body.should.have.property("name").which.is.equal('RKGIT');
+        done();
+      })
+  });
+  it("should return a error: authentication error:", (done) => {
+    agent
+      .set('auth-token', '')
+      .put(`/colleges/${code}`)
+      .send(body)
+      .expect(200)
+      .end((err, results) => {
+        results.body.should.have.property("error_info");
+        done();
+      });
+  });
+});
+describe("DELETE college by Id Testing:", () => {
+  it("should return a message about deleted college:", (done) => {
+    agent
+      .delete(`/colleges/${id}`)
+      .set('auth-token', loggedInToken)
+      .expect(200)
+      .end((err, results) => {
+        if (err) console.log(err);
+        results.body.should.have.property("message");
+        done();
+      })
+  });
+  it("should return a error: no user found in databse:", (done) => {
+    agent
+      .delete(`/colleges/${id}`)
+      .set('auth-token', loggedInToken)
+      .expect(200)
+      .end((err, results) => {
+        results.body.should.have.property("error_info");
+        done();
+      });
+  });
+});
+
+after((done) => {
+  agent
+    .delete(`/admins/${admin_id}`)
+    .set('auth-token', loggedInToken)
+    .expect(200)
+    .end((err, results) => {
+      if (err) console.log(err);
+      done();
+    })
+})

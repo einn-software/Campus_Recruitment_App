@@ -86,7 +86,7 @@ const AdminPut = async function (req, res) {
             if (!results) {
               return res
                 .status(Constants.er_not_found)
-                .json(errHandler.codeNotFoundErrorHandler());
+                .json(errHandler.idNotFoundErrorHandler());
             } else {
               res.status(Constants.success).json(results);
             }

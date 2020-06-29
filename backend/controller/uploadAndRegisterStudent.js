@@ -4,7 +4,9 @@ const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
 const Student = require("../model/Student");
-const { studentRegisterValidation } = require("../config/validation");
+const {
+  studentRegisterValidation
+} = require("../config/validation");
 
 function sendMail(req, res, email) {
   const transporter = nodemailer.createTransport({
@@ -18,12 +20,10 @@ function sendMail(req, res, email) {
     from: process.env.EINN_EMAIL,
     to: email,
     subject: "List of registered students",
-    text:
-      "We are glad to have you with us. You are receiving this because you have requested for the registeration of the students.\n\n" +
+    text: "We are glad to have you with us. You are receiving this because you have requested for the registeration of the students.\n\n" +
       "Please check the attached file, Ii's having information that students are registered or not. To register the remaining students, you are advised to send the file again of unregistered students after correcting their data.\n\n" +
       "Thank You.\n\n",
-    attachments: [
-      {
+    attachments: [{
         filename: "Registered Students.xlsx",
         path: "./studentList/Registered Students.xlsx",
       },
@@ -45,6 +45,8 @@ function sendMail(req, res, email) {
 
 const UploadFile = async function (req, res) {
   if (req.session.user_type == Constants.tpo) {
+    if (!req.body.email) return res.status(Constants.er_failure).json(errHandler.validEmailNotFoundErrorHandler());
+    if (!req.file) return res.status(Constants.er_failure).json(errHandler.fileNotFoundErrorHandler());
     const email = req.body.email;
     req.session.fileName = req.file.originalname;
     // const file1 = req.file.originalname
@@ -100,7 +102,9 @@ const StudentListRegister = async (data, res) => {
   // Create a new student
   for (var i = 0; i < docs.length; i++) {
     // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
-    const { error } = studentRegisterValidation(docs[i]);
+    const {
+      error
+    } = studentRegisterValidation(docs[i]);
     if (error) {
       const err1 = errHandler.validationWithEmailErrorHandler(
         error,

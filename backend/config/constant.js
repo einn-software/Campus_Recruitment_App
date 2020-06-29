@@ -12,7 +12,7 @@ module.exports = {
 
   // min, max for random number generation for college code generation
   code_min: 2000,
-  code_max: 10000,
+  code_max: 8000,
 
   // saltRound for gensalt function
   salt_round: 10,

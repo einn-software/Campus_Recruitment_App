@@ -108,7 +108,6 @@ const CollegePut =
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
                     }
                     return res.status(Constants.success).json(result);
-
                 })
         } else {
             return res

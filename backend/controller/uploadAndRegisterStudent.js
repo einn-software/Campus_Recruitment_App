@@ -4,6 +4,7 @@ const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
 const Student = require("../model/Student");
+
 const {
   studentRegisterValidation
 } = require("../config/validation");

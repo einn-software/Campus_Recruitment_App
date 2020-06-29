@@ -22,10 +22,14 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
-        android:minHeight="100dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:background="@color/colorPrimary"
-        android:drawSelectorOnTop="false" />
+        android:divider="@color/colorPrimaryDarkDrawer"
+        android:dividerHeight="2dp"
+        android:drawSelectorOnTop="false"
+        android:elevation="4dp"
+        android:fadeScrollbars="true"
+        android:minHeight="100dp"
+        android:padding="8dp" />
 </LinearLayout>

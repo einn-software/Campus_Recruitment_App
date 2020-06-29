@@ -55,7 +55,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
         registrationLink.setOnClickListener {
             Toast.makeText(requireContext(), "Registration Not Available", Toast.LENGTH_LONG).show()
             val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("URL")
+            openURL.data = Uri.parse(Constants.WEBSITE_LINK)
             startActivity(openURL)
         }
         Log.d(TAG, ">> onViewCreated")

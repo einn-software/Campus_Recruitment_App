@@ -46,6 +46,9 @@ class Constants {
         internal const val CORRECT_ATTEMPT = "Correct Attempt"
         internal const val TOTAL_MARKS = "Total Marks"
 
+        //registration link
+        internal const val WEBSITE_LINK = "https://www.google.com/"
+
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),
             LOGGED_IN_MODE_SERVER(1)

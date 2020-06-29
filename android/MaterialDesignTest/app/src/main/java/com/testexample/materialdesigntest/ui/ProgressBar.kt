@@ -11,7 +11,7 @@ class ProgressBar(private val activity: Activity) {
     private lateinit var progressBox: AlertDialog
 
     private val builder = AlertDialog.Builder(activity).apply {
-        setView(activity.layoutInflater.inflate(R.layout.custom_progress,null))
+        setView(R.layout.custom_progress)
         setCancelable(true)
     }
 

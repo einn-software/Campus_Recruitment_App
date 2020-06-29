@@ -42,7 +42,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
         registrationLink.setOnClickListener {
             Toast.makeText(this, "Registration Not Available", Toast.LENGTH_LONG).show()
             val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("URL")
+            openURL.data = Uri.parse(Constants.WEBSITE_LINK)
             startActivity(openURL)
         }
         Log.d(TAG, ">> onCreate")

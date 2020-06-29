@@ -12,21 +12,31 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/questionPaperNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="question_paper_name"
+            android:text="QuestionPaperName"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/questionPaperDateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="question_paper_id"
+            android:text="questionPaperId"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/questionPaperIdText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="questionPaperDate"
             android:textSize="16sp"
             android:textAlignment="center"
             android:textColor="@android:color/white"/>

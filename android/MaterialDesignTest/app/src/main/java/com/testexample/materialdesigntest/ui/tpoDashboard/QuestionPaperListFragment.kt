@@ -26,14 +26,16 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         Log.d(TAG, "<< showQuestionPaperList()")
         val questionPaperName = ArrayList<String>()
         val questionPaperId = ArrayList<String>()
+        val questionPaperDate = ArrayList<String>()
         val numQuestionPapers = questionPapers.size
 
         for (i in 0 until numQuestionPapers) {
             questionPaperName.add(questionPapers[i].paper_name)
             questionPaperId.add(questionPapers[i].questionPaperId)
+            questionPaperDate.add(questionPapers[i].day.toString()+"-"+questionPapers[i].month.toString()+"-"+questionPapers[i].year.toString())
         }
 
-        val listAdapter = QuestionPaperAdapter(this.requireActivity(), questionPaperName, questionPaperId)
+        val listAdapter = QuestionPaperAdapter(this.requireActivity(), questionPaperName, questionPaperId, questionPaperDate)
         list.adapter = listAdapter
 
         Log.d(TAG, ">> showQuestionPaperList()")
@@ -67,7 +69,9 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         presenter.fetchQuestionPaperList(code)
 
         list.setOnItemClickListener { _, view, _, _ ->
-            val questionPaperId = (view.findViewById(R.id.description) as TextView).text
+            val questionPaperId = (view.findViewById(R.id.questionPaperIdText) as TextView).text
+            Log.i(TAG, "Calling ResultList fragment with questionPaperId $questionPaperId and college code is $code")
+
             requireActivity().supportFragmentManager.beginTransaction().apply {
                 replace((requireView().parent as ViewGroup).id, ResultListFragment.newInstance(code, questionPaperId as String),"ResultListFragment")
                 addToBackStack("ResultListFragment")

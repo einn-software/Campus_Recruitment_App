@@ -30,7 +30,7 @@ class ExaminationRemoteRepoTest {
     fun setUp() {
         tokenRepository = UserRemoteRepositoryTest()
         studentSession = tokenRepository.setToken()
-        fetchExamRequest = FetchExamRequest(2346,2020,12,23)
+        fetchExamRequest = FetchExamRequest(2346,2020,6,29)
         answer = StudentAnswerRequest(studentSession.id,questionId,2,questionPaperId,5,10)
         updateAnswer = StudentAnswerResponse("5eec8f5d32d95a2a1065eaca", answer)
     }

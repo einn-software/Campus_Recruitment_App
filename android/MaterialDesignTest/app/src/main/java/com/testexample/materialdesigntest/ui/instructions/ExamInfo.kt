@@ -33,10 +33,10 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         progressBar = ProgressBar(requireActivity())
         val calender = Calendar.getInstance()
         val year: Int = calender.get(Calendar.YEAR)
-        val month: Int = calender.get(Calendar.MONTH)
+        val month: Int = calender.get(Calendar.MONTH) + 1
         val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
         presenter = ExamInfoPresenter(this)
-
+        Log.d(TAG, "Current Date is $dayOfMonth / $month / $year")
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {

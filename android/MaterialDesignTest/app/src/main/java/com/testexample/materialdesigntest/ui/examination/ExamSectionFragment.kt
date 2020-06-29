@@ -178,7 +178,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     fun setClock(timeLeftInTimer: Long) {
-        Log.d(TAG, "<< setClock")
         val minutes = (timeLeftInTimer / 60000).toInt()
         val seconds = ((timeLeftInTimer % 60000) / 1000).toInt()
         var timeLeftText: String = ""
@@ -190,7 +189,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
         timeLeftText += seconds.toString()
         timerText.text = timeLeftText
-        Log.d(TAG, ">> setClock")
     }
 
     override fun markTabAndMoveNext(state: Int) {

@@ -23,7 +23,7 @@ class QuestionPaperAdapter(private val context: Activity, private val questionPa
 
 
         titleText.text = questionPaperName[position]
-        subtitleText.text = questionPaperId[position]
+        subtitleText.text = questionPaperDate[position]
         idText.text = questionPaperId[position]
         idText.visibility = View.INVISIBLE
 

@@ -77,7 +77,7 @@ const SaveResult = async function (req, res) {
     await result.save();
     return;
   } catch (err) {
-    return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    return;
   }
 };
 

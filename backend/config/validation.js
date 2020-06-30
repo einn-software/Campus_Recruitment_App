@@ -257,8 +257,7 @@ const questionCollectionsPutValidation = (data) => {
           index: Joi.number(),
           option: Joi.string().min(Constants.option_min_length),
         })
-      )
-      .required(),
+      ),
     answer: Joi.number().min(Constants.answer_min_length).max(Constants.answer_max_length),
     weight: Joi.number().min(Constants.weight_min_length).max(Constants.weight_max_length),
   });

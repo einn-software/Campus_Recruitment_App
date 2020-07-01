@@ -7,11 +7,11 @@ module.exports = async (req, res, next) => {
     if (!token) {
         return res.status(Constants.er_authentication_failed).json(errHandler.tokenNotFoundErrorHandler());
     }
-    const verified = await jwt.verify(token, process.env.TOKEN_SECRET)
-    try {
-        req.userData = verified;
+    await jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(Constants.er_authentication_failed).json(errHandler.invalidTokenErrorHandler(err));
+        }
         next();
-    } catch (err) {
-        return res.status(Constants.er_failure).json(errHandler.invalidTokenErrorHandler(err));
-    }
+    })
+
 }

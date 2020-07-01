@@ -41,14 +41,17 @@ app.use(function (req, res, next) {
 
 //Route Middlewares
 app.use("/", authRoute);
-
+app.use('*', function (req, res) {
+  return res.status(Constants.er_failure).json(errHandler.noRouteErrorHandler());
+});
 //Error hadling middleware
 app.use((req, res, next) => {
   next(error);
 });
-
 app.use((error, req, res, next) => {
-  return res.status(Constants.er_failure).json(errHandler.noRouteErrorHandler(error));
+  logger.error(req.url)
+  logger.error(error.status + "\n" + error.stack + "\n" + error.body + "\n" + error.type);
+  return res.status(Constants.er_failure).json(errHandler.errorHandler(error));
 });
 
 module.exports = app;

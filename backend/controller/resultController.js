@@ -10,8 +10,6 @@ const {
 const {
   resultValidation
 } = require("../config/validation");
-
-const jwt = require("jsonwebtoken");
 const errHandler = require("./errorHandling");
 const Constants = require("../config/constant");
 const {
@@ -44,7 +42,7 @@ async function resultCal(req, res) {
   const student = await Student.findOne({
     _id: req.body.student_id
   }, (err, std) => {
-    if (err) return res.status(Constants.er_failure).json(errHandler.idNotFoundErrorHandler());
+    if (err) return res.status(Constants.er_not_found).json(errHandler.idNotFoundErrorHandler());
     return std;
   })
 
@@ -79,7 +77,7 @@ const SaveResult = async function (req, res) {
     await result.save();
     return;
   } catch (err) {
-    return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    return;
   }
 };
 
@@ -91,12 +89,16 @@ const ResultGetByPaperIdAndCode = function (req, res) {
         question_paper_id: req.params.question_paper_id,
       },
       (err, results) => {
-        if (err || results.length === 0) {
+        if (err || !results) {
           return res
             .status(Constants.er_not_found)
             .json(errHandler.notFoundCodeIdErrorHandler());
         }
+        if (results.length === 0) return res
+          .status(Constants.er_not_found)
+          .json(errHandler.notFoundResultErrorHandler);
         return res.status(Constants.success).json(results);
+
       }
     );
   } else {
@@ -116,11 +118,14 @@ const ResultGetByPaperIdRollAndCode = function (req, res) {
         question_paper_id: req.params.question_paper_id,
       },
       (err, results) => {
-        if (err || !results || results.length == 0) {
+        if (err || !results) {
           return res
             .status(Constants.er_not_found)
             .json(errHandler.codeRollIdNotFoundErrorHandler());
         }
+        if (results.length == 0) return res
+          .status(Constants.er_not_found)
+          .json(errHandler.notFoundResultErrorHandler);
         return res.status(Constants.success).json(results);
       }
     );

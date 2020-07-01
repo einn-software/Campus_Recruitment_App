@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Constants = require("../config/constant");
 const finalSubmissionSchema = new mongoose.Schema({
     question_paper_id: {
         type: mongoose.Types.ObjectId,

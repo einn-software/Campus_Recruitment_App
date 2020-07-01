@@ -74,27 +74,25 @@ const AdminPut = async function (req, res) {
       body.password = hashedPassword;
     }
     await Admin.findOneAndUpdate({
-        _id: req.params.id,
-      },
-      body, async (err, result) => {
-        if (err) {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        }
-        await Admin.findOne({
-            _id: req.params.id
-          }).then((results) => {
-            if (!results) {
-              return res
-                .status(Constants.er_not_found)
-                .json(errHandler.codeNotFoundErrorHandler());
-            } else {
-              res.status(Constants.success).json(results);
-            }
-          })
-          .catch((err) => {
+          _id: req.params.id,
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
             return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-          });
-      })
+          }
+          if (!result) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -195,27 +193,25 @@ const TpoPut = function (req, res) {
       body.password = hashedPassword;
     }
     Tpo.findOneAndUpdate({
-        _id: req.params.id,
-      },
-      body, async (err, result) => {
-        if (err) {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        }
-        await Tpo.findOne({
-            _id: req.params.id
-          }).then((results) => {
-            if (!results) {
-              return res
-                .status(Constants.er_not_found)
-                .json(errHandler.codeNotFoundErrorHandler());
-            } else {
-              res.status(Constants.success).json(results);
-            }
-          })
-          .catch((err) => {
+          _id: req.params.id,
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
             return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-          });
-      })
+          }
+          if (!result) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.codeNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -324,27 +320,25 @@ const StudentPut = async function (req, res) {
       body.password = hashedPassword;
     }
     await Student.findOneAndUpdate({
-        _id: req.params.id
-      },
-      body, async (err, result) => {
-        if (err) {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        }
-        await Student.findOne({
-            _id: req.params.id
-          }).then((results) => {
-            if (!results) {
-              return res
-                .status(Constants.er_not_found)
-                .json(errHandler.codeNotFoundErrorHandler());
-            } else {
-              res.status(Constants.success).json(results);
-            }
-          })
-          .catch((err) => {
+          _id: req.params.id
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
             return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-          });
-      })
+          }
+          if (!result) {
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.codeNotFoundErrorHandler());
+          } else {
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
   } else {
     return res
       .status(Constants.er_authorization_failed)

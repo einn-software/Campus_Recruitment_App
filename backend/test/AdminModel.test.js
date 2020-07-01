@@ -1,29 +1,7 @@
-const mongoose = require("mongoose");
 const Admins = require("../model/Admin");
 const assert = require("assert");
-mongoose.Promise = global.Promise;
-
-before((done) => {
-    mongoose.connect("mongodb://localhost/TestingModel", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
-
-    mongoose.connection
-        .once("open", () => {
-            // console.log("connected"))
-            done();
-        })
-        .on("error", (error) => {
-            console.log("your error", error);
-        });
-});
-
-beforeEach((done) => {
-    mongoose.connection.collections.admins.drop(() => {
-        done();
-    });
-});
+const logger = require("../config/logger");
+var id = '';
 
 describe("Create Tests for Admin Model", () => {
     it("Create Admin", (done) => {
@@ -34,93 +12,55 @@ describe("Create Tests for Admin Model", () => {
             phone: "7878787878",
         });
         Registration.save()
-            .then(() => {
+            .then((result) => {
+                id = result._id;
                 assert(!Registration.isNew); //if instruct is saved to db then it is not new
                 done();
             })
             .catch((error) => {
-                console.log("error", error);
+                logger.log("error", error);
             });
     });
 });
 
-//All read Tests
-
-describe("Read Tests", () => {
-    let Register;
-
-    beforeEach((done) => {
-        Register = new Admins({
-            name: "Shikha",
-            email: "gshikha@gmail.com",
-            password: "ssssss44",
-            phone: "7878787878",
-        });
-        Register.save().then(() => {
-            done();
-        });
-    });
+// Admin Read Tests
+describe("Admin Read Tests", () => {
     it("Read", (done) => {
         Admins.find({
             name: "Shikha"
         }).then((reg) => {
-            assert(Register._id.toString() === reg[0]._id.toString());
+            assert(id.toString() === reg[0]._id.toString());
             done();
         });
     });
 });
 
-//update all tests
+// update all tests
+describe("Admin Update Tests", () => {
 
-describe("Update Tests", () => {
-    let updater;
-    beforeEach((done) => {
-        updater = new Admins({
-            name: "Shikha",
-            email: "gshikha@gmail.com",
-            password: "ssssss44",
-            phone: "7878787878",
+    it("update", () => {
+        updater = ({
+            name: "Riya"
         });
-        updater.save().then(() => done());
-    });
-
-    it("set and save", () => {
-        updater.set({
-            name: "Riya",
-            email: "ria@gmail.com",
-            password: "rrrrrrr55",
-            phone: "6756765790",
-        });
-        updater
-            .save()
-            .then(() => Admins.find({}))
+        Admins.findByIdAndUpdate({
+                _id: id
+            }, updater, {
+                new: true
+            })
             .then((Admin) => {
-                assert(Admin[0].name !== "Shikha");
+                assert(Admin.name !== "Shikha");
             });
     });
 });
 
 //All delete tests
-
-describe("Delete Tests", () => {
-    let deleter;
-    beforeEach((done) => {
-        deleter = new Admins({
-            name: "Shikha",
-            email: "gshikha@gmail.com",
-            password: "ssssss44",
-            phone: "7878787878",
-        });
-        deleter.save().then(() => done());
-    });
+describe("Admin Delete Tests", () => {
     it("Delete", (done) => {
-        Admins.findByIdAndDelete(deleter._id)
-            .then(() => Admins.findOne({
-                name: "Shikha"
-            }))
-            .then((Admin) => {
-                assert(Admin == null);
-                done();
-            });
+        Admins.findByIdAndRemove({
+            _id: id
+        }, (Admin) => {
+            assert(Admin == null);
+            done();
+        });
     });
 });

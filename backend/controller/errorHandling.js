@@ -11,7 +11,7 @@ function errorHandler(error) {
     status: Constants.er_failure,
     message: error.message,
     error_info: error.name,
-    server_msg: error._message,
+    server_msg: error._message || error.type,
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -39,12 +39,12 @@ function validationWithEmailErrorHandler(error, email) {
   return err;
 }
 
-function noRouteErrorHandler(error) {
+function noRouteErrorHandler() {
   const err = {
     status: Constants.er_failure,
-    message: "Something went wrong!, Please check the path and try again",
-    error_info: error.name,
-    server_msg: "User requested on wrong/invalid path or check the main error at info.log file or error.log file",
+    message: "Please check the path and try again",
+    error_info: "ReferenceError",
+    server_msg: "User requested on wrong/invalid path",
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -183,6 +183,28 @@ function idNotFoundErrorHandler() {
   return err;
 }
 
+function fileNotFoundErrorHandler() {
+  const err = {
+    status: Constants.er_not_found, //404
+    message: "Please provide a valid xlxs file",
+    error_info: "Not Found Error",
+    server_msg: "No file found from user, So can't get the response",
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
+function validEmailNotFoundErrorHandler() {
+  const err = {
+    status: Constants.er_not_found, //404
+    message: "Please provide a valid email",
+    error_info: "Not Found Error",
+    server_msg: "No email found, So can't get the response",
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
 function dataNotFoundErrorHandler() {
   const err = {
     status: Constants.er_not_found, //404
@@ -238,6 +260,17 @@ function notFoundCodeIdErrorHandler() {
   return err;
 }
 
+function notFoundResultErrorHandler() {
+  const err = {
+    status: Constants.er_not_found, //404
+    message: "No result found",
+    error_info: "Not Found Error",
+    server_msg: "No result found corresponnding to the student and question-paper id",
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
 function codeRollErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
@@ -276,9 +309,9 @@ function questionPaperExistErrorHandler() {
 function studentExistErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
-    message: "Result is already present in the database for the particular student id",
+    message: "You have already submitted the result for this exam",
     error_info: "Error",
-    server_msg: "Result already exist in the database, So can't add the same result twice",
+    server_msg: "Already submitted the result for this exam, So can't add the same result twice",
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -309,5 +342,8 @@ module.exports = {
   codeNotFoundErrorHandler,
   codeRollIdNotFoundErrorHandler,
   dataNotFoundErrorHandler,
-  notFoundCodeIdErrorHandler
+  notFoundCodeIdErrorHandler,
+  notFoundResultErrorHandler,
+  fileNotFoundErrorHandler,
+  validEmailNotFoundErrorHandler
 }

@@ -1,82 +1,90 @@
 "use strict";
-require("should");
-const request = require("supertest");
+require("should"); //should is an expressive, readable, framework-agnostic assertion library. require('should')) should extends the Object.prototype with a single non-enumerable getter that allows you to express how that object should behave
+const request = require("supertest"); //provide a high-level abstraction for testing HTTP,
+const mongoose = require("mongoose");
 const app = require("../index");
 const agent = request.agent(app);
 const logger = require("../config/logger");
 
+before((done) => {
+    mongoose.connect(process.env.TEST_DB_CONNECT, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    mongoose.connection
+        .once('open', () => {
+            logger.log('info', "started");
+            done();
+        })
+        .on('error', (error) => {
+            logger.log("error", error);
+        });
+});
+
 var loggedInToken = '';
 var id = '';
-var code = 0;
 
-describe("Student Registration Testing:", () => {
-    it("should return a registered student:", (done) => {
-        const student = {
+describe("Admin Registration Testing:", () => {
+    it("should return validation error:", (done) => {
+        const admin = {
             name: "Riya Singhal",
             email: "riya@gmail.com",
-            password: "YeahcoolItIs",
+            password: "YeIs",
             phone: "7586958412",
-            roll: "124578",
-            branch: "Computer Science",
-            college: "Nitra Technical Campus",
-            code: 5473,
         };
         agent
-            .post("/register/students")
-            .send(student)
-            .expect(200)
-            .end((err, results) => {
-                id = results.body._id;
-                code = results.body.code;
-                results.body.should.have.property("_id");
-                done();
-            });
-    });
-    it("should return a validation errror - branch is required:", (done) => {
-        const student = {
-            name: "Riya Singhal",
-            email: "riyasinghal@gmail.com",
-            password: "YeahcoolItIs",
-            phone: "7586958412",
-            roll: "124578",
-            college: "Nitra Technical Campus",
-            code: 5473,
-        };
-        agent
-            .post("/register/students")
-            .send(student)
+            .post("/register/admins")
+            .send(admin)
             .expect(400)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
             });
     });
+    it("should return a registered admin:", (done) => {
+        const admin = {
+            name: "Riya Singhal",
+            email: "riya@gmail.com",
+            password: "YeahcoolItIs",
+            phone: "7586958412",
+        };
+        agent
+            .post("/register/admins")
+            .send(admin)
+            .expect(200)
+            .end((err, results) => {
+                id = results.body._id;
+                results.body.should.have.property("_id");
+                done();
+            });
+    });
 });
-describe("Student Login Testing:", () => {
+describe("Admin Login Testing:", () => {
     it("should return a session having field token:", (done) => {
-        const student = {
-            code: "5473",
-            roll: "124578",
+        const admin = {
+            email: "riya@gmail.com",
             password: "YeahcoolItIs",
         };
         agent
-            .post("/login/students")
-            .send(student)
+            .post("/login/admins")
+            .send(admin)
             .expect(200)
             .end((err, results) => {
+                if (err) logger.log('error', err);
                 loggedInToken = results.body.token;
                 results.body.should.have.property("token");
                 done();
             });
     });
-    it("should return a validation error - password is required:", (done) => {
-        const student = {
-            code: "5473",
-            roll: "124578",
+
+    it("should return a authentication error - invalid password:", (done) => {
+        const admin = {
+            email: "riya@gmail.com",
+            password: "YeIs",
         };
         agent
-            .post("/login/students")
-            .send(student)
+            .post("/login/admins")
+            .send(admin)
             .expect(400)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -84,11 +92,12 @@ describe("Student Login Testing:", () => {
             });
     });
 });
-describe("GET Student Testing:", () => {
-    it("should return a list of Students:", (done) => {
+
+describe("GET Admin Testing:", () => {
+    it("should return a list of admins:", (done) => {
         agent
             .set('auth-token', loggedInToken)
-            .get(`/colleges/${code}/students`)
+            .get("/admins")
             .expect(200)
             .end((err, results) => {
                 if (err) logger.log('error', err);
@@ -96,10 +105,10 @@ describe("GET Student Testing:", () => {
                 done();
             })
     });
-    it("should return a error: Path not defined:", (done) => {
+    it("should return a error: token not found:", (done) => {
         agent
             .set('auth-token', '')
-            .get("/studens")
+            .get("/admins")
             .expect(200)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -108,21 +117,21 @@ describe("GET Student Testing:", () => {
     });
 });
 
-describe("GET Student by Id Testing:", () => {
-    it("should return a Student:", (done) => {
+describe("GET Admin by Id Testing:", () => {
+    it("should return a admin:", (done) => {
         agent
-            .get(`/students/${id}`)
+            .get(`/admins/${id}`)
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
                 if (err) logger.log('error', err);
-                results.body.should.have.property("branch");
+                results.body.should.have.property("name");
                 done();
             })
     });
     it("should return a error: Id not found:", (done) => {
         agent
-            .get(`/students/58465464613545`)
+            .get(`/admins/58465464613545`)
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
@@ -132,26 +141,26 @@ describe("GET Student by Id Testing:", () => {
     });
 });
 
-describe("Change(PUT) student's data by Id Testing:", () => {
+describe("Change(PUT) Admin's data by Id Testing:", () => {
     const body = {
-        name: "Shikha Gputa"
+        name: "Radhika Singhal"
     }
-    it("should return a student after changing it's data:", (done) => {
+    it("should return a admin after changing it's data:", (done) => {
         agent
             .set('auth-token', loggedInToken)
-            .put(`/students/${id}`)
+            .put(`/admins/${id}`)
             .send(body)
             .expect(200)
             .end((err, results) => {
                 if (err) logger.log('error', err);
-                results.body.should.have.property("name").which.is.equal('Shikha Gputa');
+                results.body.should.have.property("name").which.is.equal('Radhika Singhal');
                 done();
             })
     });
-    it("should return a error: access denied:", (done) => {
+    it("should return a error: authentication error:", (done) => {
         agent
             .set('auth-token', '')
-            .put(`/students/${id}`)
+            .put(`/admins/${id}`)
             .send(body)
             .expect(200)
             .end((err, results) => {
@@ -160,10 +169,10 @@ describe("Change(PUT) student's data by Id Testing:", () => {
             });
     });
 });
-describe("DELETE student by Id Testing:", () => {
-    it("should return a message about deleted student:", (done) => {
+describe("DELETE Admin by Id Testing:", () => {
+    it("should return a message about deleted admin:", (done) => {
         agent
-            .delete(`/students/${id}`)
+            .delete(`/admins/${id}`)
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
@@ -174,7 +183,7 @@ describe("DELETE student by Id Testing:", () => {
     });
     it("should return a error: no user found in databse:", (done) => {
         agent
-            .delete(`/students/${id}`)
+            .delete(`/admins/${id}`)
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {

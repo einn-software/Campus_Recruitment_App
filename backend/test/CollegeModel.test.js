@@ -1,36 +1,14 @@
-const mongoose = require("mongoose");
 const Colleges = require("../model/College");
 const assert = require("assert");
-mongoose.Promise = global.Promise;
-
-before((done) => {
-    mongoose.connect("mongodb://localhost/TestingModel", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
-
-    mongoose.connection
-        .once("open", () => {
-            // console.log("connected"))
-            done();
-        })
-        .on("error", (error) => {
-            console.log("your error", error);
-        });
-});
-
-beforeEach((done) => {
-    mongoose.connection.collections.colleges.drop(() => {
-        done();
-    });
-});
+const logger = require("../config/logger");
+var id = '';
 
 describe("Create Tests for College Model", () => {
     it("Create College", (done) => {
         // assert(true);
 
         const Registration = new Colleges({
-            name: "NTc",
+            name: "NTC",
             email: "gshikha@gmail.com",
             university: "Apj Abdul Kalam",
             phone: "7878787878",
@@ -38,102 +16,54 @@ describe("Create Tests for College Model", () => {
             address: "avantika",
         });
         Registration.save()
-            .then(() => {
+            .then((res) => {
+                id = res._id;
                 assert(!Registration.isNew); //if instruct is saved to db then it is not new
                 done();
             })
             .catch((error) => {
-                console.log("error", error);
+                logger.log("error", error);
             });
     });
 });
 
-//All read Tests
-
-describe("Read Tests", () => {
-    let Register;
-
-    beforeEach((done) => {
-        Register = new Colleges({
-            name: "NTC",
-            email: "gshikha@gmail.com",
-            university: "Apj Abdul Kalam",
-            phone: "7878787878",
-            code: 2010,
-            address: "avantika",
-        });
-        Register.save().then(() => {
-            done();
-        });
-    });
+// Read Tests
+describe("College Read Tests", () => {
     it("Read", (done) => {
         Colleges.find({
             name: "NTC"
         }).then((reg) => {
-            assert(Register._id.toString() === reg[0]._id.toString());
+            assert(id.toString() === reg[0]._id.toString());
             done();
         });
     });
 });
 
-//update all tests
-
-describe("Update Tests", () => {
-    let updater;
-    beforeEach((done) => {
-        updater = new Colleges({
-            name: "NTC",
-            email: "gshikha@gmail.com",
-            university: "Apj Abdul Kalam",
-            phone: "7878787878",
-            code: 2010,
-            address: "avantika",
+// update all tests
+describe("College Update Tests", () => {
+    it("update", () => {
+        updater = ({
+            name: "RKGIT"
         });
-        updater.save().then(() => done());
-    });
-
-    it("set and save", () => {
-        updater.set({
-            name: "KITE",
-            email: "ria@gmail.com",
-            university: "Apj Abdul Kalam",
-            phone: "7848787878",
-            code: 2010,
-            address: "gzb",
-        });
-        updater
-            .save()
-            .then(() => Colleges.find({}))
-            .then((College) => {
-                assert(College[0].name !== "Shikha");
+        Colleges.findByIdAndUpdate({
+                _id: id
+            }, updater, {
+                new: true
+            })
+            .then((Admin) => {
+                assert(Admin.name !== "NTC");
             });
     });
 });
 
 //All delete tests
-
-describe("Delete Tests", () => {
-    let deleter;
-
-    beforeEach((done) => {
-        deleter = new Colleges({
-            name: "NTC",
-            email: "gshikha@gmail.com",
-            university: "Apj Abdul Kalam",
-            phone: "7878787878",
-            code: 2010,
-            address: "avantika",
-        });
-        deleter.save().then(() => done());
-    });
+describe("College Delete Tests", () => {
     it("Delete", (done) => {
-        Colleges.findByIdAndDelete(deleter._id)
-            .then(() => Colleges.findOne({
-                name: "NTC"
-            }))
-            .then((College) => {
-                assert(College == null);
-                done();
-            });
+        Colleges.findByIdAndRemove({
+            _id: id
+        }, (Admin) => {
+            assert(Admin == null);
+            done();
+        });
     });
 });

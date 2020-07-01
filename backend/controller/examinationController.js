@@ -117,33 +117,27 @@ const QuestionPut = function (req, res) {
         .json(errHandler.validationErrorHandler(error));
     }
     QuestionCollections.findOneAndUpdate({
-        _id: req.params.id,
-      },
-      body, async (err, result) => {
-        if (err) {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        }
-        await QuestionCollections.findOne({
-            _id: req.params.id
-          })
-          .then(async (results) => {
-            if (!results) {
-              return res
-                .status(Constants.er_not_found)
-                .json(errHandler.idNotFoundErrorHandler());
-            } else {
-              const updated = await QuestionCollections.findOne({
-                _id: req.params.id
-              })
-              return res.status(Constants.success).json(updated);
-            }
-          })
-          .catch((err) => {
+          _id: req.params.id,
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!result) {
             return res
-              .status(Constants.er_failure)
-              .json(errHandler.errorHandler(err));
-          });
-      })
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler());
+          } else {
+            return res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      });
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -322,33 +316,27 @@ const QuestionPaperPut = function (req, res) {
         .json(errHandler.validationErrorHandler(error));
     }
     QuestionPapers.findByIdAndUpdate({
-        _id: req.params.id,
-      },
-      body, async (err, result) => {
-        if (err) {
-          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-        }
-        await QuestionPapers.findOne({
-            _id: req.params.id
-          })
-          .then(async (results) => {
-            if (!results) {
-              return res
-                .status(Constants.er_not_found)
-                .json(errHandler.idNotFoundErrorHandler());
-            } else {
-              const updated = await QuestionPapers.findOne({
-                _id: req.params.id
-              })
-              return res.status(Constants.success).json(updated);
-            }
-          })
-          .catch((err) => {
+          _id: req.params.id,
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!result) {
             return res
-              .status(Constants.er_failure)
-              .json(errHandler.errorHandler(err));
-          });
-      })
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler());
+          } else {
+            return res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      });
   } else {
     return res
       .status(Constants.er_authorization_failed)
@@ -372,7 +360,9 @@ const QuestionPaperPatch = function (req, res) {
     QuestionPapers.findByIdAndUpdate({
           _id: req.params.id,
         },
-        body
+        body, {
+          new: true
+        }
       )
       .then(async (results) => {
         if (!results) {
@@ -380,10 +370,7 @@ const QuestionPaperPatch = function (req, res) {
             .status(Constants.er_not_found)
             .json(errHandler.idNotFoundErrorHandler());
         } else {
-          const updated = await QuestionPapers.findOne({
-            _id: req.params.id
-          })
-          return res.status(Constants.success).json(updated);
+          return res.status(Constants.success).json(results);
         }
       })
       .catch((err) => {

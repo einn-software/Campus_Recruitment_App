@@ -47,7 +47,7 @@ const AnswerSheetAdd = async (req, res) => {
     const answer = await AnswerSheet.findOne({
       question_id: req.body.question_id
     }, {
-      "marks": 0
+      "marks_rewarded": 0
     })
     return res.status(Constants.success).json(answer);
   } catch (err) {
@@ -61,7 +61,7 @@ const AnswerSheetGetById = function (req, res) {
       student_id: req.params.student_id,
       question_paper_id: req.params.question_paper_id,
     }, {
-      "marks": 0
+      "marks_rewarded": 0
     },
     (err, results) => {
       if (err || !results) {
@@ -88,35 +88,32 @@ const AnswerSheetPut = function (req, res) {
       .json(errHandler.validationErrorHandler(error));
   }
   AnswerSheet.findOneAndUpdate({
-      _id: req.params.id,
-    },
-    body, async (err, result) => {
-      if (err) {
-        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-      }
-      await AnswerSheet.findOne({
-          _id: req.params.id
-        })
-        .then(async (results) => {
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
-          } else {
-            const answer = await AnswerSheet.findOne({
-              _id: req.params.id
-            }, {
-              "marks": 0
-            })
-            return res.status(Constants.success).json(answer);
-          }
-        })
-        .catch((err) => {
+        _id: req.params.id,
+      },
+      body, {
+        new: true
+      }, async (err, result) => {
+        if (err) {
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        }
+        if (!result) {
           return res
-            .status(Constants.er_failure)
-            .json(errHandler.errorHandler(err));
-        });
-    })
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler());
+        } else {
+          const answer = await AnswerSheet.findOne({
+            _id: req.params.id
+          }, {
+            "marks_rewarded": 0
+          })
+          return res.status(Constants.success).json(answer);
+        }
+      })
+    .catch((err) => {
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.errorHandler(err));
+    });
 };
 
 //To delete the answerSheet's data by using their id

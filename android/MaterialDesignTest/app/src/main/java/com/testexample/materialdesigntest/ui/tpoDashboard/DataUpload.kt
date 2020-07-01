@@ -112,6 +112,11 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
             layoutDataUpload.snackbar("Select an Excel File First")
             return null
         }
+        else if (requireActivity().contentResolver.getType(selectedFIleUri!!) !in
+            listOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "application/vnd.ms-excel")){
+            return null
+        }
         val parcelFileDescriptor =
                 requireActivity().contentResolver.openFileDescriptor(selectedFIleUri!!, "r", null)
                         ?: return null

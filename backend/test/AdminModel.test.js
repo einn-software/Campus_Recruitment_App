@@ -1,6 +1,6 @@
 const Admins = require("../model/Admin");
 const assert = require("assert");
-
+const logger = require("../config/logger");
 var id = '';
 
 describe("Create Tests for Admin Model", () => {
@@ -18,7 +18,7 @@ describe("Create Tests for Admin Model", () => {
                 done();
             })
             .catch((error) => {
-                console.log("error", error);
+                logger.log("error", error);
             });
     });
 });

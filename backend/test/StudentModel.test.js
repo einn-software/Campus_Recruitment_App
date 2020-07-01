@@ -1,6 +1,6 @@
 const Students = require("../model/Student");
 const assert = require("assert");
-
+const logger = require("../config/logger");
 var id = '';
 
 describe("Students Create Tests", () => {
@@ -22,7 +22,7 @@ describe("Students Create Tests", () => {
                 done();
             })
             .catch((error) => {
-                console.log("error", error);
+                logger.log("error", error);
             });
     });
 });

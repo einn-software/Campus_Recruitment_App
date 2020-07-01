@@ -2,25 +2,8 @@
 require("should");
 const request = require("supertest");
 const app = require("../index");
-const mongoose = require("mongoose");
 const agent = request.agent(app);
-
-before((done) => {
-    mongoose.connect("mongodb://localhost/Testing", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-    mongoose.connection
-        .once('open', () => {
-            console.log("started");
-            done();
-        })
-        .on('error', (error) => {
-
-            console.log("your error", error);
-        });
-});
-
+const logger = require("../config/logger");
 var loggedInToken = '';
 var id = '';
 var code = 0;
@@ -38,7 +21,7 @@ before((done) => {
         .send(admin)
         .expect(200)
         .end((err, results) => {
-            if (err) console.log(err);
+            if (err) logger.log('error', err);
             admin_id = results.body._id;
             done();
         })
@@ -53,7 +36,7 @@ before((done) => {
         .send(adminLogin)
         .expect(200)
         .end((err, results) => {
-            if (err) console.log(err);
+            if (err) logger.log('error', err);
             loggedInToken = results.body.token;
             done();
         })
@@ -99,7 +82,7 @@ describe("GET college Testing:", () => {
             .get("/colleges")
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
                 done();
             })
@@ -122,7 +105,7 @@ describe("GET college by code Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name");
                 done();
             })
@@ -150,7 +133,7 @@ describe("Change(PUT) college's data by Id Testing:", () => {
             .send(body)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('RKGIT');
                 done();
             })
@@ -174,7 +157,7 @@ describe("DELETE college by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("message");
                 done();
             })
@@ -197,7 +180,7 @@ after((done) => {
         .set('auth-token', loggedInToken)
         .expect(200)
         .end((err, results) => {
-            if (err) console.log(err);
+            if (err) logger.log('error', err);
             done();
         })
 })

@@ -4,20 +4,20 @@ const request = require("supertest"); //provide a high-level abstraction for tes
 const mongoose = require("mongoose");
 const app = require("../index");
 const agent = request.agent(app);
+const logger = require("../config/logger");
 
 before((done) => {
-    mongoose.connect("mongodb://localhost/Testing", {
+    mongoose.connect(process.env.TEST_DB_CONNECT, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
     mongoose.connection
         .once('open', () => {
-            console.log("started");
+            logger.log('info', "started");
             done();
         })
         .on('error', (error) => {
-
-            console.log("your error", error);
+            logger.log("error", error);
         });
 });
 
@@ -70,7 +70,7 @@ describe("Admin Login Testing:", () => {
             .send(admin)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 loggedInToken = results.body.token;
                 results.body.should.have.property("token");
                 done();
@@ -100,7 +100,7 @@ describe("GET Admin Testing:", () => {
             .get("/admins")
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
                 done();
             })
@@ -124,7 +124,7 @@ describe("GET Admin by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name");
                 done();
             })
@@ -152,7 +152,7 @@ describe("Change(PUT) Admin's data by Id Testing:", () => {
             .send(body)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Radhika Singhal');
                 done();
             })
@@ -176,7 +176,7 @@ describe("DELETE Admin by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("message");
                 done();
             })

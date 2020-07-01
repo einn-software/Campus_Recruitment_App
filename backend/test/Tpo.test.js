@@ -3,7 +3,7 @@ require("should");
 const request = require("supertest");
 const app = require("../index");
 const agent = request.agent(app);
-
+const logger = require("../config/logger");
 var loggedInToken = '';
 var id = '';
 
@@ -87,7 +87,7 @@ describe("GET Tpo Testing:", () => {
             .get("/tpos")
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
                 done();
             })
@@ -111,7 +111,7 @@ describe("GET Tpo by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("designation");
                 done();
             })
@@ -139,7 +139,7 @@ describe("Change(PUT) Tpo's data by Id Testing:", () => {
             .send(body)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Shikha Gputa');
                 done();
             })
@@ -163,7 +163,7 @@ describe("DELETE Tpo by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("message");
                 done();
             })

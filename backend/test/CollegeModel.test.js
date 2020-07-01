@@ -1,5 +1,6 @@
 const Colleges = require("../model/College");
 const assert = require("assert");
+const logger = require("../config/logger");
 var id = '';
 
 describe("Create Tests for College Model", () => {
@@ -21,7 +22,7 @@ describe("Create Tests for College Model", () => {
                 done();
             })
             .catch((error) => {
-                console.log("error", error);
+                logger.log("error", error);
             });
     });
 });

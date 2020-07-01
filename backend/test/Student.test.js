@@ -3,6 +3,7 @@ require("should");
 const request = require("supertest");
 const app = require("../index");
 const agent = request.agent(app);
+const logger = require("../config/logger");
 
 var loggedInToken = '';
 var id = '';
@@ -90,7 +91,7 @@ describe("GET Student Testing:", () => {
             .get(`/colleges/${code}/students`)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
                 done();
             })
@@ -114,7 +115,7 @@ describe("GET Student by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("branch");
                 done();
             })
@@ -142,7 +143,7 @@ describe("Change(PUT) student's data by Id Testing:", () => {
             .send(body)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Shikha Gputa');
                 done();
             })
@@ -166,7 +167,7 @@ describe("DELETE student by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .expect(200)
             .end((err, results) => {
-                if (err) console.log(err);
+                if (err) logger.log('error', err);
                 results.body.should.have.property("message");
                 done();
             })

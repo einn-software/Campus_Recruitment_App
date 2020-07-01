@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --watch --timeout 5000 ",
-    "start": "nodemon server.js"
+    "start": "pm2 start crs.js",
+    "stop": "pm2 stop crs.js"
   },
   "author": "Riya",
   "license": "ISC",

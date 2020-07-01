@@ -28,20 +28,25 @@
     <string name="empty_password_error_message">Password cannot be empty</string>
     <string name="login_failure">Login failed</string>
     <string name="invalid_code">Please Enter A Valid Code</string>
-    <string name="welcome_message">WELCOME TO CAMPUS RECRUITMENT MOBILE APPLICATION.
-        WE ARE THE ONE WHO PROVIDE THE BEST TECHNICAL SOLUTIONS TO THE BUSINESSES TO GROW FASTER</string>
+    <string name="welcome_message">Welcome to campus recruitment mobile application. \n
+        We are one who provide the best technical solutions to businesses to grow faster.</string>
     <string name="reset_password_process">Please provide your registered Email address in order to get a password reset link on your Email.</string>
     <string name="email">Email</string>
     <string name="proceed">PROCEED</string>
     <string name="login">LOGIN</string>
     <string name="email_not_registered_message">%s is not a registered email!</string>
     <string name="predate_login_message">some exam name</string>
-    <string name="guidelines_text">MultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteText ViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteTextViewMultiAutoCompleteText ViewMultiAutoCompleteTextViewMultiAutoCompleteTextView</string>
+    <string name="guidelines_text">  Information regarding test</string>
     <string name="start_test">Start Test</string>
     <string name="agreement_text">I have read and agree to the guidelines</string>
     <string name="exam_info_header">Available Exams</string>
     <string name="exam_guidelines_header">Exam Guidelines:</string>
-    <string name="question_text">This is a test question to get the idea of how along text behaves in a small screen space and wraps around in lines nicely This is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a small screen space and wraps around in linesThis is a test question to get the idea of how along text behaves in a</string>
+    <string name="question_text">This is a test question to get the idea of how along text behaves in
+        a small screen space and wraps around in lines nicely This is a test question to get the idea of
+        how along text behaves in a small screen space and wraps around in linesThis is a test question
+        to get the idea of how along text behaves in a small screen space and wraps around in linesThis
+        is a test question to get the idea of how along text behaves in a small screen space and wraps
+        around in linesThis is a test question to get the idea of how along text behaves in a</string>
     <string name="m_m">M.M.: %d</string>
     <string name="save_and_next">Save and Next</string>
     <string name="mark_for_review">Mark For Review</string>
@@ -61,5 +66,11 @@
     <string name="verify">Verify</string>
     <string name="result">Result</string>
     <string name="question_paper">Question Paper</string>
+    <string name="student_login_header">Student Login</string>
+    <string name="roll_no_hint">Enter Your Roll No</string>
+    <string name="registration">Register Here</string>
+    <string name="not_yet_registered">Not Yet Registered!</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">forgot password ?</string>
 
 </resources>

@@ -50,9 +50,12 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
         startTestButton.setOnClickListener {
             startActivity(Intent(activity, ExamDrawer::class.java)
                     .apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     putExtra(Constants.QUESTION_PAPER, questionPaper)
                     putExtra(Constants.STUDENT, student)
                     })
+            requireActivity().finish()
         }
         Log.d(TAG,">> onViewCreated")
     }

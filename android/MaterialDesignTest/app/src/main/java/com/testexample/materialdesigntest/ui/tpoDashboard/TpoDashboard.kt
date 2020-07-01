@@ -3,8 +3,10 @@ package com.testexample.materialdesigntest.ui.tpoDashboard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View.INVISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.TPO
@@ -13,10 +15,12 @@ import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
+import kotlin.system.exitProcess
 
 
 class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODashboardContract.View {
 
+    private var exit: Boolean = false
     val TAG = "TPODashboard"
     var fragmentTag = ""
     private lateinit var presenter: TPODashboardContract.Presenter
@@ -84,6 +88,37 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         }
 
         Log.d(TAG, ">> onCreate()")
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.fragments.isNotEmpty()) {
+            var activeFragment = false
+            for (it in supportFragmentManager.fragments) {
+                if (it.isVisible) {
+                    super.onBackPressed()
+                    activeFragment = true
+                    break
+                }
+            }
+        }
+        else {
+                if (exit) {
+                    val i = Intent(Intent.ACTION_MAIN).apply {
+                        addCategory(Intent.CATEGORY_HOME)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(i)
+                } else {
+                    Toast.makeText(
+                        this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    exit = true
+                    Handler().postDelayed({
+                        exit = false
+                    }, 3000)
+                }
+            }
     }
 
     override fun showTpoDetails(tpo: TPO) {

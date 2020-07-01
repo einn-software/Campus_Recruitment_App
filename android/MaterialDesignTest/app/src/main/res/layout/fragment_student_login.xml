@@ -24,7 +24,7 @@
         android:layout_width="133dp"
         android:layout_height="42dp"
         android:layout_marginTop="24dp"
-        android:text="Student Login"
+        android:text="@string/student_login_header"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,12 +38,13 @@
         android:layout_marginTop="24dp"
         android:background="@color/colorAccent2"
         android:ems="10"
-        android:hint="Enter Your Roll No"
+        android:hint="@string/roll_no_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege" />
+        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege"
+        android:autofillHints="" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/searchableSpinnerForCollege"
@@ -68,7 +69,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="LOGIN"
+        android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,25 +79,28 @@
 
     <TextView
         android:id="@+id/registrationLink"
-        android:layout_width="98dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
-        android:text="Register Here"
+        android:text="@string/registration"
         android:textColor="#142688"
+        android:textSize="16sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/notRegisteredText"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/notRegisteredText"
-        android:layout_width="137dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="false"
-        android:text="Not Yet Registered!"
+        android:text="@string/not_yet_registered"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/registrationLink"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +113,7 @@
         android:layout_marginTop="24dp"
         android:background="@color/colorAccent2"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -118,15 +122,17 @@
 
     <TextView
         android:id="@+id/forgotPasswordLink"
-        android:layout_width="116dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
-        android:text="forgot password ?"
+        android:text="@string/forgot_password"
         android:textColor="#142688"
+        android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton"
+        android:focusable="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>

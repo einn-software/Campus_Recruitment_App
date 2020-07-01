@@ -151,8 +151,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         }
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
         }
         Log.d(TAG, ">> onBackPressed")
     }

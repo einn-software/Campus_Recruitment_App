@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_login_prompt.*
 
 class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
 
-    private val TAG = "LoginPrompt"
+    private val TAG = LoginPrompt.toString()
     lateinit var studentLogin: StudentLogin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.loginFragment, studentLogin)
-                .addToBackStack(null)
+                .addToBackStack("StudentLogin")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
         }

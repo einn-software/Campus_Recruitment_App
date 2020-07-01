@@ -19,6 +19,7 @@
         <activity
             android:name="com.testexample.materialdesigntest.ui.splash.SplashActivity"
             android:exported="true"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="MissingClass">
             <intent-filter>
@@ -27,14 +28,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity
-            android:name=".ui.tpoDashboard.TPODashboard"
-	    android:exported="true" />
-
+        <activity android:name=".ui.login.LoginActivity"/>
+        <activity android:name=".ui.tpoDashboard.TPODashboard" />
         <activity android:name=".ui.examination.ExamDrawer"/>
-        <activity android:name=".ui.instructions.InstructionActivity"
-	android:exported="true" />
+        <activity android:name=".ui.instructions.InstructionActivity"/>
         <activity android:name=".ui.login.TpoLoginActivity" />
         <activity android:name=".ui.result.ResultActivity" />
         <activity android:name=".ui.resetAuthentication.ResetAuthenticationActivity"/>

@@ -72,5 +72,7 @@
     <string name="not_yet_registered">Not Yet Registered!</string>
     <string name="password">Password</string>
     <string name="forgot_password">forgot password ?</string>
+    <string name="join_test">Join Test</string>
+    <string name="tpo_login">TPO Login</string>
 
 </resources>

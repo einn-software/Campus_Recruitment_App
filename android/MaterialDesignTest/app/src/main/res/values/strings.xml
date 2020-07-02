@@ -59,7 +59,7 @@
     <string name="attempted_question_ratio">%d / %d</string>
     <string name="timer">50:00</string>
     <string name="student_data_upload">Student Data Upload</string>
-    <string name="data_upload_message">important messag here</string>
+    <string name="data_upload_message">Please select an Excel file with only name, rollno, email, password, phone, collgename , collegecode and branch fields.</string>
     <string name="upload_button">UPLOAD</string>
     <string name="splash_header">Innobit Campus Recruitment</string>
     <string name="designed_by">Designed by Innobit Systems</string>

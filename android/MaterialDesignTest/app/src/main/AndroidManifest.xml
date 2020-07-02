@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/BaseMaterialTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        tools:targetApi="m"
+        android:icon="@mipmap/ic_launcher">
         <!-- The below is for the splash screen and we need no action bar and the default theme -->
         <activity
             android:name="com.testexample.materialdesigntest.ui.splash.SplashActivity"

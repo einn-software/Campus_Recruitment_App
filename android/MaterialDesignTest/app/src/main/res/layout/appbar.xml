@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/titleLogo"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:contentDescription="@string/app_logo"
             android:elevation="2dp"
@@ -28,7 +28,8 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/logoeinn" />
+            app:srcCompat="@drawable/innobitlogo"
+            tools:srcCompat="@drawable/innobitlogo" />
 
         <TextView
             android:id="@+id/titleText"

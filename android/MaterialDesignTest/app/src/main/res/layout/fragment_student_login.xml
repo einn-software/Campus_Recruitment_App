@@ -10,21 +10,25 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/logo" />
+        app:srcCompat="@drawable/innobitlogo"
+        tools:src="@drawable/innobitlogo" />
 
     <TextView
         android:id="@+id/studentLoginText"
-        android:layout_width="133dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/student_login_header"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24dp"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +40,7 @@
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
+        android:autofillHints=""
         android:background="@color/colorAccent2"
         android:ems="10"
         android:hint="@string/roll_no_hint"
@@ -43,8 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/searchableSpinnerForCollege"
@@ -83,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/registration"
         android:textColor="#142688"
         android:textSize="16sp"
@@ -90,8 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/notRegisteredText"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink" />
 
     <TextView
         android:id="@+id/notRegisteredText"
@@ -126,6 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/forgot_password"
         android:textColor="#142688"
         android:textSize="18sp"
@@ -133,6 +138,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

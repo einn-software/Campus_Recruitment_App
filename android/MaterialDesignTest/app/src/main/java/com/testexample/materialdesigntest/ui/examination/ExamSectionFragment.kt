@@ -48,6 +48,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         Log.d(TAG, "<< onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         setPresenter(ExaminationSectionPresenter(this))
+        presenter.loadAnswerSheet(studentCredential)
 
         for ((index, question) in section.questionsList.withIndex()) {
             questionTab.addTab(questionTab.newTab()
@@ -86,6 +87,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             saveAndNextButton.isEnabled = checkedId != -1
+            markReviewButton.isEnabled = checkedId != -1
         }
 
         saveAndNextButton.setOnClickListener {
@@ -102,6 +104,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                         setMessage(getString(R.string.end_test_message))
                         setCancelable(true)
                         setNegativeButton("Yes") { dialog, _ ->
+                            timerText.text = getString(R.string.timer)
                             (activity as ExamDrawer).endExam()
                             dialog!!.cancel()
                         }
@@ -143,9 +146,10 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         setOptions(radioButton3, question.options[2])
         setOptions(radioButton4, question.options[3])
 
-        if (answer.optionSelected > 0) {
-            radioGroup.check(radioGroup[answer.optionSelected].id - 1)
+        if (answer.optionSelected in 1..4) {
+            radioGroup.check(radioGroup[answer.optionSelected - 1].id)
         }
+
 
         questionNumber.text = getString(R.string.QuestionNum,
                 questionTab.getTabAt(viewId)!!.text)

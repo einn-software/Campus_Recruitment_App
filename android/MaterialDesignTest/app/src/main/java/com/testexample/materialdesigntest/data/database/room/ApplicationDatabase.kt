@@ -5,17 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.testexample.materialdesigntest.data.model.*
+import com.testexample.materialdesigntest.data.model.AnswerResponse
+import com.testexample.materialdesigntest.data.model.Converter
 
-@Database(entities = [Student::class, College::class, QuestionPaperForRoom::class,
-    QuestionForRoom::class, SectionForRoom::class],
+@Database(entities = [AnswerResponse::class],
     version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ApplicationDatabase: RoomDatabase() {
-    abstract fun studentDAO(): StudentDao
-    abstract fun collegeDAO(): CollegeDao
-    abstract fun questionPaperDAO(): QuestionPaperDao
-
+    abstract fun examinationDAO() : ExaminationDao
 
     companion object{
         //value is never cached and read/writes are done from main memory
@@ -33,7 +30,8 @@ abstract class ApplicationDatabase: RoomDatabase() {
                             ApplicationDatabase::class.java,
                             "application_database"
                         )
-                            .fallbackToDestructiveMigration()   //later we'll add migration here
+                            .fallbackToDestructiveMigration()
+                            //later we'll add migration here
                             .build()
                         INSTANCE = instance
                     }

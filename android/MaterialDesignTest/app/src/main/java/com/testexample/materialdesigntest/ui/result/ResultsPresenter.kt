@@ -3,6 +3,7 @@ package com.testexample.materialdesigntest.ui.result
 import android.util.Log
 import com.testexample.materialdesigntest.data.interactor.implementation.ResultRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IResultRepo
+import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,11 +25,11 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
         Log.d(TAG, "<< fetchStudentResult")
         repository = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
-
         view.let {
             subscriptions.add(
                     repository.getStudentResultFromRemoteRepo(sessionManager.getUserAuthToken()!!, code, roll, question_paper_id)
                             .subscribeOn(Schedulers.io())
+                            .handelNetworkError()
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     { success ->

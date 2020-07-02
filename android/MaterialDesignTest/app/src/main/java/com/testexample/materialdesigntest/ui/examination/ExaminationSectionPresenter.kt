@@ -1,9 +1,14 @@
 package com.testexample.materialdesigntest.ui.examination
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
+import com.testexample.materialdesigntest.data.database.repository.ExaminationRoomRepo
+import com.testexample.materialdesigntest.data.database.repository.IExaminationRoomRepo
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
+import com.testexample.materialdesigntest.data.model.AnswerResponse
+import com.testexample.materialdesigntest.data.network.model.EndExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponsePlain
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -11,21 +16,27 @@ import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 private var answerMap: MutableMap<String, ExaminationSectionPresenter.Answer> = mutableMapOf()
 
-class ExaminationSectionPresenter(private var view: ExaminationContract.FragmentView?) : ExaminationContract.FragmentPresenter {
+@SuppressLint("LongLogTag")
+class ExaminationSectionPresenter(private var view: ExaminationContract.FragmentView?)
+    : ExaminationContract.FragmentPresenter {
 
     private var sessionManager: SessionManager = SessionManager(view!!.setContext())
-    val TAG = "Examination Presenter"
+    val TAG = "Examination Section Presenter"
     private lateinit var repository: IExaminationRepo
+    private lateinit var roomRepo: IExaminationRoomRepo
     private var subscriptions = CompositeDisposable()
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun saveResponse(newResponse: StudentAnswerResponse) {
         Log.d(TAG, "<< saveResponse")
+
         repository = ExaminationRepo()
+        roomRepo = ExaminationRoomRepo(view!!.setContext())
 
         val saveMethod: Single<StudentAnswerResponsePlain> =
                 if (answerMap.containsKey(newResponse.studentAnswer.questionId))
@@ -42,17 +53,34 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                 .subscribe(
                         { answer ->
                             if (!answerMap.containsKey(answer.questionId)) {
-                                answerMap[answer.questionId] = Answer(answer.id,
-                                        answer.state, answer.selectedOption)
-
+                                roomRepo.saveAnswerResponse(AnswerResponse(answer.questionId,
+                                    answer.id, answer.state, answer.selectedOption))
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(
+                                        {Log.d(TAG, "Answer saved in Room")},
+                                        {Log.d(TAG, "Failed to save answer in Room due to ${it.localizedMessage}")})
+                                    .addTo(subscriptions)
                             }
+                            else{
+                                roomRepo.updateAnswerResponse(AnswerResponse(answer.questionId,
+                                    answer.id, answer.state, answer.selectedOption))
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(
+                                        {Log.d(TAG, "Answer updated in Room")},
+                                        {Log.d(TAG, "Failed to update answer in Room due to ${it.localizedMessage}")})
+                                    .addTo(subscriptions)
+                            }
+                            answerMap[answer.questionId] = Answer(answer.id,
+                                answer.state, answer.selectedOption)
+
                             view!!.markTabAndMoveNext(answer.state)
-                            Log.i(TAG, "Successfully save response")
+                            println(answerMap)
+                            Log.i(TAG, "Successfully saved response")
                         },
                         { error ->
                             Log.e(TAG, "Error in saving response with reason ${error.message.toString()}")
                             Toast.makeText(view!!.setContext(),
-                                    "Counldn't Save the Answer, Please Try Again!!",
+                                    "Could not Save the Answer, ${error.message.toString()}!!",
                                     Toast.LENGTH_LONG).show()
                         }
                 )
@@ -92,6 +120,47 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
         Log.d(TAG, "<< getView")
         view = viewSent
         Log.d(TAG, "<< getView")
+    }
+
+    override fun loadAnswerFromRoom(){
+        Log.d(TAG, "<< loadAnswerFromRoom")
+        roomRepo = ExaminationRoomRepo(view!!.setContext())
+        subscriptions.add(
+        roomRepo.getAnswerResponse()
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                {list ->
+                    list.forEach { item ->
+                        if (!answerMap.containsKey(item.questionId)){
+                            answerMap[item.questionId] = Answer(item.answerSheetId,item.state,
+                                item.optionSelected)
+                        }
+                    }
+                },
+                {error->
+                    Log.d(TAG, "Failed to Fetch AnswerResponse From Room Due to : ${error.localizedMessage}")
+                })
+        )
+    }
+
+    override fun loadAnswerSheet(request: EndExamRequest) {
+        Log.d(TAG, "<< loadAnsweSheet")
+        repository = ExaminationRepo()
+        subscriptions.add(
+            repository.getAnswerList(token, request)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {list ->
+                        list.forEach { item ->
+                            if (!answerMap.containsKey(item.questionId)){
+                                answerMap[item.questionId] = Answer(item.id,item.state,
+                                    item.selectedOption)
+                            }
+                        }
+                    },
+                    {error->
+                        Log.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})
+        )
     }
 
 

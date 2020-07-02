@@ -250,8 +250,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         Log.d(TAG, "<< openNextActivity")
         startActivity(Intent(this, ResultActivity::class.java)
                 .apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra(Constants.CODE, questionPaper.collegeCode)
+                    putExtra(Constants.ROLL, student.studentRollNo)
+                    putExtra(Constants.QUESTION_PAPER_ID, questionPaper.questionPaperId)
         })
         this@ExamDrawer.finish()
         Log.d(TAG, ">> openNextActivity")
@@ -267,6 +270,8 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     fun endExam() {
         Log.d(TAG, "<< endExam")
+        timeLeftInTimer = 0
+        false.countDownStart()
         presenter.endExam(EndExamRequest(questionPaper.questionPaperId, student.studentId))
         Log.d(TAG, ">> endExam")
     }

@@ -58,14 +58,19 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                {
+                                {message ->
                                     view!!.showLoading(false)
                                     view!!.openNextActivity()
-                                    Log.i(TAG, "Successfully stopped exam")
+                                    Log.i(TAG, message.toString())
                                 },
                                 { error ->
                                     Log.e(TAG, "Error stop exam with reason ${error.message.toString()}")
                                     view!!.showLoading(false)
+                                    if (error.message.toString() == "700 You have already submitted the result for this exam"){
+                                        view!!.openNextActivity()
+                                    }
+
+
                                 }
                         )
         )

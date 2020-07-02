@@ -21,9 +21,11 @@ interface ExaminationContract {
     }
 
     interface FragmentPresenter: BaseContract.BasePresenter{
-        fun saveResponse(response: StudentAnswerResponse)
+        fun saveResponse(newResponse: StudentAnswerResponse)
         fun loadQuestion(viewId: Int, questionId: String)
         fun getView(viewSent: FragmentView)
+        fun loadAnswerFromRoom()
+        fun loadAnswerSheet(request: EndExamRequest)
     }
 
     interface Presenter:BaseContract.BasePresenter {

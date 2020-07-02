@@ -57,7 +57,7 @@
     <string name="student_name">student name</string>
     <string name="question_paper_max_marks">M.M: %d</string>
     <string name="attempted_question_ratio">%d / %d</string>
-    <string name="timer">50:00</string>
+    <string name="timer">00:00</string>
     <string name="student_data_upload">Student Data Upload</string>
     <string name="data_upload_message">important messag here</string>
     <string name="upload_button">UPLOAD</string>

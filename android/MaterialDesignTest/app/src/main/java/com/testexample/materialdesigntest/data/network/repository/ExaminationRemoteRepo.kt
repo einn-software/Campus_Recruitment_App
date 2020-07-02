@@ -42,4 +42,9 @@ class ExaminationRemoteRepo : IExaminationRemoteRepo {
         Log.d(TAG, ">> callApiForEndingExam()")
         return api.endExam(token, endRequest)
     }
+
+    override fun callApiForFetchingAnswerList(token: String, request: EndExamRequest):
+            Single<List<StudentAnswerResponsePlain>>{
+        return api.getStudentResponse(token, request.studentId, request.questionPaperId)
+    }
 }

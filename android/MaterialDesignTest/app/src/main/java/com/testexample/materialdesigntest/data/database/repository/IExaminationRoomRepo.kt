@@ -1,15 +1,13 @@
 package com.testexample.materialdesigntest.data.database.repository
 
-import com.testexample.materialdesigntest.data.model.QuestionForRoom
-import com.testexample.materialdesigntest.data.model.QuestionPaperCompleteForRoom
+import com.testexample.materialdesigntest.data.model.AnswerResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface IExaminationRoomRepo {
-    fun fetchQuestionForRoom(id:String): Single<QuestionForRoom>
-    fun fetchQuestionPaper(code: String, date: String): Single<QuestionPaperCompleteForRoom>?
-    fun addQuestionPaper(questionPaper: QuestionPaperCompleteForRoom)
-    fun addQuestionForRoom(QuestionForRooms: List<QuestionForRoom>)
-    fun fetchScores():Int
-
+    fun saveAnswerResponse(answerResponse: AnswerResponse):Completable
+    fun updateAnswerResponse(answerResponse: AnswerResponse):Completable
+    fun deleteAnswerResponse(answerResponseList: List<AnswerResponse>):Completable
+    fun getAnswerResponse(): Single<List<AnswerResponse>>
+    fun getAnswerResponseById(questionId: String): Single<AnswerResponse>
 }

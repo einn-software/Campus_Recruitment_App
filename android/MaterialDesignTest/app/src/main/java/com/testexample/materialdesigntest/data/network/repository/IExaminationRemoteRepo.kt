@@ -25,4 +25,7 @@ interface IExaminationRemoteRepo {
     fun callApiForEndingExam(token: String,
                              endRequest: EndExamRequest)
             : Single<EndExamResponse>
+
+    fun callApiForFetchingAnswerList(token: String, request: EndExamRequest):
+            Single<List<StudentAnswerResponsePlain>>
 }

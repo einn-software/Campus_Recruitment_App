@@ -267,7 +267,7 @@ const QuestionPaperIdGetByTpo = (req, res) => {
         if (err || !results || results.length == 0) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.dataNotFoundErrorHandler());
+            .json(errHandler.codeNotFoundErrorHandler());
         }
         return res.status(Constants.success).json(results);
       }

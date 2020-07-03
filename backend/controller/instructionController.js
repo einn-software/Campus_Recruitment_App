@@ -20,7 +20,7 @@ const InstructionAdd = (async (req, res) => {
     const instructionExist = await Instructions.findOne({
       code: req.body.code,
     });
-    if (instructionExist) return res.status(Constants.er_failure).json(errHandler.emailExistErrorHandler());
+    if (instructionExist) return res.status(Constants.er_failure).json(errHandler.codeExistErrorHandler());
 
     // Create a new instruction
     const instructions = new Instructions({

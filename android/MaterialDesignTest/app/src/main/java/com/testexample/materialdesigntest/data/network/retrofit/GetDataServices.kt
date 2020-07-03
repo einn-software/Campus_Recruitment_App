@@ -77,11 +77,11 @@ interface GetDataServices {
                     @Path("id") questionId: String):
             Single<Question>
 
-    @GET("student-answers/{student-id}/{question-paper-id}/{question-id}")
+    @GET("student-answers/{student-id}/{question-paper-id}")
     fun getStudentResponse(@Header("auth-token") token: String ,
                            @Path("student-id") studentId: String,
-                           @Path("question-paper-id") questionPaperId: String,
-                           @Path("question-id") questionId: String): Single<Question>
+                           @Path("question-paper-id") questionPaperId: String):
+            Single<List<StudentAnswerResponsePlain>>
 
     @POST("student-answers")
     fun addStudentResponse(@Header("auth-token") token: String ,

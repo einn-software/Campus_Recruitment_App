@@ -16,4 +16,7 @@ interface IExaminationRepo {
             : Single<StudentAnswerResponsePlain>
     fun stopExam(token: String, endExamRequest: EndExamRequest): Single<EndExamResponse>
 
+    fun getAnswerList(token: String, request: EndExamRequest):
+            Single<List<StudentAnswerResponsePlain>>
+
 }

@@ -32,6 +32,13 @@ class ExaminationRepo() : IExaminationRepo {
         return remoteRepo.callApiForSavingAnswer(token, response)
     }
 
+    override fun getAnswerList(token: String, request: EndExamRequest):
+            Single<List<StudentAnswerResponsePlain>>{
+        Log.d(TAG, "<< saveResponse()")
+        Log.d(TAG, ">> saveResponse()")
+        return remoteRepo.callApiForFetchingAnswerList(token, request)
+    }
+
     override fun updateResponse(token: String, response: StudentAnswerResponse): Single<StudentAnswerResponsePlain> {
         Log.d(TAG, "<< updateResponse()")
         Log.d(TAG, ">> updateResponse()")

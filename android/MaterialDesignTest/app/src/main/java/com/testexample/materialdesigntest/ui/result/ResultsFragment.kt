@@ -11,14 +11,15 @@ import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.Result
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_student_result.*
+import kotlin.properties.Delegates
 
 class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContract.View {
 
     val TAG = "ResultsFragment"
     private lateinit var presenter: ResultsContract.Presenter
-    private var code: Int? = 0
-    private var roll: String? = null
-    private var questionPaperId: String? = null
+    private var code by Delegates.notNull<Int>()
+    private lateinit var roll: String
+    private lateinit var questionPaperId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,8 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
 
         arguments?.let {
             code = it.getInt(Constants.CODE)
-            roll = it.getString(Constants.ROLL)
-            questionPaperId = it.getString(Constants.QUESTION_PAPER_ID)
+            roll = it.getString(Constants.ROLL).toString()
+            questionPaperId = it.getString(Constants.QUESTION_PAPER_ID).toString()
         }
         Log.d(TAG, ">> onCreate")
     }
@@ -35,9 +36,10 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "<< onViewCreated")
+        Log.d(TAG, "$code + $roll + $questionPaperId")
 
         presenter = ResultsPresenter(this)
-        code?.let { roll?.let { it1 -> questionPaperId?.let { it2 -> presenter.fetchStudentResult(it, it1, it2) } } }
+        presenter.fetchStudentResult(code, roll, questionPaperId)
         Log.d(TAG, ">> onViewCreated")
     }
 

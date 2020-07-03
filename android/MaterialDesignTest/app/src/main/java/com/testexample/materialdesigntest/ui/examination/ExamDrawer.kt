@@ -58,6 +58,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
 
         setPresenter(ExaminationPresenter(this))
+        progressBar = ProgressBar(this)
 
         val bundle: Bundle? = intent.extras
         questionPaper = bundle?.getParcelable(Constants.QUESTION_PAPER)!!
@@ -128,7 +129,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
                 sectionNavigationView.menu.forEach { section ->
                     if (section.itemId != currentItem.itemId &&
                             sectionFragments[currentItem.itemId] != null) {
-                        hideFragment(sectionFragments[section.itemId]!!)
+                        sectionFragments[section.itemId]?.let { it1 -> hideFragment(it1) }
                     }
                 }
             }
@@ -236,9 +237,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         Log.d(TAG, "<< showLoading")
 
         if (flag) {
-            progressBar = ProgressBar(this)
-            progressBar.setLoadingText("Time is Over, Please Wait While Result is loaded")
-            setContentView(R.layout.activity_exam_drawer)
             progressBar.startLoading()
         } else
             progressBar.stopLoading()

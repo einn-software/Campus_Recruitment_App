@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
@@ -24,16 +25,14 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     private val api: GetDataServices = GetDataServices.create()
     private var subscriptions = CompositeDisposable()
     private val sessionManager = SessionManager(view!!.setContext())
-    private lateinit var workbook: XSSFWorkbook
 
     override fun uploadFile(tpoEmail: String, file: File) {
 
-        val requestFile = UploadRequestBody(file,"application", this)
+        val requestFile = UploadRequestBody(file,"application/*", this)
         val details : RequestBody = RequestBody.create(MediaType.parse("text/plain"), tpoEmail)
-        //val requestFile = RequestBody.create(MediaType.parse("application/vnd.ms-excel"), file)
-        val parts = MultipartBody.Part.createFormData("student_list_for_registration",
+        val parts = MultipartBody.Part.createFormData("file",
                 file.name, requestFile)
-
+        Log.d(TAG,"${sessionManager.getUserAuthToken()}")
         subscriptions.add(
             api.uploadFile(sessionManager.getUserAuthToken()!!, details, parts)
                 .handelNetworkError()
@@ -58,33 +57,45 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
         }
         try {
             val inputStream = FileInputStream(file)
-            workbook = XSSFWorkbook(inputStream)
+            Log.d(TAG, "FIle is : " + file.extension)
+
+            val workbook = when(file.extension) {
+                "xls"-> HSSFWorkbook(inputStream)
+                "xlsx"-> XSSFWorkbook(inputStream)
+                else -> throw InvalidFormatException("Invalid Excel Format")
+            }
+
+            for (sheetIndex in 0 until workbook.numberOfSheets){
+                val sheet = workbook.getSheetAt(sheetIndex)
+                val headRow = sheet.getRow(0)
+                for (rowNum in 1 until sheet.physicalNumberOfRows){
+                    val row = sheet.getRow(rowNum)
+                    if (row.physicalNumberOfCells > 8) {
+                        Log.d(TAG, "Verify File: ERROR. Extra Columns Present")
+                        view!!.showMessage("Too Many Columns Present!")
+                        return false
+                    }
+                    for (colNum in 0 until row.physicalNumberOfCells){
+                        Log.d(TAG, "Verify File: R${rowNum}C$colNum: ${row.getCell(colNum)}")
+                        val checkValidity = validateEntry(headRow.getCell(colNum).toString(),
+                            row.getCell(colNum).toString())
+                        if (checkValidity != SUCCESS){
+                            view!!.showMessage(checkValidity)
+                            return false
+                        }
+                    }
+                }
+            }
         }
         catch (e: InvalidFormatException){
             Log.d(TAG , "verifyFile <- different format file")
             view!!.showMessage("Please Select an Excel File!")
             return false
         }
-        for (sheetIndex in 0 until workbook.numberOfSheets){
-            val sheet = workbook.getSheetAt(sheetIndex)
-            val headRow = sheet.getRow(0)
-            for (rowNum in 1 until sheet.physicalNumberOfRows){
-                val row = sheet.getRow(rowNum)
-                if (row.physicalNumberOfCells > 8) {
-                    Log.d(TAG, "Verify File: ERROR. Extra Columns Present")
-                    view!!.showMessage("Too Many Columns Present!")
-                    return false
-                }
-                for (colNum in 0 until row.physicalNumberOfCells){
-                        Log.d(TAG, "Verify File: R${rowNum}C$colNum: ${row.getCell(colNum)}")
-                        val checkValidity = validateEntry(headRow.getCell(colNum).toString(),
-                                row.getCell(colNum).toString())
-                        if (checkValidity != SUCCESS){
-                            view!!.showMessage(checkValidity)
-                            return false
-                        }
-                }
-            }
+        catch (e: IllegalStateException){
+           Log.d(TAG , "verifyFile <- ${e.message}")
+           view!!.showMessage(e.message.toString())
+           return false
         }
         view!!.showMessage("Successfully Validated")
         return true

@@ -113,7 +113,7 @@ interface GetDataServices {
     @POST("upload")
     fun uploadFile(
             @Header("auth-token") token: String,
-            @Part("tpo_details_for_upload_file") details: RequestBody,
+            @Part("email") details: RequestBody,
             @Part file: MultipartBody.Part
     ): Single<String>
 

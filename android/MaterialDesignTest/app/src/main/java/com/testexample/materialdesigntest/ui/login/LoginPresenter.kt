@@ -80,7 +80,8 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
                             },
                             { error ->
                                 Log.e(TAG, "Error in fetching college list ${error.message.toString()}")
-
+                                Toast.makeText(view!!.setContext(), "${error.message}",
+                                Toast.LENGTH_LONG).show()
                             },
                             {
                                 Log.d(TAG, "Fetch query for college list completed")

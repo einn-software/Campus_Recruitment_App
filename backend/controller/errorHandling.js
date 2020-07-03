@@ -95,6 +95,17 @@ function thisEmailExistErrorHandler(email) {
   return err;
 }
 
+function codeExistErrorHandler() {
+  const err = {
+    status: Constants.er_failure, //400
+    message: `Instructions already exist for this code`,
+    error_info: "Error",
+    server_msg: "Instructions already exist for this code, so can't add new instuctions with the same code",
+    server_error_ref: Date.now() + randomGenerate(),
+  };
+  return err;
+}
+
 function codeRollWithEmailErrorHandler(email, roll, code) {
   const err = {
     status: Constants.er_failure, //400
@@ -306,17 +317,6 @@ function questionPaperExistErrorHandler() {
   return err;
 }
 
-function studentExistErrorHandler() {
-  const err = {
-    status: Constants.er_failure, //400
-    message: "You have already submitted the result for this exam",
-    error_info: "Error",
-    server_msg: "Already submitted the result for this exam, So can't add the same result twice",
-    server_error_ref: Date.now() + randomGenerate(),
-  };
-  return err;
-}
-
 module.exports = {
   errorHandler,
   emailExistErrorHandler,
@@ -338,12 +338,12 @@ module.exports = {
   questionExistErrorHandler,
   questionPaperExistErrorHandler,
   submissionExistErrorHandler,
-  studentExistErrorHandler,
   codeNotFoundErrorHandler,
   codeRollIdNotFoundErrorHandler,
   dataNotFoundErrorHandler,
   notFoundCodeIdErrorHandler,
   notFoundResultErrorHandler,
   fileNotFoundErrorHandler,
-  validEmailNotFoundErrorHandler
+  validEmailNotFoundErrorHandler,
+  codeExistErrorHandler
 }

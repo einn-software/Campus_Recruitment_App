@@ -19,25 +19,26 @@ const {
 //Result Post
 
 async function resultCal(req, res) {
-
   const {
     error
   } = resultValidation(req.body);
   if (error) {
-    console.log("error");
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
   }
   let array = await calculateMarks(req, res);
   //Checking if the studentid is already in the database
-  const studentExist = await Result.findOne({
+  const resultExist = await Result.findOne({
     student_id: req.body.student_id,
+    question_paper_id: req.body.question_paper_id
   });
-  if (studentExist)
+  if (resultExist)
     return res
-      .status(Constants.er_failure)
-      .json(errHandler.studentExistErrorHandler());
+      .status(Constants.success)
+      .json({
+        message: "You have already submitted the result for this exam"
+      });
 
   const student = await Student.findOne({
     _id: req.body.student_id

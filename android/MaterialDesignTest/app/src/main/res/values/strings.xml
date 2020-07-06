@@ -74,5 +74,6 @@
     <string name="forgot_password">forgot password ?</string>
     <string name="join_test">Join Test</string>
     <string name="tpo_login">TPO Login</string>
+    <string name="exit_test_button_cd">Exit Test Button</string>
 
 </resources>

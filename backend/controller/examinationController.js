@@ -185,7 +185,11 @@ const QuestionPaperAdd = async (req, res) => {
 
     //Checking if the question paper is already in the database
     const questionPaperExist = await QuestionPapers.findOne({
-      paper_name: req.body.paper_name,
+      year: req.body.year,
+      month: req.body.month,
+      day: req.body.day,
+      code: req.body.code,
+      start_time: req.body.start_time,
     });
     if (questionPaperExist)
       return res

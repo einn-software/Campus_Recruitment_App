@@ -15,7 +15,7 @@ data class Result(
         @SerializedName("question_attempt") val noOfQuestionsAttempted: Int,
         @SerializedName("correct_attempt") val noOfQuestionsCorrect: Int,
         @SerializedName("total_no_questions") val totalNoOfQuestions: Int,
-        @SerializedName("total marks") val totalMarks: Int,
+        @SerializedName("total_marks") val totalMarks: Int,
         @SerializedName("total_marks_scored") val scoredMarks: Double
 ) : Parcelable
 

@@ -33,16 +33,20 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun saveResponse(newResponse: StudentAnswerResponse) {
-        Log.d(TAG, "<< saveResponse")
+        Log.d(TAG, "<< saveResponse: QuestionId: ${newResponse.studentAnswer.questionId}")
 
         repository = ExaminationRepo()
         roomRepo = ExaminationRoomRepo(view!!.setContext())
+        Log.d(TAG, "$answerMap")
 
         val saveMethod: Single<StudentAnswerResponsePlain> =
-                if (answerMap.containsKey(newResponse.studentAnswer.questionId))
+                if (answerMap.containsKey(newResponse.studentAnswer.questionId) &&
+                    answerMap[newResponse.studentAnswer.questionId]!!.answerSheetId.isNotBlank())
                 {
+                    Log.d(TAG, "update Response with state: $newResponse")
                     repository.updateResponse(token, newResponse)
                 } else {
+                    Log.d(TAG, "Save Response with state: $newResponse")
                     repository.saveResponse(token, newResponse.studentAnswer)
                 }
 
@@ -52,6 +56,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { answer ->
+                            Log.d(TAG, " Incoming Response : $answer")
                             if (!answerMap.containsKey(answer.questionId)) {
                                 roomRepo.saveAnswerResponse(AnswerResponse(answer.questionId,
                                     answer.id, answer.state, answer.selectedOption))
@@ -74,7 +79,6 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                 answer.state, answer.selectedOption)
 
                             view!!.markTabAndMoveNext(answer.state)
-                            println(answerMap)
                             Log.i(TAG, "Successfully saved response")
                         },
                         { error ->
@@ -94,6 +98,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
         subscriptions.add(
                 repository.fetchQuestionFromRemote(token, questionId)
                         .subscribeOn(Schedulers.io())
+                        .handelNetworkError()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 { question ->

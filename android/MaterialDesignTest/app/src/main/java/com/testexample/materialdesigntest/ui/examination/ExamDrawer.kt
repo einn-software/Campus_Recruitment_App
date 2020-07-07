@@ -3,12 +3,14 @@ package com.testexample.materialdesigntest.ui.examination
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -45,6 +47,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     private var timeLeftInTimer by Delegates.notNull<Long>()
     private lateinit var timer: CountDownTimer
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "<< onCreate")
@@ -73,6 +76,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             presenter.loadExam(FetchExamRequest(student.studentCollegeCode,
                     year, month, dayOfMonth))
         }
+        Log.d(TAG, "Question Paper: $questionPaper")
 
         timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
 
@@ -99,13 +103,19 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         Log.d(TAG, ">> onCreate")
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun onCreateNavigationMenu(sections: List<Section>) {
         Log.d(TAG, "<< onCreateNavigationMenu")
         val menu: Menu = sectionNavigationView.menu
 
         for (item in 0 until sections.count()) {
-            menu.add(0, item, item, sections[item].sectionName)
+            menu.add(item, item, item, sections[item].sectionName)
         }
+
+        menu.add(100,101,1,"Marked For Review!").setIcon(R.drawable.ic_marked).isEnabled = false
+        menu.add(100,102,2,"Answered").setIcon(R.drawable.ic_checked).isEnabled = false
+
+        menu.setGroupDividerEnabled(true)
 
         Log.d(TAG, ">> onCreateNavigationMenu")
     }
@@ -138,7 +148,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             activeFragment = sectionFragments[currentItem.itemId]!!
         }
         drawer.closeDrawer(GravityCompat.START)
-        true.countDownStart()
+        countDownStart(true)
 
         Log.d(TAG, ">> onNavigationItemSelected")
         return true
@@ -193,11 +203,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         Log.d(TAG, ">> hideFragment")
     }
 
-    private fun Boolean.countDownStart() {
+    fun countDownStart(flag: Boolean) {
 
         Log.d(TAG, "<< countDownStart")
 
-        if (this) {
+        if (flag) {
             timer = object : CountDownTimer(timeLeftInTimer, 1000) {
                 override fun onFinish() {
                     endExam()
@@ -205,11 +215,13 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
                 override fun onTick(millisUntilFinished: Long) {
                     timeLeftInTimer = millisUntilFinished
-                    activeFragment.setClock(timeLeftInTimer)
+                        Log.d(TAG, callingActivity.toString())
+                        activeFragment.setClock(timeLeftInTimer)
                 }
             }.start()
         } else {
             timer.cancel()
+            timer.onFinish()
         }
         Log.d(TAG, ">> countDownStart")
     }
@@ -268,9 +280,8 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     fun endExam() {
         Log.d(TAG, "<< endExam")
-        timeLeftInTimer = 0
-        false.countDownStart()
         presenter.endExam(EndExamRequest(questionPaper.questionPaperId, student.studentId))
         Log.d(TAG, ">> endExam")
     }
+
 }

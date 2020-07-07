@@ -1,18 +1,14 @@
 package com.testexample.materialdesigntest.data.model
 
 import android.os.Parcelable
-import androidx.annotation.NonNull
-import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Parcelize
 data class QuestionPaper(
     @SerializedName("_id") val questionPaperId:String,
     @SerializedName("paper_name") val questionPaperName:String,
-    @SerializedName("max_marks") val maxMarks:Int,
+    @SerializedName("paper_max_marks") val maxMarks:Int,
     @SerializedName("max_time") val maxTime:Int,
     @SerializedName("instructions_id") val instructionId: String,
     @SerializedName("code") val collegeCode: Int,
@@ -38,5 +34,5 @@ data class Section(
 @Parcelize
 data class QuestionsList(
         @SerializedName("question_id")val questionId: String,
-        @SerializedName("marks")val marks: Int
+        @SerializedName("question_marks")val marks: Int
 ) : Parcelable

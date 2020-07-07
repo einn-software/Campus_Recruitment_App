@@ -2,6 +2,7 @@ package com.testexample.materialdesigntest.ui.examination
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -91,10 +92,12 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         }
 
         saveAndNextButton.setOnClickListener {
+            Log.d(TAG, "onClick: saveAndNextButton")
             this.sendAnswer(4)
         }
 
         markReviewButton.setOnClickListener {
+            Log.d(TAG, "onClick: markReviewButton")
             this.sendAnswer(5)
         }
 
@@ -104,8 +107,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                         setMessage(getString(R.string.end_test_message))
                         setCancelable(true)
                         setNegativeButton("Yes") { dialog, _ ->
-                            timerText.text = getString(R.string.timer)
-                            (activity as ExamDrawer).endExam()
+                            (activity as ExamDrawer).countDownStart(false)
                             dialog!!.cancel()
                         }
                         setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }
@@ -120,7 +122,8 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     override fun createResponse(state: Int): StudentAnswerResponse {
         Log.d(TAG, "<< createResponse")
         val index = questionTab.selectedTabPosition
-        val selectedOption = (radioGroup.checkedRadioButtonId + 1) % radioGroup[0].id
+        val selectedOption = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).tag
+        println(radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).tag)
         val questionId = questionTab.getTabAt(index)!!.tag.toString()
         val maxMarksForQuestion = section.questionsList[index].marks
         Log.d(TAG, ">> createResponse")
@@ -129,7 +132,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                 studentAnswer = StudentAnswerRequest(
                         studentId = studentCredential.studentId,
                         questionId = questionId,
-                        selectedOption = selectedOption,
+                        selectedOption = selectedOption as Int,
                         questionPaperId = studentCredential.questionPaperId,
                         state = state,
                         questionMaxMarks = maxMarksForQuestion
@@ -138,7 +141,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     override fun setQuestion(viewId: Int, question: Question, answer: Answer) {
-        Log.d(TAG, "<< setQuestion")
+        Log.d(TAG, "<< setQuestion ")
         radioGroup.clearCheck()
         this.questionText.text = question.questionText
         setOptions(radioButton1, question.options[0])
@@ -148,6 +151,10 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
         if (answer.optionSelected in 1..4) {
             radioGroup.check(radioGroup[answer.optionSelected - 1].id)
+            when(answer.state){
+                4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_checked)!!
+                5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked)!!
+            }
         }
 
 
@@ -165,6 +172,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         return requireContext()
     }
 
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
+
     private fun setOptions(radioButton: RadioButton, option: Options) {
         Log.d(TAG, "<< setOptions")
         radioButton.apply {
@@ -175,31 +187,39 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     private fun sendAnswer(state: Int) {
-        Log.d(TAG, "<< sendAnswer")
+        Log.d(TAG, "<< sendAnswer: with state: $state")
         val answerResponse = createResponse(state)
         presenter.saveResponse(answerResponse)
         Log.d(TAG, ">> sendAnswer")
     }
 
     fun setClock(timeLeftInTimer: Long) {
-        val minutes = (timeLeftInTimer / 60000).toInt()
-        val seconds = ((timeLeftInTimer % 60000) / 1000).toInt()
-        var timeLeftText: String = ""
-        timeLeftText += "$minutes:"
+        if (timeLeftInTimer > 0) {
+            val minutes = (timeLeftInTimer / 60000).toInt()
+            val seconds = ((timeLeftInTimer % 60000) / 1000).toInt()
+            var timeLeftText = ""
+            timeLeftText += "$minutes:"
 
-        if (seconds < 10) {
-            timeLeftText += "0"
+            if (seconds < 10) {
+                timeLeftText += "0"
+            }
+
+            if (minutes < 10){
+                timerText.setTextColor(Color.RED)
+            }
+
+            timeLeftText += seconds.toString()
+            timerText.text = timeLeftText
         }
-
-        timeLeftText += seconds.toString()
-        timerText.text = timeLeftText
+        else
+            timerText.text = getString(R.string.timer)
     }
 
     override fun markTabAndMoveNext(state: Int) {
-        Log.d(TAG, "<< nextTab()")
+        Log.d(TAG, "<< nextTab(): incoming state for Previous Tab: $state")
         when (state){
-            4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_attempted)!!
-            5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked_for_review)!!
+            4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_checked)!!
+            5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked)!!
         }
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))

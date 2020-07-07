@@ -33,7 +33,7 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     { success ->
-                                        Log.i(TAG, "Successfully Fetched Result From Remote")
+                                        Log.i(TAG, "Successfully Fetched Result From Remote : $success")
                                         view!!.showResults(success)
                                     },
                                     { error ->

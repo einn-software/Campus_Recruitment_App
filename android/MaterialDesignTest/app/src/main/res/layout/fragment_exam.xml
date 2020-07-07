@@ -10,14 +10,14 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/questionTab"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/timerText"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exitTestButton"
         app:tabGravity="center"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorGravity="top"
@@ -29,56 +29,75 @@
 
     <TextView
         android:id="@+id/timerText"
-        android:layout_width="56dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/timer"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="28sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/exitTestButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/questionTab"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <Button
+        android:id="@+id/exitTestButton"
+        style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Exit Test"
+        android:textColor="#CF0A0A"
+        app:layout_constraintBottom_toBottomOf="@+id/timerText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/timerText"
+        app:layout_constraintTop_toTopOf="@+id/timerText" />
 
     <TextView
         android:id="@+id/questionNumber"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/QuestionNum"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="false"
         app:layout_constraintEnd_toStartOf="@+id/questionMMarks"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/include3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTab" />
 
     <TextView
         android:id="@+id/questionMMarks"
-        android:layout_width="69dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/m_m"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/questionNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/questionNumber"
-        app:layout_constraintTop_toBottomOf="@+id/questionTab" />
+        app:layout_constraintStart_toEndOf="@+id/questionNumber" />
 
     <include
+        android:id="@+id/include3"
         layout="@layout/questionview"
         android:layout_width="0dp"
-        android:layout_height="503dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="480dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionMMarks"
-        app:layout_constraintVertical_bias="0.402" />
+        app:layout_constraintTop_toBottomOf="@+id/questionNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -203,8 +203,6 @@ const studentPutValidation = (data) => {
     phone: Joi.string().min(Constants.phone_min_length).max(Constants.phone_max_length),
     roll: Joi.string().min(Constants.roll_min_length).max(Constants.roll_max_length),
     branch: Joi.string().min(Constants.branch_min_length).max(Constants.branch_max_length),
-    college: Joi.string().min(Constants.college_min_length).max(Constants.college_max_length),
-    code: Joi.number().min(Constants.code_min_length).max(Constants.code_max_length),
     exam_start_time: Joi.date(),
   });
   return studentPutSchema.validate(data);
@@ -239,9 +237,7 @@ const tpoPutValidation = (data) => {
     email: Joi.string().min(Constants.email_min_length).max(Constants.email_max_length).email(),
     password: Joi.string().min(Constants.password_min_length).max(Constants.password_max_length),
     phone: Joi.string().min(Constants.phone_min_length).max(Constants.phone_max_length),
-    designation: Joi.string().min(Constants.designation_min_length).max(Constants.designation_max_length),
-    college: Joi.string().min(Constants.college_min_length).max(Constants.college_max_length),
-    code: Joi.number().min(Constants.code_min_length).max(Constants.code_max_length),
+    designation: Joi.string().min(Constants.designation_min_length).max(Constants.designation_max_length)
   });
   return tpoPutSchema.validate(data);
 };

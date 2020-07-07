@@ -88,9 +88,7 @@ const questionPaperSchema = new mongoose.Schema({
           type: mongoose.Types.ObjectId,
           ref: "QuestionCollection",
           required: true
-        }
-      },
-      {
+       },
         question_marks: {
           type: Number,
           required: true,
@@ -99,7 +97,7 @@ const questionPaperSchema = new mongoose.Schema({
         }
       },
     ],
-  }, ],
+  }],
 });
 
 module.exports = mongoose.model("QuestionPaper", questionPaperSchema);

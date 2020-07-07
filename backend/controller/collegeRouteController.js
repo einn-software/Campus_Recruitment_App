@@ -3,6 +3,8 @@ const Constants = require('../config/constant');
 
 //import models
 const College = require("../model/College");
+const Tpo = require("../model/Tpo");
+const Student = require("../model/Student");
 
 // import validations
 const {
@@ -106,6 +108,28 @@ const CollegePut =
                 }, (err, result) => {
                     if (err) {
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+                    }
+                    if (body.name) {
+                        Student.find({
+                            code: req.params.code,
+                        }, (result) => {
+                            Student.updateMany({
+                                college: body.name
+                            }, (err, resp) => {
+                                if (err)
+                                    return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+                            })
+                        });
+                        Tpo.find({
+                            code: req.params.code,
+                        }, (result) => {
+                            Tpo.updateMany({
+                                college: body.name
+                            }, (err, resp) => {
+                                if (err)
+                                    return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+                            })
+                        });
                     }
                     return res.status(Constants.success).json(result);
                 })

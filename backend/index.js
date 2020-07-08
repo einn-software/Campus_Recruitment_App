@@ -19,7 +19,7 @@ mongoose.connect(process.env.DB_CONNECT, {
   useCreateIndex: true,
 });
 mongoose.connection
-  .once("open", () => logger.log("info", "Connected to db!")) //Event Listeners 
+  .once("open", () => logger.log("info", "Connected to db!")) //Event Listeners
   .on("error", (error) => {
     logger.log("error", error);
   });
@@ -28,29 +28,31 @@ mongoose.connection
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 app.use(express.json());
 
-//Logger 
+//Logger
 app.use(function (req, res, next) {
   logger.info(req.url);
-  let oldSend = res.send;
-  res.send = function (data) {
-    logger.info(data);
-    oldSend.apply(res, arguments);
-  };
+  // let oldSend = res.send;
+  // res.send = function (data) {
+  //   logger.info(data);
+  //   oldSend.apply(res, arguments);
+  // };
   next();
 });
 
 //Route Middlewares
 app.use("/", authRoute);
-app.use('*', function (req, res) {
-  return res.status(Constants.er_failure).json(errHandler.noRouteErrorHandler());
+app.use("*", function (req, res) {
+  return res
+    .status(Constants.er_failure)
+    .json(errHandler.noRouteErrorHandler());
 });
 //Error hadling middleware
 app.use((req, res, next) => {
   next(error);
 });
 app.use((error, req, res, next) => {
-  logger.error(req.url)
-  logger.error(error.status + "\n" + error.stack + "\n" + error.body + "\n" + error.type);
+  logger.error(req.url);
+  logger.error(error.status + "\n" + error.stack + "\n" + error.type);
   return res.status(Constants.er_failure).json(errHandler.errorHandler(error));
 });
 

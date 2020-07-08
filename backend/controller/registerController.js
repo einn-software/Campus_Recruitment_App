@@ -1,6 +1,7 @@
 const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
+const logger = require("../config/logger")
 
 //import models
 const Admin = require("../model/Admin");
@@ -28,6 +29,7 @@ const AdminRegister = async (req, res) => {
     error
   } = adminRegisterValidation(req.body);
   if (error) {
+    logger.log('error', 'validation error', error.details)
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
@@ -38,6 +40,7 @@ const AdminRegister = async (req, res) => {
     email: req.body.email,
   });
   if (emailExist) {
+    logger.log('error', errHandler.emailExistErrorHandler());
     return res
       .status(Constants.er_failure)
       .json(errHandler.emailExistErrorHandler());
@@ -52,8 +55,10 @@ const AdminRegister = async (req, res) => {
   });
   try {
     const user = await admin.save();
+    logger.info("Successfully registered", user);
     return res.status(Constants.success).json(user);
   } catch (error) {
+    logger.log('error', errHandler.errorHandler(error))
     return res
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
@@ -67,6 +72,7 @@ const TpoRegister = async (req, res) => {
     error
   } = tpoRegisterValidation(req.body);
   if (error) {
+    logger.log('error', 'validation error', error.details)
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
@@ -77,6 +83,7 @@ const TpoRegister = async (req, res) => {
     email: req.body.email,
   });
   if (emailExist) {
+    logger.log('error', errHandler.emailExistErrorHandler());
     return res
       .status(Constants.er_failure)
       .json(errHandler.emailExistErrorHandler());
@@ -94,8 +101,10 @@ const TpoRegister = async (req, res) => {
   });
   try {
     const user = await tpo.save();
+    logger.info("Successfully registered", user);
     return res.status(Constants.success).json(user);
   } catch (err) {
+    logger.log('error', errHandler.errorHandler(error))
     return res
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
@@ -104,33 +113,39 @@ const TpoRegister = async (req, res) => {
 
 //To register a new student
 const StudentRegister = async (req, res) => {
+  logger.info(req.url)
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
   const {
     error
   } = studentRegisterValidation(req.body);
-  if (error)
+  if (error) {
+    logger.log('error', 'validation error', error.details)
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
+  }
 
   //Checking if the student is already in the database
   const emailExist = await Student.findOne({
     email: req.body.email,
   });
-  if (emailExist)
+  if (emailExist) {
+    logger.log('error', errHandler.emailExistErrorHandler());
     return res
       .status(Constants.er_failure)
       .json(errHandler.emailExistErrorHandler());
+  }
 
   const rollCodeExist = await Student.findOne({
     roll: req.body.roll,
     code: req.body.code,
   });
-  if (rollCodeExist)
+  if (rollCodeExist) {
+    logger.log('error', errHandler.codeRollErrorHandler())
     return res
       .status(Constants.er_failure)
       .json(errHandler.codeRollErrorHandler());
-
+  }
   // Create a new student
   const student = new Student({
     name: req.body.name,
@@ -145,8 +160,10 @@ const StudentRegister = async (req, res) => {
   });
   try {
     const user = await student.save();
+    logger.info("Successfully registered", user);
     return res.status(Constants.success).json(user);
   } catch (err) {
+    logger.log('error', errHandler.errorHandler(error))
     res.status(Constants.er_failure).json(errHandler.errorHandler(err));
   }
 };

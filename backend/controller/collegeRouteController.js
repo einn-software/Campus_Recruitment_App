@@ -9,6 +9,7 @@ const {
     collegeValidation,
     collegePutValidation
 } = require("../config/validation");
+const logger = require("../config/logger");
 
 function randomCodeGenerate() {
     return Math.floor((Constants.code_min) + Math.random() * (Constants.code_max));
@@ -21,14 +22,19 @@ const CollegeAdd = (async function (req, res) {
         const {
             error
         } = collegeValidation(req.body);
-        if (error) return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+        if (error) {
+            logger.log('error', errHandler.validationErrorHandler(error));
+            return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+        }
 
         //Checking if the college is already in the database
         const collegeExist = await College.findOne({
             email: req.body.email
         });
-        if (collegeExist) return res.status(Constants.er_failure).json(errHandler.emailExistErrorHandler());
-
+        if (collegeExist) {
+            logger.log('error', `Function College.findOne({email: ${req.body.email}})`, errHandler.emailExistErrorHandler());
+            return res.status(Constants.er_failure).json(errHandler.emailExistErrorHandler());
+        }
         // Create a new college
         const college = new College({
             name: req.body.name,
@@ -40,11 +46,14 @@ const CollegeAdd = (async function (req, res) {
         });
         try {
             const user = await college.save();
+            logger.info("Successfully added", user);
             return res.status(Constants.success).json(user);
         } catch (err) {
+            logger.log("error", errHandler.errorHandler(err))
             return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
         }
     } else {
+        logger.log("error", `({user_type:${req.session.user_type}})`, errHandler.unauthorizedErrorHandler())
         return res
             .status(Constants.er_authorization_failed)
             .json(errHandler.unauthorizedErrorHandler());
@@ -55,10 +64,12 @@ const CollegeAdd = (async function (req, res) {
 const CollegeGet = function (req, res) {
     College.find({}, (err, results) => {
         if (err) {
+            logger.log("error", "Function College.find({})", errHandler.errorHandler(err))
             return res
                 .status(Constants.er_failure)
                 .json(errHandler.errorHandler(err));
         }
+        logger.info(results)
         return res.status(Constants.success).json(results);
     });
 };
@@ -74,12 +85,15 @@ const CollegeGetByCode = function (req, res) {
             },
             (err, results) => {
                 if (err || !results) {
+                    logger.log("error", `Function College.fineOne({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
                     return res.status(Constants.er_not_found).json(errHandler.codeNotFoundErrorHandler());
                 }
+                logger.info(results);
                 return res.status(Constants.success).json(results);
             }
         );
     } else {
+        logger.log("error", `({user_type:${req.session.user_type}})`, errHandler.unauthorizedErrorHandler())
         return res
             .status(Constants.er_authorization_failed)
             .json(errHandler.unauthorizedErrorHandler());
@@ -96,6 +110,7 @@ const CollegePut =
                 error
             } = collegePutValidation(body);
             if (error) {
+                logger.log('error', errHandler.validationErrorHandler(error));
                 return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
             }
             College.findOneAndUpdate({
@@ -105,11 +120,17 @@ const CollegePut =
                     new: true
                 }, (err, result) => {
                     if (err) {
+                        logger.log("error", `Function College.fineOneAndUpdate({code: ${req.params.code}, with body ${body}})`, errHandler.errorHandler(err));
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+                    }
+                    if (!result) {
+                        logger.log("error", `Function College.fineOneAndUpdate({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
+                        return res.status(Constants.er_failure).json(errHandler.codeNotFoundErrorHandler());
                     }
                     return res.status(Constants.success).json(result);
                 })
         } else {
+            logger.log("error", `({user_type:${req.session.user_type}})`, errHandler.unauthorizedErrorHandler())
             return res
                 .status(Constants.er_authorization_failed)
                 .json(errHandler.unauthorizedErrorHandler());
@@ -126,19 +147,25 @@ const CollegeDelete =
                 },
                 (err, results) => {
                     if (err) {
+                        logger.log("error", `Function College.fineByIdAndRemove({_d: ${req.params.id}})`, errHandler.errorHandler(err));
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
                     }
                     if (!results) {
+                        logger.log("error", `Function College.fineByIdAndRemove({_d: ${req.params.id}})`, errHandler.idNotFoundErrorHandler());
                         return res
                             .status(Constants.er_not_found)
                             .json(errHandler.idNotFoundErrorHandler());
                     }
+                    logger.info({
+                        message: "Data deleted successfully"
+                    })
                     return res.status(Constants.success).json({
                         message: "Data deleted successfully"
                     });
                 }
             );
         } else {
+            logger.log("error", `({user_type:${req.session.user_type}})`, errHandler.unauthorizedErrorHandler())
             return res
                 .status(Constants.er_authorization_failed)
                 .json(errHandler.unauthorizedErrorHandler());

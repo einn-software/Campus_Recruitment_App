@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "899219284278",
-    "firebase_url": "https://campus-recruitment-app-9bc5a.firebaseio.com",
-    "project_id": "campus-recruitment-app-9bc5a",
-    "storage_bucket": "campus-recruitment-app-9bc5a.appspot.com"
+    "project_number": "571906637141",
+    "firebase_url": "https://innobit-project.firebaseio.com",
+    "project_id": "innobit-project",
+    "storage_bucket": "innobit-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:899219284278:android:3cbcf000e96350af66d397",
+        "mobilesdk_app_id": "1:571906637141:android:41ce768943458cb993c3dc",
         "android_client_info": {
           "package_name": "com.testexample.materialdesigntest"
         }
       },
       "oauth_client": [
         {
-          "client_id": "899219284278-p01i74ml4u2i2fhv3ptbjga9tok1le0m.apps.googleusercontent.com",
+          "client_id": "571906637141-mt7kj3314af357fps0g01dnnbtvh2u1c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA11LVlc2_07SiKSZAG78a6upyhcxaNwvM"
+          "current_key": "AIzaSyBxjuJi3YB_AebP4PX6gAKQL3Jg3IFbbZM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "899219284278-p01i74ml4u2i2fhv3ptbjga9tok1le0m.apps.googleusercontent.com",
+              "client_id": "571906637141-mt7kj3314af357fps0g01dnnbtvh2u1c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

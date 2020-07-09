@@ -80,6 +80,17 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
 
+        timer = object : CountDownTimer(timeLeftInTimer, 1000) {
+            override fun onFinish() {
+                endExam()
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                timeLeftInTimer = millisUntilFinished
+                activeFragment.setClock(timeLeftInTimer)
+            }
+        }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         setSupportActionBar(drawerToolbar)
         supportActionBar?.apply {
@@ -204,21 +215,9 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     }
 
     fun countDownStart(flag: Boolean) {
-
         Log.d(TAG, "<< countDownStart")
-
         if (flag) {
-            timer = object : CountDownTimer(timeLeftInTimer, 1000) {
-                override fun onFinish() {
-                    endExam()
-                }
-
-                override fun onTick(millisUntilFinished: Long) {
-                    timeLeftInTimer = millisUntilFinished
-                        Log.d(TAG, callingActivity.toString())
-                        activeFragment.setClock(timeLeftInTimer)
-                }
-            }.start()
+            timer.start()
         } else {
             timer.cancel()
             timer.onFinish()
@@ -247,7 +246,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     override fun showLoading(flag: Boolean) {
         Log.d(TAG, "<< showLoading")
-
         if (flag) {
             progressBar.startLoading()
         } else
@@ -266,7 +264,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
                     putExtra(Constants.ROLL, student.studentRollNo)
                     putExtra(Constants.QUESTION_PAPER_ID, questionPaper.questionPaperId)
         })
-        this@ExamDrawer.finish()
+        finish()
         Log.d(TAG, ">> openNextActivity")
     }
 
@@ -276,6 +274,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     override fun setContext(): Context {
         return this.baseContext
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        Log.d(TAG, "onDestroy()")
+        super.onDestroy()
     }
 
     fun endExam() {

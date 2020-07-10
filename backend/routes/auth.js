@@ -3,22 +3,10 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session); //MongoDB session store for Connect and Express
 const mongoose = require("mongoose");
 const verified = require("../config/verifyToken");
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-})
-const upload = multer({
-  storage: storage
-});
-
 //importing functions from Controller files
 const {
-  UploadFile
+  UploadFiles,
+  UploadLogFiles
 } = require("../controller/uploadAndRegisterStudent");
 const {
   AdminRegister,
@@ -61,7 +49,7 @@ const {
   InstructionGetById,
   InstructionPut,
   InstructionAdd,
-  InstructionDeleteAtOnce
+  InstructionDeleteAtOnce,
 } = require("../controller/instructionController");
 
 const {
@@ -84,13 +72,13 @@ const {
   AnswerSheetGetById,
   AnswerSheetPut,
   AnswerSheetDeleteById,
-  AnswerSheetDeleteByStudentId
+  AnswerSheetDeleteByStudentId,
 } = require("../controller/studentAnswerSheet");
 
 const {
   ResultAdd,
   ResultGetByPaperIdAndCode,
-  ResultGetByPaperIdRollAndCode
+  ResultGetByPaperIdRollAndCode,
 } = require("../controller/resultController");
 
 const {
@@ -117,8 +105,8 @@ router.use(
     }),
   })
 );
-
-router.post("/upload", verified, upload.single('file'), UploadFile);
+router.post("/upload/android-logs", UploadLogFiles);
+router.post("/upload", verified, UploadFiles);
 
 //Admin Register API
 router.post("/register/admins", AdminRegister);
@@ -177,19 +165,35 @@ router.put("/question-papers/:id", verified, QuestionPaperPut);
 router.delete("/question-papers/:id", verified, QuestionPaperDelete);
 
 //HTTP Patch
-router.patch('/question-papers/:id', QuestionPaperPatch);
+router.patch("/question-papers/:id", QuestionPaperPatch);
 
 //Student Answer Sheet API
 router.post("/student-answers", verified, AnswerSheetAdd);
-router.get("/student-answers/:student_id/:question_paper_id", verified, AnswerSheetGetById);
+router.get(
+  "/student-answers/:student_id/:question_paper_id",
+  verified,
+  AnswerSheetGetById
+);
 router.put("/student-answers/:id", verified, AnswerSheetPut);
 router.delete("/student-answers/:id", verified, AnswerSheetDeleteById);
-router.delete("/student-answer/:student_id/:question_paper_id", verified, AnswerSheetDeleteByStudentId);
+router.delete(
+  "/student-answer/:student_id/:question_paper_id",
+  verified,
+  AnswerSheetDeleteByStudentId
+);
 
 //Result API
 router.post("/results", verified, ResultAdd);
-router.get("/colleges/:code/results/:question_paper_id", verified, ResultGetByPaperIdAndCode);
-router.get("/colleges/:code/results/:roll/question-papers/:question_paper_id", verified, ResultGetByPaperIdRollAndCode);
+router.get(
+  "/colleges/:code/results/:question_paper_id",
+  verified,
+  ResultGetByPaperIdAndCode
+);
+router.get(
+  "/colleges/:code/results/:roll/question-papers/:question_paper_id",
+  verified,
+  ResultGetByPaperIdRollAndCode
+);
 
 // Forgot and Reset Password API
 router.post("/forgot-password/admins", AdminForgotPassword);

@@ -1,9 +1,8 @@
-const Constants = require('../config/constant');
+const Constants = require("../config/constant");
 
 function randomGenerate() {
-  return `${Math.floor((Constants.ref_min) + Math.random() * (Constants.ref_max))}`;
+  return `${Math.floor(Constants.ref_min + Math.random() * Constants.ref_max)}`;
 }
-
 
 // Error Handlers
 function errorHandler(error) {
@@ -49,7 +48,6 @@ function noRouteErrorHandler() {
   };
   return err;
 }
-
 
 function unauthorizedErrorHandler() {
   const err = {
@@ -194,12 +192,12 @@ function idNotFoundErrorHandler() {
   return err;
 }
 
-function fileNotFoundErrorHandler() {
+function invalidFileErrorHandler() {
   const err = {
-    status: Constants.er_not_found, //404
-    message: "Please provide a valid xlxs file",
+    status: Constants.er_failure,
+    message: "Please provide a valid file",
     error_info: "Not Found Error",
-    server_msg: "No file found from user, So can't get the response",
+    server_msg: "file type is not valid, So can't get the response",
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -207,7 +205,7 @@ function fileNotFoundErrorHandler() {
 
 function validEmailNotFoundErrorHandler() {
   const err = {
-    status: Constants.er_not_found, //404
+    status: Constants.er_failure,
     message: "Please provide a valid email",
     error_info: "Not Found Error",
     server_msg: "No email found, So can't get the response",
@@ -293,7 +291,6 @@ function codeRollErrorHandler() {
   return err;
 }
 
-
 function questionExistErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
@@ -304,7 +301,6 @@ function questionExistErrorHandler() {
   };
   return err;
 }
-
 
 function questionPaperExistErrorHandler() {
   const err = {
@@ -343,7 +339,7 @@ module.exports = {
   dataNotFoundErrorHandler,
   notFoundCodeIdErrorHandler,
   notFoundResultErrorHandler,
-  fileNotFoundErrorHandler,
   validEmailNotFoundErrorHandler,
-  codeExistErrorHandler
-}
+  invalidFileErrorHandler,
+  codeExistErrorHandler,
+};

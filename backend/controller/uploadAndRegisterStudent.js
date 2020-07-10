@@ -4,62 +4,82 @@ const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
 const Student = require("../model/Student");
+const logger = require("../config/logger");
 
 const {
   studentRegisterValidation
 } = require("../config/validation");
-
-function sendMail(req, res, email) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EINN_EMAIL, // generated ethereal user
-      pass: process.env.EINN_EMAIL_PASSWORD, // generated ethereal password
-    },
-  });
-  const mailOptions = {
-    from: process.env.EINN_EMAIL,
-    to: email,
-    subject: "List of registered students",
-    text: "We are glad to have you with us. You are receiving this because you have requested for the registeration of the students.\n\n" +
-      "Please check the attached file, Ii's having information that students are registered or not. To register the remaining students, you are advised to send the file again of unregistered students after correcting their data.\n\n" +
-      "Thank You.\n\n",
-    attachments: [{
-        filename: "Registered Students.xlsx",
-        path: "./studentList/Registered Students.xlsx",
-      },
-      {
-        filename: "Unregistered Students.xlsx",
-        path: "./studentList/Unregistered Students.xlsx",
-      },
-    ],
-  };
-  transporter.sendMail(mailOptions, function (err, info) {
-    if (err) {
-      return res
-        .status(Constants.er_failure)
-        .json(errHandler.errorHandler(err));
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    switch (file.mimetype) {
+      case "text/plain":
+        cb(null, "./androidLogs");
+        break;
+      case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+        cb(null, "./uploads/");
+        break;
+      default:
+        return cb("Provide a valid file");
     }
-    return;
-  });
-}
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
 
-const UploadFile = async function (req, res) {
+const upload = multer({
+  storage: storage,
+}).single("file");
+
+const UploadFiles = async function (req, res) {
   if (req.session.user_type == Constants.tpo) {
-    if (!req.body.email) return res.status(Constants.er_failure).json(errHandler.validEmailNotFoundErrorHandler());
-    if (!req.file) return res.status(Constants.er_failure).json(errHandler.fileNotFoundErrorHandler());
-    const email = req.body.email;
-    req.session.fileName = req.file.originalname;
-    // const file1 = req.file.originalname
-    FileConversion(req, res, email);
-    res.json({
-      message: "File successfully uploaded",
+    console.log(req.session);
+    upload(req, res, (err) => {
+      if (err) {
+        logger.error(errHandler.invalidFileErrorHandler());
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.invalidFileErrorHandler());
+      }
+      if (!req.body.email)
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.validEmailNotFoundErrorHandler());
+      const email = req.body.email;
+      req.session.fileName = req.file.originalname;
+      FileConversion(req, res, email);
+      logger.info({
+        message: "File successfully uploaded",
+      });
+      return res.status(Constants.success).json({
+        message: "File successfully uploaded"
+      });
     });
   } else {
     return res
       .status(Constants.er_authorization_failed)
       .json(errHandler.unauthorizedErrorHandler());
   }
+};
+
+const UploadLogFiles = async function (req, res) {
+  upload(req, res, (err) => {
+    if (err) {
+      logger.error(errHandler.invalidFileErrorHandler());
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.invalidFileErrorHandler());
+    }
+    logger.info({
+      message: "File successfully uploaded",
+    });
+    return res
+      .json({
+        message: "File successfully uploaded",
+      })
+      .status(Constants.success);
+  });
 };
 
 const FileConversion = async (req, res, email) => {
@@ -155,4 +175,40 @@ const StudentListRegister = async (data, res) => {
   return [errorArray, userArray];
 };
 
-module.exports.UploadFile = UploadFile;
+function sendMail(req, res, email) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EINN_EMAIL, // generated ethereal user
+      pass: process.env.EINN_EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+  const mailOptions = {
+    from: process.env.EINN_EMAIL,
+    to: email,
+    subject: "List of registered students",
+    text: "We are glad to have you with us. You are receiving this because you have requested for the registeration of the students.\n\n" +
+      "Please check the attached file, Ii's having information that students are registered or not. To register the remaining students, you are advised to send the file again of unregistered students after correcting their data.\n\n" +
+      "Thank You.\n\n",
+    attachments: [{
+        filename: "Registered Students.xlsx",
+        path: "./studentList/Registered Students.xlsx",
+      },
+      {
+        filename: "Unregistered Students.xlsx",
+        path: "./studentList/Unregistered Students.xlsx",
+      },
+    ],
+  };
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.errorHandler(err));
+    }
+    return;
+  });
+}
+
+module.exports.UploadLogFiles = UploadLogFiles;
+module.exports.UploadFiles = UploadFiles;

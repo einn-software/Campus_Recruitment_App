@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.examination
 
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
@@ -38,8 +39,12 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                         }
                                     },
                                     { error ->
-                                        Log.e(TAG, "Error fetching question paper from remote with reason ${error.message.toString()}")
+                                        Log.e(TAG, "Error fetching question paper from remote with " +
+                                                "reason ${error.message.toString()}")
                                         view!!.showLoading(false)
+                                        Toast.makeText(view!!.setContext(), error.message
+                                                + "\n Please Try Login in again",
+                                            Toast.LENGTH_LONG).show()
                                     })
             )
         }
@@ -69,8 +74,10 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                     if (error.message.toString() == "700 You have already submitted the result for this exam"){
                                         view!!.openNextActivity()
                                     }
-
-
+                                    else
+                                        Toast.makeText(view!!.setContext(), error.message
+                                                + "\n Please try again",
+                                            Toast.LENGTH_LONG).show()
                                 }
                         )
         )

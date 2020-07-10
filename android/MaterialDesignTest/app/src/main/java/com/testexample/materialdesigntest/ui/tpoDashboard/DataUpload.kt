@@ -16,7 +16,7 @@ import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
 import com.testexample.materialdesigntest.utils.getFileName
-import com.testexample.materialdesigntest.utils.snackbar
+import com.testexample.materialdesigntest.utils.snackBar
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_data_upload.*
 import java.io.File
@@ -59,10 +59,10 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
             Log.d(TAG, "onClick: Verify Button")
             file = prepareFileUpload()
             if (presenter.verifyFile(file)) {
-                layoutDataUpload.snackbar("Ready To Upload!")
+                layoutDataUpload.snackBar("Ready To Upload!")
                 uploadFileButton.isEnabled = true
             } else {
-                layoutDataUpload.snackbar("Invalid File!!")
+                layoutDataUpload.snackBar("Invalid File!!")
             }
         }
 
@@ -109,7 +109,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     private fun prepareFileUpload(): File?{
         Log.d(TAG , "prepareFile")
         if (selectedFIleUri == null){
-            layoutDataUpload.snackbar("Select an Excel File First")
+            layoutDataUpload.snackBar("Select an Excel File First")
             return null
         }
         else if (requireActivity().contentResolver.getType(selectedFIleUri!!) !in

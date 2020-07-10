@@ -6,7 +6,7 @@ import android.provider.OpenableColumns
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
-fun View.snackbar(message: String) {
+fun View.snackBar(message: String) {
     Snackbar.make(
             this,
             message,

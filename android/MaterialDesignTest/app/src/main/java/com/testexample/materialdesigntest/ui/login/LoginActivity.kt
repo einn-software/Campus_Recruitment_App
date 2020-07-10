@@ -1,13 +1,12 @@
 package com.testexample.materialdesigntest.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
-import com.testexample.materialdesigntest.ui.ProgressBar
 
 class LoginActivity : AppCompatActivity() {
     private var exit: Boolean = false
@@ -37,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "Total Fragments in Backstack : "+supportFragmentManager.backStackEntryCount.toString())
+        Log.d(TAG, "Total Fragments in back-stack : "+supportFragmentManager.backStackEntryCount.toString())
         if (supportFragmentManager.backStackEntryCount > 1)
         {
             super.onBackPressed()

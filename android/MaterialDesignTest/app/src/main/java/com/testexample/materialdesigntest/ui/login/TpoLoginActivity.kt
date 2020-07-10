@@ -35,7 +35,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
 
         resetPasswordLink.setOnClickListener {
             val intent = Intent(this, ResetAuthenticationActivity::class.java)
-            intent.putExtra("user_type", "tpo")
+            intent.putExtra(Constants.USERTYPE, "tpo")
             startActivity(intent)
         }
 

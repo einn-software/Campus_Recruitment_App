@@ -34,7 +34,9 @@ class InstructionActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "Total Fragments in Backstack : "+supportFragmentManager.backStackEntryCount.toString())
+        Log.d(TAG, "Total Fragments in Backstack : "
+                + supportFragmentManager.backStackEntryCount.toString())
+
         if (supportFragmentManager.backStackEntryCount > 1)
         {
             super.onBackPressed()

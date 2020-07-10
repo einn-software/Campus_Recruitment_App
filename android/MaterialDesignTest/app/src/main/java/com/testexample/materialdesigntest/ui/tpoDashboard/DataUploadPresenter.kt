@@ -28,7 +28,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
 
     override fun uploadFile(tpoEmail: String, file: File) {
 
-        val requestFile = UploadRequestBody(file,"application/*", this)
+        val requestFile = UploadRequestBody(file,"application", this)
         val details : RequestBody = RequestBody.create(MediaType.parse("text/plain"), tpoEmail)
         val parts = MultipartBody.Part.createFormData("file",
                 file.name, requestFile)

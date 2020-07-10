@@ -49,7 +49,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
 
         forgotPasswordLink.setOnClickListener {
             startActivity(Intent(activity, ResetAuthenticationActivity::class.java)
-                    .putExtra("user_type", "student"))
+                    .putExtra(Constants.USERTYPE, "student"))
         }
 
         registrationLink.setOnClickListener {

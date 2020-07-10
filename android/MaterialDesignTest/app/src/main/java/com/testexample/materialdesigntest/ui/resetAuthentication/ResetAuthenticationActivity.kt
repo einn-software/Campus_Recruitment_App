@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.login.LoginActivity
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_reset_authentication.*
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -26,7 +27,7 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
 
         //get user type from previous activity
         val bundle: Bundle? = intent.extras
-        userType = bundle?.getString("user_type").toString()
+        userType = bundle?.getString(Constants.USERTYPE).toString()
 
         presenter = ResetAuthenticationPresenter(this)
 

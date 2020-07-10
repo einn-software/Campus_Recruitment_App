@@ -25,6 +25,7 @@ interface ExaminationContract {
         fun loadQuestion(viewId: Int, questionId: String)
         fun getView(viewSent: FragmentView)
         fun loadAnswerFromRoom()
+        var Q_A_Mapping: MutableMap<String, ExaminationSectionPresenter.Answer>
         fun loadAnswerSheet(request: EndExamRequest)
     }
 

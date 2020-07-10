@@ -15,7 +15,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-// Presenter Constructor takes view Instance
 class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Presenter {
 
     private val TAG = "LoginPresenter"

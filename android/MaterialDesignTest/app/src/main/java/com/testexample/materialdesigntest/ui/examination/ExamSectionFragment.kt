@@ -20,6 +20,7 @@ import com.testexample.materialdesigntest.data.network.model.EndExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
 import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.Answer
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.questionview.*
 
@@ -52,9 +53,17 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         presenter.loadAnswerSheet(studentCredential)
 
         for ((index, question) in section.questionsList.withIndex()) {
+            Log.d(TAG, "setTag")
             questionTab.addTab(questionTab.newTab()
                     .setText((index + 1).toString())
                     .setTag(question.questionId))
+            if (presenter.Q_A_Mapping.containsKey(question.questionId)){
+                when(presenter.Q_A_Mapping[question.questionId]?.state){
+                    Constants.MARKED -> questionTab.getTabAt(index)?.setIcon(R.drawable.ic_marked)
+                    Constants.ANSWERED -> questionTab.getTabAt(index)?.setIcon(R.drawable.ic_checked)
+                }
+            }
+
             // tab tag is assigned the question id
         }
 
@@ -123,7 +132,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         Log.d(TAG, "<< createResponse")
         val index = questionTab.selectedTabPosition
         val selectedOption = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).tag
-        println(radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).tag)
         val questionId = questionTab.getTabAt(index)!!.tag.toString()
         val maxMarksForQuestion = section.questionsList[index].marks
         Log.d(TAG, ">> createResponse")
@@ -151,10 +159,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
         if (answer.optionSelected in 1..4) {
             radioGroup.check(radioGroup[answer.optionSelected - 1].id)
-            when(answer.state){
-                4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_checked)!!
-                5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked)!!
-            }
+            setTabFlag(answer.state)
         }
 
 
@@ -217,13 +222,24 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
     override fun markTabAndMoveNext(state: Int) {
         Log.d(TAG, "<< nextTab(): incoming state for Previous Tab: $state")
-        when (state){
-            4 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_checked)!!
-            5 -> questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked)!!
-        }
+        setTabFlag(state)
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
         Log.d(TAG, ">> nextTab()")
+    }
+
+    private fun setTabFlag(state: Int){
+        when (state){
+            Constants.ANSWERED ->
+                questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_checked)!!
+            Constants.MARKED ->
+                questionTab.getTabAt(questionTab.selectedTabPosition)?.setIcon(R.drawable.ic_marked)!!
+        }
+    }
+
+    override fun onDetach() {
+        presenter.onDestroy()
+        super.onDetach()
     }
 
     override fun onResume() {

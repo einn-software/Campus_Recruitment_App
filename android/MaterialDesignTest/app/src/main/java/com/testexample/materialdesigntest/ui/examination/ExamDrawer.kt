@@ -54,7 +54,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam_drawer)
         setSupportActionBar(appActionBar)
-
+        //get current date
         val calender = Calendar.getInstance()
         val year: Int = calender.get(Calendar.YEAR)
         val month: Int = calender.get(Calendar.MONTH)
@@ -62,7 +62,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         setPresenter(ExaminationPresenter(this))
         progressBar = ProgressBar(this)
-
+        //get data from previous activity
         val bundle: Bundle? = intent.extras
         questionPaper = bundle?.getParcelable(Constants.QUESTION_PAPER)!!
         student = bundle.getParcelable(Constants.STUDENT)!!

@@ -32,7 +32,9 @@ class Constants {
         internal const val CODE = "college_code"
         internal const val ROLL = "roll_no"
         internal const val QUESTION_PAPER_ID = "question_paper_id"
-	
+        internal const val ANSWERED = 4
+        internal const val MARKED = 5
+
 	//Constants for College
         internal const val COLLEGE_EMAIL = "email"
         internal const val COLLEGE_NAME = "name"

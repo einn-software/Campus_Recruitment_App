@@ -26,7 +26,7 @@ class ExaminationRemoteRepo : IExaminationRemoteRepo {
     }
 
     override fun callApiForSavingAnswer(token: String, request: StudentAnswerRequest): Single<StudentAnswerResponsePlain> {
-        Log.d(TAG, "<< callApiForSavingAnswer()")
+        Log.d(TAG, "<< callApiForSavingAnswer(): state : ${request.state}")
         Log.d(TAG, ">> callApiForSavingAnswer()")
         return api.addStudentResponse(token, request)
     }

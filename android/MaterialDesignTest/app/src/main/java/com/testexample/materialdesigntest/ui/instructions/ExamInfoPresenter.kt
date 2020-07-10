@@ -1,6 +1,7 @@
 package com.testexample.materialdesigntest.ui.instructions
 
 import android.util.Log
+import android.widget.Toast
 import com.testexample.materialdesigntest.data.interactor.implementation.PreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
@@ -74,7 +75,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                                 { error ->
                                     Log.e("TAG", "Error in fetching Student: ${error.message.toString()}")
 				                    view!!.showLoading(false)
-
+                                    Toast.makeText(view!!.setContext(), error.message, Toast.LENGTH_LONG).show()
                                 },
                                 {
                                     Log.d(TAG, "getStudent Query completed")

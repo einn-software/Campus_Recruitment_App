@@ -9,7 +9,7 @@ import com.testexample.materialdesigntest.data.network.repository.ExaminationRem
 import com.testexample.materialdesigntest.data.network.repository.IExaminationRemoteRepo
 import io.reactivex.Single
 
-class ExaminationRepo() : IExaminationRepo {
+class ExaminationRepo : IExaminationRepo {
 
     private val TAG = "ExaminationRepo"
     private val remoteRepo: IExaminationRemoteRepo = ExaminationRemoteRepo()
@@ -27,15 +27,15 @@ class ExaminationRepo() : IExaminationRepo {
     }
 
     override fun saveResponse(token: String, response: StudentAnswerRequest): Single<StudentAnswerResponsePlain> {
-        Log.d(TAG, "<< saveResponse()")
+        Log.d(TAG, "<< saveResponse(): state: ${response.state}")
         Log.d(TAG, ">> saveResponse()")
         return remoteRepo.callApiForSavingAnswer(token, response)
     }
 
     override fun getAnswerList(token: String, request: EndExamRequest):
             Single<List<StudentAnswerResponsePlain>>{
-        Log.d(TAG, "<< saveResponse()")
-        Log.d(TAG, ">> saveResponse()")
+        Log.d(TAG, "<< getAnswerList()")
+        Log.d(TAG, ">> getAnswerList()")
         return remoteRepo.callApiForFetchingAnswerList(token, request)
     }
 

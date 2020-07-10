@@ -148,8 +148,10 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
         )
     }
 
+    override var Q_A_Mapping: MutableMap<String, Answer> = mutableMapOf()
+
     override fun loadAnswerSheet(request: EndExamRequest) {
-        Log.d(TAG, "<< loadAnsweSheet")
+        Log.d(TAG, "<< loadAnswerSheet")
         repository = ExaminationRepo()
         subscriptions.add(
             repository.getAnswerList(token, request)
@@ -162,6 +164,8 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                     item.selectedOption)
                             }
                         }
+                        Q_A_Mapping = answerMap
+
                     },
                     {error->
                         Log.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})

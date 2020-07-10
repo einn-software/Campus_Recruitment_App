@@ -16,26 +16,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m"
         android:icon="@mipmap/ic_launcher">
-        <!-- The below is for the splash screen and we need no action bar and the default theme -->
         <activity
-            android:name="com.testexample.materialdesigntest.ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="MissingClass">
+            tools:ignore="MissingClass"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.LoginActivity"/>
-        <activity android:name=".ui.tpoDashboard.TPODashboard" />
-        <activity android:name=".ui.examination.ExamDrawer"/>
-        <activity android:name=".ui.instructions.InstructionActivity"/>
-        <activity android:name=".ui.login.TpoLoginActivity" />
-        <activity android:name=".ui.result.ResultActivity" />
-        <activity android:name=".ui.resetAuthentication.ResetAuthenticationActivity"/>
+        <activity android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.tpoDashboard.TPODashboard"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.examination.ExamDrawer"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.instructions.InstructionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.login.TpoLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.result.ResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.resetAuthentication.ResetAuthenticationActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -13,7 +13,7 @@ const logger = createLogger({ //A winston logger is created with the createLogge
       level: "error",
       format: format.combine(
         format.timestamp(),
-        format.simple()) //	the format of log messages
+        format.json()) //	the format of log messages
     }),
     new transports.File({
       filename: "info.log",
@@ -22,7 +22,7 @@ const logger = createLogger({ //A winston logger is created with the createLogge
       level: "info", //maximum level of log messages to log
       format: format.combine(
         format.timestamp(),
-        format.simple()
+        format.json()
       ),
     }),
   ],

@@ -1,7 +1,7 @@
 //import model
 const Result = require("../model/Result");
 const Student = require("../model/Student");
-
+const QuestionPapers = require("../model/QuestionPaper");
 const {
   totalAttemptQuestions,
   calculateMarks,
@@ -50,6 +50,26 @@ async function resultCal(req, res) {
       return std;
     }
   );
+  var sum = 0;
+  const paper = await QuestionPapers.findOne({
+      _id: req.body.question_paper_id,
+    },
+    (err, exam) => {
+      if (err) {
+        return res
+          .status(Constants.er_not_found)
+          .json(errHandler.idNotFoundErrorHandler());
+      }
+      return exam;
+    });
+
+  var section = paper.sections;
+  section.forEach(countNumberOfQuestions);
+
+  function countNumberOfQuestions(item) {
+    sum += item.num_of_questions;
+    return sum;
+  }
 
   // Create Result
   const result = new Result({
@@ -61,6 +81,8 @@ async function resultCal(req, res) {
     question_attempt: await totalAttemptQuestions(req, res),
     correct_attempt: array[1],
     total_marks_scored: array[0],
+    total_number_of_questions: sum,
+    total_marks: paper.paper_max_marks
   });
   await result.save();
   return result;

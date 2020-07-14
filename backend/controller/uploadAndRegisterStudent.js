@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
       req.route.path == "/upload/android-logs" &&
       (file.mimetype == "text/plain" || file.mimetype == "application/zip" || file.mimetype == "application/x-gzip")
     ) {
+      logger.info(file)
       return cb(null, "./androidLogs");
     }
     if (
@@ -23,8 +24,10 @@ const storage = multer.diskStorage({
       (file.mimetype ==
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       )) {
+      logger.info(file)
       return cb(null, "./uploads");
     } else {
+      logger.info(file)
       return cb("Provide a valid file");
     }
   },

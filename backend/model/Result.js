@@ -39,6 +39,16 @@ const resultSchema = new mongoose.Schema({
     min: Constants.correct_attempt_min_length,
     max: Constants.correct_attempt_max_length
   },
+  total_marks: {
+    type: Number,
+    min: Constants.total_marks_min_length,
+    max: Constants.total_marks_max_length
+  },
+  total_number_of_questions: {
+    type: Number,
+    min: Constants.total_number_of_questions_min_length,
+    max: Constants.total_number_of_questions_max_length
+  },
   total_marks_scored: {
     type: Number,
     max: Constants.total_marks_scored_max_length

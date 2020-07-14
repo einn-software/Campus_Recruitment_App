@@ -81,6 +81,12 @@ module.exports = {
   correct_attempt_min_length: 0,
   correct_attempt_max_length: 2000,
 
+  total_number_of_questions_min_length: 2,
+  total_number_of_questions_max_length: 100,
+
+  total_marks_min_length: 0,
+  total_marks_max_length: 2000,
+
   total_marks_scored_max_length: 2000,
 
   question_min_length: 4,

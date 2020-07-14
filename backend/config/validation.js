@@ -97,6 +97,8 @@ const resultValidation = (data) => {
     question_paper_id: Joi.objectId().required(),
     question_attempt: Joi.number().min(Constants.question_attempt_min_length).max(Constants.question_attempt_max_length),
     correct_attempt: Joi.number().min(Constants.correct_attempt_min_length).max(Constants.correct_attempt_max_length),
+    total_marks: Joi.number().min(Constants.total_marks_min_length).max(Constants.total_marks_max_length),
+    total_number_of_questions: Joi.number().min(Constants.total_number_of_questions_min_length).max(Constants.total_number_of_questions_max_length),
     total_marks_scored: Joi.number().max(Constants.total_marks_scored_max_length),
   });
   return resultSchema.validate(data);

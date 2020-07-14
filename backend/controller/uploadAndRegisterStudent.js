@@ -12,15 +12,20 @@ const {
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    switch (file.mimetype) {
-      case "text/plain":
-        cb(null, "./androidLogs");
-        break;
-      case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-        cb(null, "./uploads/");
-        break;
-      default:
-        return cb("Provide a valid file");
+    if (
+      req.route.path == "/upload/android-logs" &&
+      (file.mimetype == "text/plain" || file.mimetype == "application/zip" || file.mimetype == "application/x-gzip")
+    ) {
+      return cb(null, "./androidLogs");
+    }
+    if (
+      req.route.path == "/upload" &&
+      (file.mimetype ==
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      )) {
+      return cb(null, "./uploads");
+    } else {
+      return cb("Provide a valid file");
     }
   },
   filename: function (req, file, cb) {
@@ -33,39 +38,41 @@ const upload = multer({
 }).single("file");
 
 const UploadFiles = async function (req, res) {
-  if (req.session.user_type == Constants.tpo) {
-    console.log(req.session);
-    upload(req, res, (err) => {
-      if (err) {
-        logger.error(errHandler.invalidFileErrorHandler());
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.invalidFileErrorHandler());
-      }
-      if (!req.body.email)
-        return res
-          .status(Constants.er_failure)
-          .json(errHandler.validEmailNotFoundErrorHandler());
-      const email = req.body.email;
-      req.session.fileName = req.file.originalname;
-      FileConversion(req, res, email);
-      logger.info({
-        message: "File successfully uploaded",
-      });
-      return res.status(Constants.success).json({
-        message: "File successfully uploaded"
-      });
+  upload(req, res, (err) => {
+    if (
+      err ||
+      !req.file ||
+      !req.file.mimetype ==
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ) {
+      logger.error(errHandler.invalidFileErrorHandler());
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.invalidFileErrorHandler());
+    }
+    if (!req.body.email)
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.validEmailNotFoundErrorHandler());
+    const email = req.body.email;
+    req.session.fileName = req.file.originalname;
+    FileConversion(req, res, email);
+    logger.info({
+      message: "File successfully uploaded",
     });
-  } else {
-    return res
-      .status(Constants.er_authorization_failed)
-      .json(errHandler.unauthorizedErrorHandler());
-  }
+    return res.status(Constants.success).json({
+      message: "File successfully uploaded",
+    });
+  });
 };
 
 const UploadLogFiles = async function (req, res) {
   upload(req, res, (err) => {
-    if (err) {
+    if (err ||
+      !req.file ||
+      !req.file.mimetype == ("application/zip" || "text/plain" ||
+        "application/x-gzip")
+    ) {
       logger.error(errHandler.invalidFileErrorHandler());
       return res
         .status(Constants.er_failure)
@@ -75,10 +82,10 @@ const UploadLogFiles = async function (req, res) {
       message: "File successfully uploaded",
     });
     return res
+      .status(Constants.success)
       .json({
         message: "File successfully uploaded",
-      })
-      .status(Constants.success);
+      });
   });
 };
 

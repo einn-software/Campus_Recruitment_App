@@ -11,11 +11,11 @@ async function fetchNegativeMarks(req, res) {
       _id: req.body.question_paper_id,
     },
     (err, result) => {
-      if (err || !result)
+      if (err || !result) {
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler());
-      else {
+      } else {
         negative_marks = result.negative_marking_ratio;
         return negative_marks;
       }
@@ -42,11 +42,11 @@ async function callStudentResponseList(req, res) {
       ],
     },
     (err, responseSheet) => {
-      if (err || !responseSheet)
+      if (err || !responseSheet) {
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler());
-      else {
+      } else {
         const sheet = responseSheet;
         return sheet;
       }
@@ -61,10 +61,11 @@ async function fetchAnswerByQuestionId(req, res, id) {
       _id: id,
     },
     (err, result) => {
-      if (err || !result)
+      if (err || !result) {
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler());
+      }
       ans = result.answer;
       return ans;
     }
@@ -89,11 +90,11 @@ async function totalAttemptQuestions(req, res) {
       },
     ],
   }).countDocuments((err, length) => {
-    if (err || !length)
+    if (err || !length) {
       return res
         .status(Constants.er_not_found)
         .json(errHandler.idNotFoundErrorHandler());
-    else {
+    } else {
       return length;
     }
   });

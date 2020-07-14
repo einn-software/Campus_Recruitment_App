@@ -8,9 +8,6 @@ const {
 const {
     SaveResult
 } = require("./resultController");
-const {
-    response
-} = require("express");
 
 const FinalSubmissionPost = (async (req, res) => {
     //LETS VALIDATE THE DATA BEFORE WE ADD A response

@@ -81,7 +81,6 @@ module.exports = {
   correct_attempt_min_length: 0,
   correct_attempt_max_length: 2000,
 
-  total_marks_scored_min_length: 0,
   total_marks_scored_max_length: 2000,
 
   question_min_length: 4,

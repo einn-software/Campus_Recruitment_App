@@ -45,7 +45,7 @@ const AnswerSheetAdd = async (req, res) => {
   try {
     await answerSet.save();
     const answer = await AnswerSheet.findOne({
-      question_id: req.body.question_id
+      _id: answerSet._id
     }, {
       "marks_rewarded": 0
     })

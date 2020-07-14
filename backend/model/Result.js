@@ -41,7 +41,6 @@ const resultSchema = new mongoose.Schema({
   },
   total_marks_scored: {
     type: Number,
-    min: Constants.total_marks_scored_min_length,
     max: Constants.total_marks_scored_max_length
   }
 });

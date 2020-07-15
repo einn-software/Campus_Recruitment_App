@@ -9,25 +9,22 @@ const logger = require("../config/logger");
 const {
   studentRegisterValidation
 } = require("../config/validation");
+
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (
       req.route.path == "/upload/android-logs" &&
-      (file.mimetype == "text/plain" || file.mimetype == "application/zip" || file.mimetype == "application/x-gzip")
+      (file.mimetype == "multipart/form-data")
     ) {
-      logger.info(file)
       return cb(null, "./androidLogs");
     }
     if (
       req.route.path == "/upload" &&
-      (file.mimetype ==
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      )) {
+      (file.mimetype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.mimetype == "application/vnd.ms-excel")) {
       logger.info(file)
       return cb(null, "./uploads");
     } else {
-      logger.info(file)
       return cb("Provide a valid file");
     }
   },
@@ -42,12 +39,7 @@ const upload = multer({
 
 const UploadFiles = async function (req, res) {
   upload(req, res, (err) => {
-    if (
-      err ||
-      !req.file ||
-      !req.file.mimetype ==
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) {
+    if (err || !req.file) {
       logger.error(errHandler.invalidFileErrorHandler());
       return res
         .status(Constants.er_failure)
@@ -63,18 +55,17 @@ const UploadFiles = async function (req, res) {
     logger.info({
       message: "File successfully uploaded",
     });
-    return res.status(Constants.success).json({
-      message: "File successfully uploaded",
-    });
+    return res
+      .status(Constants.success)
+      .json("File successfully uploaded");
   });
 };
 
 const UploadLogFiles = async function (req, res) {
   upload(req, res, (err) => {
-    if (err ||
-      !req.file ||
-      !req.file.mimetype == ("application/zip" || "text/plain" ||
-        "application/x-gzip")
+    if (
+      err ||
+      !req.file
     ) {
       logger.error(errHandler.invalidFileErrorHandler());
       return res
@@ -84,11 +75,7 @@ const UploadLogFiles = async function (req, res) {
     logger.info({
       message: "File successfully uploaded",
     });
-    return res
-      .status(Constants.success)
-      .json({
-        message: "File successfully uploaded",
-      });
+    return res.status(Constants.success).json("File successfully uploaded");
   });
 };
 

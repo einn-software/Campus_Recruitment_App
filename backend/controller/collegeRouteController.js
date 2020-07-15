@@ -16,7 +16,7 @@ function randomCodeGenerate() {
 }
 
 // to add a college
-const CollegeAdd = (async function (req, res) {
+const CollegeAdd = (async function(req, res) {
     if (req.session.user_type == Constants.admin) {
         //LETS VALIDATE THE DATA BEFORE WE ADD A college
         const {
@@ -61,7 +61,7 @@ const CollegeAdd = (async function (req, res) {
 });
 
 //To Get all the colleges data
-const CollegeGet = function (req, res) {
+const CollegeGet = function(req, res) {
     College.find({}, (err, results) => {
         if (err) {
             logger.log("error", "Function College.find({})", errHandler.errorHandler(err))
@@ -78,14 +78,14 @@ const CollegeGet = function (req, res) {
 
 
 // To get single college data using id
-const CollegeGetByCode = function (req, res) {
+const CollegeGetByCode = function(req, res) {
     if (req.session.user_type == Constants.admin || Constants.tpo || Constants.student) {
         College.findOne({
                 code: req.params.code,
             },
             (err, results) => {
                 if (err || !results) {
-                    logger.log("error", `Function College.fineOne({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
+                    logger.log("error", `Function College.findOne({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
                     return res.status(Constants.er_not_found).json(errHandler.codeNotFoundErrorHandler());
                 }
                 logger.info(results);
@@ -102,7 +102,7 @@ const CollegeGetByCode = function (req, res) {
 
 //To change or update the college's data by using their id
 const CollegePut =
-    (function (req, res) {
+    (function(req, res) {
         if (req.session.user_type == Constants.admin || Constants.tpo) {
             const body = req.body;
             //VALIDATE THE DATA BEFORE WE MAKE A College
@@ -120,13 +120,14 @@ const CollegePut =
                     new: true
                 }, (err, result) => {
                     if (err) {
-                        logger.log("error", `Function College.fineOneAndUpdate({code: ${req.params.code}, with body ${body}})`, errHandler.errorHandler(err));
+                        logger.log("error", `Function College.findOneAndUpdate({code: ${req.params.code}, with body ${body}})`, errHandler.errorHandler(err));
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
                     }
                     if (!result) {
-                        logger.log("error", `Function College.fineOneAndUpdate({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
+                        logger.log("error", `Function College.findOneAndUpdate({code: ${req.params.code}})`, errHandler.codeNotFoundErrorHandler());
                         return res.status(Constants.er_failure).json(errHandler.codeNotFoundErrorHandler());
                     }
+                    logger.info(result)
                     return res.status(Constants.success).json(result);
                 })
         } else {
@@ -140,18 +141,18 @@ const CollegePut =
 
 //To delete the college's data by using their id
 const CollegeDelete =
-    (function (req, res) {
+    (function(req, res) {
         if (req.session.user_type == Constants.admin) {
             College.findByIdAndRemove({
                     _id: req.params.id,
                 },
                 (err, results) => {
                     if (err) {
-                        logger.log("error", `Function College.fineByIdAndRemove({_d: ${req.params.id}})`, errHandler.errorHandler(err));
+                        logger.log("error", `Function College.findByIdAndRemove({_d: ${req.params.id}})`, errHandler.errorHandler(err));
                         return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
                     }
                     if (!results) {
-                        logger.log("error", `Function College.fineByIdAndRemove({_d: ${req.params.id}})`, errHandler.idNotFoundErrorHandler());
+                        logger.log("error", `Function College.findByIdAndRemove({_d: ${req.params.id}})`, errHandler.idNotFoundErrorHandler());
                         return res
                             .status(Constants.er_not_found)
                             .json(errHandler.idNotFoundErrorHandler());

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
@@ -33,6 +32,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     private lateinit var presenter: TPODashboardContract.DataUploadPresenter
     private val TAG = "Data Upload"
     private var selectedFIleUri: Uri? = null
+    private var mimeType: String? = null
     private var file: File? = null
     private lateinit var progressBar: ProgressBar
 
@@ -51,6 +51,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
 
         selectFileText.setOnClickListener{
             HyperLog.d(TAG, "onClick : selectFileText")
+            uploadProgressBar.progress = 0
             checkFilePermission()
             fileSelector()
         }
@@ -68,7 +69,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
 
         uploadFileButton.setOnClickListener {
             HyperLog.d(TAG, "onClick: upload button")
-            file?.let { it1 -> presenter.uploadFile(tpoEmail, it1) }
+            file?.let { it1 -> mimeType?.let { it2 -> presenter.uploadFile(tpoEmail, it1, it2) } }
         }
 
     }
@@ -84,9 +85,9 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         HyperLog.d(TAG, "fileSelector")
         Intent(Intent.ACTION_GET_CONTENT).also {
             it.type = "application/*"
-            val mimeType = arrayOf("application/vnd.ms-excel",
+            val mimeTypeList = arrayOf("application/vnd.ms-excel",
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeType)
+            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypeList)
             it.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(it, Constants.REQUEST_CODE_PICK_FILE)
         }
@@ -107,16 +108,21 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     }
 
     private fun prepareFileUpload(): File?{
+
+        mimeType = requireActivity().contentResolver.getType(selectedFIleUri!!)
         HyperLog.d(TAG , "prepareFile")
         if (selectedFIleUri == null){
+            HyperLog.e(TAG, "URi: $selectedFIleUri")
             layoutDataUpload.snackBar("Select an Excel File First")
             return null
         }
-        else if (requireActivity().contentResolver.getType(selectedFIleUri!!) !in
+        else if ( mimeType !in
             listOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "application/vnd.ms-excel")){
+            HyperLog.e(TAG, "MIME type: $mimeType")
             return null
         }
+
         val parcelFileDescriptor =
                 requireActivity().contentResolver.openFileDescriptor(selectedFIleUri!!, "r", null)
                         ?: return null
@@ -136,16 +142,12 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
 
     private fun checkFilePermission(){
         HyperLog.d(TAG, "checkFilePermission():")
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-            var permissionCheck: Int = requireActivity().checkSelfPermission(permission.READ_EXTERNAL_STORAGE)
-            permissionCheck += requireActivity().checkSelfPermission(permission.WRITE_EXTERNAL_STORAGE)
-            if (permissionCheck != 0){
-                requireActivity().requestPermissions(arrayOf(permission.READ_EXTERNAL_STORAGE,
-                        permission.WRITE_EXTERNAL_STORAGE),Constants.PERMISSION_CODE)}
-        }
-        else{
-            HyperLog.d(TAG, "checkFilePermission(): No Need to Check Permission")
-        }
+        var permissionCheck: Int = requireActivity().checkSelfPermission(permission.READ_EXTERNAL_STORAGE)
+        permissionCheck += requireActivity().checkSelfPermission(permission.WRITE_EXTERNAL_STORAGE)
+        if (permissionCheck != 0){
+            requireActivity().requestPermissions(arrayOf(permission.READ_EXTERNAL_STORAGE,
+                    permission.WRITE_EXTERNAL_STORAGE),Constants.PERMISSION_CODE)}
+
     }
 
     companion object {

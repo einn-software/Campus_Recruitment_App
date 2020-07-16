@@ -8,4 +8,6 @@ interface ISessionManager {
     fun getUserId(): String?
     fun getUserType(): String?
     fun saveUserSession(session: AuthResponse)
+    fun savePauseTime(timeInMil: Long)
+    fun getPauseTime(): Long
 }

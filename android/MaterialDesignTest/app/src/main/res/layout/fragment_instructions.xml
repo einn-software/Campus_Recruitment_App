@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/instructionsFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,16 +26,13 @@
         android:id="@+id/agreeToGuidelinesCheck"
         android:layout_width="363dp"
         android:layout_height="29dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/colorAccent"
         android:text="@string/agreement_text"
         app:layout_constraintBottom_toTopOf="@+id/startTestButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelinesText"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/startTestButton"
@@ -58,16 +55,19 @@
     <TextView
         android:id="@+id/guidelinesText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/colorAccent2"
         android:gravity="top"
         android:padding="10dp"
+        android:scrollbarStyle="outsideInset"
         android:scrollbars="vertical"
         android:singleLine="false"
         android:text="@string/guidelines_text"
+        app:layout_constraintBottom_toTopOf="@+id/agreeToGuidelinesCheck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

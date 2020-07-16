@@ -1,16 +1,15 @@
 package com.testexample.materialdesigntest.ui.login
 
+import `in`.galaxyofandroid.spinerdialog.SpinnerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.hypertrack.hyperlog.HyperLog
-
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
 import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
@@ -20,23 +19,31 @@ import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthentica
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_student_login.*
 
-/**
- * A simple [Fragment] subclass for student login
- */
 class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.View {
 
     private val TAG = "StudentLogin"
     private lateinit var presenter: LoginContract.Presenter
     private lateinit var progressBar: ProgressBar
     private var collegeCode: Int = 0
+    private lateinit var spinnerDialog: SpinnerDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         HyperLog.d(TAG, "<< onViewCreated")
 
+        searchableSpinnerForCollege.isEnabled = false
         presenter = LoginPresenter(this)
         progressBar = ProgressBar(requireActivity())
         presenter.generateCollegeList()
+
+        searchableSpinnerForCollege.setOnClickListener {
+            Log.d(TAG, "${SystemClock.elapsedRealtime()}t")
+            searchableSpinnerForCollege.isEnabled = false
+            Handler().postDelayed({
+                searchableSpinnerForCollege.isEnabled = true
+            }, 1000)
+            spinnerDialog.showSpinerDialog()
+        }
 
         studentLoginButton.setOnClickListener {
             presenter
@@ -103,42 +110,32 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
         HyperLog.d(TAG, ">> showLoading")
     }
 
+
     override fun loadSpinner(collegeList: List<CollegeResponse>) {
+        searchableSpinnerForCollege.isEnabled = true
         HyperLog.d(TAG, "<< loadSpinner")
         val collegeNameList = getCollegeNameList(collegeList)
-        searchableSpinnerForCollege.adapter = ArrayAdapter(requireActivity(),
-                android.R.layout.simple_spinner_item, collegeNameList)
 
-        //set code
-        searchableSpinnerForCollege.onItemSelectedListener = (object : AdapterView
-        .OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText(activity, "Please Select Your College...", Toast.LENGTH_SHORT).show()
-            }
+        spinnerDialog = SpinnerDialog(requireActivity(), collegeNameList,
+            "Select Your College", R.style.MyDialogAnimationTheme)
 
-            override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-            ) {
-                collegeCode = collegeList[position].collegeCode
-                HyperLog.d("Student Login", "code is $collegeCode")
-            }
-
-        })
+        spinnerDialog.bindOnSpinerListener { item, position ->
+            collegeCode = collegeList[position].collegeCode
+            HyperLog.d("Student Login", "code is $collegeCode")
+            searchableSpinnerForCollege.text = item
+        }
         HyperLog.d(TAG, ">> loadSpinner")
     }
 
-    private fun getCollegeNameList(collegeList: List<CollegeResponse>): List<String> {
-        HyperLog.d(TAG, "<< loadSpinner")
+    private fun getCollegeNameList(collegeList: List<CollegeResponse>): ArrayList<String> {
+        HyperLog.d(TAG, "<< getCollegeNameList")
         val result = ArrayList<String>()
 
         for (college in collegeList) {
             result.add(college.collegeName!! + ", " + college.collegeCode.toString())
         }
 
-        HyperLog.d(TAG, ">> loadSpinner")
+        HyperLog.d(TAG, ">> getCollegeNameList")
         return result
     }
 

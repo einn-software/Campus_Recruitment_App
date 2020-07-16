@@ -34,7 +34,7 @@ interface TPODashboardContract {
     }
 
     interface DataUploadPresenter : BaseContract.BasePresenter {
-        fun uploadFile(tpoEmail: String, file: File)
+        fun uploadFile(tpoEmail: String, file: File, mimeType: String)
         fun verifyFile(file: File?): Boolean
     }
 

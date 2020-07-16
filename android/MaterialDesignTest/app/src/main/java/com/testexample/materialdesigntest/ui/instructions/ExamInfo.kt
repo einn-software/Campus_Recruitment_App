@@ -12,6 +12,7 @@ import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.login.LoginActivity
+import com.testexample.materialdesigntest.ui.result.ResultActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_exam_info.*
 import java.util.*
@@ -24,7 +25,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
     val TAG = "ExamInfo"
     private  var student: Student? = null
     private  var questionPaper: QuestionPaper? = null
-    
+    override var resultAvailable: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +47,19 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 })
                 requireActivity().finish()
+            }
+            else if (resultAvailable){
+                Log.d(TAG, "<< openNextActivity")
+                startActivity(Intent(requireContext(), ResultActivity::class.java)
+                    .apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        putExtra(Constants.CODE, questionPaper?.collegeCode)
+                        putExtra(Constants.ROLL, student?.studentRollNo)
+                        putExtra(Constants.QUESTION_PAPER_ID, questionPaper?.questionPaperId)
+                    })
+                requireActivity().finish()
+                Log.d(TAG, ">> openNextActivity")
             }
             else
                 openNextFragment(this.questionPaper!!, presenter.student)

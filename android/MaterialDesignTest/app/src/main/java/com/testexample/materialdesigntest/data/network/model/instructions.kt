@@ -26,3 +26,4 @@ data class EndExamRequest(
 data class EndExamResponse(
     @SerializedName("message")val message: String
 )
+

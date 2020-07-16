@@ -134,7 +134,7 @@ class UserRemoteRepositoryTest {
                             println(err)
                         })
 
-        assertEquals("704 Roll no. or code not found, Please register yourself", err)
+        assertEquals("Roll no. or code not found, Please register yourself", err)
 
     }
 
@@ -150,7 +150,7 @@ class UserRemoteRepositoryTest {
                         { println("success") },
                         { err = it.localizedMessage!! })
 
-        assertEquals("701 Invalid password, please try again", err)
+        assertEquals("Invalid password, please try again", err)
 
     }
 
@@ -170,7 +170,7 @@ class UserRemoteRepositoryTest {
                             println(it.message)
                         })
 
-        assertEquals("700 \"roll\" is not allowed to be empty", err)
+        assertEquals("\"roll\" is not allowed to be empty", err)
 
     }
 
@@ -186,7 +186,7 @@ class UserRemoteRepositoryTest {
                         { println("success") },
                         { err = it.localizedMessage!! })
 
-        assertEquals("700 \"password\" is not allowed to be empty", err)
+        assertEquals("\"password\" is not allowed to be empty", err)
 
     }
 
@@ -201,7 +201,7 @@ class UserRemoteRepositoryTest {
                         { println("success") },
                         { err = it.localizedMessage!! })
 
-        assertEquals("700 \"roll\" is not allowed to be empty", err)
+        assertEquals("\"roll\" is not allowed to be empty", err)
 
     }
 
@@ -256,7 +256,7 @@ class UserRemoteRepositoryTest {
                         { println("success") },
                         { err = it.localizedMessage!! })
 
-        assertEquals("704 Email not found, Please register yourself", err)
+        assertEquals("Email not found, Please register yourself", err)
     }
 
     @Test
@@ -269,7 +269,7 @@ class UserRemoteRepositoryTest {
                 { println("success") },
                 { err = it.localizedMessage!! })
 
-        assertEquals("701 Invalid password, please try again", err)
+        assertEquals("Invalid password, please try again", err)
     }
 
     @Test
@@ -282,7 +282,7 @@ class UserRemoteRepositoryTest {
                 { println("success") },
                 { err = it.localizedMessage!! })
 
-        assertEquals("700 \"email\" is not allowed to be empty", err)
+        assertEquals("\"email\" is not allowed to be empty", err)
     }
 
     @Test
@@ -295,7 +295,7 @@ class UserRemoteRepositoryTest {
                 { println("success") },
                 { err = it.localizedMessage!! })
 
-        assertEquals("700 \"email\" is not allowed to be empty", err)
+        assertEquals("\"email\" is not allowed to be empty", err)
     }
 
 }

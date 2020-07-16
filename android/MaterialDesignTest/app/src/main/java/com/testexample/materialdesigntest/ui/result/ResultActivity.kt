@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.data.network.model.AuthResponse
+import com.testexample.materialdesigntest.data.session.SessionManager
+import com.testexample.materialdesigntest.ui.login.LoginActivity
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -15,7 +18,7 @@ class ResultActivity : AppCompatActivity() {
 
     private var exit: Boolean = false
     val TAG = "Result Activity"
-    private lateinit var presenter: ResultsContract.Presenter
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HyperLog.d(TAG, "<< onCreate")
@@ -28,6 +31,7 @@ class ResultActivity : AppCompatActivity() {
         val code = bundle?.getInt(Constants.CODE)
         val roll = bundle?.getString(Constants.ROLL)
         val questionPaperId = bundle?.getString(Constants.QUESTION_PAPER_ID)
+        sessionManager = SessionManager(this)
 
         val resultInfo = ResultsFragment.newInstance(code, roll, questionPaperId)
         supportFragmentManager
@@ -47,14 +51,16 @@ class ResultActivity : AppCompatActivity() {
         }
         else {
             if (exit) {
-                val i = Intent(Intent.ACTION_MAIN).apply {
-                    addCategory(Intent.CATEGORY_HOME)
+                sessionManager.saveUserSession(AuthResponse(null, null, null, null))
+                val i = Intent(this, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 }
                 startActivity(i)
+                finish()
             } else {
                 Toast.makeText(
-                    this, "Press Back again to Exit.",
+                    this, "Press Back again to Logout.",
                     Toast.LENGTH_SHORT
                 ).show()
                 exit = true

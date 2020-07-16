@@ -20,12 +20,15 @@ interface InstructionsContract {
         fun showExamInfo(questionPaper: QuestionPaper?)
         fun showLoading(flag: Boolean)
         fun openNextFragment(questionPaper: QuestionPaper, student: Student)
+        var resultAvailable: Boolean
+
     }
 
     interface ExamInfoPresenter: BaseContract.BasePresenter{
         var  student: Student
         fun fetchExamInfo(request: FetchExamRequest)
         fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int)
+        fun fetchExamResult(code: Int, roll: String, question_paper_id: String)
 
     }
 }

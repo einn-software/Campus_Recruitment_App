@@ -37,11 +37,11 @@
 
     <EditText
         android:id="@+id/rollNoText"
+        style="@android:style/Widget.Material.Light.AutoCompleteTextView"
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:autofillHints=""
-        android:background="@color/colorAccent2"
         android:ems="10"
         android:hint="@string/roll_no_hint"
         android:inputType="textPersonName"
@@ -50,18 +50,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchableSpinnerForCollege" />
 
-    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+    <TextView
         android:id="@+id/searchableSpinnerForCollege"
         android:layout_width="340dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorAccent2"
-        android:spinnerMode="dropdown"
-        app:hintText="Please Select Your College..."
+        style="@android:style/Widget.Material.Light.Spinner"
+        android:hint="Please Select Your College..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentLoginText" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/studentPasswordTextLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rollNoText"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/studentPasswordText"
+            style="@android:style/Widget.Material.Light.AutoCompleteTextView"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/studentLoginButton"
@@ -79,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentPasswordText" />
+        app:layout_constraintTop_toBottomOf="@+id/studentPasswordTextLayout" />
 
     <TextView
         android:id="@+id/registrationLink"
@@ -110,19 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgotPasswordLink" />
 
-    <EditText
-        android:id="@+id/studentPasswordText"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/colorAccent2"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rollNoText" />
+
 
     <TextView
         android:id="@+id/forgotPasswordLink"
@@ -139,4 +148,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentLoginButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

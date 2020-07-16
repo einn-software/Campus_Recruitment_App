@@ -75,5 +75,7 @@
     <string name="join_test">Join Test</string>
     <string name="tpo_login">TPO Login</string>
     <string name="exit_test_button_cd">Exit Test Button</string>
+    <string name="note_at_result">You will be Notified through Email for Further Process</string>
+    <string name="answered">Answered</string>
 
 </resources>

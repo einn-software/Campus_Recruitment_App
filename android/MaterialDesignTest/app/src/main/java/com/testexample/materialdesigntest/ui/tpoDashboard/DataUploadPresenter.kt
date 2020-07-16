@@ -26,10 +26,13 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     private var subscriptions = CompositeDisposable()
     private val sessionManager = SessionManager(view!!.setContext())
 
-    override fun uploadFile(tpoEmail: String, file: File) {
+    override fun uploadFile(tpoEmail: String, file: File, mimeType: String) {
 
-        val requestFile = UploadRequestBody(file,"application", this)
+        Log.i(TAG, "uploadFile($tpoEmail, $file, $mimeType)")
+        view!!.showProgressBar(true)
+        val requestFile = UploadRequestBody(file, mimeType, this)
         val details : RequestBody = RequestBody.create(MediaType.parse("text/plain"), tpoEmail)
+
         val parts = MultipartBody.Part.createFormData("file",
                 file.name, requestFile)
         HyperLog.d(TAG,"${sessionManager.getUserAuthToken()}")
@@ -40,10 +43,12 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                             {success ->
                                 HyperLog.d(TAG, "Successfully Uploaded File")
+                                view!!.showProgressBar(false)
                                 view!!.showMessage(success)
                             },
                             {error ->
-                                HyperLog.d(TAG, "Failed to Uploaded File with error ${error.localizedMessage}")
+                               HyperLog.d(TAG, "Failed to Uploaded File with error ${error.localizedMessage}")
+                                view!!.showProgressBar(false)                    
                                 view!!.showMessage("Upload Failed Due to ${error.localizedMessage}")
                             })
         )
@@ -84,6 +89,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                             return false
                         }
                     }
+                    view!!.updateProgressBar(((rowNum*100)/sheet.physicalNumberOfRows))
                 }
             }
         }
@@ -151,7 +157,6 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     }
 
     override fun onProgressUpdate(percentage: Int) {
-        view!!.updateProgressBar(percentage)
-
+        Log.i(TAG, "Percentage : $percentage")
     }
 }

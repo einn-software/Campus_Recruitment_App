@@ -36,6 +36,7 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
                 ).show()
             }
             else -> {
+                Log.d(TAG, "forgotPassword at $email")
                 view?.let {
                     subscriptions.add(userRepository
                         .forgotPassword(email, userType)

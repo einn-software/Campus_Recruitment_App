@@ -53,7 +53,8 @@ class ResultRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values", response.studentRollNo.isBlank() && response.studentName.isNullOrBlank() && response.questionAttended < 0 && response.correctAttempted < 0)
+            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values",
+                response.studentRollNo.isBlank() && response.studentName.isNullOrBlank() && response.questionAttended < 0 && response.correctAttempted < 0)
         } else {
             fail("callApiForStudentResultList_withValidTokenCodeRollQuesId(): Verification failed with message: $failure")
         }
@@ -76,7 +77,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResultList_withInvalidTokenAsSpace(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResultList_withInvalidTokenAsSpace(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResultList_withInvalidTokenAsSpace(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -136,7 +137,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResultList_withInvalidTokenNQuesIdNCode(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResultList_withInvalidTokenNQuesIdNCode(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResultList_withInvalidTokenNQuesIdNCode(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -156,7 +157,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResultList_withInvalidCode(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResultList_withInvalidCode(): Verification Failed as received $failure", "704 Please provide a valid id or code", failure)
+            assertEquals("callApiForStudentResultList_withInvalidCode(): Verification Failed as received $failure", "Please provide a valid id or code", failure)
         }
     }
 
@@ -177,7 +178,7 @@ class ResultRemoteRepoTest {
             fail("callApiForStudentResultList_withInvalidCodeNQuesId(): Verification Failed! as received Result")
         } else {//Testing ResultRemoteRepo : callApiForStudentResultList_withInvalidCodeNQuesId(): 700 Cast to ObjectId failed for value "5ee20f9d6d28624f1c6470a888888" at path "question_paper_id" for model "Result"
 
-            assertEquals("callApiForStudentResultList_withInvalidCodeNQuesId(): Verification Failed as received $failure", "704 Please provide a valid id or code", failure)
+            assertEquals("callApiForStudentResultList_withInvalidCodeNQuesId(): Verification Failed as received $failure", "Please provide a valid id or code", failure)
         }
     }
 
@@ -198,7 +199,7 @@ class ResultRemoteRepoTest {
             fail("callApiForStudentResultList_withInvalidQuesId(): Verification Failed! as received Result")
         } else {
 
-            assertEquals("callApiForStudentResultList_withInvalidQuesId(): Verification Failed as received $failure", "704 Please provide a valid id or code", failure)
+            assertEquals("callApiForStudentResultList_withInvalidQuesId(): Verification Failed as received $failure", "Please provide a valid id or code", failure)
         }
     }
 
@@ -218,7 +219,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResultList_withSpecQuesId(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResultList_withSpecQuesId(): Verification Failed as received $failure", "704 Please provide a valid id or code", failure)
+            assertEquals("callApiForStudentResultList_withSpecQuesId(): Verification Failed as received $failure", "Please provide a valid id or code", failure)
         }
     }
 
@@ -241,7 +242,8 @@ class ResultRemoteRepoTest {
                         })
 
         if (failure.isBlank()) {
-            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values", response.studentRollNo.isBlank() && response.studentName.isBlank()  && response.questionPaperId.isBlank() && response.noOfQuestionsAttempted < 0 && response.noOfQuestionsCorrect < 0)
+            assertFalse("callApiForStudentResult_withValidParams(): Received Invalid Result values",
+                response.studentRollNo.isBlank() && response.studentName.isBlank()  && response.questionPaperId.isBlank() && response.noOfQuestionsAttempted < 0 && response.noOfQuestionsCorrect < 0)
         } else {
             fail("callApiForStudentResult_withInvalidParams(): Verification Failed! as not received Result")
         }
@@ -264,7 +266,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidTokenAsSpace(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidTokenAsSpace(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResult_withInvalidTokenAsSpace(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -285,7 +287,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidTokenNQuesId(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidTokenNQuesId(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResult_withInvalidTokenNQuesId(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -306,7 +308,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidTokenNQuesIdNCode(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidTokenNQuesIdNCode(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResult_withInvalidTokenNQuesIdNCode(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -327,7 +329,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidParams(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidParams(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForStudentResult_withInvalidParams(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -348,7 +350,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidCode(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidCode(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withInvalidCode(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -368,7 +370,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidCodeNQuesId(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidCodeNQuesId(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withInvalidCodeNQuesId(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -389,8 +391,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withInvalidQuesId(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withInvalidQuesId(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
-        }
+            assertEquals("callApiForStudentResult_withInvalidQuesId(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure) }
     }
 
     @Test
@@ -410,7 +411,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withSpecQuesId(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withSpecQuesId(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withSpecQuesId(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -431,7 +432,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withSpecRoll(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -452,7 +453,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withSpecRoll(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -473,7 +474,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withSpecRoll(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 
@@ -494,7 +495,7 @@ class ResultRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForStudentResult_withSpecRoll(): Verification Failed! as received Result")
         } else {
-            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "704 Please provide a valid code/id/roll no", failure)
+            assertEquals("callApiForStudentResult_withSpecRoll(): Verification Failed as received $failure", "Please provide a valid code/id/roll no", failure)
         }
     }
 }

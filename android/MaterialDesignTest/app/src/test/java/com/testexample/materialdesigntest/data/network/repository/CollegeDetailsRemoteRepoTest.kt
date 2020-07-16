@@ -7,10 +7,9 @@ import com.testexample.materialdesigntest.data.network.model.TpoLoginRequest
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class CollegeDetailsRemoteRepoTest {
 
@@ -74,7 +73,7 @@ class CollegeDetailsRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForGetCollegeDetails_withInvalidToken(): Verification Failed! as received College Details")
         } else {
-            assertEquals("callApiForGetCollegeDetails_withInvalidToken(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForGetCollegeDetails_withInvalidToken(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -95,7 +94,7 @@ class CollegeDetailsRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForGetCollegeDetails_withInvalidCode(): Verification Failed! as received College Details")
         } else {
-            assertEquals("callApiForGetCollegeDetails_withInvalidCode(): Verification Failed as received $failure", "704 Please provide a valid code", failure)
+            assertEquals("callApiForGetCollegeDetails_withInvalidCode(): Verification Failed as received $failure", "Please provide a valid code", failure)
         }
     }
 
@@ -302,7 +301,7 @@ class CollegeDetailsRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForUpdateCollegeDetails_withInvalidToken(): Verification Failed! as received College Details after updation")
         } else {
-            assertEquals("callApiForUpdateCollegeDetails_withInvalidToken(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForUpdateCollegeDetails_withInvalidToken(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -327,7 +326,7 @@ class CollegeDetailsRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForUpdateCollegeDetails_withInvalidCode(): Verification Failed! as received College Details after updation")
         } else {
-            assertEquals("callApiForUpdateCollegeDetails_withInvalidCode(): Verification Failed as received $failure", "704 Please provide a valid code", failure)
+            assertEquals("callApiForUpdateCollegeDetails_withInvalidCode(): Verification Failed as received $failure", "Please provide a valid code", failure)
         }
     }
 
@@ -352,7 +351,7 @@ class CollegeDetailsRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForUpdateCollegeDetails_withInvalidEmailFormat(): Verification Failed! as received College Details after updation")
         } else {
-            assertEquals("callApiForUpdateCollegeDetails_withInvalidEmailFormat(): Verification Failed as received $failure", "700 \"email\" must be a valid email", failure)
+            assertEquals("callApiForUpdateCollegeDetails_withInvalidEmailFormat(): Verification Failed as received $failure", "\"email\" must be a valid email", failure)
         }
     }
 }

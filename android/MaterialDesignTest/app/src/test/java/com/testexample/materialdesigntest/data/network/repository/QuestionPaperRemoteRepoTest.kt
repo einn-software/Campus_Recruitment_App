@@ -6,10 +6,9 @@ import com.testexample.materialdesigntest.data.network.model.QuestionPaperListRe
 import com.testexample.materialdesigntest.data.network.model.TpoLoginRequest
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import org.junit.After
-import org.junit.Test
-
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 
 class QuestionPaperRemoteRepoTest {
 
@@ -73,7 +72,7 @@ class QuestionPaperRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForGetQuestionPaperList_withInvalidToken(): Verification Failed! as received Question Paper List")
         } else {
-            assertEquals("callApiForGetQuestionPaperList_withInvalidToken(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callApiForGetQuestionPaperList_withInvalidToken(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -94,7 +93,7 @@ class QuestionPaperRemoteRepoTest {
         if (failure.isBlank()) {
             fail("callApiForGetQuestionPaperList_withInvalidCode(): Verification Failed! as received Question Paper List")
         } else {
-            assertEquals("callApiForGetQuestionPaperList_withInvalidCode(): Verification Failed as received $failure", "704 Data of the url parameters or query is not a valid data, plese check it and try again", failure)
+            assertEquals("callApiForGetQuestionPaperList_withInvalidCode(): Verification Failed as received $failure", "Data of the url parameters or query is not a valid data, plese check it and try again", failure)
         }
     }
 }

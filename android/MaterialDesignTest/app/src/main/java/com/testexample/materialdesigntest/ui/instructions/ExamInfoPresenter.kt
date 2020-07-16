@@ -3,6 +3,7 @@ package com.testexample.materialdesigntest.ui.instructions
 import android.widget.Toast
 import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.PreExamInstructionsRepo
+import com.testexample.materialdesigntest.data.interactor.implementation.ResultRepo
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
@@ -22,6 +23,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
     val TAG = "ExamInfoPresenter"
 
     private lateinit var repository: IPreExamInstructionsRepo
+    private lateinit var resultRepo: ResultRepo
     private lateinit var studentRepo: IUserRepository
     private var subscriptions = CompositeDisposable()
     private lateinit var sessionManager: SessionManager
@@ -40,7 +42,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             { questionPaper ->
- 				                view!!.showLoading(false)
+                                fetchExamResult(questionPaper.collegeCode, student.studentRollNo, questionPaper.questionPaperId)
                                 view!!.showExamInfo(questionPaper)
                                 HyperLog.i(TAG, "Successfully fetch exam info")
                             },
@@ -83,6 +85,37 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                         )
         )
         HyperLog.d(TAG, ">> fetchCollegeCode")
+    }
+
+    override fun fetchExamResult(code: Int, roll: String, question_paper_id: String) {
+
+        Log.d(TAG, "<< fetchExamResult")
+        resultRepo = ResultRepo()
+        sessionManager = SessionManager(view!!.setContext())
+        view.let {
+            subscriptions.add(
+                resultRepo.getStudentResultFromRemoteRepo(sessionManager.getUserAuthToken()!!,
+                    code, roll, question_paper_id)
+                    .subscribeOn(Schedulers.io())
+                    .handelNetworkError()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { success ->
+                            Log.i(TAG, "Successfully Fetched Result From Remote : $success")
+                            view!!.showLoading(false)
+                            view!!.resultAvailable = true
+                            Toast.makeText(view!!.setContext(), "You have already taken this Exam!",
+                                Toast.LENGTH_LONG).show()
+                        },
+                        { error ->
+                            Log.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
+                            view!!.showLoading(false)
+                            view!!.resultAvailable = false
+                        }
+
+                    ))
+        }
+        Log.d(TAG, ">> fetchExamResult")
     }
 
     override fun onDestroy() {

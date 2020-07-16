@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.testexample.materialdesigntest.data.network.model.ErrorResponse
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.exceptions.UndeliverableException
 import java.io.IOException
 import java.net.SocketTimeoutException
 
@@ -22,7 +21,7 @@ fun <T> Single<T>.handelNetworkError() =
                     .fromJson(e.response().errorBody()?.charStream(),ErrorResponse::class.java)
                 println(responseBody)
                 return@onErrorResumeNext Single
-                    .error(Exception(responseBody.status.toString() + " " + responseBody.message))
+                    .error(Exception(responseBody.message))
             }
             is IOException ->
                 return@onErrorResumeNext Single.error(Exception("Network error"))
@@ -44,7 +43,7 @@ fun <T> Flowable<T>.handelNetworkError() =
                     .fromJson(e.response().errorBody()?.charStream(),ErrorResponse::class.java)
                 println(responseBody)
                 return@onErrorResumeNext Flowable
-                    .error(Exception(responseBody.status.toString() + " " + responseBody.message))
+                    .error(Exception(responseBody.message))
             }
             is IOException ->
                 return@onErrorResumeNext Flowable.error(Exception("Network error"))

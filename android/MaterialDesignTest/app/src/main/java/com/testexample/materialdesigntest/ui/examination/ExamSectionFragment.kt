@@ -19,6 +19,7 @@ import com.testexample.materialdesigntest.data.model.Section
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerRequest
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponse
+import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.Answer
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.fragment_exam.*
@@ -34,6 +35,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     private lateinit var section: Section
     private lateinit var studentCredential: EndExamRequest
     private lateinit var presenter: ExaminationContract.FragmentPresenter
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HyperLog.d(TAG, "<< onCreate")
@@ -42,6 +44,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             section = it.getParcelable(SECTION)!!
             studentCredential = it.getParcelable(CREDENTIALS)!!
         }
+        progressBar = ProgressBar(requireActivity())
         HyperLog.d(TAG, ">> onCreate")
     }
 
@@ -51,6 +54,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         super.onViewCreated(view, savedInstanceState)
         setPresenter(ExaminationSectionPresenter(this))
         presenter.loadAnswerSheet(studentCredential)
+        progressBar.startLoading()
 
         for ((index, question) in section.questionsList.withIndex()) {
             HyperLog.d(TAG, "setTag")
@@ -92,6 +96,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                     section
                             .questionsList[0]
                             .marks)
+            progressBar.stopLoading()
             HyperLog.d(TAG, "default tag called")
         }
 
@@ -111,12 +116,20 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         }
 
         exitTestButton.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
+            val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .apply {
-                        setMessage(getString(R.string.end_test_message))
+                        val markedQuestionsCount = presenter.Q_A_Mapping.values.filter { it.state == 5 }.count()
+                        if ( markedQuestionsCount > 0 ){
+                            setMessage("You have $markedQuestionsCount Questions Left for Review! " +
+                                    "\n\n" + getString(R.string.end_test_message))
+                        }
+                        else
+                            setMessage("You have ${timerText.text} Minutes left! \n\n" +
+                                    getString(R.string.end_test_message))
                         setCancelable(true)
                         setNegativeButton("Yes") { dialog, _ ->
                             (activity as ExamDrawer).countDownStart(false)
+
                             dialog!!.cancel()
                         }
                         setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }
@@ -225,6 +238,8 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         setTabFlag(state)
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
+        else
+            requireActivity().onBackPressed()
         HyperLog.d(TAG, ">> nextTab()")
     }
 

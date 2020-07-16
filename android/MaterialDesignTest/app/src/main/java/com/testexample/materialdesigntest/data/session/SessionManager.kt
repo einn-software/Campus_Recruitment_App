@@ -17,17 +17,34 @@ class SessionManager(context: Context) : ISessionManager {
         const val USER_ID = "user_id"
         const val USER_TYPE = "user_type"
         const val USER_TOKEN = "user_token"
+        const val TIME_LEFT_AFTER_PAUSE = "time_left_after_pause"
     }
 
     override fun saveUserSession(session: AuthResponse) {
         HyperLog.d(TAG, "<< saveUserSession()")
-        val editor = preferences.edit()
-        editor.putString(USER_EMAIL, session.email)
-        editor.putString(USER_ID, session.id)
-        editor.putString(USER_TYPE, session.userType)
-        editor.putString(USER_TOKEN, session.token)
-        editor.apply()
+        preferences.edit().apply {
+            putString(USER_EMAIL, session.email)
+            putString(USER_ID, session.id)
+            putString(USER_TYPE, session.userType)
+            putString(USER_TOKEN, session.token)
+            apply()
+        }
         HyperLog.d(TAG, ">> saveUserSession()")
+    }
+
+    override fun savePauseTime(timeInMil: Long) {
+        Log.d(TAG, "<< savePauseTime($timeInMil)")
+        preferences.edit().apply{
+            putLong(TIME_LEFT_AFTER_PAUSE, timeInMil)
+            apply()
+        }
+        Log.d(TAG, ">> savePauseTime()")
+    }
+
+    override fun getPauseTime(): Long {
+        Log.d(TAG, "<< getPauseTime()")
+        Log.d(TAG, ">> getPauseTime()")
+        return preferences.getLong(TIME_LEFT_AFTER_PAUSE, 0)
     }
 
     override fun getUserAuthToken(): String? {

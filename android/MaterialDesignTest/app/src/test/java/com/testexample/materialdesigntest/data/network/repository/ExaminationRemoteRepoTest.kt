@@ -75,7 +75,7 @@ class ExaminationRemoteRepoTest {
                 err = it.localizedMessage!!
             }
         )
-        assertEquals("701 Invalid Token", err)
+        assertEquals("Invalid Token", err)
     }
 
 
@@ -155,7 +155,7 @@ class ExaminationRemoteRepoTest {
             },
             {err ->
                 println(err.localizedMessage)
-                if (err.localizedMessage != "700 You have already submitted the result for this exam"){
+                if (err.localizedMessage != "You have already submitted the result for this exam"){
                     output.test().assertNoErrors()
                 }
             }

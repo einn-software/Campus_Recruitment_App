@@ -7,7 +7,7 @@ class Constants {
         internal const val API_KEY = ""
         internal const val APP_DB_NAME = ""
         internal const val PREF_NAME = ""
-        internal const val NO_EXAM_FOUND = "You have no Upcoming Exams yet!, please comeback later"
+        internal const val NO_EXAM_FOUND = "You have no Upcoming Exams yet!,\n please comeback later"
         internal const val EMPTY_EMAIL_ERROR = 1001
         internal const val EMPTY_ROLL_NO_ERROR = 1001
         internal const val INVALID_EMAIL_ERROR = 1002

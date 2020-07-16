@@ -45,15 +45,15 @@ class UserRemoteRepository : IUserRemoteRepository {
     }
 
     override fun callForgotPasswordApi(email: String, userType: String): Single<String> {
-        var request : Single<String> = Single.just("")
-        when (userType) {
+        return when (userType) {
             "student" -> {
-                request = api.studentForgotPassword(email)
+                Log.d(TAG, "studentForgotPassword called")
+                api.studentForgotPassword(email)
             }
-            "tpo" -> {
-                request = api.tpoForgotPassword(email)
+            else ->{
+                Log.d(TAG, "tpoForgotPassword called")
+                api.tpoForgotPassword(email)
             }
         }
-        return request
     }
 }

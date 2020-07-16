@@ -27,7 +27,8 @@ class InstructionPresenter(private var view: InstructionsContract.View?) :
 
         view?.let {
             subscriptions.add(
-                    repository.getInstructionsFromRemoteRepo(sessionManager.getUserAuthToken()!!, instructionId)
+                    repository.getInstructionsFromRemoteRepo(sessionManager.getUserAuthToken()!!,
+                        instructionId)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .handelNetworkError()
@@ -36,8 +37,10 @@ class InstructionPresenter(private var view: InstructionsContract.View?) :
                                         HyperLog.i(TAG, "Successfully Fetch instruction")
                                         view!!.showInstructions(instructions!!)
                                     },
-                                    { error -> HyperLog.e(TAG, "Error in Fetching instruction: ${error.message.toString()}") },
-                                    { HyperLog.i(TAG, "Fetch instruction query completed") }
+                                    { error -> HyperLog.e(TAG, "Error in Fetching instruction: " +
+                                            error.message.toString()
+                                    ) },
+                                    { HyperLog.d(TAG, "Fetch instruction query completed") }
                             ))
         }
         HyperLog.d(TAG, ">> fetchInstructions")

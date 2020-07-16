@@ -7,9 +7,8 @@ import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkErr
 import junit.framework.Assert.*
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
-
 import org.junit.ClassRule
+import org.junit.Test
 
 class PreExamInstructionsRemoteRepoTest {
     companion object {
@@ -74,7 +73,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withNotExistingId(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withNotExistingId(): Verification Failed as received $failure", "704 Please provide a valid id", failure)
+            assertEquals("callInstructionsApi_withNotExistingId(): Verification Failed as received $failure", "Please provide a valid id", failure)
         }
     }
 
@@ -94,7 +93,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withSpecialCharId(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withSpecialCharId(): Verification Failed as received $failure", "704 Please provide a valid id", failure)
+            assertEquals("callInstructionsApi_withSpecialCharId(): Verification Failed as received $failure", "Please provide a valid id", failure)
         }
     }
 
@@ -114,7 +113,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withNullId(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withNullId(): Verification Failed as received $failure", "703 Unauthorized access", failure)
+            assertEquals("callInstructionsApi_withNullId(): Verification Failed as received $failure", "Unauthorized access", failure)
         }
     }
 
@@ -135,7 +134,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withSpaceAsId(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withSpaceAsId(): Verification Failed as received $failure}", "704 Please provide a valid id", failure)
+            assertEquals("callInstructionsApi_withSpaceAsId(): Verification Failed as received $failure}", "Please provide a valid id", failure)
         }
     }
 
@@ -155,7 +154,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withBlankToken(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withBlankToken(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callInstructionsApi_withBlankToken(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 
@@ -175,7 +174,7 @@ class PreExamInstructionsRemoteRepoTest {
             fail("callInstructionsApi_withInvalidTokenNId(): Verification failed as received Instructions")
         }
         else {
-            assertEquals("callInstructionsApi_withInvalidTokenNId(): Verification Failed as received $failure", "701 Access denied", failure)
+            assertEquals("callInstructionsApi_withInvalidTokenNId(): Verification Failed as received $failure", "Access denied", failure)
         }
     }
 }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
+import androidx.core.view.iterator
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -31,6 +32,7 @@ import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_exam_drawer.*
 import kotlinx.android.synthetic.main.appbar.*
 import java.util.*
+import kotlin.collections.set
 import kotlin.properties.Delegates
 
 class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatActivity(), ExaminationContract.View {
@@ -109,7 +111,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         onCreateNavigationMenu(questionPaper.sections)
         sectionNavigationView.setNavigationItemSelectedListener(this)
         //Default Page
-        onNavigationItemSelected(sectionNavigationView.menu.getItem(0).setChecked(true))
+        onNavigationItemSelected(sectionNavigationView.menu.getItem(0))
 
         HyperLog.d(TAG, ">> onCreate")
     }
@@ -122,10 +124,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         for (item in 0 until sections.count()) {
             menu.add(item, item, item, sections[item].sectionName)
         }
-
-        menu.add(100,101,1,"Marked For Review!").setIcon(R.drawable.ic_marked).isEnabled = false
-        menu.add(100,102,2,"Answered").setIcon(R.drawable.ic_checked).isEnabled = false
-
         menu.setGroupDividerEnabled(true)
 
         HyperLog.d(TAG, ">> onCreateNavigationMenu")
@@ -157,6 +155,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
             supportFragmentManager.executePendingTransactions()
             activeFragment = sectionFragments[currentItem.itemId]!!
+            for (item in sectionNavigationView.menu){
+                if (item.itemId == currentItem.itemId)
+                    item.setChecked(true).setIcon(R.drawable.ic_double_angle_pointing_to_right)
+                else
+                    item.setChecked(false).icon = null
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         countDownStart(true)

@@ -40,7 +40,7 @@ const AdminRegister = async (req, res) => {
   if (emailExist) {
     return res
       .status(Constants.er_failure)
-      .json(errHandler.emailExistErrorHandler());
+      .json(errHandler.thisEmailExistErrorHandler(req.body.email));
   }
 
   // Create a new admin
@@ -79,7 +79,7 @@ const TpoRegister = async (req, res) => {
   if (emailExist) {
     return res
       .status(Constants.er_failure)
-      .json(errHandler.emailExistErrorHandler());
+      .json(errHandler.thisEmailExistErrorHandler(req.body.email));
   }
 
   // Create a new tpo
@@ -120,7 +120,7 @@ const StudentRegister = async (req, res) => {
   if (emailExist)
     return res
       .status(Constants.er_failure)
-      .json(errHandler.emailExistErrorHandler());
+      .json(errHandler.thisEmailExistErrorHandler(req.body.email));
 
   const rollCodeExist = await Student.findOne({
     roll: req.body.roll,

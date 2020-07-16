@@ -67,7 +67,7 @@ const AnswerSheetGetById = function (req, res) {
       if (err || !results) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('student id or question-paper id'));
       }
       return res.status(Constants.success).json(results);
     }
@@ -99,7 +99,7 @@ const AnswerSheetPut = function (req, res) {
         if (!result) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('answer-sheet id'));
         } else {
           const answer = await AnswerSheet.findOne({
             _id: req.params.id
@@ -131,7 +131,7 @@ const AnswerSheetDeleteById = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('answer-sheet id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",
@@ -161,7 +161,7 @@ const AnswerSheetDeleteByStudentId = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('student id or question-paper id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",

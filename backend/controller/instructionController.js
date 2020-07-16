@@ -70,7 +70,7 @@ const InstructionGetById = (function (req, res) {
       },
       (err, results) => {
         if (err || !results) {
-          return res.status(Constants.er_not_found).json(errHandler.idNotFoundErrorHandler());
+          return res.status(Constants.er_not_found).json(errHandler.idNotFoundErrorHandler('instruction id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -107,7 +107,7 @@ const InstructionPut =
             if (!result) {
               return res
                 .status(Constants.er_not_found)
-                .json(errHandler.idNotFoundErrorHandler());
+                .json(errHandler.idNotFoundErrorHandler('instruction id'));
             } else {
               res.status(Constants.success).json(result);
             }
@@ -129,13 +129,8 @@ const InstructionDeleteAtOnce =
     if (req.session.user_type == Constants[1]) {
       Instructions.deleteMany({},
         (err, results) => {
-          if (err) {
+          if (err || !results) {
             return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
-          }
-          if (!results) {
-            return res
-              .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
           }
           return res.status(Constants.success).json({
             message: "Data deleted successfully"
@@ -164,7 +159,7 @@ const InstructionDelete =
           if (!results) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('instruction id'));
           }
           return res.status(Constants.success).json({
             message: "Data deleted successfully"

@@ -71,21 +71,10 @@ function emailNotFoundErrorHandler() {
   return err;
 }
 
-function emailExistErrorHandler() {
-  const err = {
-    status: Constants.er_failure, //400
-    message: "Already registered with this email, Please try to login",
-    error_info: "Registeration Error",
-    server_msg: "Email already exist in the database, So can't register the same user twice",
-    server_error_ref: Date.now() + randomGenerate(),
-  };
-  return err;
-}
-
 function thisEmailExistErrorHandler(email) {
   const err = {
     status: Constants.er_failure, //400
-    message: `The student (${email}) is already registered`,
+    message: `Already registered with the email ${email}, try to login`,
     error_info: "Registeration Error",
     server_msg: `${email} already exist in the database, So can't register the same user twice`,
     server_error_ref: Date.now() + randomGenerate(),
@@ -120,7 +109,7 @@ function answerExistErrorHandler() {
     status: Constants.er_failure, //400
     message: "Already answered",
     error_info: "Error in Posting data",
-    server_msg: "The question is already answerd and saved in database",
+    server_msg: "The question is already answered and saved in database",
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
@@ -181,21 +170,21 @@ function userNotFoundErrorHandler() {
   return err;
 }
 
-function idNotFoundErrorHandler() {
+function idNotFoundErrorHandler(text) {
   const err = {
     status: Constants.er_not_found, //404
-    message: "Please provide a valid id",
-    error_info: "Not Found Error, As id is not found in database",
-    server_msg: "No data present with this id, So can't get the response",
+    message: `Please provide a valid id`,
+    error_info: `Not Found Error, As id (${text}) is not found in database`,
+    server_msg: `No data present with this id (${text}), So can't get the response`,
     server_error_ref: Date.now() + randomGenerate(),
   };
   return err;
 }
 
-function invalidFileErrorHandler() {
+function invalidFileErrorHandler(fileformat) {
   const err = {
     status: Constants.er_failure,
-    message: "Please provide a valid file",
+    message: `Please provide a valid ${fileformat} file`,
     error_info: "Not Found Error",
     server_msg: "file type is not valid, So can't get the response",
     server_error_ref: Date.now() + randomGenerate(),
@@ -239,8 +228,8 @@ function codeNotFoundErrorHandler() {
 function codeRollIdNotFoundErrorHandler() {
   const err = {
     status: Constants.er_not_found, //404
-    message: "Please provide a valid code/id/roll no",
-    error_info: "Not Found Error, As code or id or roll is not found in database",
+    message: "Please provide a valid code/question-paper-id/roll no",
+    error_info: "Not Found Error, As code or question-paper id or roll is not found in database",
     server_msg: "No data present with the entered data, So can't get the response",
     server_error_ref: Date.now() + randomGenerate(),
   };
@@ -294,7 +283,7 @@ function codeRollErrorHandler() {
 function questionExistErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
-    message: "Question Already Exist,Add different Question",
+    message: "Question Already Exist, Add different Question",
     error_info: "Error, As question is already in database",
     server_msg: "question  already exist in the database, So can't add the same question twice",
     server_error_ref: Date.now() + randomGenerate(),
@@ -305,7 +294,7 @@ function questionExistErrorHandler() {
 function questionPaperExistErrorHandler() {
   const err = {
     status: Constants.er_failure, //400
-    message: "Question paper already exist,Add different question paper",
+    message: "Question paper already exist, Add different question paper",
     error_info: "Error, As question paper is already in database",
     server_msg: "question paper already exist in the database, So can't add the same question paper twice",
     server_error_ref: Date.now() + randomGenerate(),
@@ -315,7 +304,6 @@ function questionPaperExistErrorHandler() {
 
 module.exports = {
   errorHandler,
-  emailExistErrorHandler,
   thisEmailExistErrorHandler,
   validationWithEmailErrorHandler,
   codeRollWithEmailErrorHandler,

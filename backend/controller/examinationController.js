@@ -91,7 +91,7 @@ const QuestionGetById = function (req, res) {
         if (err || !results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('question id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -128,7 +128,7 @@ const QuestionPut = function (req, res) {
           if (!result) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('question id'));
           } else {
             return res.status(Constants.success).json(result);
           }
@@ -160,7 +160,7 @@ const QuestionDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('question id'));
         }
         return res.status(Constants.success).json({
           message: "Deleted successfully",
@@ -293,7 +293,7 @@ const QuestionPaperGetById = function (req, res) {
         if (err || !results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('question-paper id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -331,7 +331,7 @@ const QuestionPaperPut = function (req, res) {
           if (!result) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('question-paper id'));
           } else {
             return res.status(Constants.success).json(result);
           }
@@ -372,7 +372,7 @@ const QuestionPaperPatch = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('question-paper id'));
         } else {
           return res.status(Constants.success).json(results);
         }
@@ -404,7 +404,7 @@ const QuestionPaperDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('question-paper id'));
         }
         return res.status(Constants.success).json({
           message: "Deleted successfully",

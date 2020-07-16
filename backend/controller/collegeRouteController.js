@@ -20,7 +20,9 @@ function randomCodeGenerate() {
 const CollegeAdd = async function (req, res) {
   if (req.session.user_type == Constants.admin) {
     //LETS VALIDATE THE DATA BEFORE WE ADD A college
-    const { error } = collegeValidation(req.body);
+    const {
+      error
+    } = collegeValidation(req.body);
     if (error)
       return res
         .status(Constants.er_failure)
@@ -33,7 +35,7 @@ const CollegeAdd = async function (req, res) {
     if (collegeExist)
       return res
         .status(Constants.er_failure)
-        .json(errHandler.emailExistErrorHandler());
+        .json(errHandler.thisEmailExistErrorHandler(req.body.email));
 
     // Create a new college
     const college = new College({
@@ -78,8 +80,7 @@ const CollegeGetByCode = function (req, res) {
     Constants.tpo ||
     Constants.student
   ) {
-    College.findOne(
-      {
+    College.findOne({
         code: req.params.code,
       },
       (err, results) => {
@@ -103,18 +104,18 @@ const CollegePut = function (req, res) {
   if (req.session.user_type == Constants.admin || Constants.tpo) {
     const body = req.body;
     //VALIDATE THE DATA BEFORE WE MAKE A College
-    const { error } = collegePutValidation(body);
+    const {
+      error
+    } = collegePutValidation(body);
     if (error) {
       return res
         .status(Constants.er_failure)
         .json(errHandler.validationErrorHandler(error));
     }
-    College.findOneAndUpdate(
-      {
+    College.findOneAndUpdate({
         code: req.params.code,
       },
-      body,
-      {
+      body, {
         new: true,
       },
       (err, result) => {
@@ -129,13 +130,11 @@ const CollegePut = function (req, res) {
             .json(errHandler.codeNotFoundErrorHandler());
         }
         if (body.name) {
-          Student.find(
-            {
+          Student.find({
               code: req.params.code,
             },
             (result) => {
-              Student.updateMany(
-                {
+              Student.updateMany({
                   college: body.name,
                 },
                 (err, resp) => {
@@ -147,13 +146,11 @@ const CollegePut = function (req, res) {
               );
             }
           );
-          Tpo.find(
-            {
+          Tpo.find({
               code: req.params.code,
             },
             (result) => {
-              Tpo.updateMany(
-                {
+              Tpo.updateMany({
                   college: body.name,
                 },
                 (err, resp) => {
@@ -179,8 +176,7 @@ const CollegePut = function (req, res) {
 //To delete the college's data by using their id
 const CollegeDelete = function (req, res) {
   if (req.session.user_type == Constants.admin) {
-    College.findByIdAndRemove(
-      {
+    College.findByIdAndRemove({
         _id: req.params.id,
       },
       (err, results) => {
@@ -192,7 +188,7 @@ const CollegeDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('college id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",

@@ -14,7 +14,7 @@ async function fetchNegativeMarks(req, res) {
       if (err || !result) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('question-paper id'));
       } else {
         negative_marks = result.negative_marking_ratio;
         return negative_marks;
@@ -45,7 +45,7 @@ async function callStudentResponseList(req, res) {
       if (err || !responseSheet) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('student id or question-paper id'));
       } else {
         const sheet = responseSheet;
         return sheet;
@@ -64,7 +64,7 @@ async function fetchAnswerByQuestionId(req, res, id) {
       if (err || !result) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('question id'));
       }
       ans = result.answer;
       return ans;
@@ -93,7 +93,7 @@ async function totalAttemptQuestions(req, res) {
     if (err || !length) {
       return res
         .status(Constants.er_not_found)
-        .json(errHandler.idNotFoundErrorHandler());
+        .json(errHandler.idNotFoundErrorHandler('student id or question paper id'));
     } else {
       return length;
     }

@@ -45,7 +45,7 @@ async function resultCal(req, res) {
       if (err) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('student id'));
       }
       return std;
     }
@@ -58,7 +58,7 @@ async function resultCal(req, res) {
       if (err) {
         return res
           .status(Constants.er_not_found)
-          .json(errHandler.idNotFoundErrorHandler());
+          .json(errHandler.idNotFoundErrorHandler('question paper id'));
       }
       return exam;
     });

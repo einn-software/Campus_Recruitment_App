@@ -40,10 +40,10 @@ const upload = multer({
 const UploadFiles = async function (req, res) {
   upload(req, res, (err) => {
     if (err || !req.file) {
-      logger.error(errHandler.invalidFileErrorHandler());
+      logger.error(errHandler.invalidFileErrorHandler('xlsx'));
       return res
         .status(Constants.er_failure)
-        .json(errHandler.invalidFileErrorHandler());
+        .json(errHandler.invalidFileErrorHandler('xlsx'));
     }
     if (!req.body.email)
       return res
@@ -67,10 +67,10 @@ const UploadLogFiles = async function (req, res) {
       err ||
       !req.file
     ) {
-      logger.error(errHandler.invalidFileErrorHandler());
+      logger.error(errHandler.invalidFileErrorHandler('text or gzip'));
       return res
         .status(Constants.er_failure)
-        .json(errHandler.invalidFileErrorHandler());
+        .json(errHandler.invalidFileErrorHandler('text or gzip'));
     }
     logger.info({
       message: "File successfully uploaded",

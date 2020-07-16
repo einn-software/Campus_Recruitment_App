@@ -43,7 +43,7 @@ const AdminGetById = function (req, res) {
         if (err || !results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('admin id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -85,7 +85,7 @@ const AdminPut = async function (req, res) {
           if (!result) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.idNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('admin id'));
           } else {
             res.status(Constants.success).json(result);
           }
@@ -116,7 +116,7 @@ const AdminDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('admin id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",
@@ -141,7 +141,7 @@ const TpoGetBtId = function (req, res) {
         if (err || !results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('tpo id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -204,7 +204,7 @@ const TpoPut = function (req, res) {
           if (!result) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.codeNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('tpo id'));
           } else {
             res.status(Constants.success).json(result);
           }
@@ -235,7 +235,7 @@ const TpoDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('tpo id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",
@@ -264,7 +264,7 @@ const StudentGetById = function (req, res) {
         if (err || !results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('student id'));
         }
         return res.status(Constants.success).json(results);
       }
@@ -331,7 +331,7 @@ const StudentPut = async function (req, res) {
           if (!result) {
             return res
               .status(Constants.er_not_found)
-              .json(errHandler.codeNotFoundErrorHandler());
+              .json(errHandler.idNotFoundErrorHandler('student id'));
           } else {
             res.status(Constants.success).json(result);
           }
@@ -362,7 +362,7 @@ const StudentDelete = function (req, res) {
         if (!results) {
           return res
             .status(Constants.er_not_found)
-            .json(errHandler.idNotFoundErrorHandler());
+            .json(errHandler.idNotFoundErrorHandler('student id'));
         }
         return res.status(Constants.success).json({
           message: "Data deleted successfully",

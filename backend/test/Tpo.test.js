@@ -4,6 +4,8 @@ const request = require("supertest");
 const app = require("../index");
 const agent = request.agent(app);
 const logger = require("../config/logger");
+const Constants = require("../config/constant");
+
 var loggedInToken = '';
 var id = '';
 
@@ -21,7 +23,7 @@ describe("Tpo Registration Testing:", () => {
         agent
             .post("/register/tpos")
             .send(tpo)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 id = results.body._id;
                 results.body.should.have.property("_id");
@@ -57,7 +59,7 @@ describe("Tpo Login Testing:", () => {
         agent
             .post("/login/tpos")
             .send(tpo)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 loggedInToken = results.body.token;
                 results.body.should.have.property("token");
@@ -72,7 +74,7 @@ describe("Tpo Login Testing:", () => {
         agent
             .post("/login/tpos")
             .send(tpo)
-            .expect(400)
+            .expect(Constants.er_failure)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -85,7 +87,7 @@ describe("GET Tpo Testing:", () => {
         agent
             .set('auth-token', loggedInToken)
             .get("/tpos")
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
@@ -96,7 +98,7 @@ describe("GET Tpo Testing:", () => {
         agent
             .set('auth-token', '')
             .get("/tposs")
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -109,7 +111,7 @@ describe("GET Tpo by Id Testing:", () => {
         agent
             .get(`/tpos/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("designation");
@@ -120,7 +122,7 @@ describe("GET Tpo by Id Testing:", () => {
         agent
             .get(`/tpos/58465464613545`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -137,7 +139,7 @@ describe("Change(PUT) Tpo's data by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .put(`/tpos/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Shikha Gputa');
@@ -149,7 +151,7 @@ describe("Change(PUT) Tpo's data by Id Testing:", () => {
             .set('auth-token', '')
             .put(`/tpos/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -161,7 +163,7 @@ describe("DELETE Tpo by Id Testing:", () => {
         agent
             .delete(`/tpos/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("message");
@@ -172,7 +174,7 @@ describe("DELETE Tpo by Id Testing:", () => {
         agent
             .delete(`/tpos/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();

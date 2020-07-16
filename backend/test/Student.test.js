@@ -4,6 +4,7 @@ const request = require("supertest");
 const app = require("../index");
 const agent = request.agent(app);
 const logger = require("../config/logger");
+const Constants = require("../config/constant");
 
 var loggedInToken = '';
 var id = '';
@@ -24,7 +25,7 @@ describe("Student Registration Testing:", () => {
         agent
             .post("/register/students")
             .send(student)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 id = results.body._id;
                 code = results.body.code;
@@ -62,7 +63,7 @@ describe("Student Login Testing:", () => {
         agent
             .post("/login/students")
             .send(student)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 loggedInToken = results.body.token;
                 results.body.should.have.property("token");
@@ -89,7 +90,7 @@ describe("GET Student Testing:", () => {
         agent
             .set('auth-token', loggedInToken)
             .get(`/colleges/${code}/students`)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
@@ -100,7 +101,7 @@ describe("GET Student Testing:", () => {
         agent
             .set('auth-token', '')
             .get("/studens")
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -113,7 +114,7 @@ describe("GET Student by Id Testing:", () => {
         agent
             .get(`/students/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("branch");
@@ -124,7 +125,7 @@ describe("GET Student by Id Testing:", () => {
         agent
             .get(`/students/58465464613545`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -141,7 +142,7 @@ describe("Change(PUT) student's data by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .put(`/students/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Shikha Gputa');
@@ -153,7 +154,7 @@ describe("Change(PUT) student's data by Id Testing:", () => {
             .set('auth-token', '')
             .put(`/students/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -165,7 +166,7 @@ describe("DELETE student by Id Testing:", () => {
         agent
             .delete(`/students/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("message");
@@ -176,7 +177,7 @@ describe("DELETE student by Id Testing:", () => {
         agent
             .delete(`/students/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();

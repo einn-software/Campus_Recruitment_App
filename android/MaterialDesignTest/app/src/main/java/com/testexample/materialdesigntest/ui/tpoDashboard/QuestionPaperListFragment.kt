@@ -1,13 +1,12 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.QuestionPaperListResponse
 import com.testexample.materialdesigntest.utils.Constants
@@ -21,9 +20,8 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
     private var code: Int = 0
     val TAG = "QuestionPaperListFragment"
 
-    @SuppressLint("LongLogTag")
     override fun showQuestionPaperList(questionPapers: List<QuestionPaperListResponse>) {
-        Log.d(TAG, "<< showQuestionPaperList()")
+        HyperLog.d(TAG, "<< showQuestionPaperList()")
         val questionPaperName = ArrayList<String>()
         val questionPaperId = ArrayList<String>()
         val questionPaperDate = ArrayList<String>()
@@ -38,27 +36,24 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         val listAdapter = QuestionPaperAdapter(this.requireActivity(), questionPaperName, questionPaperId, questionPaperDate)
         list.adapter = listAdapter
 
-        Log.d(TAG, ">> showQuestionPaperList()")
+        HyperLog.d(TAG, ">> showQuestionPaperList()")
     }
 
-    @SuppressLint("LongLogTag")
     override fun setPresenter(presenter: TPODashboardContract.QuestionPaperListPresenter) {
-        Log.d(TAG, "<< setPresenter()")
+        HyperLog.d(TAG, "<< setPresenter()")
         this.presenter = presenter
-        Log.d(TAG, ">> setPresenter()")
+        HyperLog.d(TAG, ">> setPresenter()")
     }
 
-    @SuppressLint("LongLogTag")
     override fun setContext(): Context {
-        Log.d(TAG, "<< setContext()")
-        Log.d(TAG, ">> setContext()")
+        HyperLog.d(TAG, "<< setContext()")
+        HyperLog.d(TAG, ">> setContext()")
         return this.requireContext()
     }
 
 
-    @SuppressLint("LongLogTag")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onViewCreated()")
+        HyperLog.d(TAG, "<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
@@ -70,7 +65,7 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
 
         list.setOnItemClickListener { _, view, _, _ ->
             val questionPaperId = (view.findViewById(R.id.questionPaperIdText) as TextView).text
-            Log.i(TAG, "Calling ResultList fragment with questionPaperId $questionPaperId and college code is $code")
+            HyperLog.i(TAG, "Calling ResultList fragment with questionPaperId $questionPaperId and college code is $code")
 
             requireActivity().supportFragmentManager.beginTransaction().apply {
                 replace((requireView().parent as ViewGroup).id, ResultListFragment.newInstance(code, questionPaperId as String),"ResultListFragment")
@@ -78,12 +73,11 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
                 commit()
             }
         }
-        Log.d(TAG, ">> onViewCreated()")
+        HyperLog.d(TAG, ">> onViewCreated()")
     }
 
-    @SuppressLint("LongLogTag")
     override fun onDetach() {
-        Log.d(TAG, "onDetach")
+        HyperLog.d(TAG, "onDetach")
         super.onDetach()
         requireActivity().tpoDashboardContainer.visibility = View.VISIBLE
     }

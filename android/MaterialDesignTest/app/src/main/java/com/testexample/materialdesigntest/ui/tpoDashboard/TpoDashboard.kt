@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.ui.login.LoginActivity
+import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
 import kotlin.system.exitProcess
@@ -27,7 +28,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
     private var code: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate()")
+        HyperLog.d(TAG, "<< onCreate()")
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tpo_dashboard)
@@ -40,7 +41,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
         val dataUpload = DataUpload.newInstance(sessionManager.getUserEmail()!!)
 
         uploadDataTab.setOnClickListener {
-            Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
+            HyperLog.d(TAG, "<< updateCollegeTab | setOnClickListener")
             tpoDashboardContainer.visibility = INVISIBLE
             fragmentTag = "dataUpload"
             supportFragmentManager.beginTransaction().apply {
@@ -48,11 +49,11 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
                 addToBackStack(fragmentTag)
                 commit()
             }
-            Log.d(TAG, ">> updateCollegeTab | setOnClickListener")
+            HyperLog.d(TAG, ">> updateCollegeTab | setOnClickListener")
         }
 
         updateCollegeTab.setOnClickListener {
-            Log.d(TAG, "<< updateCollegeTab | setOnClickListener")
+            HyperLog.d(TAG, "<< updateCollegeTab | setOnClickListener")
             fragmentTag = "CollegeDetailsFragment"
             tpoDashboardContainer.visibility = INVISIBLE
             supportFragmentManager.beginTransaction().apply {
@@ -60,11 +61,11 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
                 addToBackStack(fragmentTag)
                 commit()
             }
-            Log.d(TAG, ">> updateCollegeTab | setOnClickListener")
+            HyperLog.d(TAG, ">> updateCollegeTab | setOnClickListener")
         }
 
         collegeResultTab.setOnClickListener {
-            Log.d(TAG, "<< resultTabText | setOnClickListener")
+            HyperLog.d(TAG, "<< resultTabText | setOnClickListener")
             tpoDashboardContainer.visibility = INVISIBLE
             fragmentTag = "QuestionPaperListFragment"
 
@@ -73,21 +74,21 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
                 addToBackStack(fragmentTag)
                 commit()
             }
-            Log.d(TAG, ">> resultTabText | setOnClickListener")
+            HyperLog.d(TAG, ">> resultTabText | setOnClickListener")
         }
 
         tpoLogOutButton.setOnClickListener {
-            Log.d(TAG, "<< logoutButton | setOnClickListener")
+            HyperLog.d(TAG, "<< logoutButton | setOnClickListener")
             sessionManager.saveUserSession(AuthResponse(null, null, null, null))
             startActivity(Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 this@TPODashboard.finish()
             })
-            Log.d(TAG, ">> logoutButton | setOnClickListener")
+            HyperLog.d(TAG, ">> logoutButton | setOnClickListener")
         }
 
-        Log.d(TAG, ">> onCreate()")
+        HyperLog.d(TAG, ">> onCreate()")
     }
 
     override fun onBackPressed() {
@@ -122,24 +123,24 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
     }
 
     override fun showTpoDetails(tpo: TPO) {
-        Log.d(TAG, "<< showTpoDetails()")
+        HyperLog.d(TAG, "<< showTpoDetails()")
         tpoNameText.text = tpo.TPOName
         tpoEmailText.text = tpo.TPOEmail
         tpoCollegeCode.text = tpo.TPOCollegeCode.toString()
         tpoCollegeText.text = tpo.TPOCollegeName
         code = tpo.TPOCollegeCode
-        Log.d(TAG, ">> showTpoDetails()")
+        HyperLog.d(TAG, ">> showTpoDetails()")
     }
 
     override fun setPresenter(presenter: TPODashboardContract.Presenter) {
-        Log.d(TAG, "<< setPresenter()")
+        HyperLog.d(TAG, "<< setPresenter()")
         this.presenter = presenter
-        Log.d(TAG, ">> setPresenter()")
+        HyperLog.d(TAG, ">> setPresenter()")
     }
 
     override fun setContext(): Context {
-        Log.d(TAG, "<< setContext()")
-        Log.d(TAG, ">> setContext()")
+        HyperLog.d(TAG, "<< setContext()")
+        HyperLog.d(TAG, ">> setContext()")
         return this.baseContext
     }
 }

@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.result
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.Result
@@ -23,28 +23,28 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
 
         arguments?.let {
             code = it.getInt(Constants.CODE)
             roll = it.getString(Constants.ROLL).toString()
             questionPaperId = it.getString(Constants.QUESTION_PAPER_ID).toString()
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "<< onViewCreated")
-        Log.d(TAG, "$code + $roll + $questionPaperId")
+        HyperLog.d(TAG, "<< onViewCreated")
+        HyperLog.d(TAG, "$code + $roll + $questionPaperId")
 
         presenter = ResultsPresenter(this)
         presenter.fetchStudentResult(code, roll, questionPaperId)
-        Log.d(TAG, ">> onViewCreated")
+        HyperLog.d(TAG, ">> onViewCreated")
     }
 
     override fun showResults(result: Result) {
-        Log.d(TAG, "<< showResults")
+        HyperLog.d(TAG, "<< showResults")
         rollNoValue.text = result.studentRollNo
         userNameValue.text = result.studentName
         totalMarksValue.text = result.totalMarks.toString()
@@ -53,7 +53,7 @@ class ResultsFragment : Fragment(R.layout.fragment_student_result), ResultsContr
         totalQuestionsAttemptedRightValue.text = result.noOfQuestionsCorrect.toString()
         totalQuestionsAttemptedWrongValue.text = (result.noOfQuestionsAttempted - result.noOfQuestionsCorrect).toString()
         totalMarksObtainedValue.text = result.scoredMarks.toString()
-        Log.d(TAG, ">> showResults")
+        HyperLog.d(TAG, ">> showResults")
     }
 
     override fun setPresenter(presenter: ResultsContract.Presenter) {

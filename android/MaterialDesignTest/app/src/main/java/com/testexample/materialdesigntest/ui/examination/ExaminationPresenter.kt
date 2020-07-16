@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.examination
 
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IExaminationRepo
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
@@ -21,7 +21,7 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun loadExam(fetchExamRequest: FetchExamRequest) {
-        Log.d(TAG, "<< loadExam")
+        HyperLog.d(TAG, "<< loadExam")
         repository = ExaminationRepo()
         view!!.showLoading(true)
         view.let {
@@ -35,11 +35,11 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                         view!!.showLoading(false)
                                         if (questionPaper != null) {
                                             view!!.setExamPaper(questionPaper)
-                                            Log.i(TAG, "Successfully get question paper from remote")
+                                            HyperLog.i(TAG, "Successfully get question paper from remote")
                                         }
                                     },
                                     { error ->
-                                        Log.e(TAG, "Error fetching question paper from remote with " +
+                                        HyperLog.e(TAG, "Error fetching question paper from remote with " +
                                                 "reason ${error.message.toString()}")
                                         view!!.showLoading(false)
                                         Toast.makeText(view!!.setContext(), error.message
@@ -48,11 +48,11 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                     })
             )
         }
-        Log.d(TAG, ">> loadExam")
+        HyperLog.d(TAG, ">> loadExam")
     }
 
     override fun endExam(endExamRequest: EndExamRequest) {
-        Log.d(TAG, "<< endExam")
+        HyperLog.d(TAG, "<< endExam")
         repository = ExaminationRepo()
         subscriptions.clear()
         view!!.showLoading(true)
@@ -66,10 +66,10 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                 {message ->
                                     view!!.showLoading(false)
                                     view!!.openNextActivity()
-                                    Log.i(TAG, message.toString())
+                                    HyperLog.i(TAG, message.toString())
                                 },
                                 { error ->
-                                    Log.e(TAG, "Error stop exam with reason ${error.message.toString()}")
+                                    HyperLog.e(TAG, "Error stop exam with reason ${error.message.toString()}")
                                     view!!.showLoading(false)
                                     if (error.message.toString() == "700 You have already submitted the result for this exam"){
                                         view!!.openNextActivity()
@@ -81,7 +81,7 @@ class ExaminationPresenter(private var view: ExaminationContract.View?) : Examin
                                 }
                         )
         )
-        Log.d(TAG, ">> endExam")
+        HyperLog.d(TAG, ">> endExam")
     }
 
     override fun onDestroy() {

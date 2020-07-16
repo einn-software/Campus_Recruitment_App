@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 
 class LoginActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         setContentView(R.layout.activity_login)
 
         if (null != this.findViewById(R.id.loginFragment)) {
@@ -32,11 +32,11 @@ class LoginActivity : AppCompatActivity() {
                     .addToBackStack("LoginPrompt")
                     .commit()
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "Total Fragments in back-stack : "+supportFragmentManager.backStackEntryCount.toString())
+        HyperLog.d(TAG, "Total Fragments in back-stack : "+supportFragmentManager.backStackEntryCount.toString())
         if (supportFragmentManager.backStackEntryCount > 1)
         {
             super.onBackPressed()

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TableLayout
@@ -14,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.CollegeWiseResultResponse
 import com.testexample.materialdesigntest.ui.ProgressBar
@@ -31,19 +31,19 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
     private lateinit var progressBar: ProgressBar
 
     override fun setPresenter(presenter: TPODashboardContract.ResultListPresenter) {
-        Log.d(TAG,"<< setPresenter()")
+        HyperLog.d(TAG,"<< setPresenter()")
         this.presenter = presenter
-        Log.d(TAG,">> setPresenter()")
+        HyperLog.d(TAG,">> setPresenter()")
     }
 
     override fun setContext(): Context {
-        Log.d(TAG,"<< setContext()")
-        Log.d(TAG,">> setContext()")
+        HyperLog.d(TAG,"<< setContext()")
+        HyperLog.d(TAG,">> setContext()")
         return this.requireContext()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG,"<< onViewCreated()")
+        HyperLog.d(TAG,"<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
@@ -54,7 +54,7 @@ class ResultListFragment: Fragment(R.layout.fragment_result_list), TPODashboardC
         presenter = ResultListPresenter(this)
         progressBar = ProgressBar(requireActivity())
         presenter .fetchResultList(code, questionPaperId)
-        Log.d(TAG,">> onViewCreated()")
+        HyperLog.d(TAG,">> onViewCreated()")
     }
 
 

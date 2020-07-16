@@ -1,8 +1,8 @@
 package com.testexample.materialdesigntest.ui.examination
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.database.repository.ExaminationRoomRepo
 import com.testexample.materialdesigntest.data.database.repository.IExaminationRoomRepo
 import com.testexample.materialdesigntest.data.interactor.implementation.ExaminationRepo
@@ -33,20 +33,20 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun saveResponse(newResponse: StudentAnswerResponse) {
-        Log.d(TAG, "<< saveResponse: QuestionId: ${newResponse.studentAnswer.questionId}")
+        HyperLog.d(TAG, "<< saveResponse: QuestionId: ${newResponse.studentAnswer.questionId}")
 
         repository = ExaminationRepo()
         roomRepo = ExaminationRoomRepo(view!!.setContext())
-        Log.d(TAG, "$answerMap")
+        HyperLog.d(TAG, "$answerMap")
 
         val saveMethod: Single<StudentAnswerResponsePlain> =
                 if (answerMap.containsKey(newResponse.studentAnswer.questionId) &&
                     answerMap[newResponse.studentAnswer.questionId]!!.answerSheetId.isNotBlank())
                 {
-                    Log.d(TAG, "update Response with state: $newResponse")
+                    HyperLog.i(TAG, "update Response with state: $newResponse")
                     repository.updateResponse(token, newResponse)
                 } else {
-                    Log.d(TAG, "Save Response with state: $newResponse")
+                    HyperLog.i(TAG, "Save Response with state: $newResponse")
                     repository.saveResponse(token, newResponse.studentAnswer)
                 }
 
@@ -56,14 +56,14 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { answer ->
-                            Log.d(TAG, " Incoming Response : $answer")
+                            HyperLog.i(TAG, " Incoming Response : $answer")
                             if (!answerMap.containsKey(answer.questionId)) {
                                 roomRepo.saveAnswerResponse(AnswerResponse(answer.questionId,
                                     answer.id, answer.state, answer.selectedOption))
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(
-                                        {Log.d(TAG, "Answer saved in Room")},
-                                        {Log.d(TAG, "Failed to save answer in Room due to ${it.localizedMessage}")})
+                                        {HyperLog.i(TAG, "Answer saved in Room")},
+                                        {HyperLog.e(TAG, "Failed to save answer in Room due to ${it.localizedMessage}")})
                                     .addTo(subscriptions)
                             }
                             else{
@@ -71,29 +71,29 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                     answer.id, answer.state, answer.selectedOption))
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(
-                                        {Log.d(TAG, "Answer updated in Room")},
-                                        {Log.d(TAG, "Failed to update answer in Room due to ${it.localizedMessage}")})
+                                        {HyperLog.i(TAG, "Answer updated in Room")},
+                                        {HyperLog.e(TAG, "Failed to update answer in Room due to ${it.localizedMessage}")})
                                     .addTo(subscriptions)
                             }
                             answerMap[answer.questionId] = Answer(answer.id,
                                 answer.state, answer.selectedOption)
 
                             view!!.markTabAndMoveNext(answer.state)
-                            Log.i(TAG, "Successfully saved response")
+                            HyperLog.i(TAG, "Successfully saved response")
                         },
                         { error ->
-                            Log.e(TAG, "Error in saving response with reason ${error.message.toString()}")
+                            HyperLog.e(TAG, "Error in saving response with reason ${error.message.toString()}")
                             Toast.makeText(view!!.setContext(),
                                     "Could not Save the Answer, ${error.message.toString()}!!",
                                     Toast.LENGTH_LONG).show()
                         }
                 )
         )
-        Log.d(TAG, ">> saveResponse")
+        HyperLog.d(TAG, ">> saveResponse")
     }
 
     override fun loadQuestion(viewId: Int, questionId: String) {
-        Log.d(TAG, "<< loadQuestion")
+        HyperLog.d(TAG, "<< loadQuestion")
         repository = ExaminationRepo()
         subscriptions.add(
                 repository.fetchQuestionFromRemote(token, questionId)
@@ -107,10 +107,10 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                         answer = answerMap[questionId]!!
                                     }
                                     view!!.setQuestion(viewId = viewId, question = question, answer = answer)
-                                    Log.i(TAG, "Successfully fetch questions from remote")
+                                    HyperLog.i(TAG, "Successfully fetch questions from remote")
                                 },
                                 { error ->
-                                    Log.d(TAG,
+                                    HyperLog.e(TAG,
                                             "Error in fetching questions from remote with reason ${error.message.toString()}")
                                     Toast.makeText(view!!.setContext(),
                                             "Counldn't Load the Question, Please Try Again!!",
@@ -118,17 +118,17 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                 }
                         )
         )
-        Log.d(TAG, ">> loadQuestion")
+        HyperLog.d(TAG, ">> loadQuestion")
     }
 
     override fun getView(viewSent: ExaminationContract.FragmentView) {
-        Log.d(TAG, "<< getView")
+        HyperLog.d(TAG, "<< getView")
         view = viewSent
-        Log.d(TAG, "<< getView")
+        HyperLog.d(TAG, "<< getView")
     }
 
     override fun loadAnswerFromRoom(){
-        Log.d(TAG, "<< loadAnswerFromRoom")
+        HyperLog.d(TAG, "<< loadAnswerFromRoom")
         roomRepo = ExaminationRoomRepo(view!!.setContext())
         subscriptions.add(
         roomRepo.getAnswerResponse()
@@ -143,7 +143,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                     }
                 },
                 {error->
-                    Log.d(TAG, "Failed to Fetch AnswerResponse From Room Due to : ${error.localizedMessage}")
+                    HyperLog.d(TAG, "Failed to Fetch AnswerResponse From Room Due to : ${error.localizedMessage}")
                 })
         )
     }
@@ -151,7 +151,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
     override var Q_A_Mapping: MutableMap<String, Answer> = mutableMapOf()
 
     override fun loadAnswerSheet(request: EndExamRequest) {
-        Log.d(TAG, "<< loadAnswerSheet")
+        HyperLog.d(TAG, "<< loadAnswerSheet")
         repository = ExaminationRepo()
         subscriptions.add(
             repository.getAnswerList(token, request)
@@ -168,7 +168,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
 
                     },
                     {error->
-                        Log.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})
+                        HyperLog.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})
         )
     }
 

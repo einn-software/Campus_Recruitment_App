@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.ResultRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IResultRepo
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -18,7 +18,7 @@ class ResultListPresenter(private var view: TPODashboardContract.ResultListView?
     private var subscriptions = CompositeDisposable()
 
     override fun fetchResultList(code: Int, question_paper_id: String) {
-        Log.d(TAG, "<< fetchResultList()")
+        HyperLog.d(TAG, "<< fetchResultList()")
         repository = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
@@ -33,11 +33,11 @@ class ResultListPresenter(private var view: TPODashboardContract.ResultListView?
                                         { success ->
                                             view!!.showLoading(false)
                                             view!!.showResultList(success)
-                                            Log.i(TAG, "Successfully Get Student Result List.")
+                                            HyperLog.i(TAG, "Successfully Get Student Result List.")
                                         },
                                         { error ->
                                             view!!.showLoading(false)
-                                            Log.e(TAG, "Failed to get Student Result List with reason: ${error.message.toString()}")
+                                            HyperLog.e(TAG, "Failed to get Student Result List with reason: ${error.message.toString()}")
 
                                             if (error.message.toString().contains("704")) {
                                                 Toast.makeText(view!!.setContext(), "Result is not released yet!!", Toast.LENGTH_LONG).show()
@@ -47,7 +47,7 @@ class ResultListPresenter(private var view: TPODashboardContract.ResultListView?
             }
 
         }
-        Log.d(TAG, ">> fetchResultList()")
+        HyperLog.d(TAG, ">> fetchResultList()")
     }
 
     override fun onDestroy() {

@@ -1,8 +1,7 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.QuestionPaperRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IQuestionPaperRepo
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -16,9 +15,8 @@ class QuestionPaperListPresenter(private var view: TPODashboardContract.Question
     private lateinit var sessionManager: SessionManager
     private lateinit var repository: IQuestionPaperRepo
 
-    @SuppressLint("LongLogTag")
     override fun fetchQuestionPaperList(code: Int) {
-        Log.d(TAG, "<< fetchQuestionPaperList()")
+        HyperLog.d(TAG, "<< fetchQuestionPaperList()")
 
         repository = QuestionPaperRepo()
         sessionManager = SessionManager(view!!.setContext())
@@ -32,16 +30,16 @@ class QuestionPaperListPresenter(private var view: TPODashboardContract.Question
                         .subscribe(
                                 { success ->
                                     view!!.showQuestionPaperList(success)
-                                    Log.i(TAG, "Successfully Get Question Paper List.")
+                                    HyperLog.i(TAG, "Successfully Get Question Paper List.")
                                 },
                                 { error ->
-                                    Log.e(TAG, "Failed to get Question Paper List with reason: ${error.message.toString()}")
+                                    HyperLog.e(TAG, "Failed to get Question Paper List with reason: ${error.message.toString()}")
                                     Toast.makeText(view!!.setContext(), error.message.toString(), Toast.LENGTH_LONG).show()
                                 })
             }
 
         }
-        Log.d(TAG, ">> fetchQuestionPaperList()")
+        HyperLog.d(TAG, ">> fetchQuestionPaperList()")
     }
 
     override fun onDestroy() {

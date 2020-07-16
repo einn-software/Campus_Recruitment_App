@@ -3,10 +3,10 @@ package com.testexample.materialdesigntest.ui.instructions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Student
@@ -28,7 +28,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "<< onViewCreated")
+        HyperLog.d(TAG, "<< onViewCreated")
 
         progressBar = ProgressBar(requireActivity())
         val calender = Calendar.getInstance()
@@ -36,7 +36,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         val month: Int = calender.get(Calendar.MONTH) + 1
         val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
         presenter = ExamInfoPresenter(this)
-        Log.d(TAG, "Current Date is $dayOfMonth / $month / $year")
+        HyperLog.d(TAG, "Current Date is $dayOfMonth / $month / $year")
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
         availableExamsTab.setOnClickListener {
@@ -50,11 +50,11 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
             else
                 openNextFragment(this.questionPaper!!, presenter.student)
         }
-        Log.d(TAG, ">> onViewCreated")
+        HyperLog.d(TAG, ">> onViewCreated")
     }
 
     override fun showExamInfo(questionPaper: QuestionPaper?) {
-        Log.d(TAG, "<< showExamInfo")
+        HyperLog.d(TAG, "<< showExamInfo")
         val message: String
 
         if (null == questionPaper) {
@@ -65,7 +65,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
             this.questionPaper = questionPaper
         }
         availableExamsTabText.text = message
-        Log.d(TAG, ">> showExamInfo")
+        HyperLog.d(TAG, ">> showExamInfo")
     }
 
     override fun openNextFragment(questionPaper: QuestionPaper, student: Student){
@@ -78,17 +78,17 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
 
-        Log.d(TAG, ">> openNextFragment")
+        HyperLog.d(TAG, ">> openNextFragment")
     }
 
     override fun showLoading(flag: Boolean) {
-        Log.d(TAG, "<< showLoading")
+        HyperLog.d(TAG, "<< showLoading")
         if (flag) {
             progressBar.startLoading()
         } else {
             progressBar.stopLoading()
         }
-        Log.d(TAG, ">> openNextFragment")
+        HyperLog.d(TAG, ">> openNextFragment")
     }
 
     override fun setPresenter(presenter: InstructionsContract.ExamInfoPresenter) {

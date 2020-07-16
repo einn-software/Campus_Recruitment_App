@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.instructions
 
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.PreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
@@ -28,7 +28,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
     override lateinit var student: Student
 
     override fun fetchExamInfo(request: FetchExamRequest) {
-        Log.d(TAG, "<< fetchExamInfo")
+        HyperLog.d(TAG, "<< fetchExamInfo")
         repository = PreExamInstructionsRepo()
         sessionManager = SessionManager(view!!.setContext())
 
@@ -42,20 +42,20 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                             { questionPaper ->
  				                view!!.showLoading(false)
                                 view!!.showExamInfo(questionPaper)
-                                Log.i(TAG, "Successfully fetch exam info")
+                                HyperLog.i(TAG, "Successfully fetch exam info")
                             },
                             {
 			    	            view!!.showLoading(false)
                                 view!!.showExamInfo(null)
-                                Log.e(TAG, "Error in fetching exam info: ${it.message.toString()}")
+                                HyperLog.e(TAG, "Error in fetching exam info: ${it.message.toString()}")
                             }
                     )
         }
-        Log.d(TAG, ">> fetchExamInfo")
+        HyperLog.d(TAG, ">> fetchExamInfo")
     }
 
     override fun fetchCollegeCode(year: Int, month: Int, dayOfMonth: Int) {
-        Log.d(TAG, "<< fetchCollegeCode")
+        HyperLog.d(TAG, "<< fetchCollegeCode")
         studentRepo = UserRepository()
         sessionManager = SessionManager(view!!.setContext())
         val userId = sessionManager.getUserId()!!
@@ -70,19 +70,19 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                                 { success ->
                                     fetchExamInfo(FetchExamRequest(success.studentCollegeCode, year, month, dayOfMonth))
                                     student = success
-                                    Log.i(TAG, "Successfully fetch college code for student")
+                                    HyperLog.i(TAG, "Successfully fetch college code for student")
                                 },
                                 { error ->
-                                    Log.e("TAG", "Error in fetching Student: ${error.message.toString()}")
+                                    HyperLog.e("TAG", "Error in fetching Student: ${error.message.toString()}")
 				                    view!!.showLoading(false)
                                     Toast.makeText(view!!.setContext(), error.message, Toast.LENGTH_LONG).show()
                                 },
                                 {
-                                    Log.d(TAG, "getStudent Query completed")
+                                    HyperLog.d(TAG, "getStudent Query completed")
                                 }
                         )
         )
-        Log.d(TAG, ">> fetchCollegeCode")
+        HyperLog.d(TAG, ">> fetchCollegeCode")
     }
 
     override fun onDestroy() {

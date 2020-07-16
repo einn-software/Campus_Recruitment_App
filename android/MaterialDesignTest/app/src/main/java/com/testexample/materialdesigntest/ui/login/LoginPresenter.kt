@@ -1,8 +1,8 @@
 package com.testexample.materialdesigntest.ui.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
@@ -23,7 +23,7 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
     private var subscriptions = CompositeDisposable()
 
     override fun onStudentLogin(loginRequest: StudentLoginRequest) {
-        Log.d(TAG, "<< onStudentLogin")
+        HyperLog.d(TAG, "<< onStudentLogin")
         userRepository = UserRepository()
 
         when {
@@ -36,7 +36,7 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
             loginRequest.code.toString().isEmpty() ->
                 view!!.onValidationMessage(Constants.EMPTY_CODE_ERROR)
             else -> userRepository.let {
-                Log.d("LoginPresenter", "subscription started")
+                HyperLog.d("LoginPresenter", "subscription started")
                 view!!.showLoading(true)
                 subscriptions.add(
                         userRepository
@@ -49,21 +49,21 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
                                             updateSession(session)
                                             view!!.showLoading(false)
                                             view!!.openMainActivity()
-                                            Log.i(TAG, "Successfully validate Student")
+                                            HyperLog.i(TAG, "Successfully validate Student")
                                         },
                                         { error ->
-                                            Log.e(TAG, "Error in validate student: ${error.localizedMessage}")
+                                            HyperLog.e(TAG, "Error in validate student: ${error.localizedMessage}")
                                             view!!.showLoading(false)
                                             Toast.makeText(view!!.setContext(),
                                                     error.localizedMessage, Toast.LENGTH_SHORT).show()
                                         } ))
             }
         }
-        Log.d(TAG, ">> onStudentLogin")
+        HyperLog.d(TAG, ">> onStudentLogin")
     }
 
     override fun generateCollegeList() {
-        Log.d(TAG, "<< generateCollegeList")
+        HyperLog.d(TAG, "<< generateCollegeList")
         var collegeList: List<CollegeResponse> = emptyList()
         userRepository = UserRepository()
 
@@ -74,29 +74,29 @@ class LoginPresenter(private var view: LoginContract.View?) : LoginContract.Pres
                     .handelNetworkError()
                     .subscribe(
                             { college ->
-                                Log.i(TAG, "Successfully fetch college list")
+                                HyperLog.i(TAG, "Successfully fetch college list")
                                 collegeList = college
                             },
                             { error ->
-                                Log.e(TAG, "Error in fetching college list ${error.message.toString()}")
+                                HyperLog.e(TAG, "Error in fetching college list ${error.message.toString()}")
                                 Toast.makeText(view!!.setContext(), "${error.message}",
                                 Toast.LENGTH_LONG).show()
                             },
                             {
-                                Log.d(TAG, "Fetch query for college list completed")
+                                HyperLog.d(TAG, "Fetch query for college list completed")
                                 view!!.loadSpinner(collegeList)
                             }
                     )
         }
-        Log.d(TAG, ">> generateCollegeList")
+        HyperLog.d(TAG, ">> generateCollegeList")
 
     }
 
     private fun updateSession(session: AuthResponse) {
-        Log.d(TAG, "<< updateSession")
+        HyperLog.d(TAG, "<< updateSession")
         sessionManager = SessionManager(view!!.setContext())
         sessionManager.saveUserSession(session)
-        Log.d(TAG, ">> updateSession")
+        HyperLog.d(TAG, ">> updateSession")
     }
 
     override fun onDestroy() {

@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.data.network.repository
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.model.Question
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.network.model.*
@@ -14,32 +14,32 @@ class ExaminationRemoteRepo : IExaminationRemoteRepo {
     private val api: GetDataServices = GetDataServices.create()
 
     override fun callApiForQuestionPaper(token: String, fetchExamRequest: FetchExamRequest): Single<QuestionPaper> {
-        Log.d(TAG, "<< callApiForQuestionPaper()")
-        Log.d(TAG, ">> callApiForQuestionPaper()")
+        HyperLog.d(TAG, "<< callApiForQuestionPaper()")
+        HyperLog.d(TAG, ">> callApiForQuestionPaper()")
         return api.getQuestionPaper(token, fetchExamRequest.code, fetchExamRequest.year, fetchExamRequest.month, fetchExamRequest.date)
     }
 
     override fun callApiForQuestion(token: String, questionId: String): Single<Question> {
-        Log.d(TAG, "<< callApiForQuestion()")
-        Log.d(TAG, ">> callApiForQuestion()")
+        HyperLog.d(TAG, "<< callApiForQuestion()")
+        HyperLog.d(TAG, ">> callApiForQuestion()")
         return api.getQuestion(token, questionId)
     }
 
     override fun callApiForSavingAnswer(token: String, request: StudentAnswerRequest): Single<StudentAnswerResponsePlain> {
-        Log.d(TAG, "<< callApiForSavingAnswer(): state : ${request.state}")
-        Log.d(TAG, ">> callApiForSavingAnswer()")
+        HyperLog.d(TAG, "<< callApiForSavingAnswer(): state : ${request.state}")
+        HyperLog.d(TAG, ">> callApiForSavingAnswer()")
         return api.addStudentResponse(token, request)
     }
 
     override fun callApiForUpdatingAnswer(token: String, request: StudentAnswerResponse): Single<StudentAnswerResponsePlain> {
-        Log.d(TAG, "<< callApiForUpdatingAnswer()")
-        Log.d(TAG, ">> callApiForUpdatingAnswer()")
+        HyperLog.d(TAG, "<< callApiForUpdatingAnswer()")
+        HyperLog.d(TAG, ">> callApiForUpdatingAnswer()")
         return api.updateStudentResponse(token, request.id, request.studentAnswer)
     }
 
     override fun callApiForEndingExam(token: String, endRequest: EndExamRequest): Single<EndExamResponse> {
-        Log.d(TAG, "<< callApiForEndingExam()")
-        Log.d(TAG, ">> callApiForEndingExam()")
+        HyperLog.d(TAG, "<< callApiForEndingExam()")
+        HyperLog.d(TAG, ">> callApiForEndingExam()")
         return api.endExam(token, endRequest)
     }
 

@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.data.interactor.implementation
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.TPO
@@ -16,38 +16,38 @@ class UserRepository() : IUserRepository {
     private val remoteRepository: IUserRemoteRepository = UserRemoteRepository()
 
     override fun isStudentValid(loginRequest: StudentLoginRequest): Single<AuthResponse> {
-        Log.d(TAG, "<< isStudentValid()")
-        Log.d(TAG, ">> isStudentValid()")
+        HyperLog.d(TAG, "<< isStudentValid()")
+        HyperLog.d(TAG, ">> isStudentValid()")
         return remoteRepository.authStudent(loginRequest)
     }
 
     override fun getStudent(userRequest: UserRequest): Flowable<Student> {
-        Log.d(TAG, "<< getStudent()")
-        Log.d(TAG, ">> getStudent()")
+        HyperLog.d(TAG, "<< getStudent()")
+        HyperLog.d(TAG, ">> getStudent()")
         return remoteRepository.getStudent(userRequest)
     }
 
     override fun forgotPassword(email: String, userTpe: String): Single<String> {
-        Log.d(TAG, "<< forgotPassword()")
-        Log.d(TAG, ">> forgotPassword()")
+        HyperLog.d(TAG, "<< forgotPassword()")
+        HyperLog.d(TAG, ">> forgotPassword()")
         return remoteRepository.callForgotPasswordApi(email, userTpe)
     }
 
     override fun isTpoValid(email: String, password: String): Single<AuthResponse> {
-        Log.d(TAG, "<< isTPOValid()")
-        Log.d(TAG, ">> isTPOValid()")
+        HyperLog.d(TAG, "<< isTPOValid()")
+        HyperLog.d(TAG, ">> isTPOValid()")
         return remoteRepository.authTPO(TpoLoginRequest(email, password))
     }
 
     override fun getTpo(userRequest: UserRequest): Flowable<TPO> {
-        Log.d(TAG, "<< getTPO()")
-        Log.d(TAG, ">> getTPO()")
+        HyperLog.d(TAG, "<< getTPO()")
+        HyperLog.d(TAG, ">> getTPO()")
         return remoteRepository.getTPO(userRequest)
     }
 
     override fun getCollegeList(): Flowable<List<CollegeResponse>> {
-        Log.d(TAG, "<< getCollegeList()")
-        Log.d(TAG, ">> getCollegeList()")
+        HyperLog.d(TAG, "<< getCollegeList()")
+        HyperLog.d(TAG, ">> getCollegeList()")
         return remoteRepository.callAPIForCollegeList()
     }
 

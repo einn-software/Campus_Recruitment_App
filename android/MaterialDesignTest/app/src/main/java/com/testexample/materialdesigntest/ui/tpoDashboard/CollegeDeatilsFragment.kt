@@ -3,11 +3,11 @@ package com.testexample.materialdesigntest.ui.tpoDashboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
@@ -31,26 +31,26 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
     val TAG = "CollegeDetailsFragment"
 
     override fun setPresenter(presenter: TPODashboardContract.CollegeDetailsPresenter) {
-        Log.d(TAG,"<< setPresenter()")
+        HyperLog.d(TAG,"<< setPresenter()")
         this.presenter = presenter
-        Log.d(TAG,">> setPresenter()")
+        HyperLog.d(TAG,">> setPresenter()")
     }
 
     override fun setContext(): Context {
-        Log.d(TAG,"<< setContext()")
-        Log.d(TAG,">> setContext()")
+        HyperLog.d(TAG,"<< setContext()")
+        HyperLog.d(TAG,">> setContext()")
         return this.requireContext()
     }
 
     override fun onDetach() {
-        Log.d(TAG, "onDetach()")
+        HyperLog.d(TAG, "onDetach()")
         requireActivity().tpoDashboardContainer.visibility = VISIBLE
         super.onDetach()
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG,"<< onViewCreated()")
+        HyperLog.d(TAG,"<< onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
@@ -61,7 +61,7 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
         presenter .fetchCollegeDetails(code)
 
         editCollegeButton.setOnClickListener {
-            Log.d(TAG,"<< editCollegeButton| setOnClickListener()")
+            HyperLog.d(TAG,"<< editCollegeButton| setOnClickListener()")
             val mEditCollegeName = collegeNameValue
             mEditCollegeName.isEnabled = true
             val meditCollegeAddress = collegeAddressValue
@@ -72,11 +72,11 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
             mEditCollegeEmail.isEnabled = true
             val mEditCollegePhone = collegePhoneValue
             mEditCollegePhone.isEnabled = true
-            Log.d(TAG,">> editCollegeButton| setOnClickListener()")
+            HyperLog.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
         saveCollegeButton.setOnClickListener{
-            Log.d(TAG,"<< saveCollegeButton| setOnClickListener()")
+            HyperLog.d(TAG,"<< saveCollegeButton| setOnClickListener()")
             val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(),
                     collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(),
                     collegeEmailValue.text.toString(),collegePhoneValue.text.toString())
@@ -84,13 +84,13 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
             Toast.makeText(this.requireContext(), "Successfully Updated College Details",
                     Toast.LENGTH_LONG).show()
             presenter.fetchCollegeDetails(code)
-            Log.d(TAG,">> saveCollegeButton| setOnClickListener()")
+            HyperLog.d(TAG,">> saveCollegeButton| setOnClickListener()")
         }
-        Log.d(TAG,">> onViewCreated()")
+        HyperLog.d(TAG,">> onViewCreated()")
     }
 
     override fun showCollegeDetails(college: College) {
-        Log.d(TAG,"<< showCollegeDetails()")
+        HyperLog.d(TAG,"<< showCollegeDetails()")
         collegeNameValue.setText(college.name)
         collegeNameValue.isEnabled = false
         collegeAddressValue.setText(college.address)
@@ -101,7 +101,7 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
         collegeEmailValue.isEnabled = false
         collegePhoneValue.setText(college.phone)
         collegePhoneValue.isEnabled = false
-        Log.d(TAG,">> showCollegeDetails()")
+        HyperLog.d(TAG,">> showCollegeDetails()")
     }
 
     companion object {

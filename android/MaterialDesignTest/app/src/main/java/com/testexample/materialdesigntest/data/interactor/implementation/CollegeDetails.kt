@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.data.interactor.implementation
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.interfaces.ICollegeDetails
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
@@ -13,16 +13,16 @@ class CollegeDetails: ICollegeDetails {
     private val remoteRepo: ICollegeDetailsRemoteRepo = CollegeDetailsRemoteRepo()
 
     override fun getCollegeDetails(token: String, code: Int): Single<College> {
-        Log.d(TAG,"<< updateCollegeDetails()")
-        Log.d(TAG,">> updateCollegeDetails()")
+        HyperLog.d(TAG,"<< updateCollegeDetails()")
+        HyperLog.d(TAG,">> updateCollegeDetails()")
         return remoteRepo.callApiForGetCollegeDetails(token, code)
     }
 
     override fun updateCollegeDetails(token: String, code: Int, updateCollegeDetails: UpdateCollegeDetails): Single<College> {
 
-        Log.d(TAG,"<< updateCollegeDetails()")
+        HyperLog.d(TAG,"<< updateCollegeDetails()")
 
-        Log.d(TAG,">> updateCollegeDetails()")
+        HyperLog.d(TAG,">> updateCollegeDetails()")
 
         return remoteRepo.callApiForUpdateCollegeDetails(token, code, updateCollegeDetails)
     }

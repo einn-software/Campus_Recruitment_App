@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.ui.result
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.ResultRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IResultRepo
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -22,7 +22,7 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
 
     override fun fetchStudentResult(code: Int, roll: String, question_paper_id: String) {
 
-        Log.d(TAG, "<< fetchStudentResult")
+        HyperLog.d(TAG, "<< fetchStudentResult")
         repository = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
@@ -33,16 +33,16 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     { success ->
-                                        Log.i(TAG, "Successfully Fetched Result From Remote : $success")
+                                        HyperLog.i(TAG, "Successfully Fetched Result From Remote : $success")
                                         view!!.showResults(success)
                                     },
                                     { error ->
-                                        Log.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
+                                        HyperLog.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
                                     }
 
                             ))
         }
-        Log.d(TAG, ">> fetchStudentResult")
+        HyperLog.d(TAG, ">> fetchStudentResult")
     }
 
     override fun onDestroy() {

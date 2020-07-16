@@ -1,9 +1,8 @@
 package com.testexample.materialdesigntest.ui.instructions
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.PreExamInstructionsRepo
 import com.testexample.materialdesigntest.data.interactor.interfaces.IPreExamInstructionsRepo
-import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +21,7 @@ class InstructionPresenter(private var view: InstructionsContract.View?) :
 
     override fun fetchInstructions(instructionId: String) {
 
-        Log.d(TAG, "<< fetchInstructions")
+        HyperLog.d(TAG, "<< fetchInstructions")
         repository = PreExamInstructionsRepo()
         sessionManager = SessionManager(view!!.setContext())
 
@@ -34,14 +33,14 @@ class InstructionPresenter(private var view: InstructionsContract.View?) :
                             .handelNetworkError()
                             .subscribe(
                                     { instructions ->
-                                        Log.i(TAG, "Successfully Fetch instruction")
+                                        HyperLog.i(TAG, "Successfully Fetch instruction")
                                         view!!.showInstructions(instructions!!)
                                     },
-                                    { error -> Log.e(TAG, "Error in Fetching instruction: ${error.message.toString()}") },
-                                    { Log.d(TAG, "Fetch instruction query completed") }
+                                    { error -> HyperLog.e(TAG, "Error in Fetching instruction: ${error.message.toString()}") },
+                                    { HyperLog.i(TAG, "Fetch instruction query completed") }
                             ))
         }
-        Log.d(TAG, ">> fetchInstructions")
+        HyperLog.d(TAG, ">> fetchInstructions")
     }
 
     override fun onDestroy() {

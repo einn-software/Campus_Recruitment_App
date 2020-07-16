@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.instructions
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -18,7 +18,7 @@ class InstructionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         setContentView(R.layout.activity_instruction)
 
         setSupportActionBar(appActionBar)
@@ -30,11 +30,11 @@ class InstructionActivity : AppCompatActivity() {
                 .addToBackStack(examInfo.toString())
                 .commit()
 
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "Total Fragments in Backstack : "
+        HyperLog.d(TAG, "Total Fragments in Backstack : "
                 + supportFragmentManager.backStackEntryCount.toString())
 
         if (supportFragmentManager.backStackEntryCount > 1)

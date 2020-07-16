@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.login
 
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
@@ -20,7 +20,7 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
     private var subscriptions = CompositeDisposable()
 
     override fun onTpoLogin(email: String, password: String) {
-        Log.d(TAG, "<< onTpoLogin")
+        HyperLog.d(TAG, "<< onTpoLogin")
         userRepository = UserRepository()
 
         when {
@@ -40,13 +40,13 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                         .handelNetworkError()
                         .subscribe(
                                 { response ->
-                                    Log.i(TAG, "Successfully validate user")
+                                    HyperLog.i(TAG, "Successfully validate user")
                                     updateSession(response)
                                     view!!.showLoading(false)
                                     view!!.openMainActivity()
                                 },
                                 { error ->
-                                    Log.e(TAG, "Error in validating TPO: ${error.message.toString()}")
+                                    HyperLog.e(TAG, "Error in validating TPO: ${error.message.toString()}")
                                     view!!.showLoading(false)
 					                Toast.makeText(view!!.setContext(),
                                             error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -54,14 +54,14 @@ class TpoLoginPresenter(private var view: LoginContract.TpoView?) : LoginContrac
                         ))
             }
         }
-        Log.d(TAG, ">> onTpoLogin")
+        HyperLog.d(TAG, ">> onTpoLogin")
     }
 
     private fun updateSession(response: AuthResponse) {
-        Log.d(TAG, "<< updateSession")
+        HyperLog.d(TAG, "<< updateSession")
         sessionManager = SessionManager(view!!.setContext())
         sessionManager.saveUserSession(response)
-        Log.d(TAG, ">> updateSession")
+        HyperLog.d(TAG, ">> updateSession")
     }
 
     override fun onDestroy() {

@@ -50,6 +50,9 @@ class Constants {
 
         //registration link
         internal const val WEBSITE_LINK = "https://www.google.com/"
+        internal const val LOGSEXPIRYTIME = 172800
+        internal const val CARE_NUMBER = "569"
+        internal const val SUCCESS = 200
 
         enum class LoggedInMode constructor(val type: Int) {
             LOGGED_IN_MODE_LOGGED_OUT(0),

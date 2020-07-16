@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.instructions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.Instructions
 import com.testexample.materialdesigntest.data.model.QuestionPaper
@@ -25,19 +25,19 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
 
         arguments?.let {
             questionPaper = it.getParcelable(Constants.QUESTION_PAPER)!!
             student = it.getParcelable(Constants.STUDENT)!!
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG,"<< onViewCreated")
+        HyperLog.d(TAG,"<< onViewCreated")
 
         progressBar = ProgressBar(requireActivity())
         presenter = InstructionPresenter(this)
@@ -57,13 +57,13 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
                     })
             requireActivity().finish()
         }
-        Log.d(TAG,">> onViewCreated")
+        HyperLog.d(TAG,">> onViewCreated")
     }
 
     override fun showInstructions(instruction: Instructions) {
-        Log.d(TAG,"<< showInstructions")
+        HyperLog.d(TAG,"<< showInstructions")
         guidelinesText.text = instruction.message
-        Log.d(TAG,">> showInstructions")
+        HyperLog.d(TAG,">> showInstructions")
     }
 
     override fun setPresenter(presenter: InstructionsContract.Presenter) {

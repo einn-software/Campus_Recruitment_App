@@ -1,8 +1,8 @@
 package com.testexample.materialdesigntest.ui.resetAuthentication
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
@@ -19,7 +19,7 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
     @SuppressLint("LongLogTag")
     override fun onResetPasswordRequest(email: String, userType: String) {
 
-        Log.d(TAG, "<< onResetPasswordRequest")
+        HyperLog.d(TAG, "<< onResetPasswordRequest")
         userRepository = UserRepository()
 
         when {
@@ -43,11 +43,11 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
                         .observeOn(AndroidSchedulers.mainThread())
                         .handelNetworkError().subscribe(
                             { success ->
-                                Log.i(TAG, "Successfully requested for reset password link")
+                                HyperLog.i(TAG, "Successfully requested for reset password link")
                                 view!!.onResetRequestComplete(success)
                             },
                             {
-                                Log.e(
+                                HyperLog.e(
                                     TAG,
                                     "Error in sending reset password link: ${it.message.toString()}"
                                 )
@@ -56,7 +56,7 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
                         )
                     )
                 }
-                Log.d(TAG, ">> onResetPasswordRequest")
+                HyperLog.d(TAG, ">> onResetPasswordRequest")
             }
         }
     }

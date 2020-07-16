@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.network.model.CollegeResponse
@@ -32,7 +32,7 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "<< onViewCreated")
+        HyperLog.d(TAG, "<< onViewCreated")
 
         presenter = LoginPresenter(this)
         progressBar = ProgressBar(requireActivity())
@@ -58,21 +58,21 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
             openURL.data = Uri.parse(Constants.WEBSITE_LINK)
             startActivity(openURL)
         }
-        Log.d(TAG, ">> onViewCreated")
+        HyperLog.d(TAG, ">> onViewCreated")
     }
 
     override fun openMainActivity() {
-        Log.d(TAG, "<< openMainActivity")
+        HyperLog.d(TAG, "<< openMainActivity")
         startActivity(Intent(activity, InstructionActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         })
         requireActivity().finish()
-        Log.d(TAG, ">> openMainActivity")
+        HyperLog.d(TAG, ">> openMainActivity")
     }
 
     override fun onValidationMessage(errorCode: Int) {
-        Log.d(TAG, "<< onValidationMessage")
+        HyperLog.d(TAG, "<< onValidationMessage")
         when (errorCode) {
             Constants.EMPTY_ROLL_NO_ERROR ->
                 Toast.makeText(activity, getString(R.string.empty_roll_no_error_message),
@@ -90,21 +90,21 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
                 Toast.makeText(activity, getString(R.string.invalid_code),
                         Toast.LENGTH_LONG).show()
         }
-        Log.d(TAG, ">> onValidationMessage")
+        HyperLog.d(TAG, ">> onValidationMessage")
     }
 
     override fun showLoading(flag: Boolean) {
-        Log.d(TAG, "<< showLoading")
+        HyperLog.d(TAG, "<< showLoading")
         if (flag) {
             progressBar.startLoading()
         } else {
             progressBar.stopLoading()
         }
-        Log.d(TAG, ">> showLoading")
+        HyperLog.d(TAG, ">> showLoading")
     }
 
     override fun loadSpinner(collegeList: List<CollegeResponse>) {
-        Log.d(TAG, "<< loadSpinner")
+        HyperLog.d(TAG, "<< loadSpinner")
         val collegeNameList = getCollegeNameList(collegeList)
         searchableSpinnerForCollege.adapter = ArrayAdapter(requireActivity(),
                 android.R.layout.simple_spinner_item, collegeNameList)
@@ -123,22 +123,22 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
                     id: Long
             ) {
                 collegeCode = collegeList[position].collegeCode
-                Log.d("Student Login", "code is $collegeCode")
+                HyperLog.d("Student Login", "code is $collegeCode")
             }
 
         })
-        Log.d(TAG, ">> loadSpinner")
+        HyperLog.d(TAG, ">> loadSpinner")
     }
 
     private fun getCollegeNameList(collegeList: List<CollegeResponse>): List<String> {
-        Log.d(TAG, "<< loadSpinner")
+        HyperLog.d(TAG, "<< loadSpinner")
         val result = ArrayList<String>()
 
         for (college in collegeList) {
             result.add(college.collegeName!! + ", " + college.collegeCode.toString())
         }
 
-        Log.d(TAG, ">> loadSpinner")
+        HyperLog.d(TAG, ">> loadSpinner")
         return result
     }
 

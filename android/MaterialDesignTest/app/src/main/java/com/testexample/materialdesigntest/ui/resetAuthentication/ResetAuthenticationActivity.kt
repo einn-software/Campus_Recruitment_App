@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.login.LoginActivity
 import com.testexample.materialdesigntest.utils.Constants
@@ -20,7 +20,7 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
 
     @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_authentication)
         setSupportActionBar(appActionBar)
@@ -42,7 +42,7 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
         loginRedirectButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun setPresenter(presenter: ResetAuthenticationContract.Presenter) {
@@ -55,7 +55,7 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
 
     @SuppressLint("LongLogTag")
     override fun onResetRequestComplete(message: String) {
-        Log.d(TAG, "<< onResetRequestComplete")
+        HyperLog.d(TAG, "<< onResetRequestComplete")
         if (!message.toBoolean()) {
             resetPasswordProcessText.text = getString(R.string.email_not_registered_message,
                     resetEmailText.text.toString())
@@ -64,7 +64,7 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
         }
         requestResetButton.isEnabled = false
         loginRedirectButton.isEnabled = true
-        Log.d(TAG, ">> onResetRequestComplete")
+        HyperLog.d(TAG, ">> onResetRequestComplete")
     }
 
     override fun onDestroy() {

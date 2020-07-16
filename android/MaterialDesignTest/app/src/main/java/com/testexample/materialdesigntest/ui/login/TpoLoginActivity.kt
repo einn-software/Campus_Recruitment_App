@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
@@ -21,7 +21,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tpo_login)
 
@@ -45,7 +45,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
             openURL.data = Uri.parse(Constants.WEBSITE_LINK)
             startActivity(openURL)
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun openMainActivity() {
@@ -57,7 +57,7 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
     }
 
     override fun onValidationMessage(errorCode: Int) {
-        Log.d(TAG, "<< onValidationMessage")
+        HyperLog.d(TAG, "<< onValidationMessage")
         when (errorCode) {
             Constants.EMPTY_EMAIL_ERROR ->
                 Toast.makeText(this, getString(R.string.empty_email_error_message),
@@ -72,17 +72,17 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
                 Toast.makeText(this, getString(R.string.login_failure),
                         Toast.LENGTH_LONG).show()
         }
-        Log.d(TAG, ">> onValidationMessage")
+        HyperLog.d(TAG, ">> onValidationMessage")
     }
 
     override fun showLoading(flag: Boolean) {
-        Log.d(TAG, "<< showLoading")
+        HyperLog.d(TAG, "<< showLoading")
         if (flag) {
             progressBar.startLoading()
         } else {
             progressBar.stopLoading()
         }
-        Log.d(TAG, ">> showLoading")
+        HyperLog.d(TAG, ">> showLoading")
     }
 
     override fun setPresenter(presenter: LoginContract.TpoPresenter) {

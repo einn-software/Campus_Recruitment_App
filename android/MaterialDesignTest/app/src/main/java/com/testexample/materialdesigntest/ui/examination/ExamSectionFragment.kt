@@ -5,13 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.Options
 import com.testexample.materialdesigntest.data.model.Question
@@ -36,24 +36,24 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     private lateinit var presenter: ExaminationContract.FragmentPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         arguments?.let {
             section = it.getParcelable(SECTION)!!
             studentCredential = it.getParcelable(CREDENTIALS)!!
         }
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onViewCreated")
+        HyperLog.d(TAG, "<< onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         setPresenter(ExaminationSectionPresenter(this))
         presenter.loadAnswerSheet(studentCredential)
 
         for ((index, question) in section.questionsList.withIndex()) {
-            Log.d(TAG, "setTag")
+            HyperLog.d(TAG, "setTag")
             questionTab.addTab(questionTab.newTab()
                     .setText((index + 1).toString())
                     .setTag(question.questionId))
@@ -76,7 +76,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val index = tab!!.position
-                Log.d(TAG, "tab called is $index")
+                HyperLog.d(TAG, "tab called is $index")
                 presenter.loadQuestion(index, tab.tag as String)
                 questionMMarks.text = getString(R.string.m_m,
                         section
@@ -92,7 +92,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                     section
                             .questionsList[0]
                             .marks)
-            Log.d(TAG, "default tag called")
+            HyperLog.d(TAG, "default tag called")
         }
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -101,12 +101,12 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         }
 
         saveAndNextButton.setOnClickListener {
-            Log.d(TAG, "onClick: saveAndNextButton")
+            HyperLog.d(TAG, "onClick: saveAndNextButton")
             this.sendAnswer(4)
         }
 
         markReviewButton.setOnClickListener {
-            Log.d(TAG, "onClick: markReviewButton")
+            HyperLog.d(TAG, "onClick: markReviewButton")
             this.sendAnswer(5)
         }
 
@@ -125,16 +125,16 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             alertForEndingExam.show()
         }
 
-        Log.d(TAG, ">> onViewCreated")
+        HyperLog.d(TAG, ">> onViewCreated")
     }
 
     override fun createResponse(state: Int): StudentAnswerResponse {
-        Log.d(TAG, "<< createResponse")
+        HyperLog.d(TAG, "<< createResponse")
         val index = questionTab.selectedTabPosition
         val selectedOption = radioGroup.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).tag
         val questionId = questionTab.getTabAt(index)!!.tag.toString()
         val maxMarksForQuestion = section.questionsList[index].marks
-        Log.d(TAG, ">> createResponse")
+        HyperLog.d(TAG, ">> createResponse")
         return StudentAnswerResponse(
                 id = currentAnswerId,
                 studentAnswer = StudentAnswerRequest(
@@ -149,7 +149,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     override fun setQuestion(viewId: Int, question: Question, answer: Answer) {
-        Log.d(TAG, "<< setQuestion ")
+        HyperLog.d(TAG, "<< setQuestion ")
         radioGroup.clearCheck()
         this.questionText.text = question.questionText
         setOptions(radioButton1, question.options[0])
@@ -166,7 +166,7 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         questionNumber.text = getString(R.string.QuestionNum,
                 questionTab.getTabAt(viewId)!!.text)
         currentAnswerId = answer.answerSheetId
-        Log.d(TAG, ">> setQuestion")
+        HyperLog.d(TAG, ">> setQuestion")
     }
 
     override fun setPresenter(presenter: ExaminationContract.FragmentPresenter) {
@@ -183,19 +183,19 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     private fun setOptions(radioButton: RadioButton, option: Options) {
-        Log.d(TAG, "<< setOptions")
+        HyperLog.d(TAG, "<< setOptions")
         radioButton.apply {
             text = option.option
             tag = option.index
         }
-        Log.d(TAG, ">> setOptions")
+        HyperLog.d(TAG, ">> setOptions")
     }
 
     private fun sendAnswer(state: Int) {
-        Log.d(TAG, "<< sendAnswer: with state: $state")
+        HyperLog.d(TAG, "<< sendAnswer: with state: $state")
         val answerResponse = createResponse(state)
         presenter.saveResponse(answerResponse)
-        Log.d(TAG, ">> sendAnswer")
+        HyperLog.d(TAG, ">> sendAnswer")
     }
 
     fun setClock(timeLeftInTimer: Long) {
@@ -221,11 +221,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     override fun markTabAndMoveNext(state: Int) {
-        Log.d(TAG, "<< nextTab(): incoming state for Previous Tab: $state")
+        HyperLog.d(TAG, "<< nextTab(): incoming state for Previous Tab: $state")
         setTabFlag(state)
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
-        Log.d(TAG, ">> nextTab()")
+        HyperLog.d(TAG, ">> nextTab()")
     }
 
     private fun setTabFlag(state: Int){
@@ -243,9 +243,9 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     }
 
     override fun onResume() {
-        Log.d(TAG, "<< onResume")
+        HyperLog.d(TAG, "<< onResume")
         super.onResume()
-        Log.d(TAG, ">> onResume")
+        HyperLog.d(TAG, ">> onResume")
     }
 
     companion object {

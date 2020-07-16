@@ -1,6 +1,6 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.util.Log
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.network.retrofit.GetDataServices
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
@@ -32,32 +32,32 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
         val details : RequestBody = RequestBody.create(MediaType.parse("text/plain"), tpoEmail)
         val parts = MultipartBody.Part.createFormData("file",
                 file.name, requestFile)
-        Log.d(TAG,"${sessionManager.getUserAuthToken()}")
+        HyperLog.d(TAG,"${sessionManager.getUserAuthToken()}")
         subscriptions.add(
             api.uploadFile(sessionManager.getUserAuthToken()!!, details, parts)
                 .handelNetworkError()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                             {success ->
-                                Log.d(TAG, "Successfully Uploaded File")
+                                HyperLog.d(TAG, "Successfully Uploaded File")
                                 view!!.showMessage(success)
                             },
                             {error ->
-                                Log.d(TAG, "Failed to Uploaded File with error ${error.localizedMessage}")
+                                HyperLog.d(TAG, "Failed to Uploaded File with error ${error.localizedMessage}")
                                 view!!.showMessage("Upload Failed Due to ${error.localizedMessage}")
                             })
         )
     }
     override fun verifyFile(file: File?): Boolean{
-        Log.d(TAG , "verifyFile <-")
+        HyperLog.d(TAG , "verifyFile <-")
         if (file == null){
-            Log.d(TAG , "verifyFile <- null file")
+            HyperLog.d(TAG , "verifyFile <- null file")
             view!!.showMessage("Select an Excel File First")
             return false
         }
         try {
             val inputStream = FileInputStream(file)
-            Log.d(TAG, "FIle is : " + file.extension)
+            HyperLog.d(TAG, "FIle is : " + file.extension)
 
             val workbook = when(file.extension) {
                 "xls"-> HSSFWorkbook(inputStream)
@@ -71,12 +71,12 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                 for (rowNum in 1 until sheet.physicalNumberOfRows){
                     val row = sheet.getRow(rowNum)
                     if (row.physicalNumberOfCells > 8) {
-                        Log.d(TAG, "Verify File: ERROR. Extra Columns Present")
+                        HyperLog.d(TAG, "Verify File: ERROR. Extra Columns Present")
                         view!!.showMessage("Too Many Columns Present!")
                         return false
                     }
                     for (colNum in 0 until row.physicalNumberOfCells){
-                        Log.d(TAG, "Verify File: R${rowNum}C$colNum: ${row.getCell(colNum)}")
+                        HyperLog.d(TAG, "Verify File: R${rowNum}C$colNum: ${row.getCell(colNum)}")
                         val checkValidity = validateEntry(headRow.getCell(colNum).toString(),
                             row.getCell(colNum).toString())
                         if (checkValidity != SUCCESS){
@@ -88,12 +88,12 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
             }
         }
         catch (e: InvalidFormatException){
-            Log.d(TAG , "verifyFile <- different format file")
+            HyperLog.d(TAG , "verifyFile <- different format file")
             view!!.showMessage("Please Select an Excel File!")
             return false
         }
         catch (e: IllegalStateException){
-           Log.d(TAG , "verifyFile <- ${e.message}")
+           HyperLog.d(TAG , "verifyFile <- ${e.message}")
            view!!.showMessage(e.message.toString())
            return false
         }
@@ -102,7 +102,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     }
 
     private fun validateEntry(type: String, data: String): String{
-        Log.d(TAG, "validateEntry: $type : $data")
+        HyperLog.d(TAG, "validateEntry: $type : $data")
         if (data.isEmpty()){
             return "Please do not provide blank data in $type Field!"
         }
@@ -140,7 +140,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                 if (data.length < 6)
                     return "Password is Too short in $type Field!"
         }
-        Log.d(TAG, "validateEntry: Exit()")
+        HyperLog.d(TAG, "validateEntry: Exit()")
         return SUCCESS
     }
 

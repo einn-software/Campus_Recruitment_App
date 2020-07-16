@@ -1,7 +1,7 @@
 package com.testexample.materialdesigntest.ui.tpoDashboard
 
-import android.util.Log
 import android.widget.Toast
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.data.interactor.implementation.UserRepository
 import com.testexample.materialdesigntest.data.interactor.interfaces.IUserRepository
 import com.testexample.materialdesigntest.data.network.model.UserRequest
@@ -17,7 +17,7 @@ class TPODashboardPresenter(private var view: TPODashboardContract.View?) : TPOD
     private lateinit var repository: IUserRepository
 
     override fun fetchTpoDetails(token: String, id: String) {
-        Log.d(TAG,"<< fetchTpoDetails()")
+        HyperLog.d(TAG,"<< fetchTpoDetails()")
         repository = UserRepository()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
@@ -29,16 +29,16 @@ class TPODashboardPresenter(private var view: TPODashboardContract.View?) : TPOD
                         .subscribe(
                                 { success ->
                                     view!!.showTpoDetails(success)
-                                    Log.i(TAG, "Successfully Get TPO details.")
+                                    HyperLog.i(TAG, "Successfully Get TPO details.")
                                 },
                                 { error ->
-                                    Log.e(TAG, "Failed to get TPO Details with reason: ${error.message.toString()}")
+                                    HyperLog.e(TAG, "Failed to get TPO Details with reason: ${error.message.toString()}")
                                     Toast.makeText(view!!.setContext(), error.message.toString(), Toast.LENGTH_LONG).show()
                                 })
             }
 
         }
-        Log.d(TAG,">> fetchTpoDetails()")
+        HyperLog.d(TAG,">> fetchTpoDetails()")
     }
 
     override fun onDestroy() {

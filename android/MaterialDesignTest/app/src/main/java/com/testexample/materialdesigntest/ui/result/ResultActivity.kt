@@ -3,9 +3,9 @@ package com.testexample.materialdesigntest.ui.result
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.appbar.*
@@ -18,7 +18,7 @@ class ResultActivity : AppCompatActivity() {
     private lateinit var presenter: ResultsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
@@ -36,11 +36,11 @@ class ResultActivity : AppCompatActivity() {
                 .addToBackStack(resultInfo.toString())
                 .commit()
 
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "Total Fragments in Backstack : "+supportFragmentManager.backStackEntryCount.toString())
+        HyperLog.d(TAG, "Total Fragments in Backstack : "+supportFragmentManager.backStackEntryCount.toString())
         if (supportFragmentManager.backStackEntryCount > 1)
         {
             super.onBackPressed()

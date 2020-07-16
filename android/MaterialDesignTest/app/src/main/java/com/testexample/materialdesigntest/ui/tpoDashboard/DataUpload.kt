@@ -7,11 +7,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
@@ -37,12 +37,12 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     private lateinit var progressBar: ProgressBar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onViewCreated")
+        HyperLog.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             tpoEmail = it.getString("tpo_email").toString()
-            Log.d(TAG, "email $tpoEmail")
+            HyperLog.d(TAG, "email $tpoEmail")
         }
 
         uploadFileButton.isEnabled = false
@@ -50,13 +50,13 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         progressBar = ProgressBar(requireActivity())
 
         selectFileText.setOnClickListener{
-            Log.d(TAG, "onClick : selectFileText")
+            HyperLog.d(TAG, "onClick : selectFileText")
             checkFilePermission()
             fileSelector()
         }
 
         verifyFileButton.setOnClickListener {
-            Log.d(TAG, "onClick: Verify Button")
+            HyperLog.d(TAG, "onClick: Verify Button")
             file = prepareFileUpload()
             if (presenter.verifyFile(file)) {
                 layoutDataUpload.snackBar("Ready To Upload!")
@@ -67,21 +67,21 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         }
 
         uploadFileButton.setOnClickListener {
-            Log.d(TAG, "onClick: upload button")
+            HyperLog.d(TAG, "onClick: upload button")
             file?.let { it1 -> presenter.uploadFile(tpoEmail, it1) }
         }
 
     }
 
     override fun onDetach() {
-        Log.d(TAG, "onDetach")
+        HyperLog.d(TAG, "onDetach")
         super.onDetach()
         requireActivity().tpoDashboardContainer.visibility = VISIBLE
     }
 
 
     private fun fileSelector() {
-        Log.d(TAG, "fileSelector")
+        HyperLog.d(TAG, "fileSelector")
         Intent(Intent.ACTION_GET_CONTENT).also {
             it.type = "application/*"
             val mimeType = arrayOf("application/vnd.ms-excel",
@@ -93,7 +93,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d(TAG, "onActivityResult ")
+        HyperLog.d(TAG, "onActivityResult ")
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
             when(requestCode) {
@@ -107,7 +107,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     }
 
     private fun prepareFileUpload(): File?{
-        Log.d(TAG , "prepareFile")
+        HyperLog.d(TAG , "prepareFile")
         if (selectedFIleUri == null){
             layoutDataUpload.snackBar("Select an Excel File First")
             return null
@@ -129,13 +129,13 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         parcelFileDescriptor.close()
 
         uploadProgressBar.progress = 0
-        Log.d(TAG, "chached file is  ${file.name}")
+        HyperLog.d(TAG, "chached file is  ${file.name}")
 
         return file
     }
 
     private fun checkFilePermission(){
-        Log.d(TAG, "checkFilePermission():")
+        HyperLog.d(TAG, "checkFilePermission():")
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             var permissionCheck: Int = requireActivity().checkSelfPermission(permission.READ_EXTERNAL_STORAGE)
             permissionCheck += requireActivity().checkSelfPermission(permission.WRITE_EXTERNAL_STORAGE)
@@ -144,7 +144,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
                         permission.WRITE_EXTERNAL_STORAGE),Constants.PERMISSION_CODE)}
         }
         else{
-            Log.d(TAG, "checkFilePermission(): No Need to Check Permission")
+            HyperLog.d(TAG, "checkFilePermission(): No Need to Check Permission")
         }
     }
 

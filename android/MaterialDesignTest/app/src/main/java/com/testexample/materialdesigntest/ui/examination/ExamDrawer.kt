@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -19,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
+import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.QuestionPaper
 import com.testexample.materialdesigntest.data.model.Section
@@ -50,7 +50,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "<< onCreate")
+        HyperLog.d(TAG, "<< onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exam_drawer)
         setSupportActionBar(appActionBar)
@@ -76,7 +76,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             presenter.loadExam(FetchExamRequest(student.studentCollegeCode,
                     year, month, dayOfMonth))
         }
-        Log.d(TAG, "Question Paper: $questionPaper")
+        HyperLog.d(TAG, "Question Paper: $questionPaper")
 
         timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
 
@@ -111,12 +111,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         //Default Page
         onNavigationItemSelected(sectionNavigationView.menu.getItem(0).setChecked(true))
 
-        Log.d(TAG, ">> onCreate")
+        HyperLog.d(TAG, ">> onCreate")
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun onCreateNavigationMenu(sections: List<Section>) {
-        Log.d(TAG, "<< onCreateNavigationMenu")
+        HyperLog.d(TAG, "<< onCreateNavigationMenu")
         val menu: Menu = sectionNavigationView.menu
 
         for (item in 0 until sections.count()) {
@@ -128,12 +128,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         menu.setGroupDividerEnabled(true)
 
-        Log.d(TAG, ">> onCreateNavigationMenu")
+        HyperLog.d(TAG, ">> onCreateNavigationMenu")
     }
 
     override fun onNavigationItemSelected(currentItem: MenuItem): Boolean {
 
-        Log.d(TAG, "<< onNavigationItemSelected")
+        HyperLog.d(TAG, "<< onNavigationItemSelected")
 
         currentItem.let {
             if (supportFragmentManager
@@ -161,12 +161,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         drawer.closeDrawer(GravityCompat.START)
         countDownStart(true)
 
-        Log.d(TAG, ">> onNavigationItemSelected")
+        HyperLog.d(TAG, ">> onNavigationItemSelected")
         return true
     }
 
     override fun onBackPressed() {
-        Log.d(TAG, "<< onBackPressed")
+        HyperLog.d(TAG, "<< onBackPressed")
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
@@ -174,12 +174,12 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         if (!drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.openDrawer(GravityCompat.START)
         }
-        Log.d(TAG, ">> onBackPressed")
+        HyperLog.d(TAG, ">> onBackPressed")
     }
 
     private fun initFragment(fragment: Fragment, tag: String) {
 
-        Log.d(TAG, "<< initFragment")
+        HyperLog.d(TAG, "<< initFragment")
 
         supportFragmentManager
                 .beginTransaction().apply {
@@ -190,11 +190,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     commit()
                 }
-        Log.d(TAG, ">> initFragment")
+        HyperLog.d(TAG, ">> initFragment")
     }
 
     private fun loadExistingFragment(fragment: Fragment) {
-        Log.d(TAG, "<< loadExistingFragment")
+        HyperLog.d(TAG, "<< loadExistingFragment")
 
         supportFragmentManager.beginTransaction().apply {
             show(fragment)
@@ -202,32 +202,32 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             commit()
         }
 
-        Log.d(TAG, ">> loadExistingFragment")
+        HyperLog.d(TAG, ">> loadExistingFragment")
     }
 
     private fun hideFragment(fragment: Fragment) {
-        Log.d(TAG, "<< hideFragment")
+        HyperLog.d(TAG, "<< hideFragment")
         supportFragmentManager.beginTransaction().apply {
             hide(fragment)
             commit()
         }
-        Log.d(TAG, ">> hideFragment")
+        HyperLog.d(TAG, ">> hideFragment")
     }
 
     fun countDownStart(flag: Boolean) {
-        Log.d(TAG, "<< countDownStart")
+        HyperLog.d(TAG, "<< countDownStart")
         if (flag) {
             timer.start()
         } else {
             timer.cancel()
             timer.onFinish()
         }
-        Log.d(TAG, ">> countDownStart")
+        HyperLog.d(TAG, ">> countDownStart")
     }
 
     override fun setExamPaper(questionPaper: QuestionPaper) {
 
-        Log.d(TAG, "<< setExamPaper")
+        HyperLog.d(TAG, "<< setExamPaper")
         val headerView = sectionNavigationView.getHeaderView(0)
 
         headerView.findViewById<TextView>(R.id.studentNameText)
@@ -241,21 +241,21 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
                 .text = getString(R.string.question_paper_max_marks,
                 questionPaper.maxMarks)
 
-        Log.d(TAG, ">> setExamPaper")
+        HyperLog.d(TAG, ">> setExamPaper")
     }
 
     override fun showLoading(flag: Boolean) {
-        Log.d(TAG, "<< showLoading")
+        HyperLog.d(TAG, "<< showLoading")
         if (flag) {
             progressBar.startLoading()
         } else
             progressBar.stopLoading()
 
-        Log.d(TAG, ">> showLoading")
+        HyperLog.d(TAG, ">> showLoading")
     }
 
     override fun openNextActivity() {
-        Log.d(TAG, "<< openNextActivity")
+        HyperLog.d(TAG, "<< openNextActivity")
         startActivity(Intent(this, ResultActivity::class.java)
                 .apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -265,7 +265,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
                     putExtra(Constants.QUESTION_PAPER_ID, questionPaper.questionPaperId)
         })
         finish()
-        Log.d(TAG, ">> openNextActivity")
+        HyperLog.d(TAG, ">> openNextActivity")
     }
 
     override fun setPresenter(presenter: ExaminationContract.Presenter) {
@@ -278,14 +278,14 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     override fun onDestroy() {
         presenter.onDestroy()
-        Log.d(TAG, "onDestroy()")
+        HyperLog.d(TAG, "onDestroy()")
         super.onDestroy()
     }
 
     fun endExam() {
-        Log.d(TAG, "<< endExam")
+        HyperLog.d(TAG, "<< endExam")
         presenter.endExam(EndExamRequest(questionPaper.questionPaperId, student.studentId))
-        Log.d(TAG, ">> endExam")
+        HyperLog.d(TAG, ">> endExam")
     }
 
 }

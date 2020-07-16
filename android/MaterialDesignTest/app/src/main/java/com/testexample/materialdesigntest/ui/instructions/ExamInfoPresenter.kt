@@ -89,7 +89,7 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
 
     override fun fetchExamResult(code: Int, roll: String, question_paper_id: String) {
 
-        Log.d(TAG, "<< fetchExamResult")
+        HyperLog.d(TAG, "<< fetchExamResult")
         resultRepo = ResultRepo()
         sessionManager = SessionManager(view!!.setContext())
         view.let {
@@ -101,21 +101,21 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         { success ->
-                            Log.i(TAG, "Successfully Fetched Result From Remote : $success")
+                            HyperLog.i(TAG, "Successfully Fetched Result From Remote : $success")
                             view!!.showLoading(false)
                             view!!.resultAvailable = true
                             Toast.makeText(view!!.setContext(), "You have already taken this Exam!",
                                 Toast.LENGTH_LONG).show()
                         },
                         { error ->
-                            Log.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
+                            HyperLog.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
                             view!!.showLoading(false)
                             view!!.resultAvailable = false
                         }
 
                     ))
         }
-        Log.d(TAG, ">> fetchExamResult")
+        HyperLog.d(TAG, ">> fetchExamResult")
     }
 
     override fun onDestroy() {

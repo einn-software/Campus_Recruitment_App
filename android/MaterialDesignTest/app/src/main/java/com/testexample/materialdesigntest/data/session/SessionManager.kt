@@ -33,17 +33,17 @@ class SessionManager(context: Context) : ISessionManager {
     }
 
     override fun savePauseTime(timeInMil: Long) {
-        Log.d(TAG, "<< savePauseTime($timeInMil)")
+        HyperLog.d(TAG, "<< savePauseTime($timeInMil)")
         preferences.edit().apply{
             putLong(TIME_LEFT_AFTER_PAUSE, timeInMil)
             apply()
         }
-        Log.d(TAG, ">> savePauseTime()")
+        HyperLog.d(TAG, ">> savePauseTime()")
     }
 
     override fun getPauseTime(): Long {
-        Log.d(TAG, "<< getPauseTime()")
-        Log.d(TAG, ">> getPauseTime()")
+        HyperLog.d(TAG, "<< getPauseTime()")
+        HyperLog.d(TAG, ">> getPauseTime()")
         return preferences.getLong(TIME_LEFT_AFTER_PAUSE, 0)
     }
 

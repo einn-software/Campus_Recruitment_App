@@ -47,11 +47,11 @@ class UserRemoteRepository : IUserRemoteRepository {
     override fun callForgotPasswordApi(email: String, userType: String): Single<String> {
         return when (userType) {
             "student" -> {
-                Log.d(TAG, "studentForgotPassword called")
+                HyperLog.d(TAG, "studentForgotPassword called")
                 api.studentForgotPassword(email)
             }
             else ->{
-                Log.d(TAG, "tpoForgotPassword called")
+                HyperLog.d(TAG, "tpoForgotPassword called")
                 api.tpoForgotPassword(email)
             }
         }

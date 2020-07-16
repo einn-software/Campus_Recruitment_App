@@ -49,7 +49,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                 requireActivity().finish()
             }
             else if (resultAvailable){
-                Log.d(TAG, "<< openNextActivity")
+                HyperLog.d(TAG, "<< openNextActivity")
                 startActivity(Intent(requireContext(), ResultActivity::class.java)
                     .apply {
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -59,7 +59,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
                         putExtra(Constants.QUESTION_PAPER_ID, questionPaper?.questionPaperId)
                     })
                 requireActivity().finish()
-                Log.d(TAG, ">> openNextActivity")
+                HyperLog.d(TAG, ">> openNextActivity")
             }
             else
                 openNextFragment(this.questionPaper!!, presenter.student)

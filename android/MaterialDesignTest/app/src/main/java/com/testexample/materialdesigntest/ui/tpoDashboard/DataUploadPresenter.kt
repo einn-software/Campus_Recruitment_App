@@ -28,7 +28,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
 
     override fun uploadFile(tpoEmail: String, file: File, mimeType: String) {
 
-        Log.i(TAG, "uploadFile($tpoEmail, $file, $mimeType)")
+        HyperLog.i(TAG, "uploadFile($tpoEmail, $file, $mimeType)")
         view!!.showProgressBar(true)
         val requestFile = UploadRequestBody(file, mimeType, this)
         val details : RequestBody = RequestBody.create(MediaType.parse("text/plain"), tpoEmail)
@@ -42,7 +42,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                             {success ->
-                                HyperLog.d(TAG, "Successfully Uploaded File")
+                                HyperLog.d(TAG, "$success")
                                 view!!.showProgressBar(false)
                                 view!!.showMessage(success)
                             },
@@ -157,6 +157,6 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
     }
 
     override fun onProgressUpdate(percentage: Int) {
-        Log.i(TAG, "Percentage : $percentage")
+        HyperLog.i(TAG, "Percentage : $percentage")
     }
 }

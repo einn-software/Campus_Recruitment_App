@@ -3,13 +3,11 @@ package com.testexample.materialdesigntest.ui.examination
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -45,11 +43,10 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     private lateinit var questionPaper: QuestionPaper
     private lateinit var student: Student
     private lateinit var credentials: EndExamRequest
-    private lateinit var activeFragment: ExamSectionFragment
+    private lateinit var activeFragment: ArrayList<ExamSectionFragment>
     private var timeLeftInTimer by Delegates.notNull<Long>()
     private lateinit var timer: CountDownTimer
 
-    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         HyperLog.d(TAG, "<< onCreate")
@@ -89,7 +86,10 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
             override fun onTick(millisUntilFinished: Long) {
                 timeLeftInTimer = millisUntilFinished
-                activeFragment.setClock(timeLeftInTimer)
+                for (id in sectionFragments.keys){
+                    if (sectionFragments[id]?.isAdded!!)
+                        sectionFragments[id]!!.setClock(timeLeftInTimer)
+                }
             }
         }
 
@@ -112,11 +112,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         sectionNavigationView.setNavigationItemSelectedListener(this)
         //Default Page
         onNavigationItemSelected(sectionNavigationView.menu.getItem(0))
+        countDownStart(true)
 
         HyperLog.d(TAG, ">> onCreate")
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     private fun onCreateNavigationMenu(sections: List<Section>) {
         HyperLog.d(TAG, "<< onCreateNavigationMenu")
         val menu: Menu = sectionNavigationView.menu
@@ -124,7 +124,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         for (item in 0 until sections.count()) {
             menu.add(item, item, item, sections[item].sectionName)
         }
-        menu.setGroupDividerEnabled(true)
 
         HyperLog.d(TAG, ">> onCreateNavigationMenu")
     }
@@ -132,8 +131,8 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     override fun onNavigationItemSelected(currentItem: MenuItem): Boolean {
 
         HyperLog.d(TAG, "<< onNavigationItemSelected")
-
         currentItem.let {
+            showLoading(true)
             if (supportFragmentManager
                             .findFragmentByTag(currentItem.title.toString()) == null) {
                 if (!sectionFragments.containsKey(currentItem.itemId)) {
@@ -154,7 +153,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             }
 
             supportFragmentManager.executePendingTransactions()
-            activeFragment = sectionFragments[currentItem.itemId]!!
+            showLoading(false)
             for (item in sectionNavigationView.menu){
                 if (item.itemId == currentItem.itemId)
                     item.setChecked(true).setIcon(R.drawable.ic_double_angle_pointing_to_right)
@@ -163,7 +162,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             }
         }
         drawer.closeDrawer(GravityCompat.START)
-        countDownStart(true)
 
         HyperLog.d(TAG, ">> onNavigationItemSelected")
         return true
@@ -184,7 +182,6 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     private fun initFragment(fragment: Fragment, tag: String) {
 
         HyperLog.d(TAG, "<< initFragment")
-
         supportFragmentManager
                 .beginTransaction().apply {
                     if (supportFragmentManager.fragments.size > 0) {

@@ -46,28 +46,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="option1" />
+                android:text="" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="option2" />
+                android:text="" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="option3" />
+                android:text="" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="option4" />
+                android:text="" />
         </RadioGroup>
 
         <Button

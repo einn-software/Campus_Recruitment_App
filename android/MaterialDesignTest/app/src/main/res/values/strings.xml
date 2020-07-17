@@ -36,17 +36,12 @@
     <string name="login">LOGIN</string>
     <string name="email_not_registered_message">%s is not a registered email!</string>
     <string name="predate_login_message">some exam name</string>
-    <string name="guidelines_text">  Information regarding test</string>
+    <string name="guidelines_text"> \n</string>
     <string name="start_test">Start Test</string>
     <string name="agreement_text">I have read and agree to the guidelines</string>
     <string name="exam_info_header">Available Exams</string>
     <string name="exam_guidelines_header">Exam Guidelines:</string>
-    <string name="question_text">This is a test question to get the idea of how along text behaves in
-        a small screen space and wraps around in lines nicely This is a test question to get the idea of
-        how along text behaves in a small screen space and wraps around in linesThis is a test question
-        to get the idea of how along text behaves in a small screen space and wraps around in linesThis
-        is a test question to get the idea of how along text behaves in a small screen space and wraps
-        around in linesThis is a test question to get the idea of how along text behaves in a</string>
+    <string name="question_text">\n\n\n\n\n\n\n\n\n\n\n</string>
     <string name="m_m">M.M.: %d</string>
     <string name="save_and_next">Save and Next</string>
     <string name="mark_for_review">Mark For Review</string>

@@ -165,7 +165,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                             }
                         }
                         Q_A_Mapping = answerMap
-
+                        HyperLog.d(TAG, Q_A_Mapping.toString())
                     },
                     {error->
                         HyperLog.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})

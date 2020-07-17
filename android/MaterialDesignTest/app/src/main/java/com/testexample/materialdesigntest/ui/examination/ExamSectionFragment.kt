@@ -67,7 +67,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                     Constants.ANSWERED -> questionTab.getTabAt(index)?.setIcon(R.drawable.ic_checked)
                 }
             }
-
             // tab tag is assigned the question id
         }
 
@@ -238,8 +237,10 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         setTabFlag(state)
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
-        else
+        else {
+            presenter.loadQuestion(questionTab.selectedTabPosition, questionTab.getTabAt(questionTab.selectedTabPosition)!!.tag as String)
             requireActivity().onBackPressed()
+        }
         HyperLog.d(TAG, ">> nextTab()")
     }
 

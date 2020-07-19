@@ -3,11 +3,9 @@ package com.testexample.materialdesigntest.ui.examination
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
-import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
@@ -22,6 +20,8 @@ import com.testexample.materialdesigntest.data.network.model.StudentAnswerRespon
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.Answer
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.snackBar
+import kotlinx.android.synthetic.main.activity_exam_drawer.*
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.questionview.*
 
@@ -48,7 +48,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         HyperLog.d(TAG, ">> onCreate")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         HyperLog.d(TAG, "<< onViewCreated")
         super.onViewCreated(view, savedInstanceState)
@@ -210,6 +209,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         HyperLog.d(TAG, ">> sendAnswer")
     }
 
+    fun getTabCounts(): Pair<Int, Int> {
+        return Pair(presenter.Q_A_Mapping.count { it.value.state == Constants.MARKED },
+            presenter.Q_A_Mapping.count{ it.value.state == Constants.ANSWERED})
+    }
+
     fun setClock(timeLeftInTimer: Long) {
         if (timeLeftInTimer > 0) {
             val minutes = (timeLeftInTimer / 60000).toInt()
@@ -240,9 +244,12 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         else {
             presenter.loadQuestion(questionTab.selectedTabPosition, questionTab.getTabAt(questionTab.selectedTabPosition)!!.tag as String)
             requireActivity().onBackPressed()
+            requireActivity().drawer.snackBar("Please select a section")
+
         }
         HyperLog.d(TAG, ">> nextTab()")
     }
+
 
     private fun setTabFlag(state: Int){
         when (state){

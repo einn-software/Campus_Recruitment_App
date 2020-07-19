@@ -24,15 +24,14 @@ class SplashActivity : AppCompatActivity() {
 
         val getLog = Logger()
         getLog.setLogger(this)
-        checkAndRequestPermissions();
 
         HyperLog.d("SplashActivity(): ", "<< onCreate()")
-
-        Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }, SPLASH_TIME_OUT)
-
+        if (checkAndRequestPermissions()) {
+            Handler().postDelayed({
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }, SPLASH_TIME_OUT)
+        }
         HyperLog.d("SplashActivity(): ", ">> onCreate()")
     }
 
@@ -54,6 +53,6 @@ class SplashActivity : AppCompatActivity() {
                     REQUEST_ID_MULTIPLE_PERMISSIONS)
             return false
         }
-        return true;
+        return true
     }
 }

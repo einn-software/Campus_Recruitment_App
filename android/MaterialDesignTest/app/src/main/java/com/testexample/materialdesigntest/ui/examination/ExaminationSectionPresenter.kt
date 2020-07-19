@@ -13,6 +13,7 @@ import com.testexample.materialdesigntest.data.network.model.StudentAnswerRespon
 import com.testexample.materialdesigntest.data.network.model.StudentAnswerResponsePlain
 import com.testexample.materialdesigntest.data.network.retrofit.handelNetworkError
 import com.testexample.materialdesigntest.data.session.SessionManager
+import com.testexample.materialdesigntest.utils.Constants
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -102,7 +103,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 { question ->
-                                    var answer = Answer("", 0, 0)
+                                    var answer = Answer("", Constants.UNANSWERED, 0)
                                     if (answerMap.containsKey(questionId) && answerMap[questionId]!!.optionSelected > 0) {
                                         answer = answerMap[questionId]!!
                                     }
@@ -165,7 +166,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                             }
                         }
                         Q_A_Mapping = answerMap
-                        HyperLog.d(TAG, Q_A_Mapping.toString())
+                        HyperLog.d(TAG, "AnswerList: $Q_A_Mapping")
                     },
                     {error->
                         HyperLog.d(TAG, "Failed to Fetch AnswerResponse From remote Due to : ${error.localizedMessage}")})

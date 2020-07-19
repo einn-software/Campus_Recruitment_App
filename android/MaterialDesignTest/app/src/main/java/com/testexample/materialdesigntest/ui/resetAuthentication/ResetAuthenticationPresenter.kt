@@ -45,7 +45,7 @@ class ResetAuthenticationPresenter(private  var view : ResetAuthenticationContra
                         .handelNetworkError().subscribe(
                             { success ->
                                 HyperLog.i(TAG, "Successfully requested for reset password link")
-                                view!!.onResetRequestComplete(success)
+                                view!!.onResetRequestComplete(success.message)
                             },
                             {
                                 HyperLog.e(

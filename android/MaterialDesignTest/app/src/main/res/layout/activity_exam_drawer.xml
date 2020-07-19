@@ -18,7 +18,9 @@
             android:id="@+id/drawerToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@android:color/white"
+            app:title="Sections"/>
 
         <FrameLayout
 
@@ -33,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/sectionNavigationView"
+        app:itemIconPadding="10dp"
         app:headerLayout="@layout/drawer_header"
         android:layout_gravity="start">
 
@@ -45,7 +48,7 @@
             android:clickable="false"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/footer_item_1"
+                android:id="@+id/markedForReviewCount"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
@@ -55,9 +58,9 @@
                 android:paddingEnd="10dp"
                 android:textSize="18sp"
                 android:gravity="start|center"
-                android:text="@string/mark_for_review" />
+                android:text="@string/mark_for_review_count" />
             <TextView
-                android:id="@+id/footer_item_2"
+                android:id="@+id/answeredCount"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

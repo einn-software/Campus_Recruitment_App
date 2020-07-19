@@ -3,10 +3,12 @@ package com.testexample.materialdesigntest.ui.examination
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -37,15 +39,16 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
     val TAG = "EXAM DRAWER"
 
+    private lateinit var currentFragment: ExamSectionFragment
     private var sectionFragments: MutableMap<Int, ExamSectionFragment> = mutableMapOf()
     private lateinit var progressBar: ProgressBar
     private lateinit var presenter: ExaminationContract.Presenter
     private lateinit var questionPaper: QuestionPaper
     private lateinit var student: Student
     private lateinit var credentials: EndExamRequest
-    private lateinit var activeFragment: ArrayList<ExamSectionFragment>
     private var timeLeftInTimer by Delegates.notNull<Long>()
     private lateinit var timer: CountDownTimer
+    private var tabCount: Pair<Int, Int> = Pair(0, 0)
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,11 +103,19 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             setDisplayHomeAsUpEnabled(false)
         }
 
-        val toggle = ActionBarDrawerToggle(
+        val toggle = object : ActionBarDrawerToggle(
                 this, drawerLayout, drawerToolbar,
                 R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close)
+                R.string.navigation_drawer_close) {
+            override fun onDrawerOpened(drawerView: View) {
+                tabCount = currentFragment.getTabCounts()
+                markedForReviewCount.text = getString(R.string.mark_for_review_count, tabCount.first)
+                answeredCount.text = getString(R.string.answered, tabCount.second)
+                super.onDrawerOpened(drawerView)
+            }
+        }
 
+        toggle.drawerArrowDrawable.color = Color.WHITE
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -153,6 +164,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             }
 
             supportFragmentManager.executePendingTransactions()
+            currentFragment = sectionFragments[currentItem.itemId]!!
             showLoading(false)
             for (item in sectionNavigationView.menu){
                 if (item.itemId == currentItem.itemId)

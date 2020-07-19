@@ -10,7 +10,7 @@ import com.testexample.materialdesigntest.data.network.repository.UserRemoteRepo
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class UserRepository() : IUserRepository {
+class UserRepository : IUserRepository {
 
     private val TAG = "UserRepository"
     private val remoteRepository: IUserRemoteRepository = UserRemoteRepository()
@@ -27,7 +27,7 @@ class UserRepository() : IUserRepository {
         return remoteRepository.getStudent(userRequest)
     }
 
-    override fun forgotPassword(email: String, userTpe: String): Single<String> {
+    override fun forgotPassword(email: String, userTpe: String): Single<MessageResponse> {
         HyperLog.d(TAG, "<< forgotPassword()")
         HyperLog.d(TAG, ">> forgotPassword()")
         return remoteRepository.callForgotPasswordApi(email, userTpe)

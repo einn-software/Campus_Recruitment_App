@@ -37,7 +37,7 @@ class ExaminationRemoteRepo : IExaminationRemoteRepo {
         return api.updateStudentResponse(token, request.id, request.studentAnswer)
     }
 
-    override fun callApiForEndingExam(token: String, endRequest: EndExamRequest): Single<EndExamResponse> {
+    override fun callApiForEndingExam(token: String, endRequest: EndExamRequest): Single<MessageResponse> {
         HyperLog.d(TAG, "<< callApiForEndingExam()")
         HyperLog.d(TAG, ">> callApiForEndingExam()")
         return api.endExam(token, endRequest)

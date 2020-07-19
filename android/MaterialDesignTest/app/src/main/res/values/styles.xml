@@ -3,9 +3,6 @@
     <!-- Base application theme. -->
     <style name="BaseMaterialTheme" parent="SuperMaterialTheme">
         <!-- Theme supported by API > 21 -->
-
-
-
     </style>
 
     <style name="SuperMaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -17,6 +14,7 @@
         <item name="colorControlActivated">#873334</item>
         <item name="colorButtonNormal">#4CAF50</item>
         <item name="colorControlHighlight">#a4c383</item>
+        <item name="fontFamily">sans-serif-condensed</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activatedbackground</item>
     </style>
 

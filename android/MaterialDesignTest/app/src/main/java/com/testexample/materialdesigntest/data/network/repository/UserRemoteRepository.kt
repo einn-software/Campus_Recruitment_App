@@ -44,7 +44,7 @@ class UserRemoteRepository : IUserRemoteRepository {
         return api.getCollegeList()
     }
 
-    override fun callForgotPasswordApi(email: String, userType: String): Single<String> {
+    override fun callForgotPasswordApi(email: String, userType: String): Single<MessageResponse> {
         return when (userType) {
             "student" -> {
                 HyperLog.d(TAG, "studentForgotPassword called")

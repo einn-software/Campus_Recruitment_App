@@ -2,10 +2,7 @@ package com.testexample.materialdesigntest.data.interactor.interfaces
 
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.model.TPO
-import com.testexample.materialdesigntest.data.network.model.AuthResponse
-import com.testexample.materialdesigntest.data.network.model.CollegeResponse
-import com.testexample.materialdesigntest.data.network.model.StudentLoginRequest
-import com.testexample.materialdesigntest.data.network.model.UserRequest
+import com.testexample.materialdesigntest.data.network.model.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -18,7 +15,7 @@ interface IUserRepository {
             : Flowable<Student>
 
     fun forgotPassword(email: String, userTpe: String)
-            : Single<String>
+            : Single<MessageResponse>
   
     fun isTpoValid(
         email: String,

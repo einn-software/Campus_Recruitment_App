@@ -45,7 +45,7 @@ class ExaminationRepo : IExaminationRepo {
         return remoteRepo.callApiForUpdatingAnswer(token, response)
     }
 
-    override fun stopExam(token: String, endExamRequest: EndExamRequest): Single<EndExamResponse> {
+    override fun stopExam(token: String, endExamRequest: EndExamRequest): Single<MessageResponse> {
         HyperLog.d(TAG, "<< stopExam()")
         HyperLog.d(TAG, ">> stopExam()")
         return remoteRepo.callApiForEndingExam(token, endExamRequest)

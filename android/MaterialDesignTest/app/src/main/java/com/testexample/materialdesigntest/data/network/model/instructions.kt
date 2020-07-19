@@ -23,7 +23,7 @@ data class EndExamRequest(
     @SerializedName("student_id")val studentId: String
 ) : Parcelable
 
-data class EndExamResponse(
+data class MessageResponse(
     @SerializedName("message")val message: String
 )
 

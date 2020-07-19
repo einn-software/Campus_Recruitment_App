@@ -12,5 +12,5 @@ interface IUserRemoteRepository {
     fun getTPO(userRequest: UserRequest): Flowable<TPO>
     fun authTPO(loginRequest: TpoLoginRequest): Single<AuthResponse>
     fun callAPIForCollegeList(): Flowable<List<CollegeResponse>>
-    fun callForgotPasswordApi(email: String, userType: String): Single<String>
+    fun callForgotPasswordApi(email: String, userType: String): Single<MessageResponse>
 }

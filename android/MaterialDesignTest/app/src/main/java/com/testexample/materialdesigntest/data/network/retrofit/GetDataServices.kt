@@ -27,7 +27,7 @@ interface GetDataServices {
                        @Path("code") code: Int ): Flowable<List<StudentResponse>>
 
     @POST("forgot-password/students")
-    fun studentForgotPassword(@Body email: String): Single<String>
+    fun studentForgotPassword(@Body email: String): Single<MessageResponse>
 
     @POST("login/tpos")
     fun authTPO(@Body loginRequest: TpoLoginRequest): Single<AuthResponse>
@@ -37,7 +37,7 @@ interface GetDataServices {
                @Path("id") tpoId: String): Flowable<TPO>
 
     @POST("forgot-password/tpos")
-    fun tpoForgotPassword(@Body email: String):Single<String>
+    fun tpoForgotPassword(@Body email: String):Single<MessageResponse>
 
     @PUT("tpos/{id}")
     fun updateTPO(@Header("auth-token") token: String,
@@ -94,7 +94,7 @@ interface GetDataServices {
 
     @POST("final-submission")
     fun endExam(@Header("auth-token") token: String ,
-                @Body endExamRequest: EndExamRequest): Single<EndExamResponse>
+                @Body endExamRequest: EndExamRequest): Single<MessageResponse>
 
     @GET("colleges/{code}/results/{question-paper-id}")
     fun getStudentResultList(@Header("auth-token") token: String,

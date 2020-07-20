@@ -2,7 +2,6 @@ const Students = require("../model/Student");
 const assert = require("assert");
 const logger = require("../config/logger");
 var id = '';
-
 describe("Students Create Tests", () => {
     it("Create", (done) => {
         const Registration = new Students({
@@ -29,16 +28,14 @@ describe("Students Create Tests", () => {
 
 // Read Tests
 describe("Student Read Tests", () => {
-    it("Read", (done) => {
+    it("Read", () => {
         Students.find({
-            name: "Shikha"
+            email: "gshikha@gmail.com"
         }).then((reg) => {
             assert(id.toString() === reg[0]._id.toString());
-            done();
         });
     });
 });
-
 // update all tests
 describe("Student Update Tests", () => {
     it("update", () => {
@@ -50,19 +47,18 @@ describe("Student Update Tests", () => {
             }, updater, {
                 new: true
             })
-            .then((Admin) => {
-                assert(Admin.name !== "Shikha");
+            .then((data) => {
+                assert(data.name !== "Shikha");
             });
     });
 });
-
 //All delete tests
 describe("Student Delete Tests", () => {
     it("Delete", (done) => {
         Students.findByIdAndRemove({
             _id: id
-        }, (Admin) => {
-            assert(Admin == null);
+        }, (data) => {
+            assert(data == null);
             done();
         });
     });

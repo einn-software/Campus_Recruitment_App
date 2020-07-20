@@ -1,3 +1,4 @@
+"use strict";
 const Colleges = require("../model/College");
 const assert = require("assert");
 const logger = require("../config/logger");
@@ -5,8 +6,6 @@ var id = '';
 
 describe("Create Tests for College Model", () => {
     it("Create College", (done) => {
-        // assert(true);
-
         const Registration = new Colleges({
             name: "NTC",
             email: "gshikha@gmail.com",
@@ -26,7 +25,6 @@ describe("Create Tests for College Model", () => {
             });
     });
 });
-
 // Read Tests
 describe("College Read Tests", () => {
     it("Read", (done) => {
@@ -38,7 +36,6 @@ describe("College Read Tests", () => {
         });
     });
 });
-
 // update all tests
 describe("College Update Tests", () => {
     it("update", () => {
@@ -50,19 +47,18 @@ describe("College Update Tests", () => {
             }, updater, {
                 new: true
             })
-            .then((Admin) => {
-                assert(Admin.name !== "NTC");
+            .then((data) => {
+                assert(data.name !== "NTC");
             });
     });
 });
-
 //All delete tests
 describe("College Delete Tests", () => {
     it("Delete", (done) => {
         Colleges.findByIdAndRemove({
             _id: id
-        }, (Admin) => {
-            assert(Admin == null);
+        }, (data) => {
+            assert(data == null);
             done();
         });
     });

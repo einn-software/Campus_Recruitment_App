@@ -1,15 +1,15 @@
 "use strict";
 require("should");
-const request = require("supertest");
 const app = require("../index");
+const request = require("supertest");
 const agent = request.agent(app);
 const logger = require("../config/logger");
+const Admins = require("../model/Admin");
 const Constants = require("../config/constant");
 
-var loggedInToken = '';
-var id = '';
-var code = 0;
-var admin_id = '';
+var token = "";
+var id = "";
+var admin_id = "";
 
 before((done) => {
     const admin = {
@@ -23,10 +23,10 @@ before((done) => {
         .send(admin)
         .expect(Constants.success)
         .end((err, results) => {
-            if (err) logger.log('error', err);
+            if (err) logger.log(err);
             admin_id = results.body._id;
             done();
-        })
+        });
 });
 before((done) => {
     const adminLogin = {
@@ -38,60 +38,50 @@ before((done) => {
         .send(adminLogin)
         .expect(Constants.success)
         .end((err, results) => {
-            if (err) logger.log('error', err);
-            loggedInToken = results.body.token;
+            if (err) logger.log(err);
+            token = results.body.token;
             done();
-        })
-})
+        });
+});
 
-describe("Add college Testing:", () => {
-    const college = {
-        "name": "Nitra Technical Campus",
-        "email": "nitra802@ntc.ac.in",
-        "phone": "8090778901",
-        "university": "APJ Abdul Kalam University",
-        "address": "Sanjay Nagar, Ghaziabad"
-    };
-    it("should return access denied:", (done) => {
+describe("Create Tests", () => {
+    it("It should return instructions", (done) => {
         agent
-            .post("/colleges")
-            .set('auth-token', '')
-            .send(college)
-            .expect(400)
-            .end((err, results) => {
-                results.body.should.have.property("error_info");
-                done();
-            });
-    });
-    it("should return a registered college:", (done) => {
-        agent
-            .post("/colleges")
-            .set('auth-token', loggedInToken)
-            .send(college)
+            .post("/instructions")
+            .set("auth-token", token)
+            .send({
+                code: 2349,
+                year: 2020,
+                month: 11,
+                day: 23,
+                message: "This is a test message",
+            })
             .expect(Constants.success)
             .end((err, results) => {
                 id = results.body._id;
-                code = results.body.code;
                 results.body.should.have.property("_id");
                 done();
             });
     });
 });
 
-describe("GET college Testing:", () => {
-    it("should return a list of colleges:", (done) => {
+// To get all instructions
+describe("The GET method", async () => {
+    it("should return a list of instructions:", (done) => {
         agent
-            .get("/colleges")
+            .get("/instructions")
+            .set("auth-token", token)
             .expect(Constants.success)
             .end((err, results) => {
-                if (err) logger.log('error', err);
+                if (err) logger.log("error", err);
                 results.body.should.be.an.Array();
                 done();
-            })
+            });
     });
     it("should return a error: Path not defined:", (done) => {
         agent
-            .get("/collees")
+            .get("/instructos")
+            .set("auth-token", token)
             .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -100,22 +90,22 @@ describe("GET college Testing:", () => {
     });
 });
 
-describe("GET college by code Testing:", () => {
-    it("should return a college:", (done) => {
+describe("GET instruction by code Testing:", () => {
+    it("should return a instruction:", (done) => {
         agent
-            .get(`/colleges/${code}`)
-            .set('auth-token', loggedInToken)
+            .get(`/instructions/${id}`)
+            .set("auth-token", token)
             .expect(Constants.success)
             .end((err, results) => {
-                if (err) logger.log('error', err);
-                results.body.should.have.property("name");
+                if (err) logger.log("error", err);
+                results.body.should.have.property("code");
                 done();
-            })
+            });
     });
     it("should return a error: Id not found:", (done) => {
         agent
-            .get(`/colleges/58465464613545`)
-            .set('auth-token', loggedInToken)
+            .get(`/instructions/58465464613545`)
+            .set("auth-token", token)
             .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -124,26 +114,26 @@ describe("GET college by code Testing:", () => {
     });
 });
 
-describe("Change(PUT) college's data by Id Testing:", () => {
+describe("Change(PUT) instruction's data by Id Testing:", () => {
     const body = {
-        name: "RKGIT"
-    }
-    it("should return a college after changing it's data:", (done) => {
+        code: 2346,
+    };
+    it("should return a instruction after changing it's data:", (done) => {
         agent
-            .set('auth-token', loggedInToken)
-            .put(`/colleges/${code}`)
+            .set("auth-token", token)
+            .put(`/instructions/${id}`)
             .send(body)
             .expect(Constants.success)
             .end((err, results) => {
-                if (err) logger.log('error', err);
-                results.body.should.have.property("name").which.is.equal('RKGIT');
+                if (err) logger.log("error", err);
+                results.body.should.have.property("code").which.is.equal(2346);
                 done();
-            })
+            });
     });
     it("should return a error: authentication error:", (done) => {
         agent
-            .set('auth-token', '')
-            .put(`/colleges/${code}`)
+            .set("auth-token", "")
+            .put(`/instructions/${id}`)
             .send(body)
             .expect(Constants.success)
             .end((err, results) => {
@@ -152,22 +142,35 @@ describe("Change(PUT) college's data by Id Testing:", () => {
             });
     });
 });
-describe("DELETE college by Id Testing:", () => {
-    it("should return a message about deleted college:", (done) => {
+describe("DELETE instruction by Id Testing:", () => {
+    it("should return a message about deleted instruction:", (done) => {
         agent
-            .delete(`/colleges/${id}`)
-            .set('auth-token', loggedInToken)
+            .delete(`/instructions/${id}`)
+            .set("auth-token", token)
             .expect(Constants.success)
             .end((err, results) => {
-                if (err) logger.log('error', err);
+                if (err) logger.log("error", err);
                 results.body.should.have.property("message");
                 done();
-            })
+            });
     });
     it("should return a error: no user found in databse:", (done) => {
         agent
-            .delete(`/colleges/${id}`)
-            .set('auth-token', loggedInToken)
+            .delete(`/instructions/${id}`)
+            .set("auth-token", token)
+            .expect(Constants.success)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
+});
+
+describe("DELETE all instruction by Id Testing:", () => {
+    it("should return a error: no user found in databse:", (done) => {
+        agent
+            .delete(`/instructions`)
+            .set("auth-token", token)
             .expect(Constants.success)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -177,12 +180,8 @@ describe("DELETE college by Id Testing:", () => {
 });
 
 after((done) => {
-    agent
-        .delete(`/admins/${admin_id}`)
-        .set('auth-token', loggedInToken)
-        .expect(Constants.success)
-        .end((err, results) => {
-            if (err) logger.log('error', err);
-            done();
-        })
-})
+    Admins.findOneAndRemove({
+        _id: admin_id,
+    }).exec();
+    done();
+});

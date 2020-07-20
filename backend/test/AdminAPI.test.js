@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const app = require("../index");
 const agent = request.agent(app);
 const logger = require("../config/logger");
+const Constants = require("../config/constant");
 
 before((done) => {
     mongoose.connect(process.env.TEST_DB_CONNECT, {
@@ -51,7 +52,7 @@ describe("Admin Registration Testing:", () => {
         agent
             .post("/register/admins")
             .send(admin)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 id = results.body._id;
                 results.body.should.have.property("_id");
@@ -68,7 +69,7 @@ describe("Admin Login Testing:", () => {
         agent
             .post("/login/admins")
             .send(admin)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 loggedInToken = results.body.token;
@@ -85,7 +86,7 @@ describe("Admin Login Testing:", () => {
         agent
             .post("/login/admins")
             .send(admin)
-            .expect(400)
+            .expect(Constants.er_authentication_failed)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -98,7 +99,7 @@ describe("GET Admin Testing:", () => {
         agent
             .set('auth-token', loggedInToken)
             .get("/admins")
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.be.an.Array();
@@ -109,7 +110,7 @@ describe("GET Admin Testing:", () => {
         agent
             .set('auth-token', '')
             .get("/admins")
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -122,7 +123,7 @@ describe("GET Admin by Id Testing:", () => {
         agent
             .get(`/admins/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("name");
@@ -133,7 +134,7 @@ describe("GET Admin by Id Testing:", () => {
         agent
             .get(`/admins/58465464613545`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -150,7 +151,7 @@ describe("Change(PUT) Admin's data by Id Testing:", () => {
             .set('auth-token', loggedInToken)
             .put(`/admins/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("name").which.is.equal('Radhika Singhal');
@@ -162,7 +163,7 @@ describe("Change(PUT) Admin's data by Id Testing:", () => {
             .set('auth-token', '')
             .put(`/admins/${id}`)
             .send(body)
-            .expect(200)
+            .expect(Constants.er_authentication_failed)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();
@@ -174,7 +175,7 @@ describe("DELETE Admin by Id Testing:", () => {
         agent
             .delete(`/admins/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
                 results.body.should.have.property("message");
@@ -185,7 +186,7 @@ describe("DELETE Admin by Id Testing:", () => {
         agent
             .delete(`/admins/${id}`)
             .set('auth-token', loggedInToken)
-            .expect(200)
+            .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
                 done();

@@ -2,7 +2,6 @@ const Tpos = require("../model/Tpo");
 const assert = require("assert");
 const logger = require("../config/logger");
 var id = '';
-
 describe("TPO Create Tests", () => {
     it("Create", (done) => {
         const Registration = new Tpos({
@@ -25,7 +24,6 @@ describe("TPO Create Tests", () => {
             });
     });
 });
-
 // Read Tests
 describe("TPO Read Tests", () => {
     it("Read", (done) => {
@@ -37,10 +35,8 @@ describe("TPO Read Tests", () => {
         });
     });
 });
-
 // update all tests
 describe("TPO Update Tests", () => {
-
     it("update", () => {
         updater = ({
             name: "Riya"
@@ -50,19 +46,18 @@ describe("TPO Update Tests", () => {
             }, updater, {
                 new: true
             })
-            .then((Admin) => {
-                assert(Admin.name !== "Shikha");
+            .then((data) => {
+                assert(data.name !== "Shikha");
             });
     });
 });
-
 //All delete tests
 describe("TPO Delete Tests", () => {
     it("Delete", (done) => {
         Tpos.findByIdAndRemove({
             _id: id
-        }, (Admin) => {
-            assert(Admin == null);
+        }, (data) => {
+            assert(data == null);
             done();
         });
     });

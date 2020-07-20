@@ -1,14 +1,14 @@
 "use strict";
 require("should");
-const request = require("supertest");
 const app = require("../index");
+const request = require("supertest");
 const agent = request.agent(app);
+const Admins = require("../model/Admin");
 const logger = require("../config/logger");
 const Constants = require("../config/constant");
 
 var loggedInToken = '';
 var id = '';
-var code = 0;
 var admin_id = '';
 
 before((done) => {
@@ -26,7 +26,7 @@ before((done) => {
             if (err) logger.log('error', err);
             admin_id = results.body._id;
             done();
-        })
+        });
 });
 before((done) => {
     const adminLogin = {
@@ -44,44 +44,49 @@ before((done) => {
         })
 })
 
-describe("Add college Testing:", () => {
-    const college = {
-        "name": "Nitra Technical Campus",
-        "email": "nitra802@ntc.ac.in",
-        "phone": "8090778901",
-        "university": "APJ Abdul Kalam University",
-        "address": "Sanjay Nagar, Ghaziabad"
-    };
-    it("should return access denied:", (done) => {
+describe("Create Tests", () => {
+    it('It should return a saved question', (done) => {
         agent
-            .post("/colleges")
-            .set('auth-token', '')
-            .send(college)
-            .expect(400)
-            .end((err, results) => {
-                results.body.should.have.property("error_info");
-                done();
-            });
-    });
-    it("should return a registered college:", (done) => {
-        agent
-            .post("/colleges")
+            .post('/questions')
             .set('auth-token', loggedInToken)
-            .send(college)
+            .send({
+                "question": "What makes a activity more essential?",
+                "topic": "Computer Science",
+                "options": [{
+                        "index": 1,
+                        "option": " No need to follow rules"
+                    },
+                    {
+                        "index": 2,
+                        "option": "It schedules, estimates and follows resource allocation"
+                    },
+                    {
+                        "index": 3,
+                        "option": "All of the mentioned"
+                    },
+                    {
+                        "index": 4,
+                        "option": "None of the mentioned"
+                    }
+                ],
+                "answer": 3,
+                "weight": 5
+            })
             .expect(Constants.success)
             .end((err, results) => {
                 id = results.body._id;
-                code = results.body.code;
                 results.body.should.have.property("_id");
                 done();
             });
     });
-});
+})
 
-describe("GET college Testing:", () => {
-    it("should return a list of colleges:", (done) => {
+// To get all questions
+describe('The GET method', async () => {
+    it("should return a list of questions:", (done) => {
         agent
-            .get("/colleges")
+            .get("/questions")
+            .set('auth-token', loggedInToken)
             .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
@@ -91,7 +96,8 @@ describe("GET college Testing:", () => {
     });
     it("should return a error: Path not defined:", (done) => {
         agent
-            .get("/collees")
+            .get("/instructos")
+            .set('auth-token', loggedInToken)
             .expect(Constants.er_not_found)
             .end((err, results) => {
                 results.body.should.have.property("error_info");
@@ -100,21 +106,21 @@ describe("GET college Testing:", () => {
     });
 });
 
-describe("GET college by code Testing:", () => {
-    it("should return a college:", (done) => {
+describe("GET instruction by code Testing:", () => {
+    it("should return a instruction:", (done) => {
         agent
-            .get(`/colleges/${code}`)
+            .get(`/questions/${id}`)
             .set('auth-token', loggedInToken)
             .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
-                results.body.should.have.property("name");
+                results.body.should.have.property("weight");
                 done();
             })
     });
     it("should return a error: Id not found:", (done) => {
         agent
-            .get(`/colleges/58465464613545`)
+            .get(`/questions/58465464613545`)
             .set('auth-token', loggedInToken)
             .expect(Constants.er_not_found)
             .end((err, results) => {
@@ -124,26 +130,26 @@ describe("GET college by code Testing:", () => {
     });
 });
 
-describe("Change(PUT) college's data by Id Testing:", () => {
+describe("Change(PUT) question's data by Id Testing:", () => {
     const body = {
-        name: "RKGIT"
+        weight: 2
     }
-    it("should return a college after changing it's data:", (done) => {
+    it("should return a question after changing it's data:", (done) => {
         agent
             .set('auth-token', loggedInToken)
-            .put(`/colleges/${code}`)
+            .put(`/questions/${id}`)
             .send(body)
             .expect(Constants.success)
             .end((err, results) => {
                 if (err) logger.log('error', err);
-                results.body.should.have.property("name").which.is.equal('RKGIT');
+                results.body.should.have.property("weight").which.is.equal(2);
                 done();
             })
     });
     it("should return a error: authentication error:", (done) => {
         agent
             .set('auth-token', '')
-            .put(`/colleges/${code}`)
+            .put(`/questions/${id}`)
             .send(body)
             .expect(Constants.success)
             .end((err, results) => {
@@ -152,10 +158,10 @@ describe("Change(PUT) college's data by Id Testing:", () => {
             });
     });
 });
-describe("DELETE college by Id Testing:", () => {
-    it("should return a message about deleted college:", (done) => {
+describe("DELETE questions by Id Testing:", () => {
+    it("should return a message about deleted questions:", (done) => {
         agent
-            .delete(`/colleges/${id}`)
+            .delete(`/questions/${id}`)
             .set('auth-token', loggedInToken)
             .expect(Constants.success)
             .end((err, results) => {
@@ -166,7 +172,7 @@ describe("DELETE college by Id Testing:", () => {
     });
     it("should return a error: no user found in databse:", (done) => {
         agent
-            .delete(`/colleges/${id}`)
+            .delete(`/questions/${id}`)
             .set('auth-token', loggedInToken)
             .expect(Constants.success)
             .end((err, results) => {
@@ -177,12 +183,8 @@ describe("DELETE college by Id Testing:", () => {
 });
 
 after((done) => {
-    agent
-        .delete(`/admins/${admin_id}`)
-        .set('auth-token', loggedInToken)
-        .expect(Constants.success)
-        .end((err, results) => {
-            if (err) logger.log('error', err);
-            done();
-        })
+    Admins.findOneAndRemove({
+        _id: admin_id
+    }).exec();
+    done();
 })

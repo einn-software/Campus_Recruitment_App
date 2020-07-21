@@ -12,6 +12,8 @@ import com.testexample.materialdesigntest.data.network.model.QuestionPaperListRe
 import com.testexample.materialdesigntest.utils.Constants
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_question_paper_list.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list), TPODashboardContract.QuestionPaperListView {
@@ -19,6 +21,10 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
     private lateinit var presenter: TPODashboardContract.QuestionPaperListPresenter
     private var code: Int = 0
     val TAG = "QuestionPaperListFragment"
+    val calender = Calendar.getInstance()
+    val currentYear: Int = calender.get(Calendar.YEAR)
+    val currentMonth: Int = calender.get(Calendar.MONTH) + 1
+    val currentDayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
 
     override fun showQuestionPaperList(questionPapers: List<QuestionPaperListResponse>) {
         HyperLog.d(TAG, "<< showQuestionPaperList()")
@@ -27,16 +33,35 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         val questionPaperDate = ArrayList<String>()
         val numQuestionPapers = questionPapers.size
 
+
         for (i in 0 until numQuestionPapers) {
-            questionPaperName.add(questionPapers[i].paper_name)
-            questionPaperId.add(questionPapers[i].questionPaperId)
-            questionPaperDate.add(questionPapers[i].day.toString()+"-"+questionPapers[i].month.toString()+"-"+questionPapers[i].year.toString())
+            if (isNotFutureDate(
+                    questionPapers[i].day,
+                    questionPapers[i].month,
+                    questionPapers[i].year
+                )
+            ) {
+                questionPaperName.add(questionPapers[i].paper_name)
+                questionPaperId.add(questionPapers[i].questionPaperId)
+                questionPaperDate.add(questionPapers[i].day.toString() + "-"
+                        + questionPapers[i].month.toString() + "-" + questionPapers[i].year.toString())
+            }
         }
 
         val listAdapter = QuestionPaperAdapter(this.requireActivity(), questionPaperName, questionPaperId, questionPaperDate)
         list.adapter = listAdapter
 
         HyperLog.d(TAG, ">> showQuestionPaperList()")
+    }
+
+    private fun isNotFutureDate(dayOfMonth: Int, month: Int, year: Int): Boolean {
+        if (year > currentYear )
+            return false
+        if (month > currentMonth)
+            return false
+        if (dayOfMonth > currentDayOfMonth)
+            return false
+        return true
     }
 
     override fun setPresenter(presenter: TPODashboardContract.QuestionPaperListPresenter) {
@@ -63,8 +88,8 @@ class QuestionPaperListFragment : Fragment(R.layout.fragment_question_paper_list
         presenter = QuestionPaperListPresenter(this)
         presenter.fetchQuestionPaperList(code)
 
-        list.setOnItemClickListener { _, view, _, _ ->
-            val questionPaperId = (view.findViewById(R.id.questionPaperIdText) as TextView).text
+        list.setOnItemClickListener { _, view1, _, _ ->
+            val questionPaperId = (view1.findViewById(R.id.questionPaperIdText) as TextView).text
             HyperLog.i(TAG, "Calling ResultList fragment with questionPaperId $questionPaperId and college code is $code")
 
             requireActivity().supportFragmentManager.beginTransaction().apply {

@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.testexample.materialdesigntest"
         multiDexEnabled true
-        minSdkVersion 26
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -54,7 +54,7 @@ android {
 ext {
     anko_version = '0.10.0'
     arc_lib_version = '1.1.1'
-    supportLibVersion = '26.1.0'
+    supportLibVersion = '27.0.2'
     retrofitVersion = '2.3.0'
     rxAndroidVersion = '2.0.1'
     rxJavaVersion = '2.1.7'
@@ -76,8 +76,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 
-    implementation "android.arch.lifecycle:runtime:$arc_lib_version"
-    implementation "android.arch.lifecycle:extensions:$arc_lib_version"
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

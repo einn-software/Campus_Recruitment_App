@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="Exit Test"
+        android:text="Submit Test"
         android:textColor="#CF0A0A"
         app:layout_constraintBottom_toBottomOf="@+id/timerText"
         app:layout_constraintEnd_toEndOf="parent"

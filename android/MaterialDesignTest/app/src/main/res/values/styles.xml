@@ -10,7 +10,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:autofilledHighlight">@android:color/transparent</item>
         <item name="colorControlActivated">#873334</item>
         <item name="colorButtonNormal">#4CAF50</item>
         <item name="colorControlHighlight">#a4c383</item>
@@ -35,6 +34,10 @@
     <style name="MyDialogAnimation.Window" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
+
+    <style name="ListFont" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">@color/colorAccent2</item>
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">

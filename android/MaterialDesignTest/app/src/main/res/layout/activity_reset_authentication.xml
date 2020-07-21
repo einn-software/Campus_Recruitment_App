@@ -15,11 +15,11 @@
     <EditText
         android:id="@+id/resetEmailText"
         style="@android:style/Widget.Material.Light.AutoCompleteTextView"
-        android:layout_width="340dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -29,9 +29,11 @@
 
     <Button
         android:id="@+id/requestResetButton"
-        android:layout_width="150dp"
-        android:layout_height="56dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="82dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
@@ -62,9 +64,11 @@
 
     <Button
         android:id="@+id/loginRedirectButton"
-        android:layout_width="150dp"
-        android:layout_height="56dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/buttonshape"
         android:enabled="false"
         android:shadowColor="#A8A8A8"

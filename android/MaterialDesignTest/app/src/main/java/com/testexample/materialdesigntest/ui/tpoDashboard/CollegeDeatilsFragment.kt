@@ -12,6 +12,7 @@ import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.data.model.College
 import com.testexample.materialdesigntest.data.network.model.UpdateCollegeDetails
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_college_details.*
 
@@ -60,7 +61,7 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
         presenter = CollegeDetailsPresenter(this)
         presenter .fetchCollegeDetails(code)
 
-        editCollegeButton.setOnClickListener {
+        editCollegeButton.setOnSingleClickListener {
             HyperLog.d(TAG,"<< editCollegeButton| setOnClickListener()")
             val mEditCollegeName = collegeNameValue
             mEditCollegeName.isEnabled = true
@@ -75,7 +76,7 @@ class CollegeDetailsFragment : Fragment(R.layout.fragment_college_details),
             HyperLog.d(TAG,">> editCollegeButton| setOnClickListener()")
         }
 
-        saveCollegeButton.setOnClickListener{
+        saveCollegeButton.setOnSingleClickListener{
             HyperLog.d(TAG,"<< saveCollegeButton| setOnClickListener()")
             val collegeDetails = UpdateCollegeDetails(collegeNameValue.text.toString(),
                     collegeAddressValue.text.toString(), collegeUniversityValue.text.toString(),

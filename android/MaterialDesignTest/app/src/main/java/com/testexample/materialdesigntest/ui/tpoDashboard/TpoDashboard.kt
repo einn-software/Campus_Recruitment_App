@@ -13,13 +13,12 @@ import com.testexample.materialdesigntest.data.model.TPO
 import com.testexample.materialdesigntest.data.network.model.AuthResponse
 import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.ui.login.LoginActivity
-import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.appbar.*
-import kotlin.system.exitProcess
 
 
-class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODashboardContract.View {
+class TPODashboard : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODashboardContract.View {
 
     private var exit: Boolean = false
     val TAG = "TPODashboard"
@@ -40,7 +39,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
 
         val dataUpload = DataUpload.newInstance(sessionManager.getUserEmail()!!)
 
-        uploadDataTab.setOnClickListener {
+        uploadDataTab.setOnSingleClickListener {
             HyperLog.d(TAG, "<< updateCollegeTab | setOnClickListener")
             tpoDashboardContainer.visibility = INVISIBLE
             fragmentTag = "dataUpload"
@@ -52,7 +51,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
             HyperLog.d(TAG, ">> updateCollegeTab | setOnClickListener")
         }
 
-        updateCollegeTab.setOnClickListener {
+        updateCollegeTab.setOnSingleClickListener {
             HyperLog.d(TAG, "<< updateCollegeTab | setOnClickListener")
             fragmentTag = "CollegeDetailsFragment"
             tpoDashboardContainer.visibility = INVISIBLE
@@ -64,7 +63,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
             HyperLog.d(TAG, ">> updateCollegeTab | setOnClickListener")
         }
 
-        collegeResultTab.setOnClickListener {
+        collegeResultTab.setOnSingleClickListener {
             HyperLog.d(TAG, "<< resultTabText | setOnClickListener")
             tpoDashboardContainer.visibility = INVISIBLE
             fragmentTag = "QuestionPaperListFragment"
@@ -77,7 +76,7 @@ class TPODashboard() : AppCompatActivity(R.layout.activity_tpo_dashboard), TPODa
             HyperLog.d(TAG, ">> resultTabText | setOnClickListener")
         }
 
-        tpoLogOutButton.setOnClickListener {
+        tpoLogOutButton.setOnSingleClickListener {
             HyperLog.d(TAG, "<< logoutButton | setOnClickListener")
             sessionManager.saveUserSession(AuthResponse(null, null, null, null))
             startActivity(Intent(this, LoginActivity::class.java).apply {

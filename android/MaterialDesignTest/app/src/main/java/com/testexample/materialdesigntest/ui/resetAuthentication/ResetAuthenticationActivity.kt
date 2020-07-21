@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.login.LoginActivity
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.activity_reset_authentication.*
 import kotlinx.android.synthetic.main.appbar.*
 
@@ -33,13 +35,13 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
 
         resetPasswordProcessText.text = getString(R.string.reset_password_process)
         requestResetButton.isEnabled = true
-        loginRedirectButton.isEnabled = !requestResetButton.isEnabled
+        loginRedirectButton.visibility = View.INVISIBLE
 
-        requestResetButton.setOnClickListener {
+        requestResetButton.setOnSingleClickListener {
             presenter.onResetPasswordRequest(resetEmailText.text.toString(), userType)
         }
 
-        loginRedirectButton.setOnClickListener {
+        loginRedirectButton.setOnSingleClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         HyperLog.d(TAG, ">> onCreate")
@@ -61,9 +63,12 @@ class ResetAuthenticationActivity : AppCompatActivity(), ResetAuthenticationCont
                     resetEmailText.text.toString())
         } else {
             resetPasswordProcessText.text = message
+            requestResetButton.isEnabled = false
+            requestResetButton.visibility = View.INVISIBLE
+            loginRedirectButton.visibility = View.VISIBLE
+            loginRedirectButton.isEnabled = true
         }
-        requestResetButton.isEnabled = false
-        loginRedirectButton.isEnabled = true
+
         HyperLog.d(TAG, ">> onResetRequestComplete")
     }
 

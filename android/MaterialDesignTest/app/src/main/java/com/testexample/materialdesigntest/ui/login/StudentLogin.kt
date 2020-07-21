@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,6 +16,7 @@ import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.instructions.InstructionActivity
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.fragment_student_login.*
 
 class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.View {
@@ -37,16 +36,11 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
         progressBar = ProgressBar(requireActivity())
         presenter.generateCollegeList()
 
-        searchableSpinnerForCollege.setOnClickListener {
-            HyperLog.d(TAG, "${SystemClock.elapsedRealtime()}t")
-            searchableSpinnerForCollege.isEnabled = false
-            Handler().postDelayed({
-                searchableSpinnerForCollege.isEnabled = true
-            }, 1000)
+        searchableSpinnerForCollege.setOnSingleClickListener {
             spinnerDialog.showSpinerDialog()
         }
 
-        studentLoginButton.setOnClickListener {
+        studentLoginButton.setOnSingleClickListener {
             presenter
                     .onStudentLogin(StudentLoginRequest(
                             rollNoText.text.toString(),
@@ -55,12 +49,12 @@ class StudentLogin : Fragment(R.layout.fragment_student_login), LoginContract.Vi
                     ))
         }
 
-        forgotPasswordLink.setOnClickListener {
+        forgotPasswordLink.setOnSingleClickListener {
             startActivity(Intent(activity, ResetAuthenticationActivity::class.java)
                     .putExtra(Constants.USERTYPE, "student"))
         }
 
-        registrationLink.setOnClickListener {
+        registrationLink.setOnSingleClickListener {
             Toast.makeText(requireContext(), "Registration Not Available", Toast.LENGTH_LONG).show()
             val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse(Constants.WEBSITE_LINK)

@@ -2,12 +2,12 @@ package com.testexample.materialdesigntest.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.hypertrack.hyperlog.HyperLog
-
 import com.testexample.materialdesigntest.R
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.fragment_login_prompt.*
 
 class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
@@ -21,7 +21,7 @@ class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
 
         studentLogin = StudentLogin.newInstance()
 
-        joinTestButton.setOnClickListener {
+        joinTestButton.setOnSingleClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.loginFragment, studentLogin)
@@ -30,7 +30,7 @@ class LoginPrompt : Fragment(R.layout.fragment_login_prompt) {
                 .commit()
         }
 
-        collegeLoginButton.setOnClickListener {
+        collegeLoginButton.setOnSingleClickListener {
             val intent = Intent(activity, TpoLoginActivity::class.java)
             startActivity(intent)
         }

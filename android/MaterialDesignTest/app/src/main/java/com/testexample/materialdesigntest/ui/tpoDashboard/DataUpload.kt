@@ -5,16 +5,19 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.hypertrack.hyperlog.HyperLog
 import com.testexample.materialdesigntest.R
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.utils.Constants
 import com.testexample.materialdesigntest.utils.getFileName
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import com.testexample.materialdesigntest.utils.snackBar
 import kotlinx.android.synthetic.main.activity_tpo_dashboard.*
 import kotlinx.android.synthetic.main.fragment_data_upload.*
@@ -49,14 +52,14 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         setPresenter(DataUploadPresenter(this))
         progressBar = ProgressBar(requireActivity())
 
-        selectFileText.setOnClickListener{
+        selectFileText.setOnSingleClickListener{
             HyperLog.d(TAG, "onClick : selectFileText")
             uploadProgressBar.progress = 0
             checkFilePermission()
             fileSelector()
         }
 
-        verifyFileButton.setOnClickListener {
+        verifyFileButton.setOnSingleClickListener {
             HyperLog.d(TAG, "onClick: Verify Button")
             file = prepareFileUpload()
             if (presenter.verifyFile(file)) {
@@ -67,7 +70,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
             }
         }
 
-        uploadFileButton.setOnClickListener {
+        uploadFileButton.setOnSingleClickListener {
             HyperLog.d(TAG, "onClick: upload button")
             file?.let { it1 -> mimeType?.let { it2 -> presenter.uploadFile(tpoEmail, it1, it2) } }
         }
@@ -140,6 +143,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         return file
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun checkFilePermission(){
         HyperLog.d(TAG, "checkFilePermission():")
         var permissionCheck: Int = requireActivity().checkSelfPermission(permission.READ_EXTERNAL_STORAGE)

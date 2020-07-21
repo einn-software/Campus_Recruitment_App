@@ -12,6 +12,7 @@ import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.resetAuthentication.ResetAuthenticationActivity
 import com.testexample.materialdesigntest.ui.tpoDashboard.TPODashboard
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.activity_tpo_login.*
 
 class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
@@ -28,18 +29,18 @@ class TpoLoginActivity : AppCompatActivity(), LoginContract.TpoView {
         presenter = TpoLoginPresenter(this)
         progressBar = ProgressBar(this)
 
-        loginButton.setOnClickListener {
+        loginButton.setOnSingleClickListener {
             presenter.onTpoLogin(emailText.text.toString(),
                     passwordText.text.toString())
         }
 
-        resetPasswordLink.setOnClickListener {
+        resetPasswordLink.setOnSingleClickListener {
             val intent = Intent(this, ResetAuthenticationActivity::class.java)
             intent.putExtra(Constants.USERTYPE, "tpo")
             startActivity(intent)
         }
 
-        registrationLink.setOnClickListener {
+        registrationLink.setOnSingleClickListener {
             Toast.makeText(this, "Registration Not Available", Toast.LENGTH_LONG).show()
             val openURL = Intent(Intent.ACTION_VIEW)
             openURL.data = Uri.parse(Constants.WEBSITE_LINK)

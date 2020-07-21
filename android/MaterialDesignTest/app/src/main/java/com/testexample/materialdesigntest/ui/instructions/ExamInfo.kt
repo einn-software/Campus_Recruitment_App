@@ -14,6 +14,7 @@ import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.login.LoginActivity
 import com.testexample.materialdesigntest.ui.result.ResultActivity
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.fragment_exam_info.*
 import java.util.*
 
@@ -40,7 +41,7 @@ class ExamInfo : Fragment(R.layout.fragment_exam_info), InstructionsContract.Exa
         HyperLog.d(TAG, "Current Date is $dayOfMonth / $month / $year")
         presenter.fetchCollegeCode(year, month, dayOfMonth)
 
-        availableExamsTab.setOnClickListener {
+        availableExamsTab.setOnSingleClickListener {
             if (questionPaper == null){
                 startActivity(Intent(activity, LoginActivity::class.java).apply {
                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

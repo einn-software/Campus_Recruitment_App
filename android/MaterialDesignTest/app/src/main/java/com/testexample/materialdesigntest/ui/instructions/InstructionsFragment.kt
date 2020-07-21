@@ -7,7 +7,6 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.ScrollingMovementMethod
 import android.text.style.BulletSpan
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.hypertrack.hyperlog.HyperLog
@@ -18,6 +17,7 @@ import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.examination.ExamDrawer
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import com.testexample.materialdesigntest.utils.snackBar
 import kotlinx.android.synthetic.main.fragment_instructions.*
 
@@ -49,7 +49,7 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
         presenter = InstructionPresenter(this)
         presenter.fetchInstructions(questionPaper.instructionId)
 
-        startTestButton.setOnClickListener {
+        startTestButton.setOnSingleClickListener {
             if (agreeToGuidelinesCheck.isChecked) {
                 progressBar.startLoading()
                 startActivity(Intent(activity, ExamDrawer::class.java)
@@ -62,7 +62,7 @@ class  InstructionsFragment : Fragment(R.layout.fragment_instructions), Instruct
                 requireActivity().finish()
             }
             else
-                instructionsFragmentLayout.snackBar("Please Check Agree to Guidelines First!")
+                instructionsFragmentLayout.snackBar("Please check \"Agree to guidelines\"  first!")
 
         }
         HyperLog.d(TAG,">> onViewCreated")

@@ -108,11 +108,10 @@ class ExamInfoPresenter(private var view: InstructionsContract.ExamInfoView?) :
                                 Toast.LENGTH_LONG).show()
                         },
                         { error ->
-                            HyperLog.e(TAG, "Error in fetching Result from Remote: ${error.message.toString()}")
+                            HyperLog.e(TAG, "Error in fetching Result from Remote: ${error.localizedMessage}")
                             view!!.showLoading(false)
                             view!!.resultAvailable = false
                         }
-
                     ))
         }
         HyperLog.d(TAG, ">> fetchExamResult")

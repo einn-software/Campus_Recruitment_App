@@ -14,7 +14,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
-import androidx.core.view.iterator
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -29,6 +28,7 @@ import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.result.ResultActivity
 import com.testexample.materialdesigntest.utils.Constants
+import com.testexample.materialdesigntest.utils.snackBar
 import kotlinx.android.synthetic.main.activity_exam_drawer.*
 import kotlinx.android.synthetic.main.appbar.*
 import java.util.*
@@ -40,6 +40,8 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     val TAG = "EXAM DRAWER"
 
     private lateinit var currentFragment: ExamSectionFragment
+    private var currentItemPosition = 0
+    private var previousItem: MenuItem? = null
     private var sectionFragments: MutableMap<Int, ExamSectionFragment> = mutableMapOf()
     private lateinit var progressBar: ProgressBar
     private lateinit var presenter: ExaminationContract.Presenter
@@ -59,8 +61,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         //get current date
         val calender = Calendar.getInstance()
         val year: Int = calender.get(Calendar.YEAR)
-        val month: Int = calender.get(Calendar.MONTH)
+        val month: Int = calender.get(Calendar.MONTH) + 1
         val dayOfMonth: Int = calender.get(Calendar.DAY_OF_MONTH)
+
+        markedForReviewCount.text = getString(R.string.mark_for_review_count, tabCount.first)
+        answeredCount.text = getString(R.string.answered, tabCount.second)
 
         setPresenter(ExaminationPresenter(this))
         progressBar = ProgressBar(this)
@@ -143,6 +148,8 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         HyperLog.d(TAG, "<< onNavigationItemSelected")
         currentItem.let {
+            currentItemPosition = currentItem.order
+            drawerToolbar.title = currentItem.title
             showLoading(true)
             if (supportFragmentManager
                             .findFragmentByTag(currentItem.title.toString()) == null) {
@@ -166,12 +173,10 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             supportFragmentManager.executePendingTransactions()
             currentFragment = sectionFragments[currentItem.itemId]!!
             showLoading(false)
-            for (item in sectionNavigationView.menu){
-                if (item.itemId == currentItem.itemId)
-                    item.setChecked(true).setIcon(R.drawable.ic_double_angle_pointing_to_right)
-                else
-                    item.setChecked(false).icon = null
-            }
+            currentItem.setChecked(true).setIcon(R.drawable.ic_label_current_black_24dp)
+            if (previousItem != currentItem)
+                previousItem?.setChecked(false)?.setIcon(R.drawable.ic_visited_24dp)
+            previousItem = currentItem
         }
         drawer.closeDrawer(GravityCompat.START)
 
@@ -189,6 +194,14 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
             drawer.openDrawer(GravityCompat.START)
         }
         HyperLog.d(TAG, ">> onBackPressed")
+    }
+
+    fun moveToNextSection(){
+        if (currentItemPosition < sectionNavigationView.childCount - 1) {
+            onNavigationItemSelected(sectionNavigationView.menu.getItem(currentItemPosition + 1))
+        }
+        else
+            drawer.snackBar("Please select a section")
     }
 
     private fun initFragment(fragment: Fragment, tag: String) {

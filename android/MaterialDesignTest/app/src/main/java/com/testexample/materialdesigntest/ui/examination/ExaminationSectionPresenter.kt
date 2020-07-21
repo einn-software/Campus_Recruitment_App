@@ -34,7 +34,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
     private val token = sessionManager.getUserAuthToken()!!
 
     override fun saveResponse(newResponse: StudentAnswerResponse) {
-        HyperLog.d(TAG, "<< saveResponse: QuestionId: ${newResponse.studentAnswer.questionId}")
+        HyperLog.d(TAG, "<< saveResponse")
 
         repository = ExaminationRepo()
         roomRepo = ExaminationRoomRepo(view!!.setContext())
@@ -44,10 +44,10 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                 if (answerMap.containsKey(newResponse.studentAnswer.questionId) &&
                     answerMap[newResponse.studentAnswer.questionId]!!.answerSheetId.isNotBlank())
                 {
-                    HyperLog.i(TAG, "update Response with state: $newResponse")
+                    HyperLog.i(TAG, "update Response with state: ${newResponse.studentAnswer.state}")
                     repository.updateResponse(token, newResponse)
                 } else {
-                    HyperLog.i(TAG, "Save Response with state: $newResponse")
+                    HyperLog.i(TAG, "Save Response with state:  ${newResponse.studentAnswer.state}")
                     repository.saveResponse(token, newResponse.studentAnswer)
                 }
 
@@ -63,8 +63,8 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                     answer.id, answer.state, answer.selectedOption))
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(
-                                        {HyperLog.i(TAG, "Answer saved in Room")},
-                                        {HyperLog.e(TAG, "Failed to save answer in Room due to ${it.localizedMessage}")})
+                                        {HyperLog.i(TAG, "Answer saved in room")},
+                                        {HyperLog.e(TAG, "Failed to save answer in room due to ${it.localizedMessage}")})
                                     .addTo(subscriptions)
                             }
                             else{
@@ -85,7 +85,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                         { error ->
                             HyperLog.e(TAG, "Error in saving response with reason ${error.message.toString()}")
                             Toast.makeText(view!!.setContext(),
-                                    "Could not Save the Answer, ${error.message.toString()}!!",
+                                    "Could not save the answer, ${error.message.toString()}!!",
                                     Toast.LENGTH_LONG).show()
                         }
                 )
@@ -95,6 +95,7 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
 
     override fun loadQuestion(viewId: Int, questionId: String) {
         HyperLog.d(TAG, "<< loadQuestion")
+        view!!.showLoading(true)
         repository = ExaminationRepo()
         subscriptions.add(
                 repository.fetchQuestionFromRemote(token, questionId)
@@ -107,14 +108,18 @@ class ExaminationSectionPresenter(private var view: ExaminationContract.Fragment
                                     if (answerMap.containsKey(questionId) && answerMap[questionId]!!.optionSelected > 0) {
                                         answer = answerMap[questionId]!!
                                     }
+                                    view!!.showLoading(false)
                                     view!!.setQuestion(viewId = viewId, question = question, answer = answer)
                                     HyperLog.i(TAG, "Successfully fetch questions from remote")
                                 },
                                 { error ->
                                     HyperLog.e(TAG,
-                                            "Error in fetching questions from remote with reason ${error.message.toString()}")
+                                            "Error in fetching questions from remote with reason " +
+                                                    error.message.toString()
+                                    )
+                                    view!!.showLoading(false)
                                     Toast.makeText(view!!.setContext(),
-                                            "Counldn't Load the Question, Please Try Again!!",
+                                            "Counldn't load the question, Please try again!!",
                                             Toast.LENGTH_LONG).show()
                                 }
                         )

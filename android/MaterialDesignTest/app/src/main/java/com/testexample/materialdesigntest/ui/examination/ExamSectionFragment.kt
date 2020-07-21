@@ -20,8 +20,7 @@ import com.testexample.materialdesigntest.data.network.model.StudentAnswerRespon
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.examination.ExaminationSectionPresenter.Answer
 import com.testexample.materialdesigntest.utils.Constants
-import com.testexample.materialdesigntest.utils.snackBar
-import kotlinx.android.synthetic.main.activity_exam_drawer.*
+import com.testexample.materialdesigntest.utils.setOnSingleClickListener
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.questionview.*
 
@@ -53,7 +52,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         super.onViewCreated(view, savedInstanceState)
         setPresenter(ExaminationSectionPresenter(this))
         presenter.loadAnswerSheet(studentCredential)
-        progressBar.startLoading()
 
         for ((index, question) in section.questionsList.withIndex()) {
             HyperLog.d(TAG, "setTag")
@@ -94,7 +92,6 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                     section
                             .questionsList[0]
                             .marks)
-            progressBar.stopLoading()
             HyperLog.d(TAG, "default tag called")
         }
 
@@ -103,26 +100,30 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
             markReviewButton.isEnabled = checkedId != -1
         }
 
-        saveAndNextButton.setOnClickListener {
+        saveAndNextButton.setOnSingleClickListener {
             HyperLog.d(TAG, "onClick: saveAndNextButton")
-            this.sendAnswer(4)
+            this.sendAnswer(Constants.ANSWERED)
         }
 
-        markReviewButton.setOnClickListener {
+        markReviewButton.setOnSingleClickListener {
             HyperLog.d(TAG, "onClick: markReviewButton")
-            this.sendAnswer(5)
+            this.sendAnswer(Constants.MARKED)
         }
 
-        exitTestButton.setOnClickListener {
+        exitTestButton.setOnSingleClickListener {
             val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .apply {
-                        val markedQuestionsCount = presenter.Q_A_Mapping.values.filter { it.state == 5 }.count()
-                        if ( markedQuestionsCount > 0 ){
-                            setMessage("You have $markedQuestionsCount Questions Left for Review! " +
+                        val markedQuestionsCount = presenter.Q_A_Mapping.values
+                            .filter { it.state == 5 }.count()
+                        val sectionFragmentCount = requireActivity().supportFragmentManager
+                            .backStackEntryCount
+
+                        if ( markedQuestionsCount > 0 || sectionFragmentCount < 2){
+                            setMessage("You have $markedQuestionsCount Questions left for review! " +
                                     "\n\n" + getString(R.string.end_test_message))
                         }
                         else
-                            setMessage("You have ${timerText.text} Minutes left! \n\n" +
+                            setMessage("You have ${timerText.text} minutes left! \n\n" +
                                     getString(R.string.end_test_message))
                         setCancelable(true)
                         setNegativeButton("Yes") { dialog, _ ->
@@ -242,10 +243,11 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
         if (questionTab.selectedTabPosition < questionTab.tabCount - 1)
             questionTab.selectTab(questionTab.getTabAt(questionTab.selectedTabPosition + 1))
         else {
-            presenter.loadQuestion(questionTab.selectedTabPosition, questionTab.getTabAt(questionTab.selectedTabPosition)!!.tag as String)
+            //reload last question after submitting answer
+            presenter.loadQuestion(questionTab.selectedTabPosition,
+                questionTab.getTabAt(questionTab.selectedTabPosition)!!.tag as String)
             requireActivity().onBackPressed()
-            requireActivity().drawer.snackBar("Please select a section")
-
+            (requireActivity() as ExamDrawer).moveToNextSection()
         }
         HyperLog.d(TAG, ">> nextTab()")
     }
@@ -263,6 +265,13 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
     override fun onDetach() {
         presenter.onDestroy()
         super.onDetach()
+    }
+
+    override fun showLoading(flag: Boolean){
+        if (flag)
+            progressBar.startLoading()
+        else
+            progressBar.stopLoading()
     }
 
     override fun onResume() {

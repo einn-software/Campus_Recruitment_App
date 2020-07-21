@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
             listPermissionsNeeded.add(Manifest.permission.READ_CALL_LOG)
         }
 
-        if (!listPermissionsNeeded.isEmpty()) {
+        if (listPermissionsNeeded.isNotEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(arrayOfNulls<String>(listPermissionsNeeded.size)),
                     REQUEST_ID_MULTIPLE_PERMISSIONS)
             return false

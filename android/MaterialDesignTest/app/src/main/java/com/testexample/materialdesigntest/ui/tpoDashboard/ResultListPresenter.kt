@@ -32,15 +32,20 @@ class ResultListPresenter(private var view: TPODashboardContract.ResultListView?
                                 .subscribe(
                                         { success ->
                                             view!!.showLoading(false)
-                                            view!!.showResultList(success)
+                                            if (success.isNotEmpty())
+                                                view!!.showResultList(success)
+
                                             HyperLog.i(TAG, "Successfully Get Student Result List.")
                                         },
                                         { error ->
                                             view!!.showLoading(false)
-                                            HyperLog.e(TAG, "Failed to get Student Result List with reason: ${error.message.toString()}")
+                                            HyperLog.e(TAG,
+                                                "Failed to get Student Result List with reason:" +
+                                                        " ${error.message.toString()}")
 
                                             if (error.message.toString().contains("704")) {
-                                                Toast.makeText(view!!.setContext(), "Result is not released yet!!", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(view!!.setContext(),
+                                                    "Result is not released yet!!", Toast.LENGTH_LONG).show()
                                             }
                                         })
                 )

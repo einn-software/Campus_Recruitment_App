@@ -27,13 +27,14 @@ class ResultsPresenter(private var view: ResultsContract.View?) :
         sessionManager = SessionManager(view!!.setContext())
         view.let {
             subscriptions.add(
-                    repository.getStudentResultFromRemoteRepo(sessionManager.getUserAuthToken()!!, code, roll, question_paper_id)
+                    repository.getStudentResultFromRemoteRepo(sessionManager.getUserAuthToken()!!,
+                        code, roll, question_paper_id)
                             .subscribeOn(Schedulers.io())
                             .handelNetworkError()
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     { success ->
-                                        HyperLog.i(TAG, "Successfully Fetched Result From Remote : $success")
+                                        HyperLog.i(TAG, "Successfully fetched result from remote : $success")
                                         view!!.showResults(success)
                                     },
                                     { error ->

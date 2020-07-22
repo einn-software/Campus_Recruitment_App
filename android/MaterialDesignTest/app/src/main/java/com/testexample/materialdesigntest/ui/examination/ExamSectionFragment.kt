@@ -115,12 +115,17 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                     .apply {
                         val markedQuestionsCount = presenter.Q_A_Mapping.values
                             .filter { it.state == 5 }.count()
-                        val sectionFragmentCount = requireActivity().supportFragmentManager
-                            .backStackEntryCount
+                        val unAnsweredQuestionCount: Int = ((requireActivity() as ExamDrawer)
+                            .totalNumberOfQuestions - markedQuestionsCount - presenter.Q_A_Mapping
+                            .values.filter { it.state == 4 }.count())
 
-                        if ( markedQuestionsCount > 0 || sectionFragmentCount < 2){
-                            setMessage("You have $markedQuestionsCount Questions left for review! " +
-                                    "\n\n" + getString(R.string.end_test_message))
+                        if ( markedQuestionsCount > 0 || unAnsweredQuestionCount > 0){
+                            var message = "You have "
+                            if (markedQuestionsCount > 0 )
+                                message += "$markedQuestionsCount Questions left for review, \n "
+                            if (unAnsweredQuestionCount > 0)
+                                message +=  "$unAnsweredQuestionCount Questions left unanswered \n "
+                            setMessage( message + "\n" + getString(R.string.end_test_message))
                         }
                         else
                             setMessage("You have ${timerText.text} minutes left! \n\n" +

@@ -48,6 +48,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     private lateinit var questionPaper: QuestionPaper
     private lateinit var student: Student
     private lateinit var credentials: EndExamRequest
+    var totalNumberOfQuestions = 0
     private var timeLeftInTimer by Delegates.notNull<Long>()
     private lateinit var timer: CountDownTimer
     private var tabCount: Pair<Int, Int> = Pair(0, 0)
@@ -76,6 +77,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         credentials = EndExamRequest(questionPaper.questionPaperId,
                 student.studentId)
+
+        for (section in questionPaper.sections){
+            totalNumberOfQuestions += section.noOfQuestion
+        }
+        HyperLog.i(TAG, "totalNumberOfQuestions: $totalNumberOfQuestions ")
 
         if (!questionPaper.instructionId.isBlank()) {
             setExamPaper(questionPaper)

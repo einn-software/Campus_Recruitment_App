@@ -132,8 +132,10 @@ class ExamSectionFragment : Fragment(R.layout.fragment_exam), ExaminationContrac
                                     getString(R.string.end_test_message))
                         setCancelable(true)
                         setNegativeButton("Yes") { dialog, _ ->
-                            (activity as ExamDrawer).countDownStart(false)
-
+                            (activity as ExamDrawer).apply {
+                                examNotStopped = false
+                                countDownStart(false)
+                            }
                             dialog!!.cancel()
                         }
                         setPositiveButton("No!") { dialog, _ -> dialog!!.dismiss() }

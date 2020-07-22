@@ -1,5 +1,6 @@
 package com.testexample.materialdesigntest.data.session
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.hypertrack.hyperlog.HyperLog
@@ -32,11 +33,12 @@ class SessionManager(context: Context) : ISessionManager {
         HyperLog.d(TAG, ">> saveUserSession()")
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun savePauseTime(timeInMil: Long) {
         HyperLog.d(TAG, "<< savePauseTime($timeInMil)")
         preferences.edit().apply{
             putLong(TIME_LEFT_AFTER_PAUSE, timeInMil)
-            apply()
+            commit()
         }
         HyperLog.d(TAG, ">> savePauseTime()")
     }

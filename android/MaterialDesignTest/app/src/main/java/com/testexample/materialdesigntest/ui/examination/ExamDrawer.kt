@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,7 @@ import com.testexample.materialdesigntest.data.model.Section
 import com.testexample.materialdesigntest.data.model.Student
 import com.testexample.materialdesigntest.data.network.model.EndExamRequest
 import com.testexample.materialdesigntest.data.network.model.FetchExamRequest
+import com.testexample.materialdesigntest.data.session.SessionManager
 import com.testexample.materialdesigntest.ui.ProgressBar
 import com.testexample.materialdesigntest.ui.result.ResultActivity
 import com.testexample.materialdesigntest.utils.Constants
@@ -49,9 +51,11 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     private lateinit var student: Student
     private lateinit var credentials: EndExamRequest
     var totalNumberOfQuestions = 0
+    var examNotStopped = true
     private var timeLeftInTimer by Delegates.notNull<Long>()
     private lateinit var timer: CountDownTimer
     private var tabCount: Pair<Int, Int> = Pair(0, 0)
+    private lateinit var sessionManager: SessionManager
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +74,7 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
 
         setPresenter(ExaminationPresenter(this))
         progressBar = ProgressBar(this)
+        sessionManager = SessionManager(this)
         //get data from previous activity
         val bundle: Bundle? = intent.extras
         questionPaper = bundle?.getParcelable(Constants.QUESTION_PAPER)!!
@@ -91,10 +96,15 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
         }
         HyperLog.d(TAG, "Question Paper: $questionPaper")
 
-        timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
+        if (sessionManager.getPauseTime() > 0)
+            timeLeftInTimer = sessionManager.getPauseTime()
+        else
+            timeLeftInTimer = (questionPaper.maxTime * 60 * 1000).toLong()
 
+        Log.d(TAG, "timeLeft: $timeLeftInTimer")
         timer = object : CountDownTimer(timeLeftInTimer, 1000) {
             override fun onFinish() {
+                Log.d(TAG, "onFinish")
                 endExam()
             }
 
@@ -309,8 +319,10 @@ class ExamDrawer : NavigationView.OnNavigationItemSelectedListener, AppCompatAct
     }
 
     override fun onDestroy() {
-        presenter.onDestroy()
         HyperLog.d(TAG, "onDestroy()")
+        if (timeLeftInTimer > 0 && examNotStopped)
+            sessionManager.savePauseTime(timeLeftInTimer)
+        presenter.onDestroy()
         super.onDestroy()
     }
 

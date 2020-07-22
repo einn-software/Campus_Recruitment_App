@@ -45,11 +45,13 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                                 HyperLog.d(TAG, success)
                                 view!!.showProgressBar(false)
                                 view!!.showMessage(success)
+                                (view!! as DataUpload).flushScreen()
                             },
                             {error ->
                                HyperLog.d(TAG, "Failed to Uploaded File with error ${error.localizedMessage}")
                                 view!!.showProgressBar(false)                    
                                 view!!.showMessage("Upload Failed Due to ${error.localizedMessage}")
+                                (view!! as DataUpload).flushScreen()
                             })
         )
     }

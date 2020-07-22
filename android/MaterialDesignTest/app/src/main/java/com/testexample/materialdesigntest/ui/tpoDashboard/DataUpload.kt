@@ -78,6 +78,13 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
 
     }
 
+    fun flushScreen(){
+        uploadFileButton.isEnabled = false
+        selectedFIleUri = null
+        uploadProgressBar.progress = 0
+
+    }
+
     override fun onDetach() {
         HyperLog.d(TAG, "onDetach")
         super.onDetach()

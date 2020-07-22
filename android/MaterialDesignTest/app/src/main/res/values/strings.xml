@@ -64,5 +64,7 @@
     <string name="exit_test_button_cd">Exit Test Button</string>
     <string name="note_at_result">You will be notified through email for further process</string>
     <string name="answered">Answered : %d</string>
+    <string name="current_section">Current Section</string>
+    <string name="visited_section">Visited Section</string>
 
 </resources>

@@ -42,7 +42,7 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                             {success ->
-                                HyperLog.d(TAG, "$success")
+                                HyperLog.d(TAG, success)
                                 view!!.showProgressBar(false)
                                 view!!.showMessage(success)
                             },
@@ -102,6 +102,11 @@ class DataUploadPresenter(private var view: TPODashboardContract.DataUploadView?
            HyperLog.d(TAG , "verifyFile <- ${e.message}")
            view!!.showMessage(e.message.toString())
            return false
+        }
+        catch (e: NullPointerException){
+            HyperLog.d(TAG , "verifyFile <- ${e.message}")
+            view!!.showMessage("Please check file format to match above description")
+            return false
         }
         view!!.showMessage("Successfully Validated")
         return true

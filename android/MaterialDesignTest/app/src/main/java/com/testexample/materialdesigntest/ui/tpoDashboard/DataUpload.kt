@@ -39,6 +39,7 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
     private var file: File? = null
     private lateinit var progressBar: ProgressBar
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         HyperLog.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
@@ -151,7 +152,6 @@ class DataUpload : Fragment(R.layout.fragment_data_upload),
         if (permissionCheck != 0){
             requireActivity().requestPermissions(arrayOf(permission.READ_EXTERNAL_STORAGE,
                     permission.WRITE_EXTERNAL_STORAGE),Constants.PERMISSION_CODE)}
-
     }
 
     companion object {

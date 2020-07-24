@@ -1,18 +1,18 @@
 version: "2"
 services:
   app:
-    image: crs
+    image: crs:1.0
     build: .
     ports:
       - '80:80'
     links:
-      - mongo
+      - database
     depends_on:
-      - mongo 
-  mongo:
-    container_name: mongo
+      - database 
+  database:
+    container_name: database
     image: mongo
     volumes:
-      - ./data:/data/db
-    ports:
-      - '27017:27017'      
+      - ./data:/data/db      
+volumes:
+    data: 

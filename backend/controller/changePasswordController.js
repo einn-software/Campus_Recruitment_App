@@ -82,10 +82,10 @@ async function resetPassword(request, response, err, user) {
     user.save();
   }
   logger.info({
-    Message: `Password for ${user.email} successfully reset`
+    message: `Password for ${user.email} successfully reset`
   })
   return response.status(Constants.success).json({
-    Message: `Password for ${user.email} successfully reset`
+    message: `Password for ${user.email} successfully reset`
   });
 }
 
@@ -110,10 +110,10 @@ const AdminForgotPassword = async (request, response) => {
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
     logger.info({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     })
     return response.status(Constants.success).json({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     });
   })
 }
@@ -162,10 +162,10 @@ const TpoForgotPassword = async (request, response) => {
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
     logger.info({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     })
     return response.status(Constants.success).json({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     });
   })
 }
@@ -214,10 +214,10 @@ const StudentForgotPassword = async (request, response) => {
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
     logger.info({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     })
     return response.status(Constants.success).json({
-      Message: "Recovery email sent, Please check your email inbox and spam folder",
+      message: "Recovery email sent, Please check your email inbox and spam folder",
     });
   })
 }

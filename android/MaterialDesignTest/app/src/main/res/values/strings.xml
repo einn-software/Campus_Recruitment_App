@@ -37,7 +37,7 @@
     <string name="save_and_next">Save and Next</string>
     <string name="mark_for_review_count">Mark For Review : %d</string>
     <string name="mark_for_review">Mark For Review</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">Loading</string>
     <string name="end_test_message">Are you sure you want to end the test ?</string>
     <string name="college_code">Code: %s</string>
     <string name="roll_no">ROll No</string>
@@ -66,5 +66,7 @@
     <string name="answered">Answered : %d</string>
     <string name="current_section">Current Section</string>
     <string name="visited_section">Visited Section</string>
+    <string name="unmark">Unmark</string>
+    <string name="logout">LOGOUT</string>
 
 </resources>

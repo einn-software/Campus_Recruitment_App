@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.testexample.materialdesigntest">
+    package="com.innobitsystems.campusrecruiter">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,12 +11,12 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
 
     <application
-        android:name=".CRS"
+        android:name="com.innobitsystems.campusrecruiter.CRS"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/BaseMaterialTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m"
+        tools:targetApi= "Q"
         android:icon="@mipmap/ic_launcher">
 
         <uses-library
@@ -24,7 +24,7 @@
             android:required="false" />
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.innobitsystems.campusrecruiter.ui.splash.SplashActivity"
             android:exported="true"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
@@ -36,26 +36,26 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.LoginActivity"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.login.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.tpoDashboard.TPODashboard"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.tpoDashboard.TPODashboard"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.examination.ExamDrawer"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.examination.ExamDrawer"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.instructions.InstructionActivity"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.instructions.InstructionActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.login.TpoLoginActivity"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.login.TpoLoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.result.ResultActivity"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.result.ResultActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.resetAuthentication.ResetAuthenticationActivity"
+        <activity android:name="com.innobitsystems.campusrecruiter.ui.resetAuthentication.ResetAuthenticationActivity"
             android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".utils.callListner.CallReceiver" >
+        <receiver android:name="com.innobitsystems.campusrecruiter.utils.callListner.CallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>

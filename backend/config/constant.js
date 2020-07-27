@@ -14,6 +14,12 @@ module.exports = {
   code_min: 2000,
   code_max: 8000,
 
+  // constants used in rotateLogAndDeleteOldLofFiles.js
+  fifteenDaysInMiliseconds: 1296000000, // 15 days in miliseconds,
+  oneDayInMilisecond: 86400000, // 1 day in milisecon
+  fileSizeInMB: 1,
+  logFile: "crs.log",
+
   // saltRound for gensalt function
   salt_round: 10,
 

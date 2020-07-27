@@ -1,6 +1,10 @@
 //import models
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
+const {
+  logger,
+  printLogs
+} = require("../config/logger");
 const Constants = require('../config/constant');
 const Student = require("../model/Student");
 const errHandler = require("./errorHandling");
@@ -45,24 +49,25 @@ function createAndSendSession(req, res, user, token, user_type) {
     req.session._id = user._id,
     req.session.token = token,
     req.session.user_type = user_type
-
-
 }
 
 //Admin Login
 const AdminLogin = (async (req, res) => {
+  printLogs(req);
   const {
     error
   } = loginValidation(req.body);
   if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
   }
 
   //Checking if the admin is not in the database
   const user = await Admin.findOne({
-    email: req.body.email,
+    email: req.body.email
   });
   if (!user) {
+    logger.error(`Function Admin.findOne({email: ${req.body.email}}) - `, errHandler.emailNotFoundErrorHandler());
     return res
       .status(Constants.er_not_found)
       .json(errHandler.emailNotFoundErrorHandler());
@@ -71,73 +76,85 @@ const AdminLogin = (async (req, res) => {
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
-  return res.status(Constants.success).header("auth-token", token).json({
+  const result = {
     email: req.session.email,
     _id: req.session._id,
     token: req.session.token,
     user_type: req.session.user_type
-  });
+  }
+  logger.info(result)
+  return res.status(Constants.success).header("auth-token", token).json(result);
 });
 
 //Student Login
 
 const StudentLogin = (async (req, res) => {
+  printLogs(req);
   const {
     error
   } = studentloginValidation(req.body);
-  if (error)
+  if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
-
+  }
   //Checking if the student is not in the database
   const user = await Student.findOne({
     code: req.body.code,
-    roll: req.body.roll,
+    roll: req.body.roll
   });
-  if (!user)
+  if (!user) {
+    logger.error(`Function Student.findOne({code: ${req.body.code}, roll: ${req.body.roll}}) - `, errHandler.notFoundRollCodeErrorHandler());
     return res
       .status(Constants.er_not_found)
       .json(errHandler.notFoundRollCodeErrorHandler());
-
+  }
   const user_type = Constants.student;
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
-  return res.status(Constants.success).header("auth-token", token).json({
+  const result = {
     email: req.session.email,
     _id: req.session._id,
     token: req.session.token,
     user_type: req.session.user_type
-  });
+  }
+  logger.info(result)
+  return res.status(Constants.success).header("auth-token", token).json(result);
 });
 
 //Tpo Login
 
 const TpoLogin = (async (req, res) => {
+  printLogs(req);
   const {
     error
   } = loginValidation(req.body);
-  if (error)
+  if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
-
+  }
   //Checking if the tpo is not in the database
   const user = await Tpo.findOne({
     email: req.body.email,
   });
-  if (!user)
+  if (!user) {
+    logger.error(`Function Tpo.findOne({email: ${req.body.email}}) - `, errHandler.emailNotFoundErrorHandler());
     return res
       .status(Constants.er_not_found)
       .json(errHandler.emailNotFoundErrorHandler());
-
+  }
   const user_type = Constants.tpo;
   await ValidPassword(req, res, user);
   const token = await createToken(user);
   await createAndSendSession(req, res, user, token, user_type);
-  return res.status(Constants.success).header("auth-token", token).json({
+  const result = {
     email: req.session.email,
     _id: req.session._id,
     token: req.session.token,
     user_type: req.session.user_type
-  });
+  }
+  logger.info(result)
+  return res.status(Constants.success).header("auth-token", token).json(result);
 });
 
 module.exports.StudentLogin = StudentLogin

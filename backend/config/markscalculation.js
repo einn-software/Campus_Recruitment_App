@@ -4,14 +4,18 @@ const Constants = require("../config/constant");
 const QuestionCollections = require("../model/QuestionCollections");
 const AnswerSheet = require("../model/StudentAnswerSheet");
 const QuestionPaper = require("../model/QuestionPaper");
+const {
+  logger
+} = require("./logger");
 
 async function fetchNegativeMarks(req, res) {
   let negative_marks = 0;
   await QuestionPaper.findOne({
-      _id: req.body.question_paper_id,
+      _id: req.body.question_paper_id
     },
     (err, result) => {
       if (err || !result) {
+        logger.error(`Function QuestionPaper.findOne({_id: ${req.body.question_paper_id}}, callback) - `, errHandler.idNotFoundErrorHandler('question-paper id'));
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler('question-paper id'));
@@ -43,6 +47,7 @@ async function callStudentResponseList(req, res) {
     },
     (err, responseSheet) => {
       if (err || !responseSheet) {
+        logger.error(`Function AnswerSheet.find({$and: [{student_id: ${req.body.student_id},question_paper_id: ${req.body.question_paper_id}},{$or: [{state: ${Constants.markedForReview}},{state: ${Constants.answered}}]}]}, callback) - `, errHandler.idNotFoundErrorHandler('student id or question-paper id'))
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler('student id or question-paper id'));
@@ -58,10 +63,11 @@ async function callStudentResponseList(req, res) {
 async function fetchAnswerByQuestionId(req, res, id) {
   let ans = 0;
   await QuestionCollections.findOne({
-      _id: id,
+      _id: id
     },
     (err, result) => {
       if (err || !result) {
+        logger.error(`Function QuestionCollections.findOne({_id: ${id}}, callback) - `, errHandler.idNotFoundErrorHandler('question id'));
         return res
           .status(Constants.er_not_found)
           .json(errHandler.idNotFoundErrorHandler('question id'));
@@ -91,6 +97,7 @@ async function totalAttemptQuestions(req, res) {
     ],
   }).countDocuments((err, length) => {
     if (err || !length) {
+      logger.error(`Function AnswerSheet.find({$and: [{student_id: ${req.body.student_id},question_paper_id: ${req.body.question_paper_id}},{$or: [{state: ${Constants.markedForReview}},{state: ${Constants.answered}}]}]}, callback) - `, errHandler.idNotFoundErrorHandler('student id or question-paper id'))
       return res
         .status(Constants.er_not_found)
         .json(errHandler.idNotFoundErrorHandler('student id or question paper id'));
@@ -121,6 +128,7 @@ async function calculateMarks(req, res) {
       sum = sum + marks;
     }
   }
+  logger.info(sum, count);
   return [sum, count];
 }
 

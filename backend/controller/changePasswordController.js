@@ -2,6 +2,11 @@ const nodemailer = require("nodemailer");
 const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const {
+  logger,
+  printLogs,
+  printLogsWithBody
+} = require("../config/logger");
 const Constants = require("../config/constant");
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
@@ -53,12 +58,16 @@ async function createMailOptions(request, user) {
 
 async function resetPassword(request, response, err, user) {
   if (err || !user) {
+    logger.error(`Function resetPassword(request, response, err, user:{${user}}) - `, errHandler.userNotFoundErrorHandler())
     return response.status(Constants.er_not_found).json(errHandler.userNotFoundErrorHandler());
   } else {
     const {
       error
     } = reqPasswordBodyValidation(request.body);
-    if (error) return response.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return response.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+    }
     /* Once again store password securely */
     const salt = bcrypt.genSaltSync(10);
     const hashedNewPassword = bcrypt.hashSync(
@@ -72,6 +81,9 @@ async function resetPassword(request, response, err, user) {
     request.session.email = null;
     user.save();
   }
+  logger.info({
+    Message: `Password for ${user.email} successfully reset`
+  })
   return response.status(Constants.success).json({
     Message: `Password for ${user.email} successfully reset`
   });
@@ -81,10 +93,12 @@ async function resetPassword(request, response, err, user) {
 /* Request a password reset email and make a reset password token */
 
 const AdminForgotPassword = async (request, response) => {
+  printLogsWithBody(request);
   const user = await Admin.findOne({
     email: request.body.email,
   });
   if (user === null) {
+    logger.error(`Admin.findOne({email: ${request.session.email}}) - `, errHandler.emailNotFoundErrorHandler())
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
@@ -92,8 +106,12 @@ const AdminForgotPassword = async (request, response) => {
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
+      logger.error(`Function transporter.sendMail(mailOptions, callback) - `, errHandler.errorHandler(err))
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
+    logger.info({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    })
     return response.status(Constants.success).json({
       Message: "Recovery email sent, Please check your email inbox and spam folder",
     });
@@ -102,9 +120,11 @@ const AdminForgotPassword = async (request, response) => {
 
 /* Reset a password using */
 const AdminResetPassword = async (request, response) => {
+  printLogs(request)
   if (request.session.resetLink) {
     jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
       if (err) {
+        logger.error(`Function jwt.verify(${request.session.resetLink}, process.env.TOKEN_SECRET, callback) - `, errHandler.invalidTokenErrorHandler(err))
         return res.status(Constants.er_failure)
           .json(errHandler.invalidTokenErrorHandler(err));
       }
@@ -117,6 +137,7 @@ const AdminResetPassword = async (request, response) => {
       );
     })
   } else {
+    logger.error(`If(!${request.session.resetLink}) - `, errHandler.tokenNotFoundErrorHandler());
     return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };
@@ -124,10 +145,12 @@ const AdminResetPassword = async (request, response) => {
 // Tpo forgot and reset Pssword
 /* Request a password reset email and make a reset password token */
 const TpoForgotPassword = async (request, response) => {
+  printLogsWithBody(request);
   const user = await Tpo.findOne({
     email: request.body.email,
   });
   if (user === null) {
+    logger.error(`Function Tpo.findOne({email: ${request.session.email}}) - `, errHandler.emailNotFoundErrorHandler())
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
@@ -135,8 +158,12 @@ const TpoForgotPassword = async (request, response) => {
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
+      logger.error(`Function transporter.sendMail(mailOptions, callback) - `, errHandler.errorHandler(err))
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
+    logger.info({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    })
     return response.status(Constants.success).json({
       Message: "Recovery email sent, Please check your email inbox and spam folder",
     });
@@ -145,9 +172,11 @@ const TpoForgotPassword = async (request, response) => {
 
 /* Reset a password using */
 const TpoResetPassword = async (request, response) => {
+  printLogs(request)
   if (request.session.resetLink) {
     jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
       if (err) {
+        logger.error(`Function jwt.verify(${request.session.resetLink}, process.env.TOKEN_SECRET, callback) - `, errHandler.invalidTokenErrorHandler(err))
         return res.status(Constants.er_failure)
           .json(errHandler.invalidTokenErrorHandler(err));
       }
@@ -160,6 +189,7 @@ const TpoResetPassword = async (request, response) => {
       );
     })
   } else {
+    logger.error(`If(!${request.session.resetLink}) - `, errHandler.tokenNotFoundErrorHandler());
     return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };
@@ -167,10 +197,12 @@ const TpoResetPassword = async (request, response) => {
 // Student foegot and reset Pssword
 /* Request a password reset email and make a reset password token */
 const StudentForgotPassword = async (request, response) => {
+  printLogsWithBody(request);
   const user = await Student.findOne({
     email: request.body.email,
   });
   if (user === null) {
+    logger.error(`Function Student.findOne({email: ${request.session.email}}) - `, errHandler.emailNotFoundErrorHandler())
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
@@ -178,8 +210,12 @@ const StudentForgotPassword = async (request, response) => {
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
+      logger.error(`Function transporter.sendMail(mailOptions, callback) - `, errHandler.errorHandler(err))
       return response.status(Constants.er_failure).json(errHandler.errorHandler(err));
     }
+    logger.info({
+      Message: "Recovery email sent, Please check your email inbox and spam folder",
+    })
     return response.status(Constants.success).json({
       Message: "Recovery email sent, Please check your email inbox and spam folder",
     });
@@ -188,9 +224,11 @@ const StudentForgotPassword = async (request, response) => {
 
 /* Reset a password using */
 const StudentResetPassword = async (request, response) => {
+  printLogs(request)
   if (request.session.resetLink) {
     jwt.verify(request.session.resetLink, process.env.TOKEN_SECRET, function (err, res) {
       if (err) {
+        logger.error(`Function jwt.verify(${request.session.resetLink}, process.env.TOKEN_SECRET, callback) - `, errHandler.invalidTokenErrorHandler(err))
         return res.status(Constants.er_failure)
           .json(errHandler.invalidTokenErrorHandler(err));
       }
@@ -203,6 +241,7 @@ const StudentResetPassword = async (request, response) => {
       );
     })
   } else {
+    logger.error(`If(!${request.session.resetLink}) - `, errHandler.tokenNotFoundErrorHandler());
     return response.status(Constants.er_not_found).json(errHandler.tokenNotFoundErrorHandler());
   }
 };

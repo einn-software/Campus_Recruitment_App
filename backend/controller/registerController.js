@@ -1,7 +1,10 @@
 const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
-
+const {
+  logger,
+  printLogs
+} = require("../config/logger");
 //import models
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
@@ -23,11 +26,13 @@ function createHashedPassword(req) {
 
 //To register a new admin
 const AdminRegister = async (req, res) => {
+  printLogs(req);
   // VALIDATE THE DATA BEFORE WE MAKE A Admin
   const {
     error
   } = adminRegisterValidation(req.body);
   if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
@@ -38,6 +43,7 @@ const AdminRegister = async (req, res) => {
     email: req.body.email,
   });
   if (emailExist) {
+    logger.error(`If(emailExist: ${emailExist}) - `, errHandler.thisEmailExistErrorHandler(req.body.email));
     return res
       .status(Constants.er_failure)
       .json(errHandler.thisEmailExistErrorHandler(req.body.email));
@@ -52,8 +58,10 @@ const AdminRegister = async (req, res) => {
   });
   try {
     const user = await admin.save();
+    logger.info(user);
     return res.status(Constants.success).json(user);
   } catch (error) {
+    logger.error('Error in saving the admin - ', errHandler.errorHandler(error));
     return res
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
@@ -62,11 +70,13 @@ const AdminRegister = async (req, res) => {
 
 // To register a new tpo
 const TpoRegister = async (req, res) => {
+  printLogs(req);
   // LETS VALIDATE THE DATA BEFORE WE MAKE A Tpo
   const {
     error
   } = tpoRegisterValidation(req.body);
   if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
@@ -77,6 +87,7 @@ const TpoRegister = async (req, res) => {
     email: req.body.email,
   });
   if (emailExist) {
+    logger.error(`If(emailExist: ${emailExist}) - `, errHandler.thisEmailExistErrorHandler(req.body.email));
     return res
       .status(Constants.er_failure)
       .json(errHandler.thisEmailExistErrorHandler(req.body.email));
@@ -94,8 +105,10 @@ const TpoRegister = async (req, res) => {
   });
   try {
     const user = await tpo.save();
+    logger.info(user);
     return res.status(Constants.success).json(user);
   } catch (err) {
+    logger.error('Error in saving the admin - ', errHandler.errorHandler(error));
     return res
       .status(Constants.er_failure)
       .json(errHandler.errorHandler(error));
@@ -104,33 +117,37 @@ const TpoRegister = async (req, res) => {
 
 //To register a new student
 const StudentRegister = async (req, res) => {
+  printLogs(req);
   // LETS VALIDATE THE DATA BEFORE WE MAKE A USER
   const {
     error
   } = studentRegisterValidation(req.body);
-  if (error)
+  if (error) {
+    logger.error(errHandler.validationErrorHandler(error));
     return res
       .status(Constants.er_failure)
       .json(errHandler.validationErrorHandler(error));
-
+  }
   //Checking if the student is already in the database
   const emailExist = await Student.findOne({
     email: req.body.email,
   });
-  if (emailExist)
+  if (emailExist) {
+    logger.error(`If(emailExist: ${emailExist}) - `, errHandler.thisEmailExistErrorHandler(req.body.email));
     return res
       .status(Constants.er_failure)
       .json(errHandler.thisEmailExistErrorHandler(req.body.email));
-
+  }
   const rollCodeExist = await Student.findOne({
     roll: req.body.roll,
     code: req.body.code,
   });
-  if (rollCodeExist)
+  if (rollCodeExist) {
+    logger.error(`If(rollCodeExist: ${rollCodeExist}) - `, errHandler.codeRollErrorHandler());
     return res
       .status(Constants.er_failure)
       .json(errHandler.codeRollErrorHandler());
-
+  }
   // Create a new student
   const student = new Student({
     name: req.body.name,
@@ -145,8 +162,10 @@ const StudentRegister = async (req, res) => {
   });
   try {
     const user = await student.save();
+    logger.info(user);
     return res.status(Constants.success).json(user);
   } catch (err) {
+    logger.error('Error in saving the admin - ', errHandler.errorHandler(error));
     res.status(Constants.er_failure).json(errHandler.errorHandler(err));
   }
 };

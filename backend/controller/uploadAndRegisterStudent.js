@@ -4,7 +4,10 @@ const errHandler = require("./errorHandling");
 const bcrypt = require("bcryptjs");
 const Constants = require("../config/constant");
 const Student = require("../model/Student");
-const logger = require("../config/logger");
+const {
+  logger,
+  printLogsWithBody
+} = require("../config/logger");
 
 const {
   studentRegisterValidation
@@ -53,7 +56,7 @@ const UploadFiles = async function (req, res) {
     req.session.fileName = req.file.originalname;
     FileConversion(req, res, email);
     logger.info({
-      message: "File successfully uploaded",
+      message: "File successfully uploaded"
     });
     return res
       .status(Constants.success)
@@ -62,6 +65,7 @@ const UploadFiles = async function (req, res) {
 };
 
 const UploadLogFiles = async function (req, res) {
+  printLogsWithBody(req);
   upload(req, res, (err) => {
     if (
       err ||
@@ -138,6 +142,7 @@ const StudentListRegister = async (data, res) => {
       });
       if (emailExist) {
         const err2 = errHandler.thisEmailExistErrorHandler(docs[i].email);
+        logger.error(`If (emailExist: ${emailExist}) - `, errHandler.thisEmailExistErrorHandler(docs[i].email));
         errorArray.push({
           message: err2.message,
         });
@@ -152,6 +157,11 @@ const StudentListRegister = async (data, res) => {
             docs[i].roll,
             docs[i].code
           );
+          logger.error(`If (rollCodeExist: ${rollCodeExist}) - `, errHandler.codeRollWithEmailErrorHandler(
+            docs[i].email,
+            docs[i].roll,
+            docs[i].code
+          ));
           errorArray.push({
             message: err3.message,
           });
@@ -199,6 +209,7 @@ function sendMail(req, res, email) {
   };
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
+      logger.error(`Function transporter.sendMail(mailOptions, callback) - `, errHandler.errorHandler(err))
       return res
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));

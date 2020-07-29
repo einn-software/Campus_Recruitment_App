@@ -11,6 +11,8 @@ services:
       - database 
   database:
     container_name: database
-    image: mongo     
+    image: mongo
+    volumes:
+      - ./data:/data/db      
 volumes:
     data: 

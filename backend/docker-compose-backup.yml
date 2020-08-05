@@ -1,0 +1,18 @@
+version: "2"
+services:
+  app:
+    image: crs:1.0
+    build: .
+    ports:
+      - '80:80'
+    links:
+      - database
+    depends_on:
+      - database 
+  database:
+    container_name: database
+    image: mongo
+    volumes:
+      - ./data:/data/db      
+volumes:
+  data: 

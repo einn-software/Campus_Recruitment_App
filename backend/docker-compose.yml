@@ -5,14 +5,5 @@ services:
     build: .
     ports:
       - '80:80'
-    links:
-      - database
-    depends_on:
-      - database 
-  database:
-    container_name: database
-    image: mongo
-    volumes:
-      - ./data:/data/db      
-volumes:
-  data: 
+    labels:
+      kompose.service.type: LoadBalancer

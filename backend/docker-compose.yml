@@ -1,8 +1,8 @@
 version: "2"
 services:
-  app:
-    image: crs:1.0
+  app:    
     build: .
+    image: docker.io/innobit/crs
     ports:
       - '80:80'
     labels:

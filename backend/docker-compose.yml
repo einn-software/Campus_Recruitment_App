@@ -1,9 +1,0 @@
-version: "2"
-services:
-  app:    
-    build: .
-    image: docker.io/innobit/crs
-    ports:
-      - '80:80'
-    labels:
-      kompose.service.type: LoadBalancer

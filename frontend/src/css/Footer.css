@@ -1,0 +1,17 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 55px;
+    width: 100%;
+    padding: 16px 0px;
+    background-color: #202020;
+    color: #999;
+    text-align: center;
+ }
+.copyrights {
+    color: #777;
+}
+.copyrights a {
+    color: #ddd;
+}

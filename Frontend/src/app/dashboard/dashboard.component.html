@@ -1,18 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <app-sidebar></app-sidebar>
-      <app-tabs></app-tabs>
-      <br />
-      <app-toolbar></app-toolbar>
-      <br />
-      <app-cards></app-cards>
-      <br />
-      <app-charts></app-charts>
-      <br />
-    </div>
-  </div>
-</div>
+<app-header (toggleSideBarForMe)="sideBarToggler($event)"></app-header>
 
-
+<mat-drawer-container>
+  <mat-drawer mode="side" [opened]="sideBarOpen">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
 

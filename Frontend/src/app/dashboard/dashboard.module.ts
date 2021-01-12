@@ -1,42 +1,49 @@
 import { NgModule } from '@angular/core';
-
-import { DashboardComponent } from './dashboard.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { ToolbarModule } from  'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { CardModule } from 'primeng/card';
-import { ChartModule } from 'primeng/chart';
-import { SidebarModule } from 'primeng/sidebar';
-import { CardsComponent } from './cards/cards.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { ChartsComponent } from './charts/charts.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 
+import { DashboardComponent } from './dashboard.component';
+import { DashComponent } from './modules/dash/dash.component';
+import { PostsComponent } from './modules/posts/posts.component';
+import { QuestionsComponent } from './modules/questions/questions.component';
+import { QuestionPapersComponent } from './modules/question-papers/question-papers.component';
+import { InstructionsComponent } from './modules/instructions/instructions.component';
+import { CollegesComponent } from './modules/colleges/colleges.component';
+import { TpoComponent } from './modules/tpo/tpo.component';
+import { StudentsComponent } from './modules/students/students.component';
+
+
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
   imports: [
+    CommonModule,
+    RouterModule,
     SharedModule,
     DashboardRoutingModule,
-    TabMenuModule,
-    ToolbarModule,
-    ButtonModule,
-    SplitButtonModule,
-    CardModule,
-    ChartModule,
-    SidebarModule
+    MatSidenavModule,
+    MatDividerModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatTableModule,
   ],
   declarations: [
     DashboardComponent,
-    CardsComponent,
-    TabsComponent,
-    ToolbarComponent,
-    ChartsComponent,
-    SidebarComponent
+    DashComponent,
+    PostsComponent,
+    QuestionsComponent,
+    QuestionPapersComponent,
+    InstructionsComponent,
+    CollegesComponent,
+    TpoComponent,
+    StudentsComponent
   ]
 })
 export class DashboardModule {}

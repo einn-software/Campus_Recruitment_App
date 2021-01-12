@@ -1,6 +1,7 @@
 const express = require("express"); //The Express is a web framwork for nodejs that provide small, robust tooling for HTTP servers, making it a great solution for single page applications, web sites, hybrids, or public HTTP APIs.
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const logger = require("./config/logger");
 const dotenv = require("dotenv"); // The dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 const app = express(); // Create the Express application
@@ -25,6 +26,7 @@ mongoose.connection
   });
 
 //Middleware
+app.use(cors());
 app.use(volleyball);
 app.use(express.json());
 

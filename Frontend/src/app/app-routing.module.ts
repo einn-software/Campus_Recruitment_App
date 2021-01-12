@@ -3,12 +3,12 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'settings',
-    loadChildren: './settings/settings.module#SettingsModule'
-  },
-  {
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsModule'
   },
   {
     path: 'upload',

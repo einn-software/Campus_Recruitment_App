@@ -61,7 +61,7 @@ mongo --quiet <<EOF
          "code":2347
 }
 ]);
-  
+
     db.students.insertMany([
 {
          "name": "Shikha Gupta",
@@ -151,7 +151,7 @@ mongo --quiet <<EOF
     }
 ]);
 
-  db.questioncollections.insertMany([ 
+  db.questioncollections.insertMany([
 {
    "question":"What makes tracking activity more essential?",
    "topic":"Computer Science",
@@ -429,7 +429,7 @@ mongo --quiet <<EOF
      var QstId6 = db.questioncollections.find({})[5]._id;
      var QstId7 = db.questioncollections.find({})[6]._id;
      var QstId8 = db.questioncollections.find({})[7]._id;
- 
+
 
     db.questionpapers.insertMany([
 {
@@ -442,9 +442,9 @@ mongo --quiet <<EOF
           "instructions_id" : InstId1,
           "code" : 2346,
           "start_time" :"8:00 pm",
-          "trigger_type": 2, 
-          "enable": 1,  
-          "negative_marking_ratio" : 0.25, 
+          "trigger_type": 2,
+          "enable": 1,
+          "negative_marking_ratio" : 0.25,
           "sections":[{
              "section_name":"A",
              "section_marks" : 20,
@@ -465,8 +465,8 @@ mongo --quiet <<EOF
                 {"question_id":QstId7, "question_marks" : 5},
                 {"question_id":QstId8, "question_marks" : 5}
               ]}
-              
-              
+
+
               ]
 
 },
@@ -480,9 +480,9 @@ mongo --quiet <<EOF
           "instructions_id" : InstId2,
           "code" : 2347,
           "start_time" :"8:00 pm",
-          "trigger_type": 2, 
-          "enable": 1,  
-          "negative_marking_ratio" : 0.25, 
+          "trigger_type": 2,
+          "enable": 1,
+          "negative_marking_ratio" : 0.25,
           "sections":[{
              "section_name":"A",
              "section_marks" : 20,

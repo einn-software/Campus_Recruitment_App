@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
             logger.error(errHandler.invalidTokenErrorHandler(err));
             return res.status(Constants.er_authentication_failed).json(errHandler.invalidTokenErrorHandler(err));
         }
+        req = decoded;
         next();
     })
 

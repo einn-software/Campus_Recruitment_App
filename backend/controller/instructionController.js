@@ -57,6 +57,7 @@ const InstructionAdd = (async (req, res) => {
 
 //To Get all the instructions data
 const InstructionGet = (function (req, res) {
+  console.log(req.session);
   if (req.session.user_type == Constants.admin) {
     Instructions.find({}, (err, results) => {
       if (err || !results) {
@@ -65,10 +66,12 @@ const InstructionGet = (function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
+      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });
   } else {
+    console.log(res);
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
       .status(Constants.er_authorization_failed)

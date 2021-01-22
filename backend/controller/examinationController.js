@@ -69,7 +69,8 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  console.log(req.session);
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
     }, (err, results) => {
@@ -79,6 +80,7 @@ const QuestionGet = function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
+      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });

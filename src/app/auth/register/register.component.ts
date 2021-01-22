@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
     this.userService
     .attemptAuth(this.authType, credentials)
     .subscribe(
-      data => this.router.navigateByUrl('/'),
+      data => this.router.navigateByUrl('/login'),
       err => {
         this.errors = err;
         this.isSubmitting = false;

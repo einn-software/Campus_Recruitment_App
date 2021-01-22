@@ -1,6 +1,7 @@
 const express = require("express");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const {
   logger
 } = require("./config/logger");
@@ -29,6 +30,7 @@ mongoose.connection
   });
 
 //Middleware
+app.use(cors());
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 app.use(express.json());
 

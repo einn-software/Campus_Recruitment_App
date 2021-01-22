@@ -4,22 +4,24 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
-import { Question } from './questions.model';
+import { JwtService } from '../../../core/services/jwt.service';
+import { Instruction } from './instructions.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class QuestionService{
+export class InstructionService{
+
   baseUri: string = 'http://localhost:80';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient, private apiService: ApiService){}
+  constructor(private http: HttpClient, private apiService: ApiService, private jwtService: JwtService){}
 
   //Create
-  createQuestion(data): Observable<Question>{
+  createInstruction(data): Observable<Instruction>{
     console.log(data);
-    return this.apiService.post('/questions', data)
+    return this.apiService.post('/instructions', data)
     .pipe(map(
       data => {
         return data;
@@ -28,12 +30,12 @@ export class QuestionService{
   }
 
   //Get all questions
-  getQuestions(): Observable<Question[]>{
-    return this.apiService.get('/questions');
+  getInstructions(): Observable<Instruction[]>{
+    return this.apiService.get('/instructions');
   }
 
   //Get question by id
-  getQuestion(id): Observable<Question>{
+  getInstruction(id): Observable<Instruction>{
     let url = `/questions/${id}`;
     return this.apiService.get(url).pipe(
       map((res) => {
@@ -44,19 +46,17 @@ export class QuestionService{
   }
 
   //Update question
-  updateQuestion(id, data): Observable<Question>{
-    return this.apiService.put(`/questions/${id}`, data).pipe(
-      map((res) => {
-        return res;
-      }),
+  updateInstruction(id, data): Observable<Instruction>{
+    let url = `${this.baseUri}/${id}`;
+    return this.http.put<Instruction>(url, data, {headers: this.headers}).pipe(
       catchError(this.errorMgmt)
     )
   }
 
   //Delete question
-  deleteQuestion(id): Observable<any>{
-    let url = `/questions/${id}`;
-    return this.apiService.delete(url).pipe(
+  deleteInstruction(id): Observable<any>{
+    let url = `${this.baseUri}/${id}`;
+    return this.http.delete(url, { headers: this.headers}).pipe(
       catchError(this.errorMgmt)
     )
   }

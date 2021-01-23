@@ -83,7 +83,6 @@ const AdminLogin = (async (req, res) => {
     user_type: req.session.user_type
   }
   logger.info(result)
-  console.log(result);
   return res.status(Constants.success).header("auth-token", token).json(result);
 });
 

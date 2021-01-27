@@ -19,7 +19,7 @@ const {
 
 //Question Collection API
 const QuestionAdd = async (req, res) => {
-  if (req.session.user_type == Constants.admin) {
+  if (req.session.user_type == Constants.student || Constants.admin) {
     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
     const {
       error
@@ -69,8 +69,8 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  console.log(req.session);
-  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
+  console.log(req.session.user_type);
+  if (req.session.user_type == Constants.student || Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
     }, (err, results) => {
@@ -121,7 +121,7 @@ const QuestionGetById = function (req, res) {
 
 //Put QuestionCollection
 const QuestionPut = function (req, res) {
-  if (req.session.user_type == Constants.admin) {
+  if (req.session.user_type == Constants.student || Constants.admin) {
     const body = req.body;
     //VALIDATE THE DATA
     const {
@@ -169,7 +169,7 @@ const QuestionPut = function (req, res) {
 
 //Delete QuestionCollection
 const QuestionDelete = function (req, res) {
-  if (req.session.user_type == Constants.admin) {
+  if (req.session.user_type == Constants.student || Constants.admin) {
     QuestionCollections.findByIdAndRemove({
         _id: req.params.id,
       },

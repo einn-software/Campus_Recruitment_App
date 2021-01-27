@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { AccountComponent } from './auth/account/account.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    path: '',
+    component: AccountComponent
   }
 ];
 

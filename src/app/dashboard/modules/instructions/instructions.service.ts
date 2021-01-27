@@ -4,7 +4,6 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
-import { JwtService } from '../../../core/services/jwt.service';
 import { Instruction } from './instructions.model';
 
 @Injectable({
@@ -13,10 +12,14 @@ import { Instruction } from './instructions.model';
 
 export class InstructionService{
 
-  baseUri: string = 'http://localhost:80';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-  constructor(private http: HttpClient, private apiService: ApiService, private jwtService: JwtService){}
+  //baseUri: string = 'http://localhost:80';
+  // private httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmVkNTAzMDQxYTc2MzI4ZjQ4ZTk1YzkiLCJpYXQiOjE2MTEzMTY3Mzl9.agx7AcgYRPrCjpsW5wBU6vBGO0MijsxByU6E5WE9T4o'  //Pass auth token
+  //   })
+  // };
+  constructor(private http: HttpClient, private apiService: ApiService){}
 
   //Create
   createInstruction(data): Observable<Instruction>{
@@ -32,11 +35,12 @@ export class InstructionService{
   //Get all questions
   getInstructions(): Observable<Instruction[]>{
     return this.apiService.get('/instructions');
+    //return this.http.get<Instruction[]>('http://localhost:80/instructions', this.httpOptions);
   }
 
-  //Get question by id
+  //Get instruction by id
   getInstruction(id): Observable<Instruction>{
-    let url = `/questions/${id}`;
+    let url = `/instructions/${id}`;
     return this.apiService.get(url).pipe(
       map((res) => {
         return res;
@@ -45,18 +49,23 @@ export class InstructionService{
     )
   }
 
-  //Update question
+  //Update instruction
   updateInstruction(id, data): Observable<Instruction>{
-    let url = `${this.baseUri}/${id}`;
-    return this.http.put<Instruction>(url, data, {headers: this.headers}).pipe(
+    return this.apiService.put(`/instructions/${id}`, data).pipe(
+      map((res) => {
+        return res;
+      }),
       catchError(this.errorMgmt)
     )
   }
 
   //Delete question
   deleteInstruction(id): Observable<any>{
-    let url = `${this.baseUri}/${id}`;
-    return this.http.delete(url, { headers: this.headers}).pipe(
+    let url = `/instructions/${id}`;
+    return this.apiService.delete(url).pipe(
+      map((res) => {
+        return res;
+      }),
       catchError(this.errorMgmt)
     )
   }

@@ -7,7 +7,7 @@ const {
 } = require("./logger");
 
 module.exports = async (req, res, next) => {
-    printLogsWithBody(req);
+    //printLogsWithBody(req);
     const token = req.header('auth-token');
     if (!token) {
         logger.error(`If (!${token}) - `, errHandler.tokenNotFoundErrorHandler())

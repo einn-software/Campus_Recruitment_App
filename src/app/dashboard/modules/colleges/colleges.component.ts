@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { College } from './colleges.model';
+import { CollegeService } from './colleges.service';
+
 
 @Component({
   selector: 'app-colleges',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollegesComponent implements OnInit {
 
-  constructor() { }
+  public collegeList : College[] = [];
+
+  constructor(private collegeService: CollegeService) { }
 
   ngOnInit(): void {
+    this.collegeService.getColleges().subscribe(
+      res => {
+        this.collegeList = res;
+      }
+    )
   }
 
 }

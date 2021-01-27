@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../questions.model';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService} from '../questions.service';
-import { ApiService } from 'src/app/core';
+
 
 @Component({
   selector: 'app-question-edit',
@@ -46,7 +46,6 @@ export class QuestionEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +77,6 @@ export class QuestionEditComponent implements OnInit {
         this.questionService.updateQuestion(id, this.editForm.value)
         .subscribe(res => {
           res => this.editForm = res
-          console.log(res);
           this.router.navigateByUrl('/questions');
           console.log('Content updated successfully!');
         }, (error) => {

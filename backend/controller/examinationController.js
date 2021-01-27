@@ -94,7 +94,7 @@ const QuestionGet = function (req, res) {
 
 // Get QuestionCollection By Id
 const QuestionGetById = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.findOne({
         _id: req.params.id
       }, {
@@ -265,7 +265,7 @@ const QuestionPaperAdd = async (req, res) => {
 //Get QuestionPaper
 
 const QuestionPaperGet = (req, res) => {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionPapers.findOne({
         code: req.params.code,
         year: req.params.year,
@@ -299,7 +299,7 @@ const QuestionPaperGet = (req, res) => {
 //Get QuestionPaper by Tpo using code
 
 const QuestionPaperIdGetByTpo = (req, res) => {
-  if (req.session.user_type == Constants.tpo || Constants.admin) {
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     QuestionPapers.find({
         code: req.params.code
       }, {
@@ -330,7 +330,7 @@ const QuestionPaperIdGetByTpo = (req, res) => {
 
 // Get QuestionPaper By Id
 const QuestionPaperGetById = function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.student) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     QuestionPapers.findOne({
         _id: req.params.id,
       },

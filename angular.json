@@ -13,7 +13,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+<<<<<<< HEAD
             "allowedCommonJsDependencies": ["chart.js", "xlsx"],
+=======
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ],
+>>>>>>> d864c4646ba41e83bb5653a5bd6bd197b7acdcdc
             "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -128,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "cli": {
+    "analytics": false
+  }
 }

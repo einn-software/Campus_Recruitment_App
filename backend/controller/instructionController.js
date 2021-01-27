@@ -79,7 +79,8 @@ const InstructionGet = (function (req, res) {
 
 // To get single instruction data using id
 const InstructionGetById = (function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.student) {
+  console.log(req.session);
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     Instructions.findOne({
         _id: req.params.id
       },

@@ -30,20 +30,20 @@ export class InstructionService{
   }
 
   //Get all questions
-  getInstructions(): Observable<Instruction[]>{
+  getInstructions(){
     return this.apiService.get('/instructions');
   }
 
   //Get question by id
-  getInstruction(id): Observable<Instruction>{
-    let url = `/questions/${id}`;
-    return this.apiService.get(url).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError(this.errorMgmt)
-    )
-  }
+  // getInstruction(id): Observable<Instruction>{
+  //   let url = `/questions/${id}`;
+  //   return this.apiService.get(url).pipe(
+  //     map((res) => {
+  //       return res;
+  //     }),
+  //     catchError(this.errorMgmt)
+  //   )
+  // }
 
   //Update question
   updateInstruction(id, data): Observable<Instruction>{

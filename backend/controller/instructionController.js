@@ -18,6 +18,7 @@ const InstructionAdd = (async (req, res) => {
       error
     } = instructionValidation(req.body);
     if (error) {
+
       logger.error(errHandler.validationErrorHandler(error));
       return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
     }
@@ -38,6 +39,7 @@ const InstructionAdd = (async (req, res) => {
       month: req.body.month,
       day: req.body.day,
     });
+    console.log(instructions)
     try {
       const instruction = await instructions.save();
       logger.info(instruction);
@@ -57,7 +59,6 @@ const InstructionAdd = (async (req, res) => {
 
 //To Get all the instructions data
 const InstructionGet = (function (req, res) {
-  console.log(req.session);
   if (req.session.user_type == Constants.admin) {
     Instructions.find({}, (err, results) => {
       if (err || !results) {
@@ -71,7 +72,6 @@ const InstructionGet = (function (req, res) {
       return res.status(Constants.success).json(results);
     });
   } else {
-    console.log(res);
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
       .status(Constants.er_authorization_failed)
@@ -81,7 +81,6 @@ const InstructionGet = (function (req, res) {
 
 // To get single instruction data using id
 const InstructionGetById = (function (req, res) {
-  console.log(req.session);
   if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     Instructions.findOne({
         _id: req.params.id

@@ -1,44 +1,110 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-    <a class="navbar-brand" routerLink="/">Campus Recruiter</a>
-  </div>
+      <a class="navbar-brand" routerLink="/">Campus Recruiter</a>
+    </div>
 
     <!-- Show this for logged out users -->
-    <ul *appShowAuthed="false"
-      class="nav navbar-nav pull-xs-right">
+    <div class="navbar-collapse">
+      <ul *appShowAuthed="false" class="nav navbar-nav ml-auto pull-xs-right">
+        <li ngbDropdown class="nav-item">
+          <a
+            class="nav-link dropdown-toggle"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown1"
+            authType="button"
+          >
+            Login
+          </a>
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown1"
+            class="dropdown-menu"
+          >
+            <a
+              ngbDropdownItem
+              href="#"
+              routerLink="/login/admins"
+              routerLinkActive="active"
+              >As Admin</a
+            ><br />
+            <a
+              ngbDropdownItem
+              href="#"
+              routerLink="/login/tpos"
+              routerLinkActive="active"
+              >As Tpo</a
+            ><br />
+            <a
+              ngbDropdownItem
+              href="#"
+              routerLink="/login/students"
+              routerLinkActive="active"
+              >As Student</a
+            ><br />
+          </div>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a
+            class="nav-link dropdown-toggle"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown1"
+            authType="button"
+          >
+            Register
+          </a>
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown1"
+            class="dropdown-menu"
+          >
+            <a
+              href="#"
+              ngbDropdownItem
+              class="dropdown-item"
+              routerLink="/register/admins"
+              routerLinkActive="active"
+              >As Admin</a
+            >
+            <br />
+            <a
+              href="#"
+              ngbDropdownItem
+              class="dropdown-item"
+              routerLink="/register/tpos"
+              routerLinkActive="active"
+              >As Tpo</a
+            ><br />
+            <a
+              href="#"
+              ngbDropdownItem
+              class="dropdown-item"
+              routerLink="/register/colleges"
+              routerLinkActive="active"
+              >As College</a
+            ><br />
+            <a
+              href="#"
+              ngbDropdownItem
+              class="dropdown-item"
+              routerLink="/register/students"
+              routerLinkActive="active"
+              >As Student</a
+            ><br />
+          </div>
+        </li>
+      </ul>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/login"
-          routerLinkActive="active">
-          Login
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/register"
-          routerLinkActive="active">
-          Register
-        </a>
-      </li>
-
-    </ul>
-
-    <!-- Show this for logged in users -->
-    <ul *appShowAuthed="true"
-      class="nav navbar-nav pull-xs-right">
-
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/dashboard"
-          routerLinkActive="active">
-          Dashboard
-        </a>
-      </li>
-
-    </ul>
-
+      <!-- Show this for logged in users -->
+      <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            Dashboard
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

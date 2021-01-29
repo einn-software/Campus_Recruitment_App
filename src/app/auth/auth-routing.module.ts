@@ -8,14 +8,21 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [NoAuthGuard]
-  },
+        children: [
+            { path: 'admins', component: LoginComponent, canActivate: [NoAuthGuard] },
+            { path: 'tpos', component: LoginComponent, canActivate: [NoAuthGuard] },
+            { path: 'students', component: LoginComponent, canActivate: [NoAuthGuard] }
+          ],
+        },
   {
     path: 'register',
-    component: RegisterComponent,
-    canActivate: [NoAuthGuard]
-  },
+        children: [
+            { path: 'admins', component: RegisterComponent, canActivate: [NoAuthGuard] },
+            { path: 'tpos', component: RegisterComponent, canActivate: [NoAuthGuard] },
+            { path: 'colleges', component: RegisterComponent, canActivate: [NoAuthGuard] },
+            { path: 'students', component: RegisterComponent, canActivate: [NoAuthGuard] }
+          ],
+        },
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,

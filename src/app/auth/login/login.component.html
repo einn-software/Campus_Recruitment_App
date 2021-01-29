@@ -1,40 +1,126 @@
 <div class="auth-page">
   <div class="container page">
     <div class="row">
-
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">{{ title }}</h1>
-        <p class="text-xs-center">
-          <a [routerLink]="['/login']"  *ngIf="authType == 'register'">Have an account?</a>
-          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
-        </p>
+        <div class="text-xs-center">
+          <div [ngSwitch]="role">
+            <div *ngSwitchCase="'admins'">
+              <a [routerLink]="['/login/admins']" *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a [routerLink]="['/register/admins']" *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+            <div *ngSwitchCase="'students'">
+              <a
+                [routerLink]="['/login/students']"
+                *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a
+                [routerLink]="['/register/students']"
+                *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+            <div *ngSwitchCase="'tpos'">
+              <a [routerLink]="['/login/tpos']" *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a [routerLink]="['/register/tpos']" *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+          </div>
+        </div>
         <app-list-errors [errors]="errors"></app-list-errors>
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group">
+            <fieldset
+              class="form-group"
+              *ngIf="role == 'admins' || role == 'tpos'"
+            >
               <input
                 formControlName="email"
                 placeholder="Email"
                 class="form-control form-control-lg"
-                type="text" />
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('phone').valid && authForm.get('phone').touched
+                "
+                class="help-block"
+                >Please, Enter a valid phone number (length should be greater
+                than 9 and less than 15)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role == 'students'">
+              <select
+                class="form-control form-control-lg"
+                formControlName="code"
+              >
+                <option disabled>Select Code</option>
+                <option *ngFor="let i of clg" [value]="i.code">
+                  {{ i.code }}, {{ i.name }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  !authForm.get('code').valid && authForm.get('code').touched
+                "
+                class="help-block"
+                >Please, Select a code from the list</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role == 'students'">
+              <input
+                formControlName="roll"
+                placeholder="roll"
+                class="form-control form-control-lg"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('roll').valid && authForm.get('roll').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll (length should be greater than 3 and
+                less than 256)</span
+              >
             </fieldset>
             <fieldset class="form-group">
               <input
                 formControlName="password"
                 placeholder="Password"
                 class="form-control form-control-lg"
-                type="password" />
+                type="password"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('password').valid &&
+                  authForm.get('password').touched
+                "
+                class="help-block"
+                >Please, Enter a valid password (length should be greater than 5
+                and less than 256)</span
+              >
             </fieldset>
 
-            <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              [disabled]="!authForm.valid"
+              type="submit"
+            >
               {{ title }}
             </button>
-            <br>
+            <br />
             <a [routerLink]="['/forgot-password']">Forgotten Password?</a>
           </fieldset>
         </form>
       </div>
-
     </div>
   </div>
 </div>

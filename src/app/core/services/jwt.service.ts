@@ -7,13 +7,17 @@ export class JwtService {
   getToken(): String {
     return window.localStorage['jwtToken'];
   }
-
-  saveToken(token: String) {
+getUserRole(){
+return window.localStorage['userRole'];
+}
+  saveTokenAndRole(token: String, role: number) {
     window.localStorage['jwtToken'] = token;
+    window.localStorage['userRole'] = role;
   }
 
-  destroyToken() {
+  destroyTokenAndRole() {
     window.localStorage.removeItem('jwtToken');
+    window.localStorage.removeItem('userRole');
   }
 
 }

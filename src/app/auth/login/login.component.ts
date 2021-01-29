@@ -10,6 +10,7 @@ import { Errors, UserService } from '../../core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  role: string = '';
   authType: string = '';
   title: String = '';
   errors: Errors = {errors: {}};
@@ -22,33 +23,40 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
   ) {
+    this.route.url.subscribe(data => {
+      // Get the last piece of the URL (it's either 'login' or 'register')
+      this.role = data[data.length - 1].path;
+      this.authType = this.route.pathFromRoot[this.route.pathFromRoot.length - 2].routeConfig.path;
+      // Set a title for the page accordingly
+      this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
+    });
+    if(this.role == 'students'){
+      this.authForm = this.fb.group({
+      'code': new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
+      'roll': new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(255)]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
+      });
+      }
+      else{
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
-      'email': ['', Validators.required],
-      'password': ['', Validators.required],
+      'email': new FormControl(null, [Validators.required, Validators.email, Validators.minLength(7), Validators.maxLength(255)]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
     });
+  }
    }
 
   ngOnInit(): void {
-    this.route.url.subscribe(data => {
-      // Get the last piece of the URL (it's either 'login' or 'register')
-      this.authType = data[data.length - 1].path;
-      // Set a title for the page accordingly
-      this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
-      // add form control for username if this is the register page
-      // if (this.authType === 'register') {
-      //   this.authForm.addControl('username', new FormControl());
-      // }
-    });
+
   }
 
   submitForm() {
     this.isSubmitting = true;
     this.errors = {errors: {}};
-
+    console.log(this.role);
     const credentials = this.authForm.value;
     this.userService
-    .attemptAuth(this.authType, credentials)
+    .attemptAuth(this.authType, this.role, credentials)
     .subscribe(
       data => this.router.navigateByUrl('/dash'),
       err => {

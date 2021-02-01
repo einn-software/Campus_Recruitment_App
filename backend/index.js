@@ -30,7 +30,9 @@ mongoose.connection
   });
 
 //Middleware
-app.use(cors());
+app.use(cors({origin: [
+  "http://localhost:4200"
+], credentials: true}));
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 app.use(express.json());
 

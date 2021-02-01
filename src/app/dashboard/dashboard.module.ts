@@ -21,6 +21,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { AdminComponent } from './modules/admin/admin.component';
+
 
 
 
@@ -46,7 +48,8 @@ import { MatTableModule } from '@angular/material/table';
     InstructionsComponent,
     CollegesComponent,
     TpoComponent,
-    StudentsComponent
+    StudentsComponent,
+    AdminComponent,
   ],
 
 })

@@ -96,7 +96,7 @@ const {
 
 router.use(
   session({
-    secret: "au%mQKNhZBuQZyV0o$|?!!r2t5Dfg4d96r9",
+    secret: `${process.env.TOKEN_SECRET}`,
     resave: false, //Forces the session to be saved back to the session store, even if the session was never modified during the request
     saveUninitialized: true, //Forces a session that is "uninitialized" to be saved to the store
     store: new MongoStore({

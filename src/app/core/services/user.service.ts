@@ -27,6 +27,7 @@ export class UserService {
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
+      console.log(window.localStorage);
       this.apiService.get('/user')
       .subscribe(
         data => this.setAuth(data.user),
@@ -40,7 +41,7 @@ export class UserService {
 
   setAuth(user: User) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
+    this.jwtService.saveTokenAndRole(user.token, user.user_type);
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
@@ -49,17 +50,18 @@ export class UserService {
 
   purgeAuth() {
     // Remove JWT from localstorage
-    this.jwtService.destroyToken();
+    this.jwtService.destroyTokenAndRole();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
   }
 
-  attemptAuth(type, credentials): Observable<User> {
-    console.log(credentials);
+  attemptAuth(type, role, credentials): Observable<User> {
     const route = (type === 'login') ? 'login' : 'register';
-    return this.apiService.post(`/${route}/admins`, credentials)
+    const url = route + '/' + role;
+    console.log(url);
+    return this.apiService.post(`/${url}`,credentials)
       .pipe(map(
       data => {
         this.setAuth(data);

@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './core/interceptors/http.token.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,6 +29,7 @@ import { HttpTokenInterceptor } from './core/interceptors/http.token.interceptor
     AuthModule,
     AppRoutingModule,
     DashboardModule,
+    NgbModule,
 
   ],
   providers: [{

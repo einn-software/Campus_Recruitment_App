@@ -12,7 +12,7 @@ const {
 
 //instructions
 const InstructionAdd = (async (req, res) => {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.admin) {
     //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
     const {
       error
@@ -57,7 +57,7 @@ const InstructionAdd = (async (req, res) => {
 
 //To Get all the instructions data
 const InstructionGet = (function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.admin) {
     Instructions.find({}, (err, results) => {
       if (err || !results) {
         logger.error(`Fuction Instructions.find({}}, callback) - `, errHandler.errorHandler(err));
@@ -80,7 +80,7 @@ const InstructionGet = (function (req, res) {
 // To get single instruction data using id
 const InstructionGetById = (function (req, res) {
   console.log(req.session);
-  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
+  if(req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     Instructions.findOne({
         _id: req.params.id
       },
@@ -113,7 +113,7 @@ const InstructionPut =
       logger.error(errHandler.validationErrorHandler(error));
       return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
     }
-    if (req.session.user_type == Constants.student || Constants.admin) {
+    if (req.session.user_type == Constants.admin) {
       Instructions.findOneAndUpdate({
             _id: req.params.id,
           },
@@ -148,7 +148,7 @@ const InstructionPut =
 // To Delete all the instructions at once
 const InstructionDeleteAtOnce =
   (function (req, res) {
-    if (req.session.user_type == Constants.student || Constants.admin) {
+    if (req.session.user_type == Constants.admin) {
       Instructions.deleteMany({},
         (err, results) => {
           if (err || !results) {
@@ -175,7 +175,7 @@ const InstructionDeleteAtOnce =
 const InstructionDelete =
   (function (req, res) {
     //printLogsWithBody(req);
-    if (req.session.user_type == Constants.student || Constants.admin) {
+    if (req.session.user_type == Constants.admin) {
       Instructions.findByIdAndRemove({
           _id: req.params.id,
         },

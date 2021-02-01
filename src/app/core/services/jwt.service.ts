@@ -8,12 +8,18 @@ export class JwtService {
     return window.localStorage['jwtToken'];
   }
 
-  saveToken(token: String) {
-    window.localStorage['jwtToken'] = token;
+  getUserRole(){
+  return window.localStorage['userRole'];
   }
 
-  destroyToken() {
+  saveTokenAndRole(token: String, role: number) {
+    window.localStorage['jwtToken'] = token;
+    window.localStorage['userRole'] = role;
+  }
+
+  destroyTokenAndRole() {
     window.localStorage.removeItem('jwtToken');
+    window.localStorage.removeItem('userRole');
   }
 
 }

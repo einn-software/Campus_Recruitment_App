@@ -16,6 +16,10 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './core/interceptors/http.token.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+<<<<<<< HEAD
+=======
+
+>>>>>>> aeed274502be1c6a733e44712655a0fd1782a48d
 
 
 @NgModule({
@@ -28,7 +32,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AuthModule,
     AppRoutingModule,
     DashboardModule,
+<<<<<<< HEAD
     NgbModule
+=======
+    NgbModule,
+>>>>>>> aeed274502be1c6a733e44712655a0fd1782a48d
 
   ],
   providers: [{

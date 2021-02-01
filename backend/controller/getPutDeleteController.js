@@ -64,7 +64,7 @@ const AdminGetById = function (req, res) {
 
 //To change or update the admin's data by using their id
 const AdminPut = async function (req, res) {
-  if (req.session.user_type == Constants.admin) {
+  if(req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA BEFORE WE MAKE A Admin
     const {
       error

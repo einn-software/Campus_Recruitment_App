@@ -4,27 +4,22 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
-import { Instruction } from './instructions.model';
+import { User } from '../../../core/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class InstructionService{
-
+export class AdminService{
   //baseUri: string = 'http://localhost:80';
-  // private httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmVkNTAzMDQxYTc2MzI4ZjQ4ZTk1YzkiLCJpYXQiOjE2MTEzMTY3Mzl9.agx7AcgYRPrCjpsW5wBU6vBGO0MijsxByU6E5WE9T4o'  //Pass auth token
-  //   })
-  // };
+  //headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   constructor(private http: HttpClient, private apiService: ApiService){}
 
   //Create
-  createInstruction(data): Observable<Instruction>{
+  createAdmin(data): Observable<User>{
     console.log(data);
-    return this.apiService.post('/instructions', data)
+    return this.apiService.post('/admins', data)
     .pipe(map(
       data => {
         return data;
@@ -33,26 +28,8 @@ export class InstructionService{
   }
 
   //Get all questions
-  getInstructions(){
-    return this.apiService.get('/instructions');
-    //return this.http.get<Instruction[]>('http://localhost:80/instructions', this.httpOptions);
-  }
-
-<<<<<<< HEAD
-  //Get question by id
-  // getInstruction(id): Observable<Instruction>{
-  //   let url = `/questions/${id}`;
-  //   return this.apiService.get(url).pipe(
-  //     map((res) => {
-  //       return res;
-  //     }),
-  //     catchError(this.errorMgmt)
-  //   )
-  // }
-=======
-  //Get instruction by id
-  getInstruction(id): Observable<Instruction>{
-    let url = `/instructions/${id}`;
+  getAdmins(): Observable<User[]>{
+    let url = '/admins';
     return this.apiService.get(url).pipe(
       map((res) => {
         return res;
@@ -60,11 +37,21 @@ export class InstructionService{
       catchError(this.errorMgmt)
     )
   }
->>>>>>> aeed274502be1c6a733e44712655a0fd1782a48d
 
-  //Update instruction
-  updateInstruction(id, data): Observable<Instruction>{
-    return this.apiService.put(`/instructions/${id}`, data).pipe(
+  //Get question by id
+  getAdmin(id): Observable<User>{
+    let url = `/admins/${id}`;
+    return this.apiService.get(url).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
+
+  //Update question
+  updateAdmin(id, data): Observable<User>{
+    return this.apiService.put(`/admins/${id}`, data).pipe(
       map((res) => {
         return res;
       }),
@@ -73,8 +60,8 @@ export class InstructionService{
   }
 
   //Delete question
-  deleteInstruction(id): Observable<any>{
-    let url = `/instructions/${id}`;
+  deleteAdmin(id): Observable<any>{
+    let url = `/admins/${id}`;
     return this.apiService.delete(url).pipe(
       map((res) => {
         return res;

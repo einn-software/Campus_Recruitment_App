@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../questions.service';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +33,7 @@ export class QuestionCreateComponent implements OnInit {
         option: ['', [Validators.required]]
       })
     ]),
+    answer: ['', [Validators.required]],
     weight: ['', [Validators.required]]
   });
   public question: Question[];
@@ -45,7 +46,6 @@ export class QuestionCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private ngZone: NgZone,
     private questionService: QuestionService
   ) {}
 

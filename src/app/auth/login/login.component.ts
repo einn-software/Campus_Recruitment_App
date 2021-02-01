@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
+  clg: [];
 
   constructor(
     private route: ActivatedRoute,

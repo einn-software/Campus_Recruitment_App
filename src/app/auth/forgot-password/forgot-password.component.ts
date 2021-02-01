@@ -10,6 +10,7 @@ import { Errors, UserService } from '../../core';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
+  role: string = '';
   authType: string = '';
   role: string = '';
   title: String = '';

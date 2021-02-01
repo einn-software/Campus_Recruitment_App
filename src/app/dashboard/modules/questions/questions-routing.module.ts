@@ -5,7 +5,6 @@ import { AuthGuard } from '../../../core';
 import { QuestionsComponent } from './questions.component';
 import { QuestionCreateComponent } from './question-create/question-create.component';
 import { QuestionEditComponent } from './question-edit/question-edit.component';
-import { QuestionListComponent } from './question-list/question-list.component';
 
 const routes: Routes = [
   {
@@ -19,10 +18,6 @@ const routes: Routes = [
       path: 'edit-question/:id',
       component: QuestionEditComponent
     },
-    {
-      path: 'questions-list',
-      component: QuestionListComponent
-    }
   ]
   },
 ];

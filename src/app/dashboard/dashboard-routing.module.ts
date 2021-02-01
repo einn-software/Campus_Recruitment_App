@@ -13,7 +13,8 @@ import { QuestionCreateComponent } from './modules/questions/question-create/que
 import { QuestionEditComponent } from './modules/questions/question-edit/question-edit.component';
 import { InstructionCreateComponent } from './modules/instructions/instruction-create/instruction-create.component';
 import { InstructionEditComponent } from './modules/instructions/instruction-edit/instruction-edit.component';
-
+import { AdminComponent } from './modules/admin/admin.component';
+import { AdminEditComponent } from './modules/admin/admin-edit/admin-edit.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,14 @@ const routes: Routes = [
     {
       path: 'edit-instruction/:id',
       component: InstructionEditComponent
+    },
+    {
+      path: 'admin',
+      component: AdminComponent
+    },
+    {
+      path: 'edit-admin/:id',
+      component: AdminEditComponent
     },
     {
       path: 'colleges',

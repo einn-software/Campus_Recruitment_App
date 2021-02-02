@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstructionListComponent } from './instruction-list.component';
+import { TpoDashboardComponent } from './tpo-dashboard.component';
 
-describe('InstructionListComponent', () => {
-  let component: InstructionListComponent;
-  let fixture: ComponentFixture<InstructionListComponent>;
+describe('TpoDashboardComponent', () => {
+  let component: TpoDashboardComponent;
+  let fixture: ComponentFixture<TpoDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InstructionListComponent ]
+      declarations: [ TpoDashboardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstructionListComponent);
+    fixture = TestBed.createComponent(TpoDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

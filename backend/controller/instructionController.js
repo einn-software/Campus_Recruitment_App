@@ -67,7 +67,6 @@ const InstructionGet = (function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
-      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });
@@ -175,7 +174,7 @@ const InstructionDeleteAtOnce =
 //To delete the instruction's data by using their id
 const InstructionDelete =
   (function (req, res) {
-    printLogsWithBody(req);
+    //printLogsWithBody(req);
     if (req.session.user_type == Constants.admin) {
       Instructions.findByIdAndRemove({
           _id: req.params.id,

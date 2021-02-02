@@ -69,7 +69,7 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  console.log(req.session);
+  console.log(req.session.user_type);
   if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
@@ -265,7 +265,7 @@ const QuestionPaperAdd = async (req, res) => {
 //Get QuestionPaper
 
 const QuestionPaperGet = (req, res) => {
-  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
+  if  (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionPapers.findOne({
         code: req.params.code,
         year: req.params.year,

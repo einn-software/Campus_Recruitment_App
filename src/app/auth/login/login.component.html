@@ -50,11 +50,11 @@
               />
               <span
                 *ngIf="
-                  !authForm.get('phone').valid && authForm.get('phone').touched
+                  !authForm.get('email').valid && authForm.get('email').touched
                 "
                 class="help-block"
-                >Please, Enter a valid phone number (length should be greater
-                than 9 and less than 15)</span
+                >Please, Enter a valid email (length should be greater than 9
+                and less than 15)</span
               >
             </fieldset>
             <fieldset class="form-group" *ngIf="role == 'students'">

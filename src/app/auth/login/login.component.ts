@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
+  clg: [];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +59,7 @@ export class LoginComponent implements OnInit {
     this.userService
     .attemptAuth(this.authType, this.role, credentials)
     .subscribe(
-      data => this.router.navigateByUrl('/dash'),
+      data => this.router.navigateByUrl(`/dash/${this.role}`),
       err => {
         this.errors = err;
         this.isSubmitting = false;

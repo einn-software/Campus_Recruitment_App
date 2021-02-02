@@ -1,8 +1,8 @@
 export class Instruction{
   _id: string;
-  code: string;
+  code: number;
   message: string;
-  year: string;
-  month: string;
-  day: string;
+  year: number;
+  month: number;
+  day: number;
 }

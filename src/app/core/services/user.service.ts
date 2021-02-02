@@ -41,7 +41,7 @@ export class UserService {
 
   setAuth(user: User) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveTokenAndRole(user.token, user.user_type);
+    this.jwtService.saveTokenAndRole(user.token, user.user_type, user._id, user.email);
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true

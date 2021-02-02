@@ -11,8 +11,8 @@ import { Question } from './questions.model';
 })
 
 export class QuestionService{
-  baseUri: string = 'http://localhost:80';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //baseUri: string = 'http://localhost:80';
+  //headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient, private apiService: ApiService){}
 
@@ -29,7 +29,13 @@ export class QuestionService{
 
   //Get all questions
   getQuestions(): Observable<Question[]>{
-    return this.apiService.get('/questions');
+    let url = '/questions';
+    return this.apiService.get(url).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
   }
 
   //Get question by id
@@ -57,6 +63,9 @@ export class QuestionService{
   deleteQuestion(id): Observable<any>{
     let url = `/questions/${id}`;
     return this.apiService.delete(url).pipe(
+      map((res) => {
+        return res;
+      }),
       catchError(this.errorMgmt)
     )
   }

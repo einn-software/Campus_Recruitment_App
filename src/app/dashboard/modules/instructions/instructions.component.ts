@@ -14,8 +14,20 @@ export class InstructionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.instructionService.getInstructions().subscribe(
-      res => this.instructionList = res
-    )
+      res => {
+        this.instructionList = res;
+      })
+  }
+
+  removeInstruction(ins, index){
+    if(window.confirm('Are you sure')){
+      this.instructionService.deleteInstruction(ins._id).subscribe(
+        success => {
+          this.instructionList = this.instructionList.filter((inst) => inst !== ins);
+        }
+      )
+      this.instructionList.splice(index, 1);
+    }
   }
 
 }

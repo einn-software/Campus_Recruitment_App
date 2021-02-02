@@ -24,6 +24,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { TpoCreateComponent } from './modules/tpo/tpo-create/tpo-create.component';
+import { TpoEditComponent } from './modules/tpo/tpo-edit/tpo-edit.component';
 
 
 
@@ -53,6 +55,8 @@ import { MatTableModule } from '@angular/material/table';
     TpoComponent,
     StudentsComponent,
     AdminComponent,
+    TpoCreateComponent,
+    TpoEditComponent,
   ],
 
 })

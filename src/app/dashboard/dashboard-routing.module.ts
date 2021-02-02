@@ -25,6 +25,9 @@ import { AdminEditComponent } from './modules/admin/admin-edit/admin-edit.compon
 import { CollegesComponent } from './modules/colleges/colleges.component';
 import { CollegeCreateComponent } from './modules/colleges/college-create/college-create.component';
 import { CollegeEditComponent } from './modules/colleges/college-edit/college-edit.component';
+import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
+import { ShowResultComponent } from './modules/show-result/show-result.component';
+import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 
 
 const routes: Routes = [
@@ -32,10 +35,30 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    children: [{
-      path: 'dash',
-      component: DashComponent
-    },{
+    children: [
+      {
+        path: 'dash',
+        children:[{
+          path: 'admins',
+          component: DashComponent
+        },
+        {
+          path: 'tpos',
+          component: TpoDashboardComponent
+        }]
+      }
+      ,{
+        path: 'questions',
+        component: QuestionsComponent
+      },
+      {
+        path: 'results',
+        component: ShowResultComponent
+      },
+      {
+        path: 'upload',
+        component: UploadStudentListComponent
+      },{
       path: 'questions',
       component: QuestionsComponent
     },

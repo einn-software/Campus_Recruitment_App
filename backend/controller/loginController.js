@@ -35,20 +35,27 @@ async function ValidPassword(req, res, user) {
 }
 
 //Function for Create and assign a token
-async function createToken(user) {
-  return jwt.sign({
-      _id: user._id,
-    },
-    process.env.TOKEN_SECRET
-  );
+async function createToken(user, role) {
+  return jwt.sign({_id: user._id,
+    user_type: role
+  },
+  process.env.TOKEN_SECRET
+);
 }
 
-function createAndSendSession(req, res, user, token, user_type) {
+function createAndSendSession(req, res, user, token, role) {
   //To store or access session data, we use the request property req.session, which is (generally) serialized as JSON by the store.
   req.session.email = user.email,
     req.session._id = user._id,
     req.session.token = token,
-    req.session.user_type = user_type
+    req.session.user_type = role;
+    const result = {
+      email: user.email,
+      _id: user._id,
+      token: token,
+      user_type: role
+    }
+    return result;
 }
 
 //Admin Login
@@ -72,18 +79,17 @@ const AdminLogin = (async (req, res) => {
       .status(Constants.er_not_found)
       .json(errHandler.emailNotFoundErrorHandler());
   }
-  const user_type = Constants.admin;
+  const role = Constants.admin;
   await ValidPassword(req, res, user);
-  const token = await createToken(user);
-  await createAndSendSession(req, res, user, token, user_type);
-  const result = {
-    email: req.session.email,
-    _id: req.session._id,
-    token: req.session.token,
-    user_type: req.session.user_type
-  }
-  logger.info(result)
-  return res.status(Constants.success).header("auth-token", token).json(result);
+  const token = await createToken(user, role);
+
+  const finalResponse = await createAndSendSession(req, res, user, token, role);
+
+  logger.info(finalResponse);
+  console.log(req.session);
+  const cook=  res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).json(finalResponse);
+  return cook;
+
 });
 
 //Student Login
@@ -108,18 +114,12 @@ const StudentLogin = (async (req, res) => {
       .status(Constants.er_not_found)
       .json(errHandler.notFoundRollCodeErrorHandler());
   }
-  const user_type = Constants.student;
+  const role = Constants.student;
   await ValidPassword(req, res, user);
   const token = await createToken(user);
-  await createAndSendSession(req, res, user, token, user_type);
-  const result = {
-    email: req.session.email,
-    _id: req.session._id,
-    token: req.session.token,
-    user_type: req.session.user_type
-  }
-  logger.info(result)
-  return res.status(Constants.success).header("auth-token", token).json(result);
+  const finalResponse = await createAndSendSession(req, res, user, token, role);
+  logger.info(finalResponse)
+  return res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).header("auth-token", token).json(finalResponse);
 });
 
 //Tpo Login
@@ -143,18 +143,12 @@ const TpoLogin = (async (req, res) => {
       .status(Constants.er_not_found)
       .json(errHandler.emailNotFoundErrorHandler());
   }
-  const user_type = Constants.tpo;
+  const role = Constants.tpo;
   await ValidPassword(req, res, user);
   const token = await createToken(user);
-  await createAndSendSession(req, res, user, token, user_type);
-  const result = {
-    email: req.session.email,
-    _id: req.session._id,
-    token: req.session.token,
-    user_type: req.session.user_type
-  }
-  logger.info(result)
-  return res.status(Constants.success).header("auth-token", token).json(result);
+  const finalResponse = await createAndSendSession(req, res, user, token, role);
+  logger.info(finalResponse)
+  return res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).header("auth-token", token).json(finalResponse);
 });
 
 module.exports.StudentLogin = StudentLogin

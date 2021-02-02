@@ -5,5 +5,8 @@ export interface User {
   password: string;
   phone: string;
   token: string;
+  username: string;
+  bio: string;
+  image: string;
   user_type: number;
 }

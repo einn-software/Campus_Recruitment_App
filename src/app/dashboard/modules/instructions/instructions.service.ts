@@ -33,14 +33,14 @@ export class InstructionService{
   }
 
   //Get all questions
-  getInstructions(): Observable<Instruction[]>{
+  getInstructions(){
     return this.apiService.get('/instructions');
     //return this.http.get<Instruction[]>('http://localhost:80/instructions', this.httpOptions);
   }
 
-  //Get instruction by id
+  //Get question by id
   getInstruction(id): Observable<Instruction>{
-    let url = `/instructions/${id}`;
+    let url = `/questions/${id}`;
     return this.apiService.get(url).pipe(
       map((res) => {
         return res;

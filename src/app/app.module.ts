@@ -17,7 +17,6 @@ import { HttpTokenInterceptor } from './core/interceptors/http.token.interceptor
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent],
   imports: [

@@ -102,7 +102,7 @@ router.use(
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
       dbName: "session",
-    }),
+    })
   })
 );
 router.post("/upload/android-logs", UploadLogFiles);

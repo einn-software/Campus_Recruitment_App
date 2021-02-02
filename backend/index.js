@@ -2,6 +2,8 @@ const express = require("express");
 const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const {
   logger
 } = require("./config/logger");
@@ -10,6 +12,7 @@ const {
 } = require("./config/rotateLogAndDeleteOldLogFiles");
 const dotenv = require("dotenv"); // The dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
 const app = express(); // Create the Express application
+app.use(bodyParser.json());
 const errHandler = require("./controller/errorHandling");
 const Constants = require("./config/constant");
 const authRoute = require("./routes/auth"); //Import Routes
@@ -34,7 +37,7 @@ app.use(cors({origin: [
   "http://localhost:4200"
 ], credentials: true}));
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
-app.use(express.json());
+// app.use(express.json());
 
 deleteOldLogFiles();
 

@@ -7,7 +7,14 @@ import { Component, OnInit, HostBinding, Input } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  role: string = '';
+
+  constructor(
+  ) {
+    const data = window.location.pathname;
+    this.role = data.slice(6, );
+   }
+
 
   ngOnInit(): void {
   }

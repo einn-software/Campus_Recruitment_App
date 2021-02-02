@@ -30,22 +30,24 @@ export class ForgotPasswordComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    //this.route.url.subscribe(data => {
+    this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
       //this.authType = data[data.length - 1].path;
+      this.role = data[data.length - 1].path;
+      this.authType = this.route.pathFromRoot[this.route.pathFromRoot.length - 2].routeConfig.path;
       // Set a title for the page accordingly
       //this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
       // add form control for username if this is the register page
       // if (this.authType === 'register') {
       //   this.authForm.addControl('username', new FormControl());
       // }
-    //});
+    });
   }
 
    submitForm() {
     this.isSubmitting = true;
     this.errors = {errors: {}};
-
+    console.log(this.role);
     const credentials = this.authForm.value;
     this.userService
     .attemptAuth(this.authType, this.role, credentials)

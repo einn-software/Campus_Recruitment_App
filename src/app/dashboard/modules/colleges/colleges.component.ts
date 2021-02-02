@@ -18,8 +18,18 @@ export class CollegesComponent implements OnInit {
     this.collegeService.getColleges().subscribe(
       res => {
         this.collegeList = res;
-      }
-    )
+      })
+  }
+
+  removeCollege(col, index){
+    if(window.confirm('Are you sure')){
+      this.collegeService.deleteCollege(col._id).subscribe(
+        success => {
+          this.collegeList = this.collegeList.filter((co) => co !== col);
+        }
+      )
+      this.collegeList.splice(index, 1);
+    }
   }
 
 }

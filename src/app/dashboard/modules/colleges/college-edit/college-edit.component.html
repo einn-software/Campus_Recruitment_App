@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3>Edit College</h3>
+      </div>
+      <div class="card-body">
+        <div [formGroup]="collegeForm">
+
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input class="form-control" type="text" formControlName="name">
+            <div class="invalid-feedback" *ngIf="submitted && myForm.name.errors?.required">
+              Name is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputCode">Code</label>
+            <input class="form-control" type="text" formControlName="code">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.code.errors?.required">
+              Enter a code.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input class="form-control" type="text" formControlName="address">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.address.errors?.required">
+              Enter an Address.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="inputUniversity">University</label>
+            <input class="form-control" type="text" formControlName="university">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.university.errors?.required">
+              Enter a university
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input class="form-control" type="text" formControlName="email">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.email.errors?.required">
+              Enter an Email.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="inputPhone">Phone</label>
+            <input class="form-control" type="text" formControlName="phone">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.phone.errors?.required">
+              Enter a phone number.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <button class="btn btn-success btn-lg btn-block" type="submit" (click)="onSubmit()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- form  -->
+  </div>
+</div>

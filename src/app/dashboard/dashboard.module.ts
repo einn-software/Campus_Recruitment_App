@@ -6,6 +6,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import { QuestionsModule } from './modules/questions/questions.module';
 import { InstructionsModule } from './modules/instructions/instructions.module';
+import { AdminModule } from './modules/admin/admin.module';
+import { CollegeModule } from './modules/colleges/colleges.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashComponent } from './modules/dash/dash.component';
@@ -15,14 +17,13 @@ import { InstructionsComponent } from './modules/instructions/instructions.compo
 import { CollegesComponent } from './modules/colleges/colleges.component';
 import { TpoComponent } from './modules/tpo/tpo.component';
 import { StudentsComponent } from './modules/students/students.component';
+import { AdminComponent } from './modules/admin/admin.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { AdminComponent } from './modules/admin/admin.component';
-
 
 
 
@@ -38,7 +39,9 @@ import { AdminComponent } from './modules/admin/admin.component';
     MatPaginatorModule,
     MatTableModule,
     QuestionsModule,
-    InstructionsModule
+    InstructionsModule,
+    AdminModule,
+    CollegeModule
   ],
   declarations: [
     DashboardComponent,

@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { AdminRoutingModule } from './admin-routing.module';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
-
 import { AdminService } from './admin.service';
+import { AdminCreateComponent } from './admin-create/admin-create.component';
 
 @NgModule({
   declarations: [
-    AdminEditComponent
+    AdminEditComponent,
+    AdminCreateComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AdminRoutingModule
   ],
   providers: [AdminService]
 })

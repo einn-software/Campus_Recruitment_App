@@ -64,6 +64,7 @@ const AdminGetById = function (req, res) {
 
 //To change or update the admin's data by using their id
 const AdminPut = async function (req, res) {
+  const body = req.body;
   if(req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA BEFORE WE MAKE A Admin
     const {
@@ -192,6 +193,7 @@ const TpoGet = function (req, res) {
 
 //To change or update the tpo's data by using their id
 const TpoPut = function (req, res) {
+  const body = req.body;
   if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA
     const {
@@ -331,6 +333,7 @@ const StudentGet = function (req, res) {
 
 //Update student's info
 const StudentPut = async function (req, res) {
+  const body = req.body;
   if (req.session.user_type == Constants.student || req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA
     const {

@@ -19,7 +19,7 @@ export class AdminService{
   //Create
   createAdmin(data): Observable<User>{
     console.log(data);
-    return this.apiService.post('/admins', data)
+    return this.apiService.post('/register/admins', data)
     .pipe(map(
       data => {
         return data;
@@ -38,7 +38,7 @@ export class AdminService{
     )
   }
 
-  //Get question by id
+  //Get admin by id
   getAdmin(id): Observable<User>{
     let url = `/admins/${id}`;
     return this.apiService.get(url).pipe(

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AdminEditComponent } from './admin-edit.component';
 
 describe('AdminEditComponent', () => {
@@ -8,6 +8,7 @@ describe('AdminEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
       declarations: [ AdminEditComponent ]
     })
     .compileComponents();

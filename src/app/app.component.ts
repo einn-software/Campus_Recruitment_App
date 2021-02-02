@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ) {
     router.events.forEach((event)=> {
       if(event instanceof NavigationStart){
-        if(["/", "/dash", "/questions", "/question-papers", "/instructions", "/admin", "/colleges", "/tpo", "/students", "/create-question", "/create-instruction"].indexOf(event['url']) >= 0){
+        if(["/dash", "/questions", "/question-papers", "/instructions", "/admin", "/colleges", "/tpo", "/students", "/create-question", "/create-instruction", "/create-admin", "/create-college"].indexOf(event['url']) >= 0){
           this.showHead = false;
         }else{
           this.showHead = true;
@@ -26,6 +26,14 @@ export class AppComponent implements OnInit {
         }
         var latestUrl = event['url'];
         if(latestUrl.match('/edit-instruction')){
+          this.showHead = false;
+        }
+        var latUrl = event['url'];
+        if(latUrl.match('/edit-admin')){
+          this.showHead = false;
+        }
+        var atUrl = event['url'];
+        if(atUrl.match('/edit-college')){
           this.showHead = false;
         }
       }

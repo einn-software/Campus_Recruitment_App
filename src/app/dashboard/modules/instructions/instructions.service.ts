@@ -38,18 +38,6 @@ export class InstructionService{
     //return this.http.get<Instruction[]>('http://localhost:80/instructions', this.httpOptions);
   }
 
-<<<<<<< HEAD
-  //Get question by id
-  // getInstruction(id): Observable<Instruction>{
-  //   let url = `/questions/${id}`;
-  //   return this.apiService.get(url).pipe(
-  //     map((res) => {
-  //       return res;
-  //     }),
-  //     catchError(this.errorMgmt)
-  //   )
-  // }
-=======
   //Get instruction by id
   getInstruction(id): Observable<Instruction>{
     let url = `/instructions/${id}`;
@@ -60,7 +48,6 @@ export class InstructionService{
       catchError(this.errorMgmt)
     )
   }
->>>>>>> aeed274502be1c6a733e44712655a0fd1782a48d
 
   //Update instruction
   updateInstruction(id, data): Observable<Instruction>{

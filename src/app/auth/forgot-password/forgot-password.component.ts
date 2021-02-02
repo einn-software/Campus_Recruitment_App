@@ -12,7 +12,6 @@ import { Errors, UserService } from '../../core';
 export class ForgotPasswordComponent implements OnInit {
   role: string = '';
   authType: string = '';
-  role: string = '';
   title: String = '';
   errors: Errors = {errors: {}};
   isSubmitting = false;

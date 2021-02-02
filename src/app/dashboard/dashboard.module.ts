@@ -22,6 +22,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { AdminComponent } from './modules/admin/admin.component';
+import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
+import { ShowResultComponent } from './modules/show-result/show-result.component';
+import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 
 
 
@@ -50,6 +53,9 @@ import { AdminComponent } from './modules/admin/admin.component';
     TpoComponent,
     StudentsComponent,
     AdminComponent,
+    TpoDashboardComponent,
+    ShowResultComponent,
+    UploadStudentListComponent
   ],
 
 })

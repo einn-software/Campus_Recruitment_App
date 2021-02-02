@@ -1,7 +1,8 @@
 <mat-nav-list>
   <div class="profile-card">
     <div class="header">
-      <h2>Admin Dashboard</h2>
+      <h2 *ngIf="role === 'admins'">Admin Dashboard</h2>
+      <h2 *ngIf="role === 'tpos'">Tpo Dashboard</h2>
       <h4>admin@innobitsystems.com</h4>
     </div>
     <img
@@ -13,23 +14,63 @@
   <mat-divider></mat-divider>
 
   <h2 matSubheader>Pages</h2>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dash"
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dash/admins"
+    *ngIf="role === 'admins'"
     >Dashboard</a
   >
-
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/questions"
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dash/tpos"
+    *ngIf="role === 'tpos'"
+    >Dashboard</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/upload"
+    *ngIf="role === 'tpos'"
+    >Upload</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/results"
+    *ngIf="role === 'tpos'"
+    >Show Results</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/questions"
+    *ngIf="role === 'admins'"
     >Manage Questions</a
   >
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/question-papers"
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/question-papers"
     >Manage Question Papers</a
   >
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/instructions"
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/instructions"
     >Manage Instructions</a
   >
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/admin"
-  >Manage Admins</a
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/admin"
+    >Manage Admins</a
   >
 
   <a mat-list-item routerLinkActive="list-item-active" routerLink="/colleges"
@@ -41,5 +82,4 @@
   <a mat-list-item routerLinkActive="list-item-active" routerLink="/students"
     >Manage Students</a
   >
-
-  </mat-nav-list>
+</mat-nav-list>

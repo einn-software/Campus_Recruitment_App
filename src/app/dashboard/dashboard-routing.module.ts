@@ -15,18 +15,37 @@ import { InstructionCreateComponent } from './modules/instructions/instruction-c
 import { InstructionEditComponent } from './modules/instructions/instruction-edit/instruction-edit.component';
 import { AdminComponent } from './modules/admin/admin.component';
 import { AdminEditComponent } from './modules/admin/admin-edit/admin-edit.component';
-
+import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
+import { ShowResultComponent } from './modules/show-result/show-result.component';
+import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    children: [{
+    children: [
+    {
       path: 'dash',
-      component: DashComponent
-    },{
+      children:[{
+        path: 'admins',
+        component: DashComponent
+      },
+      {
+        path: 'tpos',
+        component: TpoDashboardComponent
+      }]
+    }
+    ,{
       path: 'questions',
       component: QuestionsComponent
+    },
+    {
+      path: 'results',
+      component: ShowResultComponent
+    },
+    {
+      path: 'upload',
+      component: UploadStudentListComponent
     },
     {
       path: 'create-question',

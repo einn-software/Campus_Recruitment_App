@@ -10,14 +10,23 @@ export class JwtService {
 getUserRole(){
 return window.localStorage['userRole'];
 }
-  saveTokenAndRole(token: String, role: number) {
+getId(){
+  return window.localStorage['id'];
+  }
+  saveTokenAndRole(token: String, role: number, id: string, email: string) {
     window.localStorage['jwtToken'] = token;
     window.localStorage['userRole'] = role;
+    window.localStorage['id'] = id;
+    window.localStorage['email'] = email;
   }
 
   destroyTokenAndRole() {
     window.localStorage.removeItem('jwtToken');
     window.localStorage.removeItem('userRole');
+    window.localStorage.removeItem('id');
+    window.localStorage.removeItem('code');
+    window.localStorage.removeItem('email');
+
   }
 
 }

@@ -54,12 +54,11 @@ export class LoginComponent implements OnInit {
   submitForm() {
     this.isSubmitting = true;
     this.errors = {errors: {}};
-    console.log(this.role);
     const credentials = this.authForm.value;
     this.userService
     .attemptAuth(this.authType, this.role, credentials)
     .subscribe(
-      data => this.router.navigateByUrl('/dash'),
+      data => this.router.navigateByUrl(`/dash/${this.role}`),
       err => {
         this.errors = err;
         this.isSubmitting = false;

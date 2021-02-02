@@ -6,8 +6,6 @@ import { DashComponent } from './modules/dash/dash.component';
 
 import { QuestionPapersComponent } from './modules/question-papers/question-papers.component';
 
-
-import { TpoComponent } from './modules/tpo/tpo.component';
 import { StudentsComponent } from './modules/students/students.component';
 
 import { QuestionsComponent } from './modules/questions/questions.component';
@@ -25,6 +23,11 @@ import { AdminEditComponent } from './modules/admin/admin-edit/admin-edit.compon
 import { CollegesComponent } from './modules/colleges/colleges.component';
 import { CollegeCreateComponent } from './modules/colleges/college-create/college-create.component';
 import { CollegeEditComponent } from './modules/colleges/college-edit/college-edit.component';
+
+import { TpoComponent } from './modules/tpo/tpo.component';
+import { TpoCreateComponent } from './modules/tpo/tpo-create/tpo-create.component';
+import { TpoEditComponent } from './modules/tpo/tpo-edit/tpo-edit.component';
+
 import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
@@ -113,6 +116,14 @@ const routes: Routes = [
     {
       path: 'tpo',
       component: TpoComponent
+    },
+    {
+      path: 'create-tpo',
+      component: TpoCreateComponent
+    },
+    {
+      path: 'edit-tpo/:id',
+      component: TpoEditComponent
     },
     {
       path: 'students',

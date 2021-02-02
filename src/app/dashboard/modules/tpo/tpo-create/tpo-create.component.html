@@ -1,1 +1,75 @@
-<p>tpo-create works!</p>
+<div class="row justify-content-center">
+  <div class="col-md-4 register-question">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="tpoForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <input class="form-control" type="text" formControlName="name">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.name.errors?.required">
+            Name is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail">Email</label>
+          <input class="form-control" type="text" formControlName="email">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.email.errors?.required">
+            Email is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input class="form-control" type="text" formControlName="password">
+          <div class="invalid-feedback" *ngIf="submitted && myForm.password.errors?.required">
+            Enter a password.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPhone">Phone</label>
+          <input class="form-control" type="text" formControlName="phone">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.phone.errors?.required">
+            Enter a phone.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputDesignation">Designation</label>
+          <input class="form-control" type="text" formControlName="designation">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.designation.errors?.required">
+            Enter a designation.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputCollege">College</label>
+          <input class="form-control" type="text" formControlName="college">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.college.errors?.required">
+            Enter a college.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputCode">Code</label>
+          <input class="form-control" type="text" formControlName="code">
+          <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && myForm.code.errors?.required">
+            Enter a code.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block" type="submit">Submit</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

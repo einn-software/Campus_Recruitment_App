@@ -88,48 +88,121 @@
               class="form-control form-control-lg"
               formControlName="instructions_id"
             >
-              <option disabled value="">Select Code</option>
-              <option *ngFor="let i of clg" [value]="i.code">
-                {{ i.code }}, {{ i.name }}
+              <option disabled value="">Select Instruction Id</option>
+              <option *ngFor="let i of instruction" [value]="i._id">
+                {{ i.code }}, ({{ i._id }})
               </option>
             </select>
             <div
               class="invalid-feedback"
-              *ngIf="submitted && myForm.code.errors?.required"
+              *ngIf="submitted && myForm.instruction_id.errors?.required"
             >
               Instruction Id is required.
             </div>
           </div>
           <div class="form-group">
-            <label for="inputEmail3">Topic</label>
-            <input class="form-control" type="text" formControlName="topic" />
-            <!-- error -->
+            <label>Start-Time</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="start_time"
+            />
             <div
               class="invalid-feedback"
-              *ngIf="submitted && myForm.topic.errors?.required"
+              *ngIf="submitted && myForm.start_time.errors?.required"
             >
-              Enter a topic.
+              Start-Time is required.
             </div>
           </div>
-
-          <div formArrayName="options">
-            <div *ngFor="let opt of options.controls; let i = index">
-              <div [formGroup]="opt">
-                Index:<input type="text" formControlName="index" /> <br />
-                Option:<input type="text" formControlName="option" /> <br />
-              </div>
-            </div>
-          </div>
-
           <div class="form-group">
-            <label for="inputVerify3">Weight</label>
-            <input class="form-control" type="text" formControlName="weight" />
-            <!-- error -->
+            <label for="trigger_type">Trigger-Type</label>
+            <select
+              class="form-control form-control-lg"
+              formControlName="trigger_type"
+            >
+              <option [value]="enable">Enable</option>
+              <option [value]="disable">Disable</option>
+            </select>
             <div
               class="invalid-feedback"
-              *ngIf="submitted && myForm.weight.errors?.required"
+              *ngIf="submitted && myForm.trigger_type.errors?.required"
             >
-              Enter a weight
+              Trigger-Type is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Negative-Marking-Ratio</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="negative_marking_ratio"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted && myForm.negative_marking_ratio.errors?.required
+              "
+            >
+              Negative-Marking-Ratio is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Start-Time</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="start_time"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.start_time.errors?.required"
+            >
+              Start-Time is required.
+            </div>
+          </div>
+
+          <div formArrayName="sections">
+            <div *ngFor="let opt of sections.controls; let i = index">
+              <div [formGroup]="opt">
+                Section-Name:<input
+                  type="text"
+                  formControlName="section_name"
+                />
+                <br />
+                Section-Marks:<input
+                  type="text"
+                  formControlName="section_marks"
+                />
+                <br />
+                No-of-Questions:<input
+                  type="text"
+                  formControlName="num_of_questions"
+                />
+                <br />
+                <div formArrayName="sections">
+                  <div
+                    *ngFor="let opt of question_list.controls; let i = index"
+                  >
+                    <div [formGroup]="opt">
+                      <label>Question Id</label>
+                      <select
+                        class="form-control form-control-lg"
+                        formControlName="question_id"
+                      >
+                        <option disabled value="">Select Question Id</option>
+                        <option *ngFor="let i of question" [value]="i._id">
+                          {{ i.topic }}, {{ i.question }}({{ i._id }})
+                        </option>
+                      </select>
+                      Question-Marks:<input
+                        type="text"
+                        formControlName="question_marks"
+                      />
+                      <br />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

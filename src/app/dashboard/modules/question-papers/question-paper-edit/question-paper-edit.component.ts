@@ -4,13 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionPaper } from '../question-papers.model';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { QuestionPapersService } from '../question-papers.service';
+import { ApiService } from 'src/app/core';
 @Component({
   selector: 'app-question-paper-edit',
   templateUrl: './question-paper-edit.component.html',
   styleUrls: ['./question-paper-edit.component.css']
 })
 export class QuestionPaperEditComponent implements OnInit {
-
+  clg : [];
+  instruction : [];
+  question : [];
   public submitted: boolean = false;
   public editForm: FormGroup = this.fb.group({
     year: ['', [Validators.required]],
@@ -46,7 +49,7 @@ export class QuestionPaperEditComponent implements OnInit {
       })
     ]),
   });
-  public question: QuestionPaper[] = [];
+  public questionPaper: QuestionPaper[] = [];
 
   get options() {
     return this.editForm.get('options') as FormArray;
@@ -57,11 +60,31 @@ export class QuestionPaperEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
+    private apiService: ApiService
   ) { }
+
 
   ngOnInit(): void {
     var id = this.route.snapshot.paramMap.get('id');
     this.getQuestionPaper(id);
+    this.apiService.get('/colleges')
+      .subscribe(
+        data => {
+          this.clg = data;
+        }
+      );
+      this.apiService.get('/instructions')
+      .subscribe(
+        data => {
+          this.instruction = data;
+        }
+      );
+      this.apiService.get('/questions')
+      .subscribe(
+        data => {
+          this.question = data;
+        }
+      );
   }
 
 

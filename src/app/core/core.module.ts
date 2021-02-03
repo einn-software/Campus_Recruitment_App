@@ -7,7 +7,8 @@ import {
   ApiService,
   AuthGuard,
   JwtService,
-  UserService
+  UserService,
+  ForgotPasswordService
 } from './services';
 
 @NgModule({
@@ -19,7 +20,8 @@ import {
     ApiService,
     AuthGuard,
     JwtService,
-    UserService
+    UserService,
+    ForgotPasswordService
   ],
   declarations: []
 })

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { NoAuthGuard } from './no-auth-guard.service';
 
 const routes: Routes = [
@@ -27,7 +28,12 @@ const routes: Routes = [
     path: 'forgot-password',
     component: ForgotPasswordComponent,
     canActivate: [NoAuthGuard]
-  }
+  },
+  {
+    path: 'reset-password/admins',
+    component: ResetPasswordComponent
+  },
+
 ];
 
 @NgModule({

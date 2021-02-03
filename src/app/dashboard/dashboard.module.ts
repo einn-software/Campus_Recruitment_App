@@ -27,6 +27,9 @@ import { MatTableModule } from '@angular/material/table';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
+import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
+import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
+import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
 
 
 
@@ -59,6 +62,9 @@ import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.com
     ShowResultComponent,
     UploadStudentListComponent,
     TpoDashboardComponent,
+    QuestionPaperCreateComponent,
+    QuestionPaperEditComponent,
+    QuestionPaperOpenComponent,
   ],
 
 })

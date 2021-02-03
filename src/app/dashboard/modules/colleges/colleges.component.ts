@@ -11,7 +11,7 @@ import { CollegeService } from './colleges.service';
 export class CollegesComponent implements OnInit {
 
   public collegeList : College[] = [];
-
+  public code : number;
   constructor(private collegeService: CollegeService) { }
 
   ngOnInit(): void {
@@ -20,7 +20,10 @@ export class CollegesComponent implements OnInit {
         this.collegeList = res;
       })
   }
+findCode(code){
+  this.code = window.localStorage['code'] = code;
 
+}
   removeCollege(col, index){
     if(window.confirm('Are you sure')){
       this.collegeService.deleteCollege(col._id).subscribe(

@@ -65,6 +65,7 @@ const {
   QuestionPaperPut,
   QuestionPaperPatch,
   QuestionPaperDelete,
+  AllQuestionPaperGet
 } = require("../controller/examinationController");
 
 const {
@@ -158,6 +159,7 @@ router.delete("/questions/:id", verified, QuestionDelete);
 
 //Question Paper API
 router.post("/question-papers", verified, QuestionPaperAdd);
+router.get("/question-paper", verified, AllQuestionPaperGet);
 router.get("/colleges/:code/question-papers/:year", verified, QuestionPaperGet);
 router.get("/question-papers/:code", verified, QuestionPaperIdGetByTpo);
 router.get("/question-papers/:id/questions", verified, QuestionPaperGetById);

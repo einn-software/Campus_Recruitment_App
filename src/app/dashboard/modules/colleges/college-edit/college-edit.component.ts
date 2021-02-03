@@ -13,6 +13,7 @@ import { CollegeService } from '../colleges.service';
 
 export class CollegeEditComponent implements OnInit {
   public submitted: boolean = false;
+  public code: number;
   public collegeForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     code: ['', [Validators.required]],
@@ -31,8 +32,8 @@ export class CollegeEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var code = this.route.snapshot.paramMap.get('code');
-    this.getCollege(code);
+     this.code = window.localStorage['code'];
+    this.getCollege(this.code);
   }
 
   get myForm(){
@@ -40,6 +41,7 @@ export class CollegeEditComponent implements OnInit {
   }
 
   getCollege(code){
+     window.localStorage.removeItem('code');
     this.collegeService.getCollege(code).subscribe(res => {
       console.log("controller: " ,res);
       this.collegeForm.patchValue(res);
@@ -53,7 +55,7 @@ export class CollegeEditComponent implements OnInit {
     }else{
       if(window.confirm('Are you sure?')){
         let id = this.route.snapshot.paramMap.get('id');
-        this.collegeService.updateCollege(id, this.collegeForm.value)
+        this.collegeService.updateCollege(this.code, this.collegeForm.value)
         .subscribe(res => {
           res => this.collegeForm = res
           this.router.navigateByUrl('/colleges');

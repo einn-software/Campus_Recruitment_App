@@ -24,7 +24,6 @@
         <th scope="col">Code</th>
         <th scope="col">Start Time</th>
         <th scope="col">Negative Marks Ratio</th>
-        <th scope="col">Sections</th>
       </tr>
     </thead>
     <tbody>
@@ -42,9 +41,11 @@
         <td>
           <p *ngFor="let opt of ques.sections">
             {{ opt.section_name }}
+            {{ opt.section_marks }}
+            {{ opt.num_of_questions }}
+            {{ opt.question_list }}
           </p>
         </td>
-        <td><a [routerLink]="['/open-question-paper', ques._id]">View</a></td>
         <td><a [routerLink]="['/edit-question-paper', ques._id]">Edit</a></td>
         <td><a (click)="removeQuestionPaper(ques, i)">Delete</a></td>
       </tr>

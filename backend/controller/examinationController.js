@@ -262,6 +262,28 @@ const QuestionPaperAdd = async (req, res) => {
   };
 }
 
+// Get aLl the Question Papers
+const AllQuestionPaperGet = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    QuestionPapers.find({}, (err, results) => {
+      if (err || !results) {
+        logger.error(`Function QuestionPaper.find({}, callback) - `, errHandler.errorHandler(err));
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      }
+      console.log(res);
+      logger.info(results);
+      return res.status(Constants.success).json(results);
+    });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
+
 //Get QuestionPaper
 
 const QuestionPaperGet = (req, res) => {
@@ -497,4 +519,5 @@ module.exports = {
   QuestionPaperPut,
   QuestionPaperPatch,
   QuestionPaperDelete,
+  AllQuestionPaperGet
 };

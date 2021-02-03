@@ -21,4 +21,4 @@ import {TpoService} from './tpo.service';
   providers: [TpoService]
 })
 
-export class TpoModule{}
+export class TpoModule {}

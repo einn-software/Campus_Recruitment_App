@@ -31,6 +31,9 @@ import { TpoEditComponent } from './modules/tpo/tpo-edit/tpo-edit.component';
 import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
+import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
+import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
+import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
 
 
 const routes: Routes = [
@@ -76,6 +79,18 @@ const routes: Routes = [
     {
       path: 'question-papers',
       component: QuestionPapersComponent
+    },
+    {
+      path: 'create-question-paper',
+      component: QuestionPaperCreateComponent
+    },
+    {
+      path: 'open-question-paper/:id',
+      component: QuestionPaperOpenComponent
+    },
+    {
+      path: 'edit-question-paper/:id',
+      component: QuestionPaperEditComponent
     },
     {
       path: 'instructions',

@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
-import { Instruction } from './instructions.model';
-
+import { QuestionPaper } from "./question-papers.model";
 @Injectable({
   providedIn: 'root'
 })
+export class QuestionPapersService {
 
-export class InstructionService{
+   //baseUri: string = 'http://localhost:80';
+  //headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  //baseUri: string = 'http://localhost:80';
-  // private httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmVkNTAzMDQxYTc2MzI4ZjQ4ZTk1YzkiLCJpYXQiOjE2MTEzMTY3Mzl9.agx7AcgYRPrCjpsW5wBU6vBGO0MijsxByU6E5WE9T4o'  //Pass auth token
-  //   })
-  // };
   constructor(private http: HttpClient, private apiService: ApiService){}
 
   //Create
-  createInstruction(data): Observable<Instruction>{
+  createQuestionPaper(data): Observable<QuestionPaper>{
     console.log(data);
-    return this.apiService.post('/instructions', data)
+    return this.apiService.post('question-papers', data)
     .pipe(map(
       data => {
         return data;
@@ -33,14 +27,8 @@ export class InstructionService{
   }
 
   //Get all questions
-  getInstructions(){
-    return this.apiService.get('/instructions');
-    //return this.http.get<Instruction[]>('http://localhost:80/instructions', this.httpOptions);
-  }
-
-  //Get question by id
-  getInstruction(id): Observable<Instruction>{
-    let url = `/instructions/${id}`;
+  getQuestionsPaper(): Observable<QuestionPaper[]>{
+    let url = '/question-paper';
     return this.apiService.get(url).pipe(
       map((res) => {
         return res;
@@ -49,9 +37,20 @@ export class InstructionService{
     )
   }
 
-  //Update instruction
-  updateInstruction(id, data): Observable<Instruction>{
-    return this.apiService.put(`/instructions/${id}`, data).pipe(
+  //Get question by id
+  getQuestionPaper(id): Observable<QuestionPaper>{
+    let url = `/question-papers/${id}/questions`;
+    return this.apiService.get(url).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
+
+  //Update question
+  updateQuestionPaper(id, data): Observable<QuestionPaper>{
+    return this.apiService.put(`/question-papers/${id}`, data).pipe(
       map((res) => {
         return res;
       }),
@@ -60,8 +59,8 @@ export class InstructionService{
   }
 
   //Delete question
-  deleteInstruction(id): Observable<any>{
-    let url = `/instructions/${id}`;
+  deleteQuestionPaper(id): Observable<any>{
+    let url = `/question-papers/${id}`;
     return this.apiService.delete(url).pipe(
       map((res) => {
         return res;
@@ -83,5 +82,4 @@ export class InstructionService{
     console.log(errorMessage);
     return throwError(errorMessage);
   }
-
 }

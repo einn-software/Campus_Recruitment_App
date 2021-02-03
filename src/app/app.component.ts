@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
       if(event instanceof NavigationStart){
         if([
           "/dash/admins",
-          "/dash",
+          "/dash/tpos",
           "/questions",
           "/create-question",
           "/question-papers",

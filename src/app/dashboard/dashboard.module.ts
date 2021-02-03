@@ -8,6 +8,7 @@ import { QuestionsModule } from './modules/questions/questions.module';
 import { InstructionsModule } from './modules/instructions/instructions.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { CollegeModule } from './modules/colleges/colleges.module';
+import { TpoModule } from './modules/tpo/tpo.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashComponent } from './modules/dash/dash.component';
@@ -47,7 +48,8 @@ import { QuestionPaperOpenComponent } from './modules/question-papers/question-p
     QuestionsModule,
     InstructionsModule,
     AdminModule,
-    CollegeModule
+    CollegeModule,
+    TpoModule
   ],
   declarations: [
     DashboardComponent,

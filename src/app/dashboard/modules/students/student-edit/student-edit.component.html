@@ -3,46 +3,19 @@
     <!-- form card register -->
     <div class="card card-outline-secondary">
       <div class="card-header">
-        <h3>Edit College</h3>
+        <h3>Edit Student</h3>
       </div>
       <div class="card-body">
-        <div [formGroup]="collegeForm">
+        <div [formGroup]="studentForm">
           <div class="form-group">
             <label for="inputName">Name</label>
             <input class="form-control" type="text" formControlName="name" />
+            <!-- error -->
             <div
               class="invalid-feedback"
               *ngIf="submitted && myForm.name.errors?.required"
             >
               Name is required.
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input class="form-control" type="text" formControlName="address" />
-            <!-- error -->
-            <div
-              class="invalid-feedback"
-              *ngIf="submitted && myForm.address.errors?.required"
-            >
-              Enter an Address.
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputUniversity">University</label>
-            <input
-              class="form-control"
-              type="text"
-              formControlName="university"
-            />
-            <!-- error -->
-            <div
-              class="invalid-feedback"
-              *ngIf="submitted && myForm.university.errors?.required"
-            >
-              Enter a university
             </div>
           </div>
 
@@ -54,7 +27,7 @@
               class="invalid-feedback"
               *ngIf="submitted && myForm.email.errors?.required"
             >
-              Enter an Email.
+              Enter an email.
             </div>
           </div>
 
@@ -67,6 +40,44 @@
               *ngIf="submitted && myForm.phone.errors?.required"
             >
               Enter a phone number.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="password"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.password.errors?.required"
+            >
+              Enter an Password.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputRoll">Roll No.</label>
+            <input class="form-control" type="text" formControlName="roll" />
+            <!-- error -->
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.roll.errors?.required"
+            >
+              Enter a Roll No.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputBranch">Branch</label>
+            <input class="form-control" type="text" formControlName="branch" />
+            <!-- error -->
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.branch.errors?.required"
+            >
+              Enter a Branch
             </div>
           </div>
 

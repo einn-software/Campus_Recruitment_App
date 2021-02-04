@@ -15,7 +15,8 @@ public result: [];
 public showPapers: boolean = true;
 public show: boolean = false;
   question_paper_id: String;
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private jwtService: JwtService) {
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private jwtService: JwtService) {}
+  ngOnInit(): void {
     const id = window.localStorage['id'];
     this.apiService.get(`/tpos/${id}`)
       .subscribe(
@@ -31,6 +32,7 @@ public show: boolean = false;
       }
     );
   }
+
   showResult(p){
     this.apiService.get(`/colleges/${this.code}/results/${p._id}`).subscribe(
       data => {
@@ -39,9 +41,6 @@ public show: boolean = false;
        this.result = data;
       }
     );
-  }
-
-  ngOnInit(): void {
   }
 
 }

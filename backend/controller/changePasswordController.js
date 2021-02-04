@@ -40,7 +40,7 @@ function createTransporter() {
   return transporter;
 }
 
-async function createMailOptions(request, user) {
+async function createMailOptions(request, user, url) {
   const token = await createToken(user);
   const mailOptions = {
     from: process.env.EINN_EMAIL,
@@ -48,7 +48,7 @@ async function createMailOptions(request, user) {
     subject: "Link To Reset Password",
     text: "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
       "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
-      `http://localhost:4200/reset-password/admins/\n\n` +
+      `${url}\n\n` +
       "If you did not request this, please ignore this email and your password will remain unchanged.\n",
   };
   request.session.email = request.body.email;
@@ -102,7 +102,7 @@ const AdminForgotPassword = async (request, response) => {
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
-  const mailOptions = await createMailOptions(request, user);
+  const mailOptions = await createMailOptions(request, user, `${process.env.url}/admins`);
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
@@ -154,7 +154,7 @@ const TpoForgotPassword = async (request, response) => {
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
-  const mailOptions = await createMailOptions(request, user);
+  const mailOptions = await createMailOptions(request, user, `${process.env.url}/tpos`);
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
@@ -206,7 +206,7 @@ const StudentForgotPassword = async (request, response) => {
     response.status(404).json(errHandler.emailNotFoundErrorHandler());
   }
   const transporter = await createTransporter();
-  const mailOptions = await createMailOptions(request, user);
+  const mailOptions = await createMailOptions(request, user, `${process.env.url}/students`);
 
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {

@@ -26,12 +26,19 @@ const routes: Routes = [
   },
   {
     path: 'forgot-password',
-    component: ForgotPasswordComponent,
-    canActivate: [NoAuthGuard]
+    children: [
+      { path: 'admins', component: ForgotPasswordComponent, canActivate: [NoAuthGuard] },
+      { path: 'tpos', component: ForgotPasswordComponent, canActivate: [NoAuthGuard] },
+      { path: 'students', component: ForgotPasswordComponent, canActivate: [NoAuthGuard] }
+    ],
   },
   {
-    path: 'reset-password/admins',
-    component: ResetPasswordComponent
+    path: 'reset-password',
+    children: [
+      { path: 'admins', component: ResetPasswordComponent},
+      { path: 'tpos', component: ResetPasswordComponent},
+      { path: 'students', component: ResetPasswordComponent}
+    ],
   },
 
 ];

@@ -31,6 +31,8 @@ import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.com
 import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
 import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
 import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
+import { StudentEditComponent } from './modules/students/student-edit/student-edit.component';
+import { StudentCreateComponent } from './modules/students/student-create/student-create.component';
 
 
 
@@ -67,6 +69,8 @@ import { QuestionPaperOpenComponent } from './modules/question-papers/question-p
     QuestionPaperCreateComponent,
     QuestionPaperEditComponent,
     QuestionPaperOpenComponent,
+    StudentEditComponent,
+    StudentCreateComponent,
   ],
 
 })

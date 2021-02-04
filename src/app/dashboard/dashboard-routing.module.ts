@@ -6,6 +6,7 @@ import { DashComponent } from './modules/dash/dash.component';
 
 
 import { StudentsComponent } from './modules/students/students.component';
+import { StudentEditComponent } from "./modules/students/student-edit/student-edit.component";
 
 import { QuestionsComponent } from './modules/questions/questions.component';
 import { QuestionCreateComponent } from './modules/questions/question-create/question-create.component';
@@ -35,6 +36,11 @@ import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.com
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
+<<<<<<< HEAD
+=======
+import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
+import { StudentCreateComponent } from './modules/students/student-create/student-create.component';
+>>>>>>> 45a7adfea45d60f93c977dfcb0412e6000c2ca65
 
 
 const routes: Routes = [
@@ -144,7 +150,17 @@ const routes: Routes = [
     {
       path: 'students',
       component: StudentsComponent
-    }]
+    },
+
+    {
+      path: 'edit-student/:id',
+      component: StudentEditComponent
+    },
+    {
+      path: 'create-student',
+      component: StudentCreateComponent
+    }
+  ]
   },
 ];
 

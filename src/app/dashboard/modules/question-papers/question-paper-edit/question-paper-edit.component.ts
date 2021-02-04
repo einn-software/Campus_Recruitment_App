@@ -25,7 +25,8 @@ export class QuestionPaperEditComponent implements OnInit {
     instructions_id: ['', [Validators.required]],
     code: ['', [Validators.required]],
     start_time: ['', [Validators.required]],
-    trigger_ype: ['', [Validators.required]],
+    trigger_type: ['', [Validators.required]],
+    enable: ['', [Validators.required]],
     negative_marks_ratio: ['', [Validators.required]],
     sections: this.fb.array([
       this.fb.group({

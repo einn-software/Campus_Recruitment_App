@@ -12,35 +12,41 @@ export class QuestionPaperCreateComponent implements OnInit {
 
   public submitted: boolean = false;
   public questionPaperForm: FormGroup = this.fb.group({
-    question: ['', [Validators.required]],
-    topic: ['', [Validators.required]],
-    options: this.fb.array([
+    year: ['', [Validators.required]],
+    month: ['', [Validators.required]],
+    day: ['', [Validators.required]],
+    paper_name: ['', [Validators.required]],
+    paper_max_marks: ['', [Validators.required]],
+    max_time: ['', [Validators.required]],
+    instructions_id: ['', [Validators.required]],
+    code: ['', [Validators.required]],
+    start_time: ['', [Validators.required]],
+    trigger_type: ['', [Validators.required]],
+    enable: ['', [Validators.required]],
+    negative_marking_ratio: ['', [Validators.required]],
+    sections: this.fb.array([
       this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
+        section_name: ['', [Validators.required]],
+        section_marks: ['', [Validators.required]],
+        num_of_questions: ['', [Validators.required]],
+        question_list: this.fb.array([
+          this.fb.group({
+            question_id: ['', [Validators.required]],
+            question_marks: ['', [Validators.required]]
+          })
+        ])
       }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      })
-    ]),
-    answer: ['', [Validators.required]],
-    weight: ['', [Validators.required]]
+    ])
   });
-  public question: QuestionPaper[];
+  public questionPaper: QuestionPaper[];
 
-  get options(){
-    return this.questionPaperForm.get('options') as FormArray;
+  get sections(){
+    return this.questionPaperForm.get('sections') as FormArray;
   }
 
+  get question_list(){
+    return this.questionPaperForm.get('question_list') as FormArray;
+  }
 
   constructor(
     private fb: FormBuilder,

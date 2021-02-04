@@ -20,6 +20,7 @@ export class CollegesComponent implements OnInit {
         this.collegeList = res;
       })
   }
+
 findCode(code){
   this.code = window.localStorage['code'] = code;
 

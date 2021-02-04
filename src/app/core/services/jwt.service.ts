@@ -7,6 +7,7 @@ export class JwtService {
   getToken(): String {
     return window.localStorage['jwtToken'];
   }
+
 getUserRole(){
 return window.localStorage['userRole'];
 }

@@ -4,13 +4,16 @@ import { AuthGuard } from '../core';
 import { DashboardComponent } from './dashboard.component';
 import { DashComponent } from './modules/dash/dash.component';
 
-import { QuestionPapersComponent } from './modules/question-papers/question-papers.component';
 
 import { StudentsComponent } from './modules/students/students.component';
 
 import { QuestionsComponent } from './modules/questions/questions.component';
 import { QuestionCreateComponent } from './modules/questions/question-create/question-create.component';
 import { QuestionEditComponent } from './modules/questions/question-edit/question-edit.component';
+
+import { QuestionPapersComponent } from './modules/question-papers/question-papers.component';
+import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
+import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
 
 import { InstructionsComponent } from './modules/instructions/instructions.component';
 import { InstructionCreateComponent } from './modules/instructions/instruction-create/instruction-create.component';
@@ -31,9 +34,7 @@ import { TpoEditComponent } from './modules/tpo/tpo-edit/tpo-edit.component';
 import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.component';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
-import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
 import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
-import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
 
 
 const routes: Routes = [

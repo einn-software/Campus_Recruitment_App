@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
           "/questions",
           "/create-question",
           "/question-papers",
+          "/create-question-paper",
+          "/open-question-paper",
           "/instructions",
           "/create-instruction",
           "/admin",
@@ -53,6 +55,10 @@ export class AppComponent implements OnInit {
         }
         var aUrl = event['url'];
         if(aUrl.match('/edit-tpo')){
+          this.showHead = false;
+        }
+        var url = event['url'];
+        if(url.match('/edit-question-paper')){
           this.showHead = false;
         }
       }

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
 import { QuestionPaper } from "./question-papers.model";
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class QuestionPapersService {
 
    //baseUri: string = 'http://localhost:80';
@@ -31,6 +33,7 @@ export class QuestionPapersService {
     let url = '/question-paper';
     return this.apiService.get(url).pipe(
       map((res) => {
+        console.log(res);
         return res;
       }),
       catchError(this.errorMgmt)

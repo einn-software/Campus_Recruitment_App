@@ -4,58 +4,171 @@
     <div class="card-body">
       <form [formGroup]="questionPaperForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="inputQuestion">Question</label>
-          <input class="form-control" type="text" formControlName="question" />
+          <label for="inputYear">Year</label>
+          <input class="form-control" type="number" formControlName="year" />
           <!-- error -->
           <div
             class="invalid-feedback"
-            *ngIf="submitted && myForm.question.errors?.required"
+            *ngIf="submitted && myForm.year.errors?.required"
           >
-            Question is required.
+            Year is required.
           </div>
         </div>
 
         <div class="form-group">
-          <label for="inputTopic">Topic</label>
-          <input class="form-control" type="text" formControlName="topic" />
+          <label for="inputMonth">Month</label>
+          <input class="form-control" type="number" formControlName="month" />
           <!-- error -->
           <div
             class="invalid-feedback"
-            *ngIf="submitted && myForm.topic.errors?.required"
+            *ngIf="submitted && myForm.month.errors?.required"
           >
-            Topic is required.
+            Month is required.
           </div>
         </div>
 
-        <div formArrayName="options">
-          <div *ngFor="let opt of options.controls; let i = index">
-            <div [formGroup]="opt">
-              Index:<input type="text" formControlName="index" /> <br />
-              Option:<input type="text" formControlName="option" /> <br />
+        <div class="form-group">
+          <label for="inputDay">Day</label>
+          <input class="form-control" type="number" formControlName="day" />
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.day.errors?.required"
+          >
+            Enter a day.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPaperName">Paper Name</label>
+          <input class="form-control" type="text" formControlName="paper_name" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.paper_name.errors?.required"
+          >
+            Enter a Paper Name.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPaperMaxMarks">Paper Max Marks</label>
+          <input class="form-control" type="number" formControlName="paper_max_marks" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.paper_max_marks.errors?.required"
+          >
+            Enter Paper Max Marks.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputMaxTime">Max Time</label>
+          <input class="form-control" type="text" formControlName="max_time" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.max_time.errors?.required"
+          >
+            Enter Max Time.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputInstructionId">Instruction Id</label>
+          <input class="form-control" type="text" formControlName="instruction_id" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.instruction_id.errors?.required"
+          >
+            Enter Instruction Id
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputCode">Code</label>
+          <input class="form-control" type="number" formControlName="code" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.code.errors?.required"
+          >
+            Enter a Code
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="inputStartTime">Start Time</label>
+          <input class="form-control" type="text" formControlName="start_time" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.start_time.errors?.required"
+          >
+            Enter Start Time.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputTriggerType">Trigger Type</label>
+          <input class="form-control" type="number" formControlName="trigger_type" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.trigger_type.errors?.required"
+          >
+            Enter a Trigger Type.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="inputEnable">Enable</label>
+          <input class="form-control" type="number" formControlName="enable" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.enable.errors?.required"
+          >
+            Enter Enable
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputNegativeMarkingRatio">Negative Marking Ratio</label>
+          <input class="form-control" type="number" formControlName="negative_marking_ratio" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.negative_marking_ratio.errors?.required"
+          >
+            Enter Negative Marking Ratio
+          </div>
+        </div>
+
+        <div formArrayName="sections">
+          <div *ngFor="let sec of sections.controls; let i = index">
+            <div [formGroup]="sec">
+              <div class="form-group">
+                <label for="inputSectionName">Section Name</label>
+                <input class="form-control" type="text" formControlName="section_name" />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.section_name.errors?.required"
+                >
+                  Enter Section Name
+                </div>
+              </div>
+              Section Marks:<input type="number" formControlName="section_marks" /> <br />
+              Number of Questions:<input type="number" formControlName="num_of_questions" /> <br />
+              <div *ngFor="let quel of question_list.controls; let i = index">
+                Question Id:<input type="text" formControlName="question_id" /> <br />
+                Question Marks:<input type="number" formControlName="question_marks" /> <br />
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="inputAnswer">Answer</label>
-          <input class="form-control" type="text" formControlName="answer" />
-          <div
-            class="invalid-feedback"
-            *ngIf="submitted && myForm.answer.errors?.required"
-          >
-            Enter an answer.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="inputWeight">Weight</label>
-          <input class="form-control" type="text" formControlName="weight" />
-          <!-- error -->
-          <div
-            class="invalid-feedback"
-            *ngIf="submitted && myForm.weight.errors?.required"
-          >
-            Enter a weight.
           </div>
         </div>
 

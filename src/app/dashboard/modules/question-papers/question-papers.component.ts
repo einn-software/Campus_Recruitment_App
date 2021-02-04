@@ -10,6 +10,7 @@ import { QuestionPapersService } from "./question-papers.service";
 export class QuestionPapersComponent implements OnInit {
 
   public questionPaperList : QuestionPaper[] = [];
+
   constructor(private questionPaperService: QuestionPapersService){}
 
 

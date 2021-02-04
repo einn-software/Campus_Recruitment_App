@@ -9,7 +9,8 @@ export class QuestionPaper {
   instructions_id: string;
   code : number;
   start_time : string;
-  trigger_type : string;
+  trigger_type : number;
+  enable: number;
   negative_marking_ratio: number;
   sections: QuestionpaperSection[]
 }
@@ -18,8 +19,8 @@ class QuestionpaperSection{
   _id: string;
   section_name : string;
   section_marks : number;
-num_of_questions : number;
-question_list: QuetsionList[];
+  num_of_questions : number;
+  question_list: QuetsionList[];
 }
 
 class QuetsionList{

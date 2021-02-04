@@ -7,6 +7,7 @@ import { DashComponent } from './modules/dash/dash.component';
 import { QuestionPapersComponent } from './modules/question-papers/question-papers.component';
 
 import { StudentsComponent } from './modules/students/students.component';
+import { StudentEditComponent } from "./modules/students/student-edit/student-edit.component";
 
 import { QuestionsComponent } from './modules/questions/questions.component';
 import { QuestionCreateComponent } from './modules/questions/question-create/question-create.component';
@@ -34,6 +35,7 @@ import { UploadStudentListComponent } from './modules/upload-student-list/upload
 import { QuestionPaperCreateComponent } from './modules/question-papers/question-paper-create/question-paper-create.component';
 import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
 import { QuestionPaperEditComponent } from './modules/question-papers/question-paper-edit/question-paper-edit.component';
+import { StudentCreateComponent } from './modules/students/student-create/student-create.component';
 
 
 const routes: Routes = [
@@ -143,7 +145,17 @@ const routes: Routes = [
     {
       path: 'students',
       component: StudentsComponent
-    }]
+    },
+
+    {
+      path: 'edit-student/:id',
+      component: StudentEditComponent
+    },
+    {
+      path: 'create-student',
+      component: StudentCreateComponent
+    }
+  ]
   },
 ];
 

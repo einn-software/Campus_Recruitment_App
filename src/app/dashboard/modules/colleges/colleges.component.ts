@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { College } from './colleges.model';
 import { CollegeService } from './colleges.service';
 
@@ -12,7 +13,7 @@ export class CollegesComponent implements OnInit {
 
   public collegeList : College[] = [];
   public code : number;
-  constructor(private collegeService: CollegeService) { }
+  constructor(private collegeService: CollegeService, private route: ActivatedRoute) {console.log(this.route) }
 
   ngOnInit(): void {
     this.collegeService.getColleges().subscribe(

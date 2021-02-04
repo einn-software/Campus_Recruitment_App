@@ -21,6 +21,7 @@
         <th scope="col">University</th>
         <th scope="col">Code</th>
         <th scope="col">Address</th>
+        <th scope="col">Show Students</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -33,6 +34,11 @@
         <td>{{ col.university }}</td>
         <td>{{ col.code }}</td>
         <td>{{ col.address }}</td>
+        <td>
+          <a [routerLink]="['/students']" (click)="findCode(col.code)"
+            >Students</a
+          >
+        </td>
         <td>
           <a
             [routerLink]="['/edit-college', col._id]"

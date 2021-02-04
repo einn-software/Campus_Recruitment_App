@@ -14,7 +14,6 @@ export class CollegeCreateComponent implements OnInit {
   public submitted: boolean = false;
   public collegeForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
-    code: ['', [Validators.required]],
     address: ['', [Validators.required]],
     university: ['', [Validators.required]],
     email: ['', [Validators.required]],

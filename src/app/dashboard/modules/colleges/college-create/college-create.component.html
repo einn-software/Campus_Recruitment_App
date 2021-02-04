@@ -5,62 +5,73 @@
       <form [formGroup]="collegeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="inputName">Name</label>
-          <input class="form-control" type="text" formControlName="name">
+          <input class="form-control" type="text" formControlName="name" />
           <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.name.errors?.required">
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.name.errors?.required"
+          >
             Name is required.
           </div>
         </div>
 
         <div class="form-group">
-          <label for="inputCode">Code</label>
-          <input class="form-control" type="text" formControlName="code">
-          <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.code.errors?.required">
-            Code is required.
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="inputAddress">Address</label>
-          <input class="form-control" type="text" formControlName="address">
-          <div class="invalid-feedback" *ngIf="submitted && myForm.address.errors?.required">
+          <input class="form-control" type="text" formControlName="address" />
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.address.errors?.required"
+          >
             Enter an address.
           </div>
         </div>
 
         <div class="form-group">
           <label for="inputUniversity">University</label>
-          <input class="form-control" type="text" formControlName="university">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="university"
+          />
           <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.university.errors?.required">
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.university.errors?.required"
+          >
             Enter a University.
           </div>
         </div>
 
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input class="form-control" type="text" formControlName="email">
+          <input class="form-control" type="text" formControlName="email" />
           <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.email.errors?.required">
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.email.errors?.required"
+          >
             Enter an email.
           </div>
         </div>
 
         <div class="form-group">
           <label for="inputPhone">Phone</label>
-          <input class="form-control" type="text" formControlName="phone">
+          <input class="form-control" type="text" formControlName="phone" />
           <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && myForm.phone.errors?.required">
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.phone.errors?.required"
+          >
             Enter a phone number.
           </div>
         </div>
 
         <div class="form-group">
-          <button class="btn btn-success btn-lg btn-block" type="submit">Submit</button>
+          <button class="btn btn-success btn-lg btn-block" type="submit">
+            Submit
+          </button>
         </div>
       </form>
-
     </div>
   </div>
 </div>

@@ -117,7 +117,23 @@
               {{ title }}
             </button>
             <br />
-            <a [routerLink]="['/forgot-password']">Forgotten Password?</a>
+            <div [ngSwitch]="role">
+              <div *ngSwitchCase="'admins'">
+                <a [routerLink]="['/forgot-password/admins']"
+                  >Forgotten Password?</a
+                >
+              </div>
+              <div *ngSwitchCase="'students'">
+                <a [routerLink]="['/forgot-password/students']"
+                  >Forgotten Password?</a
+                >
+              </div>
+              <div *ngSwitchCase="'tpos'">
+                <a [routerLink]="['/forgot-password/tpos']"
+                  >Forgotten Password?</a
+                >
+              </div>
+            </div>
           </fieldset>
         </form>
       </div>

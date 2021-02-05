@@ -92,8 +92,8 @@ const CollegeGetByCode = function (req, res) {
   printLogsWithBody(req);
   if (
     req.session.user_type == Constants.admin ||
-    Constants.tpo ||
-    Constants.student
+    req.session.user_type == Constants.tpo ||
+    req.session.user_type == Constants.student
   ) {
     College.findOne({
         code: req.params.code
@@ -120,7 +120,7 @@ const CollegeGetByCode = function (req, res) {
 //To change or update the college's data by using their id
 const CollegePut = function (req, res) {
   printLogsWithBody(req);
-  if (req.session.user_type == Constants.admin || Constants.tpo) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.tpo) {
     const body = req.body;
     //VALIDATE THE DATA BEFORE WE MAKE A College
     const {

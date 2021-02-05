@@ -69,7 +69,8 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  console.log(req.session.user_type);
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
     }, (err, results) => {
@@ -79,6 +80,7 @@ const QuestionGet = function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
+      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });
@@ -92,7 +94,7 @@ const QuestionGet = function (req, res) {
 
 // Get QuestionCollection By Id
 const QuestionGetById = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.findOne({
         _id: req.params.id
       }, {
@@ -260,10 +262,32 @@ const QuestionPaperAdd = async (req, res) => {
   };
 }
 
+// Get aLl the Question Papers
+const AllQuestionPaperGet = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    QuestionPapers.find({}, (err, results) => {
+      if (err || !results) {
+        logger.error(`Function QuestionPaper.find({}, callback) - `, errHandler.errorHandler(err));
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      }
+      console.log(res);
+      logger.info(results);
+      return res.status(Constants.success).json(results);
+    });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
+
 //Get QuestionPaper
 
 const QuestionPaperGet = (req, res) => {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if  (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionPapers.findOne({
         code: req.params.code,
         year: req.params.year,
@@ -297,7 +321,7 @@ const QuestionPaperGet = (req, res) => {
 //Get QuestionPaper by Tpo using code
 
 const QuestionPaperIdGetByTpo = (req, res) => {
-  if (req.session.user_type == Constants.tpo || Constants.admin) {
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     QuestionPapers.find({
         code: req.params.code
       }, {
@@ -328,7 +352,7 @@ const QuestionPaperIdGetByTpo = (req, res) => {
 
 // Get QuestionPaper By Id
 const QuestionPaperGetById = function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.student) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     QuestionPapers.findOne({
         _id: req.params.id,
       },
@@ -495,4 +519,5 @@ module.exports = {
   QuestionPaperPut,
   QuestionPaperPatch,
   QuestionPaperDelete,
+  AllQuestionPaperGet
 };

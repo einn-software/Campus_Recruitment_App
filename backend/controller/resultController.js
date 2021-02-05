@@ -119,7 +119,7 @@ const SaveResult = async function (req, res) {
 
 //Get Result By Paper Id
 const ResultGetByPaperIdAndCode = function (req, res) {
-  if (req.session.user_type == Constants.tpo || Constants.admin) {
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     Result.find({
         code: req.params.code,
         question_paper_id: req.params.question_paper_id
@@ -153,8 +153,8 @@ const ResultGetByPaperIdAndCode = function (req, res) {
 const ResultGetByPaperIdRollAndCode = function (req, res) {
   if (
     req.session.user_type == Constants.admin ||
-    Constants.tpo ||
-    Constants.student
+    req.session.user_type == Constants.tpo ||
+    req.session.user_type == Constants.student
   ) {
     Result.findOne({
         code: req.params.code,

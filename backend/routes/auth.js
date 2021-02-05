@@ -65,6 +65,7 @@ const {
   QuestionPaperPut,
   QuestionPaperPatch,
   QuestionPaperDelete,
+  AllQuestionPaperGet
 } = require("../controller/examinationController");
 
 const {
@@ -96,13 +97,13 @@ const {
 
 router.use(
   session({
-    secret: "au%mQKNhZBuQZyV0o$|?!!r2t5Dfg4d96r9",
+    secret: `${process.env.TOKEN_SECRET}`,
     resave: false, //Forces the session to be saved back to the session store, even if the session was never modified during the request
     saveUninitialized: true, //Forces a session that is "uninitialized" to be saved to the store
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
       dbName: "session",
-    }),
+    })
   })
 );
 router.post("/upload/android-logs", UploadLogFiles);
@@ -158,6 +159,7 @@ router.delete("/questions/:id", verified, QuestionDelete);
 
 //Question Paper API
 router.post("/question-papers", verified, QuestionPaperAdd);
+router.get("/question-paper", verified, AllQuestionPaperGet);
 router.get("/colleges/:code/question-papers/:year", verified, QuestionPaperGet);
 router.get("/question-papers/:code", verified, QuestionPaperIdGetByTpo);
 router.get("/question-papers/:id/questions", verified, QuestionPaperGetById);

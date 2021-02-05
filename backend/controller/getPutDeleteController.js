@@ -64,7 +64,8 @@ const AdminGetById = function (req, res) {
 
 //To change or update the admin's data by using their id
 const AdminPut = async function (req, res) {
-  if (req.session.user_type == Constants.admin) {
+  const body = req.body;
+  if(req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA BEFORE WE MAKE A Admin
     const {
       error
@@ -146,7 +147,7 @@ const AdminDelete = function (req, res) {
 
 // To get single Tpo data using id
 const TpoGetBtId = function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.admin) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.tpo) {
     Tpo.findOne({
         _id: req.params.id,
       },
@@ -171,7 +172,7 @@ const TpoGetBtId = function (req, res) {
 
 //To get all the tpo's data
 const TpoGet = function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.tpo) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.tpo) {
     Tpo.find({}, (err, results) => {
       if (err || !results) {
         logger.error(`Fuction Tpo.find({}, callback) - `, errHandler.errorHandler(err));
@@ -192,7 +193,8 @@ const TpoGet = function (req, res) {
 
 //To change or update the tpo's data by using their id
 const TpoPut = function (req, res) {
-  if (req.session.user_type == Constants.tpo) {
+  const body = req.body;
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA
     const {
       error
@@ -242,7 +244,7 @@ const TpoPut = function (req, res) {
 
 //To delete the tpo's data by using their id
 const TpoDelete = function (req, res) {
-  if (req.session.user_type == Constants.tpo) {
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     Tpo.findByIdAndRemove({
         _id: req.params.id,
       },
@@ -279,8 +281,8 @@ const TpoDelete = function (req, res) {
 const StudentGetById = function (req, res) {
   if (
     req.session.user_type == Constants.admin ||
-    Constants.tpo ||
-    Constants.student
+    req.session.user_type == Constants.tpo ||
+    req.session.user_type == Constants.student
   ) {
     Student.findOne({
         _id: req.params.id,
@@ -331,7 +333,8 @@ const StudentGet = function (req, res) {
 
 //Update student's info
 const StudentPut = async function (req, res) {
-  if (req.session.user_type == Constants.student) {
+  const body = req.body;
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     //VALIDATE THE DATA
     const {
       error
@@ -381,7 +384,7 @@ const StudentPut = async function (req, res) {
 
 // delete a student from the db
 const StudentDelete = function (req, res) {
-  if (req.session.user_type == Constants.student) {
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     Student.findByIdAndRemove({
         _id: req.params.id,
       },

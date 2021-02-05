@@ -1,0 +1,54 @@
+<div
+  class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+>
+  <h2>Manage Question Papers</h2>
+  <a
+    class="btn btn-outline-primary"
+    routerLinkActive="active"
+    routerLink="/create-question-paper"
+    >Add Question Paper</a
+  >
+</div>
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">S.No.</th>
+        <th scope="col">Year</th>
+        <th scope="col">Month</th>
+        <th scope="col">Day</th>
+        <th scope="col">Name</th>
+        <th scope="col">Marks</th>
+        <th scope="col">Time</th>
+        <th scope="col">Code</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">Negative Marks Ratio</th>
+        <th scope="col">Sections</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ques of questionPaperList; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ ques.year }}</td>
+        <td>{{ ques.month }}</td>
+        <td>{{ ques.day }}</td>
+        <td>{{ ques.paper_name }}</td>
+        <td>{{ ques.paper_max_marks }}</td>
+        <td>{{ ques.max_time }}</td>
+        <td>{{ ques.code }}</td>
+        <td>{{ ques.start_time }}</td>
+        <td>{{ ques.negative_marking_ratio }}</td>
+        <td>
+          <p *ngFor="let opt of ques.sections">
+            {{ opt.section_name }}
+          </p>
+        </td>
+        <td><a [routerLink]="['/open-question-paper', ques._id]">View</a></td>
+        <td><a [routerLink]="['/edit-question-paper', ques._id]">Edit</a></td>
+        <td><a (click)="removeQuestionPaper(ques, i)">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- Card -->

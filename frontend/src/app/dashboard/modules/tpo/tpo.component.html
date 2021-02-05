@@ -1,0 +1,38 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h2>Manage TPOs</h2>
+  <a class="btn btn-outline-primary" routerLinkActive="active" routerLink="/create-tpo">Add TPO</a>
+</div>
+
+<div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">S.No.</th>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Password</th>
+    <th scope="col">Phone</th>
+    <th scope="col">Designation</th>
+    <th scope="col">College</th>
+    <th scope="col">Code</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tp of tpoList; index as i">
+    <th scope="row">{{ i + 1 }}</th>
+    <td>{{ tp.name }}</td>
+    <td>{{ tp.email }}</td>
+    <td>{{ tp.password}}</td>
+    <td>{{ tp.phone}}</td>
+    <td>{{ tp.designation }}</td>
+    <td>{{ tp.college }}</td>
+    <td>{{ tp.code }}</td>
+    <td><a [routerLink]="['/edit-tpo', tp._id]">Edit</a></td>
+    <td><a (click)="removeTPO(tp, i)">Delete</a></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+<!-- Card -->
+

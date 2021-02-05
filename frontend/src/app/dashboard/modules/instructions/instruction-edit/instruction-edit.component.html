@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3>Edit Instruction</h3>
+      </div>
+      <div class="card-body">
+        <div [formGroup]="instructionForm">
+
+          <div class="form-group">
+            <label for="inputCode">Code</label>
+            <input class="form-control" type="text" formControlName="code">
+            <div class="invalid-feedback" *ngIf="submitted && myForm.code.errors?.required">
+              Code is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputMessage">Message</label>
+            <input class="form-control" type="text" formControlName="message">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.message.errors?.required">
+              Enter a message.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputYear">Year</label>
+            <input class="form-control" type="text" formControlName="year">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.year.errors?.required">
+              Enter a year.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="inputMonth">Month</label>
+            <input class="form-control" type="text" formControlName="month">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.month.errors?.required">
+              Enter a month
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputDay">Day</label>
+            <input class="form-control" type="text" formControlName="day">
+            <!-- error -->
+            <div class="invalid-feedback" *ngIf="submitted && myForm.day.errors?.required">
+              Enter a day.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <button class="btn btn-success btn-lg btn-block" type="submit" (click)="onSubmit()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- form  -->
+  </div>
+</div>

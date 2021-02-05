@@ -33,6 +33,7 @@ import { QuestionPaperEditComponent } from './modules/question-papers/question-p
 import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
 import { StudentEditComponent } from './modules/students/student-edit/student-edit.component';
 import { StudentCreateComponent } from './modules/students/student-create/student-create.component';
+import { StudentDashboardComponent } from './modules/student-dashboard/student-dashboard.component';
 
 
 
@@ -71,6 +72,7 @@ import { StudentCreateComponent } from './modules/students/student-create/studen
     QuestionPaperOpenComponent,
     StudentEditComponent,
     StudentCreateComponent,
+    StudentDashboardComponent,
   ],
 
 })

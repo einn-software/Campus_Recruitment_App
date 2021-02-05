@@ -24,7 +24,6 @@ export class CollegesComponent implements OnInit {
 
 findCode(code){
   this.code = window.localStorage['code'] = code;
-
 }
   removeCollege(col, index){
     if(window.confirm('Are you sure')){

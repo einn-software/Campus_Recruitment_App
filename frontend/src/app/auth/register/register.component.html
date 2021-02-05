@@ -200,7 +200,7 @@
                 and less than 1025)</span
               >
             </fieldset>
-            <fieldset class="form-group" *ngIf="role === 'students'">
+            <!--<fieldset class="form-group" *ngIf="role === 'students'">
               <input
                 class="form-control form-control-lg"
                 name="roll"
@@ -231,6 +231,39 @@
                 class="help-block"
                 >Please, Enter a valid branch (length should be greater than 2
                 and less than 256)</span
+              >
+            </fieldset>-->
+            <fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="roll"
+                placeholder="Roll Number"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('roll').valid && authForm.get('roll').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll number (length should be greater
+                than 3 and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="branch"
+                placeholder="Branch"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('branch').valid &&
+                  authForm.get('branch').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll number (length should be greater
+                than 2 and less than 256)</span
               >
             </fieldset>
             <button

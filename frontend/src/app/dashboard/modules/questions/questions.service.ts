@@ -34,6 +34,7 @@ export class QuestionService{
       map((res) => {
         return res;
       }),
+
       catchError(this.errorMgmt)
     )
   }

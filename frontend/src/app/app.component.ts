@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
           "/students",
           "/create-student",
           "/upload",
-          "/results"
+          "/results",
+          "/dash/students",
         ].indexOf(event['url']) >= 0){
           this.showHead = false;
         }else{

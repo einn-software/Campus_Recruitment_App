@@ -5,7 +5,8 @@
       <h2 *ngIf="role === 'tpos'">Tpo Dashboard</h2>
       <h2 *ngIf="role === 'students'">Student Dashboard</h2>
 
-      <h4>admin@innobitsystems.com</h4>
+      <!--<h4 routerLink="/settings">admin</h4>-->
+      <h4>{{user.email}}</h4>
     </div>
     <img
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
@@ -90,7 +91,12 @@
     (click)="saveCode()"
     >Manage College</a
   >
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/tpo"
+
+  <a
+    *ngIf="role !== 'students'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/tpo"
     >Manage TPO</a
   >
   <a

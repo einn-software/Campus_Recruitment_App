@@ -32,12 +32,6 @@ export class RegisterComponent implements OnInit {
         // Set a title for the page accordingly
         this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
       });
-      this.apiService.get('/colleges')
-      .subscribe(
-        data => {
-          this.clg = data;
-        }
-      );
     // use FormBuilder to create a form group
     switch(this.role){
       case 'admins': this.authForm = this.fb.group({
@@ -68,22 +62,27 @@ export class RegisterComponent implements OnInit {
         });
         break;
      default:
-          this.authForm = this.fb.group({
-            'name': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
-            'email': new FormControl('', [Validators.required, Validators.email, Validators.minLength(7), Validators.maxLength(255)]),
-            'password': new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
-            'phone': new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(14)]),
-            'roll': new FormControl(''),
-            'branch': new FormControl(''),
-            'college': new FormControl('', Validators.required),
-          'code': new FormControl('', Validators.required),
-          });
+      this.authForm = this.fb.group({
+        'name': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+        'email': new FormControl(null, [Validators.required, Validators.email, Validators.minLength(7), Validators.maxLength(255)]),
+        'password': new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
+        'phone': new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(14)]),
+        'roll': new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(255)]),
+        'branch': new FormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(55)]),
+        'college': new FormControl(null, Validators.required),
+      'code': new FormControl(null, Validators.required),
+      });
           }
           console.log(this.authForm);
   }
 
   ngOnInit(): void {
-
+    this.apiService.get('/colleges')
+    .subscribe(
+      data => {
+        this.clg = data;
+      }
+    );
   }
 
   submitForm() {

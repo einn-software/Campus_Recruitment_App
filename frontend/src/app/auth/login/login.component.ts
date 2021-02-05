@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Errors, UserService } from '../../core';
+import { ApiService, Errors, UserService } from '../../core';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
+    private apiService: ApiService
   ) {
     this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
@@ -48,7 +49,12 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+    this.apiService.get('/colleges')
+    .subscribe(
+      data => {
+        this.clg = data;
+      }
+    );
   }
 
   submitForm() {

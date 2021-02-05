@@ -10,13 +10,15 @@ import { QuestionService } from './questions.service';
 
 export class QuestionsComponent implements OnInit {
   public questionList : Question[] = [];
+  public length: number;
   constructor(private questionService: QuestionService){}
 
 
   ngOnInit(){
     this.questionService.getQuestions()
-    .subscribe(
-      res => this.questionList = res
+    .subscribe((res) => {
+        this.questionList = res
+      }
     )
   }
 

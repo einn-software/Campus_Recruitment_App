@@ -36,7 +36,7 @@ export class StudentService {
   }
 
   //Get student by code
-  getStudent(code): Observable<Student>{
+  getStudent(code): Observable<Student[]>{
     return this.apiService.get(`/colleges/${code}/students`).pipe(
       map((res) => {
         console.log("Student: ",res);

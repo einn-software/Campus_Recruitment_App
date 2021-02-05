@@ -10,7 +10,7 @@ import { StudentService } from './student.service';
 })
 export class StudentsComponent implements OnInit {
 
-  sList= [];
+  public sList: Student[] = [];
   public code : number;
   constructor(private studentService: StudentService, private route: ActivatedRoute) {console.log(this.route) }
 

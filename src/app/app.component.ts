@@ -31,7 +31,10 @@ export class AppComponent implements OnInit {
           "/create-college",
           "/tpo",
           "/create-tpo",
-          "/students"
+          "/students",
+          "/create-student",
+          "/upload",
+          "/results"
         ].indexOf(event['url']) >= 0){
           this.showHead = false;
         }else{
@@ -59,6 +62,10 @@ export class AppComponent implements OnInit {
         }
         var url = event['url'];
         if(url.match('/edit-question-paper')){
+          this.showHead = false;
+        }
+        var rl = event['url'];
+        if(rl.match('/edit-student')){
           this.showHead = false;
         }
       }

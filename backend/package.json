@@ -1,0 +1,41 @@
+{
+  "name": "register-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --watch --timeout 5000 ",
+    "start": "pm2 start crs.js --watch",
+    "stop": "pm2 stop crs.js"
+  },
+  "author": "Innobit",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^3.2.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.6",
+    "multer": "^1.4.2",
+    "password-hash": "^1.2.2",
+    "path": "^0.12.7",
+    "volleyball": "^1.5.1",
+    "winston": "^3.2.1",
+    "xlsx": "^0.16.2"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1",
+    "nodemailer": "^6.4.6",
+    "nodemon": "^2.0.2",
+    "should": "^13.2.3",
+    "sinon": "^9.0.2",
+    "supertest": "^4.0.2"
+  }
+}

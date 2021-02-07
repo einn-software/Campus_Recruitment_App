@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../questions.service';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Question } from '../questions.model';
@@ -12,52 +12,105 @@ import { Question } from '../questions.model';
 export class QuestionCreateComponent implements OnInit {
 
   public submitted: boolean = false;
-  public questionForm: FormGroup = this.fb.group({
-    question: ['', [Validators.required]],
-    topic: ['', [Validators.required]],
-    options: this.fb.array([
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        index: ['', [Validators.required]],
-        option: ['', [Validators.required]]
-      })
-    ]),
-    answer: ['', [Validators.required]],
-    weight: ['', [Validators.required]]
-  });
-  public question: Question[];
-
-  get options(){
-    return this.questionForm.get('options') as FormArray;
+  public questionForm: FormGroup;
+  data = {
+    questions:[{
+    question: "",
+  topic: "",
+  options: [
+   { index: "",
+  option: "",
+   }
+  ],
+  answer: "",
+  weight: "",
+}]
   }
 
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private questionService: QuestionService
-  ) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private router: Router, private questionService: QuestionService) {
+    this.questionForm = this.fb.group({
+      questions: this.fb.array([])
+    })
+    this.setQuestions();
+   }
+   setQuestions(){
+     let control = <FormArray>this.questionForm.controls.questions;
+     this.data.questions.forEach(x=>{
+       control.push(this.fb.group({
+         question: x.question,
+         topic: x.topic,
+         options: this.setOptions(x),
+         answer: x.answer,
+         weight: x.weight
+       }))
+     })
+   }
+   setOptions(x){
+     let arr = new FormArray([])
+     x.options.forEach(y=>{
+       arr.push(this.fb.group({
+         index: y.index,
+         option: y.option
+       }));
+       arr.push(this.fb.group({
+        index: y.index,
+        option: y.option
+      }));
+      arr.push(this.fb.group({
+        index: y.index,
+        option: y.option
+      }));
+      arr.push(this.fb.group({
+        index: y.index,
+        option: y.option
+      }));
+     })
+     return arr;
+   }
+   addNewQuestion(){
+     let control = <FormArray>this.questionForm.controls.questions;
+     control.push(this.fb.group({
+      question: [''],
+      topic: [''],
+      options: this.fb.array([
+        this.fb.group({
+          index: [''],
+         option: ['']
+        }),
+        this.fb.group({
+          index: [''],
+         option: ['']
+        }),
+        this.fb.group({
+          index: [''],
+         option: ['']
+        }),
+        this.fb.group({
+          index: [''],
+         option: ['']
+        }),
+      ]),
+      answer: [''],
+      weight: ['']
+     }))
+   }
+   deleteQuestion(index){
+    let control = <FormArray>this.questionForm.controls.questions;
+    control.removeAt(index);
+   }
+   addNewOption(control){
+     control.push(
+       this.fb.group({
+         index: [''],
+         option: ['']
+       })
+     )
+   }
+   deleteOption(control, index){
+     control.removeAt(index);
+   }
+  ngOnInit() {
   }
-
-
-  //Getter to access form control
-  get myForm(){
-    return this.questionForm.controls;
-  }
-
   onSubmit(){
     this.submitted = true;
     if(!this.questionForm.valid){

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentService } from '../student.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Student } from "../student.model";
 import { ApiService } from 'src/app/core';
 
@@ -13,16 +13,19 @@ import { ApiService } from 'src/app/core';
 export class StudentCreateComponent implements OnInit {
 cld:[];
   public submitted: boolean = false;
-  public studentForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required]],
-    phone: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    roll: ['', [Validators.required]],
-    branch: ['', [Validators.required]],
-    college: ['', [Validators.required]],
-    code: ['', [Validators.required]]
-  });
+  data={
+    students: [{
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      roll: "",
+      branch: "",
+      college: "",
+      code: ""
+    }]
+  }
+  public studentForm: FormGroup;
   public student: Student[];
 
   constructor(
@@ -31,13 +34,48 @@ cld:[];
     private studentService: StudentService,
     private apiService: ApiService
   ) {
+    this.studentForm = this.fb.group({
+      students: this.fb.array([])
+    })
+    this.setStudents();
+  }
+  setStudents(){
+    let control = <FormArray>this.studentForm.controls.students;
+     this.data.students.forEach(x => {
+      control.push(this.fb.group({
+        name: x.name,
+    email: x.email,
+    phone: x.phone,
+    password: x.password,
+    roll: x.roll,
+    branch: x.branch,
+    college: x.college,
+    code: x.code
+      })
+     )});
+  }
+  AddStudents(){
+    let control = <FormArray>this.studentForm.controls.students;
+    control.push(this.fb.group({
+      name: [''],
+      email: [''],
+      phone: [''],
+      password: [''],
+      roll: [''],
+      branch: [''],
+      college: [''],
+      code: ['']
+    }))
+   }
+   removeStudents(index){
+    let arr = <FormArray>this.studentForm.controls.students;
+    arr.removeAt(index);
+   }
+  ngOnInit(): void {
     this.apiService.get('/colleges').subscribe(data=>{
       console.log(data);
       this.cld = data;
     })
-  }
-
-  ngOnInit(): void {
   }
 
   get myForm(){

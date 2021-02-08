@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollegeService } from '../colleges.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { College } from '../colleges.model';
 
 @Component({
@@ -12,21 +12,54 @@ import { College } from '../colleges.model';
 
 export class CollegeCreateComponent implements OnInit {
   public submitted: boolean = false;
-  public collegeForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    address: ['', [Validators.required]],
-    university: ['', [Validators.required]],
-    email: ['', [Validators.required]],
-    phone: ['', [Validators.required]]
-  });
+  data = {
+    colleges: [{
+      name: "",
+    address: "",
+    university: "",
+    email: "",
+    phone: ""
+    }]
+  }
+  public collegeForm: FormGroup;
   public college: College[];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private collegeService: CollegeService
-  ) { }
-
+  ) {
+    this.collegeForm = this.fb.group({
+      colleges: this.fb.array([])
+    })
+    this.setCollege();
+   }
+   setCollege(){
+     let control = <FormArray>this.collegeForm.controls.colleges;
+     this.data.colleges.forEach(x => {
+      control.push(this.fb.group({
+        name: x.name,
+    address: x.address,
+    university: x.university,
+    email: x.email,
+    phone: x.phone
+      })
+     )});
+   }
+   AddColleges(){
+    let control = <FormArray>this.collegeForm.controls.colleges;
+    control.push(this.fb.group({
+          name: [''],
+    address: [''],
+    university: [''],
+    email: [''],
+    phone: ['']
+    }))
+   }
+   removeColleges(index){
+    let arr = <FormArray>this.collegeForm.controls.colleges;
+    arr.removeAt(index);
+   }
   ngOnInit(): void {
   }
 

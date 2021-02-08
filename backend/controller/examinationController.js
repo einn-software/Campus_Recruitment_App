@@ -21,10 +21,13 @@ const {
 const QuestionAdd = async (req, res) => {
   if (req.session.user_type == Constants.admin) {
     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
+    let len = req.body.questions.length;
+    for (let i =0; i< len; i++){
     const {
       error
-    } = questionCollectionsValidation(req.body);
+    } = questionCollectionsValidation(req.body.questions[i]);
     if (error) {
+      console.log(error);
       logger.error(errHandler.validationErrorHandler(error));
       return res
         .status(Constants.er_failure)
@@ -32,7 +35,7 @@ const QuestionAdd = async (req, res) => {
     }
     //Checking if the question is already in the database
     const questionExist = await QuestionCollections.findOne({
-      question: req.body.question,
+      question: req.body.questions[i].question,
     });
 
     if (questionExist) {
@@ -43,11 +46,11 @@ const QuestionAdd = async (req, res) => {
     }
     // Create a new questionCollection
     const questionCollection = new QuestionCollections({
-      question: req.body.question,
-      topic: req.body.topic,
-      options: req.body.options,
-      answer: req.body.answer,
-      weight: req.body.weight,
+      question: req.body.questions[i].question,
+      topic: req.body.questions[i].topic,
+      options: req.body.questions[i].options,
+      answer: req.body.questions[i].answer,
+      weight: req.body.questions[i].weight,
     });
     try {
       const questions = await questionCollection.save();
@@ -59,6 +62,7 @@ const QuestionAdd = async (req, res) => {
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));
     }
+  }
   } else {
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res

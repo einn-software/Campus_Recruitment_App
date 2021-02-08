@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
+
 
 import { JwtService } from './jwt.service';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
+
   constructor(
     private http: HttpClient,
     private jwtService: JwtService
@@ -37,6 +39,15 @@ export class ApiService {
     return this.http.post(
       `${environment.api_url}${path}`,
       JSON.stringify(body), {
+        withCredentials: true }
+    ).pipe(catchError(this.formatErrors));
+  }
+
+  upload(path: string, body: any, headers: any): Observable<any> {
+    return this.http.post(
+      `${environment.api_url}${path}`,
+      body, {
+        headers: headers,
         withCredentials: true }
     ).pipe(catchError(this.formatErrors));
   }

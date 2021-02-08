@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from 'src/app/core';
 
 @Component({
@@ -8,21 +9,30 @@ import { ApiService } from 'src/app/core';
 })
 export class UploadStudentListComponent {
 
-  public file : File = null;
-constructor(private apiService: ApiService){
-}
-  onFileSelected(event){
+    public file : File = null;
+
+    public httpOption = new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      });
+
+
+    constructor(private apiService: ApiService){}
+
+    onFileSelected(event){
     this.file = <File>event.target.files[0];
     console.log(event);
-  }
+    }
+
   onUpload(){
     const fd = new FormData();
-    fd.append('xlsx', this.file, this.file.name);
-    const data ={
-      'file': fd,
-      'email': window.localStorage['email']
-    }
-    this.apiService.post('/upload', fd).subscribe(res=>{
+    fd.append('file', this.file);
+    fd.append('email', window.localStorage['email']);
+    // const data ={
+    //   'file': fd,
+    //   'email': window.localStorage['email']
+    // }
+
+    this.apiService.upload('/upload', fd, this.httpOption).subscribe(res=>{
       console.log(res);
     })
   }

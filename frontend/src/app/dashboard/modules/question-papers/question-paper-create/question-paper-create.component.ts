@@ -11,7 +11,7 @@ import { QuestionPaper } from "../question-papers.model";
 export class QuestionPaperCreateComponent implements OnInit {
   public questionPaperForm: FormGroup
   public submitted: boolean = false;
-  data={
+  public data={
     papers: [{
     year: "",
     month: "",
@@ -77,6 +77,8 @@ export class QuestionPaperCreateComponent implements OnInit {
        })
        )
       })
+      return arr;
+
   }
   setQuestions(y){
     let arr = new FormArray([])
@@ -87,6 +89,7 @@ export class QuestionPaperCreateComponent implements OnInit {
        })
        )
       })
+      return arr;
   }
   addNewPaper(){
     let control = <FormArray>this.questionPaperForm.controls.papers;
@@ -118,6 +121,7 @@ export class QuestionPaperCreateComponent implements OnInit {
       ])
      })
      )}
+
   addNewSection(control){
     control.push(
       this.fb.group({
@@ -151,6 +155,10 @@ export class QuestionPaperCreateComponent implements OnInit {
   }
   deleteQuestion(control, index){
     control.removeAt(index);
+  }
+
+  get myForm(){
+    return this.questionPaperForm.controls;
   }
 
   ngOnInit(): void {

@@ -136,7 +136,7 @@ router.post("/login/students", StudentLogin);
 router.post("/login/tpos", TpoLogin);
 
 // College API
-router.post("/colleges", verified, CollegeAdd);
+router.post("/register/colleges", verified, CollegeAdd);
 router.get("/colleges/:code", verified, CollegeGetByCode);
 router.get("/colleges", CollegeGet);
 router.put("/colleges/:code", verified, CollegePut);

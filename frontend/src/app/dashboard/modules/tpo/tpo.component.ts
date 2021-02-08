@@ -18,7 +18,25 @@ export class TpoComponent implements OnInit {
   ngOnInit(): void {
     this.tpoService.getTPOs()
     .subscribe(
-      res => this.tpoList = res
+      res =>{
+      if(window.localStorage['userRole'] !== '2'){
+        this.tpoList = res;
+      }
+      else{
+        const id = window.localStorage['id'];
+        this.tpoService.getTpo(`${id}`)
+       .subscribe(
+        data => {
+         for(let i =0; i<res.length; i++){
+           if(res[i].code === data.code){
+             this.tpoList.push(res[i]);
+           }
+         }
+        }
+      );
+
+      }
+      }
     )
   }
 

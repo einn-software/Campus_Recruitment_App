@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TpoService } from '../tpo.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Tpo } from '../tpo.model';
+import { ApiService } from 'src/app/core';
 
 @Component({
   selector: 'app-tpo-create',
@@ -12,25 +13,68 @@ import { Tpo } from '../tpo.model';
 
 export class TpoCreateComponent implements OnInit {
   public submitted: boolean = false;
-  public tpoForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    phone: ['', [Validators.required]],
-    designation: ['', [Validators.required]],
-    college: ['', [Validators.required]],
-    code: ['', [Validators.required]]
-  })
-
+  data={
+    tpos: [{
+      name: "",
+    email: "",
+    password: "",
+    phone: "",
+    designation: "",
+    college: "",
+    code: ""
+    }]
+  }
+  public tpoForm: FormGroup
   public tpo: Tpo[];
+  public cld: [];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private tpoService: TpoService
-  ) { }
-
+    private tpoService: TpoService,
+    private apiService: ApiService
+  ) {
+    this.tpoForm = this.fb.group({
+      tpos: this.fb.array([])
+    })
+    this.setTpos();
+   }
+   setTpos(){
+    let control = <FormArray>this.tpoForm.controls.tpos;
+    this.data.tpos.forEach(x=>{
+      control.push(this.fb.group({
+      name: x.name,
+      email: x.email,
+      password: x.password,
+      phone: x.phone,
+      designation: x.designation,
+    college: x.college,
+    code: x.code
+    })
+    )})
+   }
+   addTpos(){
+    let control = <FormArray>this.tpoForm.controls.tpos;
+      control.push(this.fb.group({
+      name: [''],
+      email: [''],
+      password: [''],
+      phone: [''],
+      designation: [''],
+    college: [''],
+    code: ['']
+    })
+    )
+   }
+   removeTpos(index){
+    let control = <FormArray>this.tpoForm.controls.tpos;
+    control.removeAt(index);
+   }
   ngOnInit(): void {
+    this.apiService.get('/colleges').subscribe(data=>{
+      console.log(data);
+      this.cld = data;
+    })
   }
 
   get myForm(){

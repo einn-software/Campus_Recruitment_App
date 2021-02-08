@@ -68,7 +68,7 @@ export class QuestionPaperCreateComponent implements OnInit {
   }
   setSections(x){
     let arr = new FormArray([])
-     x.sections.forEach(y=>{
+     x.sections.map.forEach(y=>{
        arr.push(this.fb.group({
         section_name: y.section_name,
         section_marks: y.section_marks,

@@ -6,9 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./instruction-message.component.css']
 })
 export class InstructionMessageComponent implements OnInit {
-
+public check: boolean = false;
   constructor() { }
-
+  checked(){
+    this.check = true;
+  }
   ngOnInit(): void {
   }
 

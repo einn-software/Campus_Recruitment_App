@@ -30,20 +30,12 @@ export class QuestionPaperEditComponent implements OnInit {
     negative_marks_ratio: ['', [Validators.required]],
     sections: this.fb.array([
       this.fb.group({
-        section_name: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        section_marks: ['', [Validators.required]]
-      }),
-      this.fb.group({
-        no_of_questions: ['', [Validators.required]]
-      }),
-      this.fb.group({
+        section_name: ['', [Validators.required]],
+        section_marks: ['', [Validators.required]],
+        no_of_questions: ['', [Validators.required]],
         question_list: this.fb.array([
           this.fb.group({
-            question_id: ['', [Validators.required]]
-          }),
-          this.fb.group({
+            question_id: ['', [Validators.required]],
             question_marks: ['', [Validators.required]]
           }),
         ])
@@ -52,8 +44,11 @@ export class QuestionPaperEditComponent implements OnInit {
   });
   public questionPaper: QuestionPaper[] = [];
 
-  get options() {
-    return this.editForm.get('options') as FormArray;
+  get sections() {
+    return this.editForm.get('sections') as FormArray;
+  }
+  get question_list() {
+    return this.editForm.get('sections').get('question_list') as FormArray;
   }
 
   constructor(

@@ -37,7 +37,6 @@ import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.com
 import { StudentDashboardComponent } from './modules/student-dashboard/student-dashboard.component';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
-import { QuestionPaperOpenComponent } from './modules/question-papers/question-paper-open/question-paper-open.component';
 
 
 const routes: Routes = [
@@ -72,10 +71,7 @@ const routes: Routes = [
       {
         path: 'upload',
         component: UploadStudentListComponent
-      },{
-      path: 'questions',
-      component: QuestionsComponent
-    },
+      },
     {
       path: 'create-question',
       component: QuestionCreateComponent
@@ -91,10 +87,6 @@ const routes: Routes = [
     {
       path: 'create-question-paper',
       component: QuestionPaperCreateComponent
-    },
-    {
-      path: 'open-question-paper/:id',
-      component: QuestionPaperOpenComponent
     },
     {
       path: 'edit-question-paper/:id',

@@ -141,16 +141,17 @@
           </div>
           <div class="form-inline">
             <div class="form-group">
-              <label class="col-4">instructions_id</label>
-              <input
-                type="text"
+              <label class="col-4">Instructions_Id</label>
+              <select
                 class="form-control"
-                placeholder="instructions_id"
-                name="type"
                 formControlName="instructions_id"
                 style="margin-right: 5px"
-                required
-              />
+              >
+                <option disabled value="">Select Instruction Id</option>
+                <option *ngFor="let ins of instructionList" [value]="ins._id">
+                  {{ ins._id }} ({{ ins.code }})
+                </option>
+              </select>
               <div
                 class="invalid-feedback"
                 *ngIf="submitted && myForm.instructions_id.errors?.required"
@@ -160,15 +161,16 @@
           <div class="form-inline">
             <div class="form-group">
               <label class="col-4">code</label>
-              <input
-                type="text"
+              <select
                 class="form-control"
-                placeholder="code"
-                name="type"
                 formControlName="code"
                 style="margin-right: 5px"
-                required
-              />
+              >
+                <option disabled value="">Select Code</option>
+                <option *ngFor="let cd of collegeList" [value]="cd.code">
+                  {{ cd.code }} ({{ cd.name }})
+                </option>
+              </select>
               <div
                 class="invalid-feedback"
                 *ngIf="submitted && myForm.code.errors?.required"

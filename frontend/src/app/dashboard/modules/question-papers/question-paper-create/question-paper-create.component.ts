@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { QuestionPapersService } from '../question-papers.service';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { QuestionPaper } from "../question-papers.model";
+import { InstructionService } from '../../instructions/instructions.service';
+import { ApiService } from 'src/app/core';
 @Component({
   selector: 'app-question-paper-create',
   templateUrl: './question-paper-create.component.html',
@@ -11,6 +13,8 @@ import { QuestionPaper } from "../question-papers.model";
 export class QuestionPaperCreateComponent implements OnInit {
   public questionPaperForm: FormGroup
   public submitted: boolean = false;
+  public instructionList: [];
+  public collegeList: [];
   public data={
     papers: [{
     year: "",
@@ -39,7 +43,9 @@ export class QuestionPaperCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private questionPapersService: QuestionPapersService
+    private questionPapersService: QuestionPapersService,
+    private instructionService: InstructionService,
+    private apiService: ApiService
   ) {
     this.questionPaperForm = this.fb.group({
       papers: this.fb.array([])
@@ -68,7 +74,7 @@ export class QuestionPaperCreateComponent implements OnInit {
   }
   setSections(x){
     let arr = new FormArray([])
-     x.sections.map.forEach(y=>{
+     x.sections.forEach(y=>{
        arr.push(this.fb.group({
         section_name: y.section_name,
         section_marks: y.section_marks,
@@ -162,6 +168,13 @@ export class QuestionPaperCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.instructionService.getInstructions().subscribe(
+      res => {
+        this.instructionList = res;
+      })
+      this.apiService.get('/colleges').subscribe(data=>{
+        this.collegeList = data;
+      })
   }
 
   onSubmit(){

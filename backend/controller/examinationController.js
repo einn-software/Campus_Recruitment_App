@@ -259,21 +259,23 @@ const QuestionDelete = function (req, res) {
 //Post Question Paper
 const QuestionPaperAdd = async (req, res) => {
   if (req.session.user_type == Constants.admin) {
+    let len = req.body.papers.length;
+    for (let i =0; i< len; i++){
     //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
     const {
       error
-    } = questionPaperValidation(req.body);
+    } = questionPaperValidation(req.body.papers[i]);
     if (error) {
       logger.error(errHandler.validationErrorHandler(error));
       return res.status(Constants.er_failure).send(error.details[0].message);
     }
     //Checking if the question paper is already in the database
     const questionPaperExist = await QuestionPapers.findOne({
-      year: req.body.year,
-      month: req.body.month,
-      day: req.body.day,
-      code: req.body.code,
-      start_time: req.body.start_time,
+      year: req.body.papers[i].year,
+      month: req.body.papers[i].month,
+      day: req.body.papers[i].day,
+      code: req.body.papers[i].code,
+      start_time: req.body.papers[i].start_time,
     });
     if (questionPaperExist) {
       logger.error(`If (questionPaperExist: ${questionPaperExist}) - `, errHandler.questionPaperExistErrorHandler());
@@ -283,19 +285,19 @@ const QuestionPaperAdd = async (req, res) => {
     }
     // Create a new questionPaper
     const questionPapers = new QuestionPapers({
-      year: req.body.year,
-      month: req.body.month,
-      day: req.body.day,
-      paper_name: req.body.paper_name,
-      paper_max_marks: req.body.paper_max_marks,
-      max_time: req.body.max_time,
-      instructions_id: req.body.instructions_id,
-      code: req.body.code,
-      start_time: req.body.start_time,
-      trigger_type: req.body.trigger_type,
-      enable: req.body.enable,
-      negative_marking_ratio: req.body.negative_marking_ratio,
-      sections: req.body.sections,
+      year: req.body.papers[i].year,
+      month: req.body.papers[i].month,
+      day: req.body.papers[i].day,
+      paper_name: req.body.papers[i].paper_name,
+      paper_max_marks: req.body.papers[i].paper_max_marks,
+      max_time: req.body.papers[i].max_time,
+      instructions_id: req.body.papers[i].instructions_id,
+      code: req.body.papers[i].code,
+      start_time: req.body.papers[i].start_time,
+      trigger_type: req.body.papers[i].trigger_type,
+      enable: req.body.papers[i].enable,
+      negative_marking_ratio: req.body.papers[i].negative_marking_ratio,
+      sections: req.body.papers[i].sections,
     });
     try {
       const savedPapers = await questionPapers.save();
@@ -307,6 +309,7 @@ const QuestionPaperAdd = async (req, res) => {
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));
     }
+  }
   } else {
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res

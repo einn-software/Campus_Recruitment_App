@@ -1,4 +1,20 @@
-<h1>Welcome to Campus Recruiter. We are the one who provide the best technical solutions to businesses to grow faster</h1>
-<h2>You have exam at this time || you have no idea at this time</h2>
-<button type="submit" class="btn btn-success" (click)="showDate()">Check Exam Date</button>
-<button type="submit" class="btn btn-success" (click)="joinTest()">Join Test</button>
+<div style="text-align: center">
+  <h1>
+    <br /><br />
+    Welcome to Campus Recruiter.<br />
+    We are the one who provide the best technical<br />
+    solutions to businesses to grow faster
+  </h1>
+  <br />
+  <hr />
+  <br />
+  <h2 *ngIf="isExam">
+    You have exam today<br /><br />
+    <button type="submit" class="btn btn-success" (click)="joinTest()">
+      Join Test
+    </button>
+  </h2>
+  <h2 *ngIf="!isExam">
+    You have no exam today, please come and check another day
+  </h2>
+</div>

@@ -58,7 +58,7 @@ export class QuestionPapersService {
     params = params.append('day', day);
     return this.apiService.get(`/colleges/${code}/question-papers/${year}`, params).pipe(
       map((res) => {
-        console.log(res);
+       // console.log(res);
         return res;
       }),
       catchError(this.errorMgmt)

@@ -37,6 +37,7 @@ import { TpoDashboardComponent } from './modules/tpo-dashboard/tpo-dashboard.com
 import { StudentDashboardComponent } from './modules/student-dashboard/student-dashboard.component';
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
+import { InstructionMessageComponent } from './modules/student-dashboard/instruction-message/instruction-message.component';
 
 
 const routes: Routes = [
@@ -111,6 +112,10 @@ const routes: Routes = [
     {
       path: 'create-admin',
       component: AdminCreateComponent
+    },
+    {
+      path: 'join-test/instruction',
+      component: InstructionMessageComponent
     },
     {
       path: 'edit-admin/:id',

@@ -69,6 +69,10 @@ export class AppComponent implements OnInit {
         if(rl.match('/edit-student')){
           this.showHead = false;
         }
+        var r2 = event['url'];
+        if(r2.match('/join-test/instruction')){
+          this.showHead = false;
+        }
       }
     });
   }

@@ -33,7 +33,7 @@ export class DashComponent implements OnInit {
   public instructionLength:number;
   public adminLength: number;
   public collegeLength: number;
-  public studentLength: number;
+  //public studentLength: number;
   public tpoLength: number;
 
   constructor(

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import { ApiService } from '../../../core/services/api.service';
 import { QuestionPaper } from "./question-papers.model";
@@ -40,7 +40,7 @@ export class QuestionPapersService {
     )
   }
 
-  //Get question by id
+  //Get question-paper by id
   getQuestionPaper(id): Observable<QuestionPaper>{
     let url = `/question-papers/${id}/questions`;
     return this.apiService.get(url).pipe(
@@ -50,6 +50,21 @@ export class QuestionPapersService {
       catchError(this.errorMgmt)
     )
   }
+
+  //Get question-paper by code and year
+  getQuestionPaperByCode(code, year, month, day): Observable<QuestionPaper>{
+    let params = new HttpParams();
+    params = params.append('month', month);
+    params = params.append('day', day);
+    return this.apiService.get(`/colleges/${code}/question-papers/${year}`, params).pipe(
+      map((res) => {
+        console.log(res);
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
+
 
   //Update question
   updateQuestionPaper(id, data): Observable<QuestionPaper>{

@@ -35,7 +35,7 @@ mongoose.connection
 //Middleware
 app.use(cors({
   origin: [
-    "http://localhost:4200"
+    "http://cra.innobitsystems.com:9500"
   ],credentials: true}));
  
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events

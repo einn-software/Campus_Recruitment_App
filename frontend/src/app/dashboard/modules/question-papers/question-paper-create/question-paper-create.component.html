@@ -1,0 +1,466 @@
+<form [formGroup]="questionPaperForm" (ngSubmit)="onSubmit()">
+  <button
+    style="margin-top: 5px; margin-bottom: 5px"
+    type="button"
+    class="btn btn-primary btn-sm"
+    (click)="addNewPaper()"
+  >
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New
+    Question Paper
+  </button>
+  <div formArrayName="papers">
+    <div
+      style="margin-top: 5px; margin-bottom: 5px"
+      *ngFor="
+        let paper of questionPaperForm.get('papers')['controls'];
+        let i = index
+      "
+    >
+      <fieldset>
+        <legend>
+          <h4>
+            Question Paper {{ i + 1 }}:<button
+              style="margin-left: 35px"
+              type="button"
+              class="btn btn-danger"
+              (click)="deletePaper(i)"
+            >
+              <span aria-hidden="true"></span>
+              Remove Question Paper
+            </button>
+          </h4>
+        </legend>
+        <div [formGroupName]="i">
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Year</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Year"
+                name="type"
+                formControlName="year"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.year.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Month</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Month"
+                name="type"
+                formControlName="month"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.month.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Day</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Day"
+                name="type"
+                formControlName="day"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.day.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Paper Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paper Name"
+                name="type"
+                formControlName="paper_name"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.paper_name.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Paper Max Marks</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paper Max Marks"
+                name="type"
+                formControlName="paper_max_marks"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.paper_max_marks.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Max Time</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Max Time"
+                name="type"
+                formControlName="max_time"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.max_time.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">Instructions_Id</label>
+              <select
+                class="form-control"
+                formControlName="instructions_id"
+                style="margin-right: 5px"
+              >
+                <option disabled value="">Select Instruction Id</option>
+                <option *ngFor="let ins of instructionList" [value]="ins._id">
+                  {{ ins._id }} ({{ ins.code }})
+                </option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.instructions_id.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">code</label>
+              <select
+                class="form-control"
+                formControlName="code"
+                style="margin-right: 5px"
+              >
+                <option disabled value="">Select Code</option>
+                <option *ngFor="let cd of collegeList" [value]="cd.code">
+                  {{ cd.code }} ({{ cd.name }})
+                </option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.code.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">start_time</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="start_time"
+                name="type"
+                formControlName="start_time"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.start_time.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">trigger_type</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="trigger_type"
+                name="type"
+                formControlName="trigger_type"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.trigger_type.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">enable</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="enable"
+                name="type"
+                formControlName="enable"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && myForm.enable.errors?.required"
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="col-4">negative_marking_ratio</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="negative_marking_ratio"
+                name="type"
+                formControlName="negative_marking_ratio"
+                style="margin-right: 5px"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="
+                  submitted && myForm.negative_marking_ratio.errors?.required
+                "
+              ></div>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <label style="margin-right: 80px" class="col-form-label"
+                >Sections :-</label
+              >
+              <button
+                style="margin-top: 5px; margin-bottom: 5px"
+                type="button"
+                class="btn btn-primary btn-sm"
+                (click)="addNewSection(paper.controls.sections)"
+              >
+                <span
+                  class="glyphicon glyphicon-plus"
+                  aria-hidden="true"
+                ></span>
+                Add New Section
+              </button>
+            </div>
+          </div>
+          <div class="form-inline">
+            <div class="form-group">
+              <div formArrayName="sections">
+                <div
+                  style="margin-top: 5px; margin-bottom: 5px"
+                  *ngFor="
+                    let sec of paper.get('sections')['controls'];
+                    let j = index
+                  "
+                >
+                  <div [formGroupName]="j">
+                    <div class="form-group">
+                      <label style="margin-right: 60px" class="col-form-label"
+                        >Section {{ j + 1 }}</label
+                      >
+                      <button
+                        style="margin-left: 35px"
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="deleteSection(paper.controls.sections, j)"
+                      >
+                        <span aria-hidden="true"></span>
+                        Remove Section
+                      </button>
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <label class="col-4">section_name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="section_name"
+                            name="section_name"
+                            formControlName="section_name"
+                            style="margin-right: 5px"
+                            required
+                          />
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="
+                              submitted && myForm.section_name.errors?.required
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <label class="col-4">section_marks</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="section_marks"
+                            name="section_marks"
+                            formControlName="section_marks"
+                            style="margin-right: 5px"
+                            required
+                          />
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="
+                              submitted && myForm.section_marks.errors?.required
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <label class="col-4">num_of_questions</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="num_of_questions"
+                            name="num_of_questions"
+                            formControlName="num_of_questions"
+                            style="margin-right: 5px"
+                            required
+                          />
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="
+                              submitted &&
+                              myForm.num_of_questions.errors?.required
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <label
+                            style="margin-right: 80px"
+                            class="col-form-label"
+                            >Question :-</label
+                          >
+                          <button
+                            style="margin-top: 5px; margin-bottom: 5px"
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            (click)="addNewQuestion(sec.controls.question_list)"
+                          >
+                            <span aria-hidden="true"></span>
+                            Add New Question
+                          </button>
+                        </div>
+                      </div>
+                      <div class="form-inline">
+                        <div class="form-group">
+                          <div formArrayName="question_list">
+                            <div
+                              style="margin-top: 5px; margin-bottom: 5px"
+                              *ngFor="
+                                let lines of sec.get('question_list')[
+                                  'controls'
+                                ];
+                                let k = index
+                              "
+                            >
+                              <div [formGroupName]="k">
+                                <div class="form-group">
+                                  <label
+                                    style="margin-right: 60px"
+                                    class="col-form-label"
+                                    >Question {{ k + 1 }}</label
+                                  >
+                                  <button
+                                    style="margin-left: 35px"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    (click)="
+                                      deleteQuestion(
+                                        sec.controls.question_list,
+                                        k
+                                      )
+                                    "
+                                  >
+                                    <span aria-hidden="true"></span>Remove
+                                    Question
+                                  </button>
+                                  <div class="form-inline">
+                                    <div class="form-group">
+                                      <label class="col-4">question_id</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="question_id"
+                                        name="question_id"
+                                        formControlName="question_id"
+                                        style="margin-right: 5px"
+                                        required
+                                      />
+                                      <div
+                                        class="invalid-feedback"
+                                        *ngIf="
+                                          submitted &&
+                                          myForm.question_id.errors?.required
+                                        "
+                                      ></div>
+                                      <label class="col-4"
+                                        >question_marks</label
+                                      >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="question_marks"
+                                        name="question_marks"
+                                        formControlName="question_marks"
+                                        style="margin-right: 5px"
+                                        required
+                                      />
+                                      <div
+                                        class="invalid-feedback"
+                                        *ngIf="
+                                          submitted &&
+                                          myForm.question_marks.errors?.required
+                                        "
+                                      ></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>

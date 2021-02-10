@@ -1,0 +1,173 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-question">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <button
+          style="margin-top: 5px; margin-bottom: 5px"
+          type="button"
+          class="btn btn-primary btn-sm"
+          (click)="AddStudents()"
+        >
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+          New Student
+        </button>
+        <div formArrayName="students">
+          <div
+            *ngFor="
+              let t of studentForm.get('students')['controls'];
+              let i = index
+            "
+          >
+            <legend>
+              <h4>
+                Student no. - {{ i + 1 }}:
+                <button
+                  style="margin-left: 35px"
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="removeStudents(i)"
+                >
+                  <span aria-hidden="true"></span> Remove Student
+                </button>
+              </h4>
+            </legend>
+            <div [formGroupName]="i">
+              <div class="form-group">
+                <label for="inputName">Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="name"
+                />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.name.errors?.required"
+                >
+                  Name is required.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="email"
+                />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.email.errors?.required"
+                >
+                  Enter an email.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPhone">Phone</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="phone"
+                />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.phone.errors?.required"
+                >
+                  Enter a phone number.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="password"
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.password.errors?.required"
+                >
+                  Enter an Password.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputRoll">Roll No.</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="roll"
+                />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.roll.errors?.required"
+                >
+                  Enter a Roll No.
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputBranch">Branch</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="branch"
+                />
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.branch.errors?.required"
+                >
+                  Enter a Branch
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputCollege">College</label>
+                <select class="form-control" formControlName="college">
+                  <option disabled value="">Select College</option>
+                  <option *ngFor="let i of cld" [value]="i.name">
+                    {{ i.name }}
+                  </option>
+                </select>
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.branch.errors?.required"
+                >
+                  Enter a College
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputCode">Code</label>
+                <select class="form-control" formControlName="code">
+                  <option disabled value="">Select Code</option>
+                  <option *ngFor="let i of cld" [value]="i.code">
+                    {{ i.code }}, {{ i.name }}
+                  </option>
+                </select>
+                <!-- error -->
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && myForm.branch.errors?.required"
+                >
+                  Enter a Branch
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-success btn-lg btn-block" type="submit">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

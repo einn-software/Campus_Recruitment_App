@@ -25,10 +25,12 @@ function randomCodeGenerate() {
 const CollegeAdd = async function (req, res) {
   printLogsWithBody(req);
   if (req.session.user_type == Constants.admin) {
+    let len = req.body.colleges.length;
+    for (let i =0; i< len; i++){
     //LETS VALIDATE THE DATA BEFORE WE ADD A college
     const {
       error
-    } = collegeValidation(req.body);
+    } = collegeValidation(req.body.colleges[i]);
     if (error) {
       logger.error(errHandler.validationErrorHandler(error));
       return res
@@ -37,22 +39,22 @@ const CollegeAdd = async function (req, res) {
     }
     //Checking if the college is already in the database
     const collegeExist = await College.findOne({
-      email: req.body.email
+      email: req.body.colleges[i].email
     });
     if (collegeExist) {
-      logger.error(`If(collegeExist: ${collegeExist}) - `, errHandler.thisEmailExistErrorHandler(req.body.email));
+      logger.error(`If(collegeExist: ${collegeExist}) - `, errHandler.thisEmailExistErrorHandler(req.body.colleges[i].email));
       return res
         .status(Constants.er_failure)
-        .json(errHandler.thisEmailExistErrorHandler(req.body.email));
+        .json(errHandler.thisEmailExistErrorHandler(req.body.colleges[i].email));
     }
     // Create a new college
     const college = new College({
-      name: req.body.name,
+      name: req.body.colleges[i].name,
       code: randomCodeGenerate(),
-      address: req.body.address,
-      university: req.body.university,
-      email: req.body.email,
-      phone: req.body.phone,
+      address: req.body.colleges[i].address,
+      university: req.body.colleges[i].university,
+      email: req.body.colleges[i].email,
+      phone: req.body.colleges[i].phone,
     });
     try {
       const user = await college.save();
@@ -64,7 +66,8 @@ const CollegeAdd = async function (req, res) {
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));
     }
-  } else {
+  }
+ } else {
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
       .status(Constants.er_authorization_failed)
@@ -92,8 +95,8 @@ const CollegeGetByCode = function (req, res) {
   printLogsWithBody(req);
   if (
     req.session.user_type == Constants.admin ||
-    Constants.tpo ||
-    Constants.student
+    req.session.user_type == Constants.tpo ||
+    req.session.user_type == Constants.student
   ) {
     College.findOne({
         code: req.params.code
@@ -120,7 +123,7 @@ const CollegeGetByCode = function (req, res) {
 //To change or update the college's data by using their id
 const CollegePut = function (req, res) {
   printLogsWithBody(req);
-  if (req.session.user_type == Constants.admin || Constants.tpo) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.tpo) {
     const body = req.body;
     //VALIDATE THE DATA BEFORE WE MAKE A College
     const {

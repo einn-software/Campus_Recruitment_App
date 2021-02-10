@@ -1,0 +1,217 @@
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3>Edit Question Paper</h3>
+      </div>
+      <div class="card-body">
+        <div [formGroup]="editForm">
+          <div class="form-group">
+            <label>Year</label>
+            <input class="form-control" type="text" formControlName="year" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.year.errors?.required"
+            >
+              Year is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Month</label>
+            <input class="form-control" type="text" formControlName="month" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.month.errors?.required"
+            >
+              Month is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Day</label>
+            <input class="form-control" type="text" formControlName="day" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.day.errors?.required"
+            >
+              Day is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Question Paper Name</label>
+            <input class="form-control" type="text" formControlName="name" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.name.errors?.required"
+            >
+              Question Paper Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Paper Marks</label>
+            <input class="form-control" type="text" formControlName="marks" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.marks.errors?.required"
+            >
+              Marks is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input class="form-control" type="text" formControlName="time" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.time.errors?.required"
+            >
+              Time is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Code</label>
+            <select class="form-control form-control-lg" formControlName="code">
+              <option disabled value="">Select Code</option>
+              <option *ngFor="let i of clg" [value]="i.code">
+                {{ i.code }}, {{ i.name }}
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.code.errors?.required"
+            >
+              Code is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Instruction Id</label>
+            <select
+              class="form-control form-control-lg"
+              formControlName="instructions_id"
+            >
+              <option disabled value="">Select Instruction Id</option>
+              <option *ngFor="let i of instruction" [value]="i._id">
+                {{ i.code }}, ({{ i._id }})
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.instruction_id.errors?.required"
+            >
+              Instruction Id is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Start-Time</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="start_time"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.start_time.errors?.required"
+            >
+              Start-Time is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Trigger Type</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="trigger_type"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.trigger_type.errors?.required"
+            >
+              Trigger Type is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Enable</label>
+            <input class="form-control" type="text" formControlName="enable" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.enable.errors?.required"
+            >
+              Enable is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Negative-Marking-Ratio</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="negative_marking_ratio"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted && myForm.negative_marking_ratio.errors?.required
+              "
+            >
+              Negative-Marking-Ratio is required.
+            </div>
+          </div>
+          <div formArrayName="sections">
+            <div
+              *ngFor="
+                let opt of editForm.get('sections')['controls'];
+                let j = index
+              "
+            >
+              <label>Sections: {{ j + 1 }}</label>
+              <div [formGroup]="opt">
+                <label>Section-Name:</label>
+                <input type="text" formControlName="section_name" />
+                <br />
+                <label>Section-Marks:</label>
+                <input type="text" formControlName="section_marks" />
+                <br />
+                <label>No-of-Questions:</label>
+                <input type="text" formControlName="num_of_questions" />
+                <br />
+                <div formArrayName="question_list">
+                  <div
+                    *ngFor="
+                      let ques of opt.get('question_list')['controls'];
+                      let k = index
+                    "
+                  >
+                    <label>Questions-List: {{ k + 1 }}</label>
+                    <div [formGroup]="ques">
+                      <label>Question Id</label>
+                      <select
+                        class="form-control form-control-lg"
+                        formControlName="question_id"
+                      >
+                        <option disabled value="">Select Question Id</option>
+                        <option *ngFor="let i of question" [value]="i._id">
+                          {{ i.topic }}, {{ i.question }}({{ i._id }})
+                        </option>
+                      </select>
+                      <label>Question-Marks:</label>
+                      <input type="text" formControlName="question_marks" />
+                      <br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-success btn-lg btn-block"
+              type="submit"
+              (click)="onSubmit()"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- form  -->
+  </div>
+</div>

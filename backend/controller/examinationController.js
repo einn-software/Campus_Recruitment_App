@@ -18,13 +18,66 @@ const {
 } = require("../config/validation");
 
 //Question Collection API
+// const QuestionAdd = async (req, res) => {
+//   if (req.session.user_type == Constants.admin) {
+//     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
+//     const {
+//       error
+//     } = questionCollectionsValidation(req.body);
+//     if (error) {
+//       logger.error(errHandler.validationErrorHandler(error));
+//       return res
+//         .status(Constants.er_failure)
+//         .json(errHandler.validationErrorHandler(error));
+//     }
+//     //Checking if the question is already in the database
+//     const questionExist = await QuestionCollections.findOne({
+//       question: req.body.question,
+//     });
+
+//     if (questionExist) {
+//       logger.error(`If (questionExist: ${questionExist}) - `, errHandler.questionExistErrorHandler());
+//       return res
+//         .status(Constants.er_failure)
+//         .json(errHandler.questionExistErrorHandler());
+//     }
+//     // Create a new questionCollection
+//     const questionCollection = new QuestionCollections({
+//       question: req.body.question,
+//       topic: req.body.topic,
+//       options: req.body.options,
+//       answer: req.body.answer,
+//       weight: req.body.weight,
+//     });
+//     try {
+//       const questions = await questionCollection.save();
+//       logger.info(questions);
+//       res.status(Constants.success).json(questions);
+//     } catch (err) {
+//       logger.error(`Error in saving Question - `, errHandler.errorHandler(err));
+//       res
+//         .status(Constants.er_failure)
+//         .json(errHandler.errorHandler(err));
+//     }
+//   } else {
+//     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+//     return res
+//       .status(Constants.er_authorization_failed)
+//       .json(errHandler.unauthorizedErrorHandler());
+//   }
+// };
+
+//Question Collection API
 const QuestionAdd = async (req, res) => {
   if (req.session.user_type == Constants.admin) {
     //LETS VALIDATE THE DATA BEFORE WE ADD A COLLECTION
+    let len = req.body.questions.length;
+    for (let i =0; i< len; i++){
     const {
       error
-    } = questionCollectionsValidation(req.body);
+    } = questionCollectionsValidation(req.body.questions[i]);
     if (error) {
+      console.log(error);
       logger.error(errHandler.validationErrorHandler(error));
       return res
         .status(Constants.er_failure)
@@ -32,7 +85,7 @@ const QuestionAdd = async (req, res) => {
     }
     //Checking if the question is already in the database
     const questionExist = await QuestionCollections.findOne({
-      question: req.body.question,
+      question: req.body.questions[i].question,
     });
 
     if (questionExist) {
@@ -43,11 +96,11 @@ const QuestionAdd = async (req, res) => {
     }
     // Create a new questionCollection
     const questionCollection = new QuestionCollections({
-      question: req.body.question,
-      topic: req.body.topic,
-      options: req.body.options,
-      answer: req.body.answer,
-      weight: req.body.weight,
+      question: req.body.questions[i].question,
+      topic: req.body.questions[i].topic,
+      options: req.body.questions[i].options,
+      answer: req.body.questions[i].answer,
+      weight: req.body.questions[i].weight,
     });
     try {
       const questions = await questionCollection.save();
@@ -59,6 +112,7 @@ const QuestionAdd = async (req, res) => {
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));
     }
+  }
   } else {
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
@@ -69,7 +123,8 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  console.log(req.session.user_type);
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
     }, (err, results) => {
@@ -79,6 +134,7 @@ const QuestionGet = function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
+      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });
@@ -92,7 +148,7 @@ const QuestionGet = function (req, res) {
 
 // Get QuestionCollection By Id
 const QuestionGetById = function (req, res) {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.findOne({
         _id: req.params.id
       }, {
@@ -203,21 +259,23 @@ const QuestionDelete = function (req, res) {
 //Post Question Paper
 const QuestionPaperAdd = async (req, res) => {
   if (req.session.user_type == Constants.admin) {
+    let len = req.body.papers.length;
+    for (let i =0; i< len; i++){
     //LETS VALIDATE THE DATA BEFORE WE ADD A PAPER
     const {
       error
-    } = questionPaperValidation(req.body);
+    } = questionPaperValidation(req.body.papers[i]);
     if (error) {
       logger.error(errHandler.validationErrorHandler(error));
       return res.status(Constants.er_failure).send(error.details[0].message);
     }
     //Checking if the question paper is already in the database
     const questionPaperExist = await QuestionPapers.findOne({
-      year: req.body.year,
-      month: req.body.month,
-      day: req.body.day,
-      code: req.body.code,
-      start_time: req.body.start_time,
+      year: req.body.papers[i].year,
+      month: req.body.papers[i].month,
+      day: req.body.papers[i].day,
+      code: req.body.papers[i].code,
+      start_time: req.body.papers[i].start_time,
     });
     if (questionPaperExist) {
       logger.error(`If (questionPaperExist: ${questionPaperExist}) - `, errHandler.questionPaperExistErrorHandler());
@@ -227,19 +285,19 @@ const QuestionPaperAdd = async (req, res) => {
     }
     // Create a new questionPaper
     const questionPapers = new QuestionPapers({
-      year: req.body.year,
-      month: req.body.month,
-      day: req.body.day,
-      paper_name: req.body.paper_name,
-      paper_max_marks: req.body.paper_max_marks,
-      max_time: req.body.max_time,
-      instructions_id: req.body.instructions_id,
-      code: req.body.code,
-      start_time: req.body.start_time,
-      trigger_type: req.body.trigger_type,
-      enable: req.body.enable,
-      negative_marking_ratio: req.body.negative_marking_ratio,
-      sections: req.body.sections,
+      year: req.body.papers[i].year,
+      month: req.body.papers[i].month,
+      day: req.body.papers[i].day,
+      paper_name: req.body.papers[i].paper_name,
+      paper_max_marks: req.body.papers[i].paper_max_marks,
+      max_time: req.body.papers[i].max_time,
+      instructions_id: req.body.papers[i].instructions_id,
+      code: req.body.papers[i].code,
+      start_time: req.body.papers[i].start_time,
+      trigger_type: req.body.papers[i].trigger_type,
+      enable: req.body.papers[i].enable,
+      negative_marking_ratio: req.body.papers[i].negative_marking_ratio,
+      sections: req.body.papers[i].sections,
     });
     try {
       const savedPapers = await questionPapers.save();
@@ -251,6 +309,7 @@ const QuestionPaperAdd = async (req, res) => {
         .status(Constants.er_failure)
         .json(errHandler.errorHandler(err));
     }
+  }
   } else {
     logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
@@ -260,10 +319,32 @@ const QuestionPaperAdd = async (req, res) => {
   };
 }
 
+// Get aLl the Question Papers
+const AllQuestionPaperGet = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    QuestionPapers.find({}, (err, results) => {
+      if (err || !results) {
+        logger.error(`Function QuestionPaper.find({}, callback) - `, errHandler.errorHandler(err));
+        return res
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      }
+      console.log(res);
+      logger.info(results);
+      return res.status(Constants.success).json(results);
+    });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
+
 //Get QuestionPaper
 
 const QuestionPaperGet = (req, res) => {
-  if (req.session.user_type == Constants.student || Constants.admin) {
+  if  (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionPapers.findOne({
         code: req.params.code,
         year: req.params.year,
@@ -297,7 +378,7 @@ const QuestionPaperGet = (req, res) => {
 //Get QuestionPaper by Tpo using code
 
 const QuestionPaperIdGetByTpo = (req, res) => {
-  if (req.session.user_type == Constants.tpo || Constants.admin) {
+  if (req.session.user_type == Constants.tpo || req.session.user_type == Constants.admin) {
     QuestionPapers.find({
         code: req.params.code
       }, {
@@ -328,7 +409,7 @@ const QuestionPaperIdGetByTpo = (req, res) => {
 
 // Get QuestionPaper By Id
 const QuestionPaperGetById = function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.student) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     QuestionPapers.findOne({
         _id: req.params.id,
       },
@@ -495,4 +576,5 @@ module.exports = {
   QuestionPaperPut,
   QuestionPaperPatch,
   QuestionPaperDelete,
+  AllQuestionPaperGet
 };

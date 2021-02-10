@@ -18,6 +18,7 @@ const InstructionAdd = (async (req, res) => {
       error
     } = instructionValidation(req.body);
     if (error) {
+
       logger.error(errHandler.validationErrorHandler(error));
       return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
     }
@@ -38,6 +39,7 @@ const InstructionAdd = (async (req, res) => {
       month: req.body.month,
       day: req.body.day,
     });
+    console.log(instructions)
     try {
       const instruction = await instructions.save();
       logger.info(instruction);
@@ -78,7 +80,7 @@ const InstructionGet = (function (req, res) {
 
 // To get single instruction data using id
 const InstructionGetById = (function (req, res) {
-  if (req.session.user_type == Constants.admin || Constants.student) {
+  if (req.session.user_type == Constants.admin || req.session.user_type == Constants.student) {
     Instructions.findOne({
         _id: req.params.id
       },
@@ -172,7 +174,7 @@ const InstructionDeleteAtOnce =
 //To delete the instruction's data by using their id
 const InstructionDelete =
   (function (req, res) {
-    printLogsWithBody(req);
+    //printLogsWithBody(req);
     if (req.session.user_type == Constants.admin) {
       Instructions.findByIdAndRemove({
           _id: req.params.id,

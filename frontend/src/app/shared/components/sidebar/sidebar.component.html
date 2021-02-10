@@ -1,0 +1,109 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2 *ngIf="role === 'admins'">Admin Dashboard</h2>
+      <h2 *ngIf="role === 'tpos'">Tpo Dashboard</h2>
+      <h2 *ngIf="role === 'students'">Student Dashboard</h2>
+
+      <!--<h4 routerLink="/settings">admin</h4>-->
+      <h4>{{user.email}}</h4>
+    </div>
+    <img
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="admin"
+    />
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Pages</h2>
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dash/admins"
+    *ngIf="role === 'admins'"
+    >Dashboard</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dash/tpos"
+    *ngIf="role === 'tpos'"
+    >Dashboard</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/upload"
+    *ngIf="role === 'tpos'"
+    >Upload</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/results"
+    *ngIf="role === 'tpos'"
+    >Show Results</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/questions"
+    *ngIf="role === 'admins'"
+    >Manage Questions</a
+  >
+
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/question-papers"
+    >Manage Question Papers</a
+  >
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/instructions"
+    >Manage Instructions</a
+  >
+
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/admin"
+    >Manage Admins</a
+  >
+
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/colleges"
+    >Manage Colleges and Students</a
+  >
+  <a
+    *ngIf="role === 'tpos'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/edit-college/:id"
+    (click)="saveCode()"
+    >Manage College</a
+  >
+
+  <a
+    *ngIf="role !== 'students'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/tpo"
+    >Manage TPO</a
+  >
+  <a
+    *ngIf="role === 'tpos'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/students"
+    >Manage Students</a
+  >
+</mat-nav-list>

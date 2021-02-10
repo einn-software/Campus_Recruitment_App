@@ -1,0 +1,281 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">{{ title }}</h1>
+        <div class="text-xs-center">
+          <div [ngSwitch]="role">
+            <div *ngSwitchCase="'admins'">
+              <a [routerLink]="['/login/admins']" *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a [routerLink]="['/register/admins']" *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+            <div *ngSwitchCase="'students'">
+              <a
+                [routerLink]="['/login/students']"
+                *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a
+                [routerLink]="['/register/students']"
+                *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+            <div *ngSwitchCase="'tpos'">
+              <a [routerLink]="['/login/tpos']" *ngIf="authType == 'register'"
+                >Have an account?</a
+              >
+              <a [routerLink]="['/register/tpos']" *ngIf="authType == 'login'"
+                >Need an account?</a
+              >
+            </div>
+          </div>
+        </div>
+        <app-list-errors [errors]="errors"></app-list-errors>
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+              <input
+                formControlName="name"
+                placeholder="Name"
+                class="form-control form-control-lg"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('name').valid && authForm.get('name').touched
+                "
+                class="help-block"
+                >Please, Enter a valid username (length should be greater than 2
+                and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                formControlName="email"
+                placeholder="Email"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('email').valid && authForm.get('email').touched
+                "
+                class="help-block"
+                >Please, Enter a valid email (length should be greater than 6
+                and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                formControlName="phone"
+                placeholder="Phone Number"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('phone').valid && authForm.get('phone').touched
+                "
+                class="help-block"
+                >Please, Enter a valid phone number (length should be greater
+                than 9 and less than 15)</span
+              >
+            </fieldset>
+
+            <fieldset class="form-group" *ngIf="role !== 'colleges'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="password"
+                placeholder="Password"
+                type="password"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('password').valid &&
+                  authForm.get('password').touched
+                "
+                class="help-block"
+                >Please, Enter a valid password (length should be greater than 5
+                and less than 256)</span
+              >
+            </fieldset>
+            <fieldset
+              class="form-group"
+              *ngIf="role !== 'admins' && role !== 'colleges'"
+            >
+              <h3 class="help-block">College:</h3>
+              <select
+                class="form-control form-control-lg"
+                formControlName="college"
+              >
+                <option disabled>Select College</option>
+                <option *ngFor="let i of clg" [value]="i.name">
+                  {{ i.name }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  !authForm.get('college').valid &&
+                  authForm.get('college').touched
+                "
+                class="help-block"
+                >Please, Select the college from the list</span
+              >
+            </fieldset>
+            <fieldset
+              class="form-group"
+              *ngIf="role !== 'admins' && role !== 'colleges'"
+            >
+              <h3 class="help-block">Code:</h3>
+              <select
+                class="form-control form-control-lg"
+                formControlName="code"
+              >
+                <option disabled value="">Select Code</option>
+                <option *ngFor="let i of clg" [value]="i.code">
+                  {{ i.code }}, {{ i.name }}
+                </option>
+              </select>
+              <span
+                *ngIf="
+                  !authForm.get('code').valid && authForm.get('code').touched
+                "
+                class="help-block"
+                >Please, Select a code from the list</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'tpos'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="designation"
+                placeholder="designation"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('designation').valid &&
+                  authForm.get('designation').touched
+                "
+                class="help-block"
+                >Please, Enter a valid designation (length should be greater
+                than 2 and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'colleges'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="university"
+                placeholder="university"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('university').valid &&
+                  authForm.get('university').touched
+                "
+                class="help-block"
+                >Please, Enter a valid university (length should be greater than
+                3 and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'colleges'">
+              <input
+                class="form-control form-control-lg"
+                name="address"
+                placeholder="address"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('address').valid &&
+                  authForm.get('address').touched
+                "
+                class="help-block"
+                >Please, Enter a valid address (length should be greater than 5
+                and less than 1025)</span
+              >
+            </fieldset>
+            <!--<fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                name="roll"
+                placeholder="roll"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('roll').valid && authForm.get('roll').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll (length should be greater than 3 and
+                less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                name="branch"
+                placeholder="branch"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('branch').valid &&
+                  authForm.get('branch').touched
+                "
+                class="help-block"
+                >Please, Enter a valid branch (length should be greater than 2
+                and less than 256)</span
+              >
+            </fieldset>-->
+            <fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="roll"
+                placeholder="Roll Number"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('roll').valid && authForm.get('roll').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll number (length should be greater
+                than 3 and less than 256)</span
+              >
+            </fieldset>
+            <fieldset class="form-group" *ngIf="role === 'students'">
+              <input
+                class="form-control form-control-lg"
+                formControlName="branch"
+                placeholder="Branch"
+                type="text"
+              />
+              <span
+                *ngIf="
+                  !authForm.get('branch').valid &&
+                  authForm.get('branch').touched
+                "
+                class="help-block"
+                >Please, Enter a valid roll number (length should be greater
+                than 2 and less than 256)</span
+              >
+            </fieldset>
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              [disabled]="!authForm.valid"
+              type="submit"
+            >
+              {{ title }}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

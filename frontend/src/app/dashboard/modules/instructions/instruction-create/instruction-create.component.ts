@@ -41,10 +41,10 @@ export class InstructionCreateComponent implements OnInit {
     }else{
       this.instructionService.createInstruction(this.instructionForm.value).subscribe(
         (res) => {
-          console.log('Instruction created successfully!')
+          // console.log('Instruction created successfully!')
           this.router.navigateByUrl('/instructions');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

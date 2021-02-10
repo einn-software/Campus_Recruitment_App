@@ -18,7 +18,7 @@ export class AdminService{
 
   //Create
   createAdmin(data): Observable<User>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/register/admins', data)
     .pipe(map(
       data => {
@@ -80,7 +80,7 @@ export class AdminService{
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

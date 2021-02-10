@@ -130,11 +130,11 @@ export class QuestionCreateComponent implements OnInit {
     } else {
       this.questionService.createQuestion(this.questionForm.value).subscribe(
         (res) => {
-          console.log('Question created successfully!');
+          // console.log('Question created successfully!');
           this.router.navigateByUrl('/questions');
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     }

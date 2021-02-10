@@ -77,7 +77,6 @@ const QuestionAdd = async (req, res) => {
       error
     } = questionCollectionsValidation(req.body.questions[i]);
     if (error) {
-      console.log(error);
       logger.error(errHandler.validationErrorHandler(error));
       return res
         .status(Constants.er_failure)
@@ -123,7 +122,6 @@ const QuestionAdd = async (req, res) => {
 
 // Get QuestionCollection
 const QuestionGet = function (req, res) {
-  console.log(req.session.user_type);
   if (req.session.user_type == Constants.student || req.session.user_type == Constants.admin) {
     QuestionCollections.find({}, {
       answer: 0
@@ -134,7 +132,6 @@ const QuestionGet = function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
-      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });
@@ -329,7 +326,6 @@ const AllQuestionPaperGet = function (req, res) {
           .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
-      console.log(res);
       logger.info(results);
       return res.status(Constants.success).json(results);
     });

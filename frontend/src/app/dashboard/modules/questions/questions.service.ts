@@ -18,7 +18,7 @@ export class QuestionService{
 
   //Create
   createQuestion(data): Observable<Question>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/questions', data)
     .pipe(map(
       data => {
@@ -81,7 +81,7 @@ export class QuestionService{
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

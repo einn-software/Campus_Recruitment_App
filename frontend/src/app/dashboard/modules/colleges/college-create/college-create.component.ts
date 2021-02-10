@@ -74,10 +74,10 @@ export class CollegeCreateComponent implements OnInit {
     }else{
       this.collegeService.createCollege(this.collegeForm.value).subscribe(
         (res) => {
-          console.log('College create successfully!');
+          // console.log('College create successfully!');
           this.router.navigateByUrl('/colleges');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

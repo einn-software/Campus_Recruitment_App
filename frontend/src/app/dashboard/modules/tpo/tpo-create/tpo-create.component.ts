@@ -72,7 +72,7 @@ export class TpoCreateComponent implements OnInit {
    }
   ngOnInit(): void {
     this.apiService.get('/colleges').subscribe(data=>{
-      console.log(data);
+      // console.log(data);
       this.cld = data;
     })
   }
@@ -88,10 +88,10 @@ export class TpoCreateComponent implements OnInit {
     }else{
       this.tpoService.createTPO(this.tpoForm.value)
       .subscribe((res) => {
-        console.log('TPO created successfully!')
+        // console.log('TPO created successfully!')
         this.router.navigateByUrl('/tpo');
       }, (error) => {
-        console.log(error);
+        // console.log(error);
       });
     }
   }

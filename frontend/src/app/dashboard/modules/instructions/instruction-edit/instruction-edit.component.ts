@@ -55,9 +55,9 @@ export class InstructionEditComponent implements OnInit {
         .subscribe(res => {
           res => this.instructionForm = res
           this.router.navigateByUrl('/instructions');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

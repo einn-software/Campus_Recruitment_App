@@ -39,7 +39,6 @@ const InstructionAdd = (async (req, res) => {
       month: req.body.month,
       day: req.body.day,
     });
-    console.log(instructions)
     try {
       const instruction = await instructions.save();
       logger.info(instruction);

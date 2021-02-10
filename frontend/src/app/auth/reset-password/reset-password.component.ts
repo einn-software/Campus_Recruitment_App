@@ -43,10 +43,10 @@ export class ResetPasswordComponent implements OnInit {
     }else{
       this.fpService.resetPassword(this.authForm.value, this.role).subscribe(
         (res) => {
-          console.log('Password reset successfully!');
+          // console.log('Password reset successfully!');
           this.router.navigateByUrl(`/login/${this.role}`);
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

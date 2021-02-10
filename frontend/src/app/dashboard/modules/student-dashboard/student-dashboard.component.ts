@@ -32,12 +32,12 @@ public code;
   saveCode(data){
     this.code = data.code;
     this.questionPaper.getQuestionPaperByCode(this.code, this.year, this.month, this.date).subscribe((res) => {
-      console.log("questionpapercomponent", res);
+      // console.log("questionpapercomponent", res);
       window.localStorage['instructionID'] = res.instructions_id
       if(res._id){
         window.localStorage['ins'] = res.instructions_id;
         this.isExam = true;
-        console.log(this.isExam);
+        // console.log(this.isExam);
       }
     })
   }
@@ -45,9 +45,9 @@ public code;
     this.router.navigateByUrl('/join-test/instruction');
   }
   showDate(){
-    console.log(this.date);
-    console.log(this.month + 1);
-    console.log(this.year);
+    // console.log(this.date);
+    // console.log(this.month + 1);
+    // console.log(this.year);
   }
 
 }

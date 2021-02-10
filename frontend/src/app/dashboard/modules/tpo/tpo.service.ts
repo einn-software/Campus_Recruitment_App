@@ -15,7 +15,7 @@ export class TpoService{
 
   //Create TPO
   createTPO(data): Observable<Tpo>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/register/tpos', data)
     .pipe(map(
       data => {
@@ -74,7 +74,7 @@ export class TpoService{
       //Get server side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

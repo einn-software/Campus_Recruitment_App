@@ -43,10 +43,10 @@ export class ForgotPasswordComponent implements OnInit {
       }else{
         this.fpService.forgotPassword(this.authForm.value, this.role).subscribe(
           (res) => {
-            console.log('Email sent successfully!');
+            // console.log('Email sent successfully!');
             this.router.navigateByUrl(`/login/${this.role}`);
           }, (error) => {
-            console.log(error);
+            // console.log(error);
           });
       }
     }

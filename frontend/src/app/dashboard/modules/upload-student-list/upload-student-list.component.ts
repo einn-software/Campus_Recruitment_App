@@ -20,7 +20,7 @@ export class UploadStudentListComponent {
 
     onFileSelected(event){
     this.file = <File>event.target.files[0];
-    console.log(event);
+    // console.log(event);
     }
 
   onUpload(){
@@ -33,7 +33,7 @@ export class UploadStudentListComponent {
     // }
 
     this.apiService.upload('/upload', fd, this.httpOption).subscribe(res=>{
-      console.log(res);
+      // console.log(res);
     })
   }
 

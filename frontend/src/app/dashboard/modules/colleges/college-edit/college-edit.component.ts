@@ -43,7 +43,7 @@ export class CollegeEditComponent implements OnInit {
   getCollege(code){
     window.localStorage.removeItem('code');
     this.collegeService.getCollege(code).subscribe(res => {
-      console.log("controller: " ,res);
+      // console.log("controller: " ,res);
       this.collegeForm.patchValue(res);
     });
   }
@@ -58,9 +58,9 @@ export class CollegeEditComponent implements OnInit {
         .subscribe(res => {
           res => this.collegeForm = res
           this.router.navigateByUrl('/colleges');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

@@ -78,9 +78,9 @@ export class QuestionEditComponent implements OnInit {
         .subscribe(res => {
           res => this.editForm = res
           this.router.navigateByUrl('/questions');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

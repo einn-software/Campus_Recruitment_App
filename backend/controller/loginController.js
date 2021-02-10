@@ -86,7 +86,6 @@ const AdminLogin = (async (req, res) => {
   const finalResponse = await createAndSendSession(req, res, user, token, role);
 
   logger.info(finalResponse);
-  console.log(req.session);
   const cook=  res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).json(finalResponse);
   return cook;
 

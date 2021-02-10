@@ -14,7 +14,7 @@ export class StudentService {
 
   //Create
   createStudent(data): Observable<Student>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/register/students', data)
     .pipe(map(
       data => {
@@ -27,7 +27,7 @@ export class StudentService {
   getStudentById(id): Observable<Student>{
     return this.apiService.get(`/students/${id}`).pipe(
       map((res) => {
-        console.log("Student: ",res);
+        // console.log("Student: ",res);
 
         return res;
       }),
@@ -39,7 +39,7 @@ export class StudentService {
   getStudent(code): Observable<Student[]>{
     return this.apiService.get(`/colleges/${code}/students`).pipe(
       map((res) => {
-        console.log("Student: ",res);
+        // console.log("Student: ",res);
         return res;
       }),
       catchError(this.errorMgmt)
@@ -77,7 +77,7 @@ export class StudentService {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

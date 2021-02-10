@@ -6,7 +6,7 @@
       <h2 *ngIf="role === 'students'">Student Dashboard</h2>
 
       <!--<h4 routerLink="/settings">admin</h4>-->
-      <h4>{{user.email}}</h4>
+      <h4>{{ user.email }}</h4>
     </div>
     <img
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
@@ -29,6 +29,13 @@
     routerLinkActive="list-item-active"
     routerLink="/dash/tpos"
     *ngIf="role === 'tpos'"
+    >Dashboard</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dash/students"
+    *ngIf="role === 'students'"
     >Dashboard</a
   >
   <a
@@ -93,11 +100,18 @@
   >
 
   <a
-    *ngIf="role !== 'students'"
+    *ngIf="role === 'tpos'"
     mat-list-item
     routerLinkActive="list-item-active"
     routerLink="/tpo"
-    >Manage TPO</a
+    >Manage TPOs</a
+  >
+  <a
+    *ngIf="role === 'admins'"
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/tpo"
+    >Manage TPOs</a
   >
   <a
     *ngIf="role === 'tpos'"

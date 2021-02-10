@@ -19,7 +19,7 @@ export class QuestionPapersService {
 
   //Create
   createQuestionPaper(data): Observable<QuestionPaper>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('question-papers', data)
     .pipe(map(
       data => {
@@ -33,7 +33,7 @@ export class QuestionPapersService {
     let url = '/question-paper';
     return this.apiService.get(url).pipe(
       map((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       }),
       catchError(this.errorMgmt)
@@ -58,7 +58,7 @@ export class QuestionPapersService {
     params = params.append('day', day);
     return this.apiService.get(`/colleges/${code}/question-papers/${year}`, params).pipe(
       map((res) => {
-       // console.log(res);
+       // // console.log(res);
         return res;
       }),
       catchError(this.errorMgmt)
@@ -97,7 +97,7 @@ export class QuestionPapersService {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 }

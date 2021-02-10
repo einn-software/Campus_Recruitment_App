@@ -184,10 +184,10 @@ export class QuestionPaperCreateComponent implements OnInit {
     }else{
       this.questionPapersService.createQuestionPaper(this.questionPaperForm.value).subscribe(
         (res) => {
-          console.log('Question created successfully!')
+          // console.log('Question created successfully!')
           this.router.navigateByUrl('/questions-papers');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

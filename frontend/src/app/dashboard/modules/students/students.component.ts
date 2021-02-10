@@ -12,7 +12,7 @@ export class StudentsComponent implements OnInit {
 
   public sList: Student[] = [];
   public code : number;
-  constructor(private studentService: StudentService, private route: ActivatedRoute) {console.log(this.route) }
+  constructor(private studentService: StudentService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.code = window.localStorage['code'];

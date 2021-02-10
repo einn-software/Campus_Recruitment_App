@@ -80,10 +80,10 @@ export class AdminCreateComponent implements OnInit {
     }else{
       this.adminService.createAdmin(this.adminForm.value)
       .subscribe((res) => {
-        console.log('Admin created successfully!')
+        // console.log('Admin created successfully!')
         this.router.navigateByUrl('/admin');
       }, (error) => {
-        console.log(error);
+        // console.log(error);
       });
     }
   }

@@ -109,9 +109,9 @@ export class QuestionPaperEditComponent implements OnInit {
         .subscribe(res => {
           res => this.editForm = res
           this.router.navigateByUrl('/question-papers');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

@@ -40,7 +40,7 @@ export class TpoDashboardComponent implements OnInit {
     window.localStorage.removeItem('code');
     this.students.getStudent(code).subscribe((res) => {
       this.studentList = res;
-      console.log(res);
+      // console.log(res);
       this.studentLength = res.length
     })
   }

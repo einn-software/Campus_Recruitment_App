@@ -24,7 +24,7 @@ export class CollegeService{
 
   //Create
   createCollege(data): Observable<College>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/colleges', data)
     .pipe(map(
       data => {
@@ -42,7 +42,7 @@ export class CollegeService{
   getCollege(code): Observable<College>{
     return this.apiService.get(`/colleges/${code}`).pipe(
       map((res) => {
-        console.log("college: ",res);
+        // console.log("college: ",res);
 
         return res;
       }),
@@ -81,7 +81,7 @@ export class CollegeService{
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

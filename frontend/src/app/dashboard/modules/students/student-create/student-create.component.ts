@@ -73,7 +73,7 @@ cld:[];
    }
   ngOnInit(): void {
     this.apiService.get('/colleges').subscribe(data=>{
-      console.log(data);
+      // console.log(data);
       this.cld = data;
     })
   }
@@ -89,10 +89,10 @@ cld:[];
     }else{
       this.studentService.createStudent(this.studentForm.value).subscribe(
         (res) => {
-          console.log('student created successfully!');
+          // console.log('student created successfully!');
           this.router.navigateByUrl('/students');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

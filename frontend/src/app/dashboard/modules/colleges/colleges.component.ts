@@ -13,7 +13,8 @@ export class CollegesComponent implements OnInit {
 
   public collegeList : College[] = [];
   public code : number;
-  constructor(private collegeService: CollegeService, private route: ActivatedRoute) {console.log(this.route) }
+  constructor(private collegeService: CollegeService, private route: ActivatedRoute) {// console.log(this.route)
+  }
 
   ngOnInit(): void {
     this.collegeService.getColleges().subscribe(

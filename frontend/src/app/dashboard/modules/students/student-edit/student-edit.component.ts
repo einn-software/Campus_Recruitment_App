@@ -41,7 +41,7 @@ export class StudentEditComponent implements OnInit {
 
   getstudent(id){
     this.studentService.getStudentById(id).subscribe(res => {
-      console.log("controller: " ,res);
+      // console.log("controller: " ,res);
       this.studentForm.patchValue(res);
     });
   }
@@ -58,9 +58,9 @@ export class StudentEditComponent implements OnInit {
         .subscribe(res => {
           res => this.studentForm = res
           this.router.navigateByUrl('/students');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

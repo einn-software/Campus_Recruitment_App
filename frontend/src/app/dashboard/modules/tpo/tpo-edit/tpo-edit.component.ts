@@ -54,9 +54,9 @@ export class TpoEditComponent implements OnInit {
         .subscribe(res => {
           res => this.tpoForm = res
           this.router.navigateByUrl('/tpo');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

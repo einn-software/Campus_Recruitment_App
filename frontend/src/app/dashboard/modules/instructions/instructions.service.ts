@@ -23,7 +23,7 @@ export class InstructionService{
 
   //Create
   createInstruction(data): Observable<Instruction>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post('/instructions', data)
     .pipe(map(
       data => {
@@ -80,7 +80,7 @@ export class InstructionService{
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 

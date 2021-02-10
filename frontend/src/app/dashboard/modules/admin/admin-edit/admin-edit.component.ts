@@ -38,7 +38,7 @@ export class AdminEditComponent implements OnInit {
 
   getAdmin(id){
     this.adminService.getAdmin(id).subscribe(res => {
-      //console.log("adminres" ,res);
+      //// console.log("adminres" ,res);
       this.adminForm.patchValue(res);
     });
   }
@@ -54,9 +54,9 @@ export class AdminEditComponent implements OnInit {
         .subscribe(res => {
           res => this.adminForm = res
           this.router.navigateByUrl('/admin');
-          console.log('Content updated successfully!');
+          // console.log('Content updated successfully!');
         }, (error) => {
-          console.log(error);
+          // console.log(error);
         })
       }
     }

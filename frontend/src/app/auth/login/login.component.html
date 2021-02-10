@@ -5,14 +5,6 @@
         <h1 class="text-xs-center">{{ title }}</h1>
         <div class="text-xs-center">
           <div [ngSwitch]="role">
-            <div *ngSwitchCase="'admins'">
-              <a [routerLink]="['/login/admins']" *ngIf="authType == 'register'"
-                >Have an account?</a
-              >
-              <a [routerLink]="['/register/admins']" *ngIf="authType == 'login'"
-                >Need an account?</a
-              >
-            </div>
             <div *ngSwitchCase="'students'">
               <a
                 [routerLink]="['/login/students']"
@@ -22,14 +14,6 @@
               <a
                 [routerLink]="['/register/students']"
                 *ngIf="authType == 'login'"
-                >Need an account?</a
-              >
-            </div>
-            <div *ngSwitchCase="'tpos'">
-              <a [routerLink]="['/login/tpos']" *ngIf="authType == 'register'"
-                >Have an account?</a
-              >
-              <a [routerLink]="['/register/tpos']" *ngIf="authType == 'login'"
                 >Need an account?</a
               >
             </div>
@@ -58,10 +42,7 @@
               >
             </fieldset>
             <fieldset class="form-group" *ngIf="role == 'students'">
-              <select
-                class="form-control"
-                formControlName="code"
-              >
+              <select class="form-control" formControlName="code">
                 <option disabled>Select Code</option>
                 <option *ngFor="let i of clg" [value]="i.code">
                   {{ i.code }}, {{ i.name }}

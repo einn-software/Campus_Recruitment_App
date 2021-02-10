@@ -15,7 +15,7 @@ export class ForgotPasswordService{
 
   //Forgot Password - Enter an email address
   forgotPassword(data, role): Observable<User>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post(`/forgot-password/${role}`, data)
     .pipe(map(
       data => {
@@ -25,7 +25,7 @@ export class ForgotPasswordService{
   }
 
   resetPassword(data, role): Observable<User>{
-    console.log(data);
+    // console.log(data);
     return this.apiService.post(`/reset-password/${role}`, data)
     .pipe(map(
       data => {

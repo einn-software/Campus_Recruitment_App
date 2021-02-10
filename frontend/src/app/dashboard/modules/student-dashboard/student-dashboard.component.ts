@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../../core';
 import { Router } from '@angular/router';
 import { QuestionPapersService } from '../question-papers/question-papers.service';
 import { StudentService } from '../students/student.service';
@@ -18,7 +17,6 @@ public code;
   public year = this.today.getFullYear();
   public isExam: Boolean = false;
   constructor(
-    private apiService: ApiService,
     private router: Router,
     private questionPaper: QuestionPapersService,
     private studentService: StudentService
@@ -36,6 +34,7 @@ public code;
     this.questionPaper.getQuestionPaperByCode(this.code, this.year, this.month, this.date).subscribe((res) => {
       console.log("questionpapercomponent", res);
       if(res._id){
+        window.localStorage['ins'] = res.instructions_id;
         this.isExam = true;
         console.log(this.isExam);
       }
@@ -44,7 +43,6 @@ public code;
   joinTest(){
     this.router.navigateByUrl('/join-test/instruction');
   }
-
   showDate(){
     console.log(this.date);
     console.log(this.month + 1);

@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/core';
   templateUrl: './question-paper-edit.component.html',
   styleUrls: ['./question-paper-edit.component.css']
 })
+
 export class QuestionPaperEditComponent implements OnInit {
   clg : [];
   instruction : [];

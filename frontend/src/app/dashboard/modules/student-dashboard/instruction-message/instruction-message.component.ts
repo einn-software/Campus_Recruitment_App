@@ -7,11 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstructionMessageComponent implements OnInit {
 public check: boolean = false;
-  constructor() { }
-  checked(){
+
+constructor() { }
+
+
+
+checked(){
     this.check = true;
-  }
-  ngOnInit(): void {
-  }
+}
+
+ngOnInit(): void {}
 
 }

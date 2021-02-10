@@ -1,24 +1,33 @@
 const router = require("express").Router();
 const session = require("express-session");
-const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session); //MongoDB session store for Connect and Express
+const mongoose = require("mongoose");
+const verified = require("../config/verifyToken");
+//importing functions from Controller files
+const {
+  UploadFiles,
+  UploadLogFiles
+} = require("../controller/uploadAndRegisterStudent");
 const {
   AdminRegister,
   StudentRegister,
-  TpoRegister
+  TpoRegister,
 } = require("../controller/registerController");
+
 const {
   AdminLogin,
   StudentLogin,
-  TpoLogin
+  TpoLogin,
 } = require("../controller/loginController");
+
 const {
-  collegeAdd,
-  collegeDelete,
-  collegeGet,
-  collegeGetById,
-  collegePut
-} = require('../controller/collegeRouteController');
+  CollegeAdd,
+  CollegeDelete,
+  CollegeGet,
+  CollegeGetByCode,
+  CollegePut,
+} = require("../controller/collegeRouteController");
+
 const {
   AdminDelete,
   AdminGet,
@@ -31,17 +40,59 @@ const {
   TpoDelete,
   TpoGet,
   TpoGetBtId,
-  TpoPut
-} = require('../controller/getPutDeleteController')
-//const {} = require("../controller/examinationController");
-//const resultController = require("../controller/resultController");
+  TpoPut,
+} = require("../controller/getPutDeleteController");
+
 const {
-  instructionDelete,
-  instructionGet,
-  instructionGetById,
-  instructionPut,
-  instructionAdd
+  InstructionDelete,
+  InstructionGet,
+  InstructionGetById,
+  InstructionPut,
+  InstructionAdd,
+  InstructionDeleteAtOnce,
 } = require("../controller/instructionController");
+
+const {
+  QuestionAdd,
+  QuestionGet,
+  QuestionGetById,
+  QuestionPut,
+  QuestionDelete,
+  QuestionPaperAdd,
+  QuestionPaperGet,
+  QuestionPaperIdGetByTpo,
+  QuestionPaperGetById,
+  QuestionPaperPut,
+  QuestionPaperPatch,
+  QuestionPaperDelete,
+} = require("../controller/examinationController");
+
+const {
+  AnswerSheetAdd,
+  AnswerSheetGetById,
+  AnswerSheetPut,
+  AnswerSheetDeleteById,
+  AnswerSheetDeleteByStudentId,
+} = require("../controller/studentAnswerSheet");
+
+const {
+  ResultAdd,
+  ResultGetByPaperIdAndCode,
+  ResultGetByPaperIdRollAndCode,
+} = require("../controller/resultController");
+
+const {
+  AdminForgotPassword,
+  AdminResetPassword,
+  TpoForgotPassword,
+  TpoResetPassword,
+  StudentForgotPassword,
+  StudentResetPassword,
+} = require("../controller/changePasswordController");
+
+const {
+  FinalSubmissionPost
+} = require("../controller/finalSubmission");
 
 router.use(
   session({
@@ -54,68 +105,105 @@ router.use(
     }),
   })
 );
+router.post("/upload/android-logs", UploadLogFiles);
+router.post("/upload", verified, UploadFiles);
 
-//Admin Register
+//Admin Register API
 router.post("/register/admins", AdminRegister);
-router.get("/admins", AdminGet)
-router.get("/admins/:id", AdminGetById);
-router.put("/admins/:id", AdminPut);
-router.delete("/admins/:id", AdminDelete);
+router.get("/admins", verified, AdminGet);
+router.get("/admins/:id", verified, AdminGetById);
+router.put("/admins/:id", verified, AdminPut);
+router.delete("/admins/:id", verified, AdminDelete);
 
-//Student Register
+//Student Register API
 router.post("/register/students", StudentRegister);
-router.get("/students", StudentGet)
-router.get("/students/:id", StudentGetById);
-router.put("/students/:id", StudentPut);
-router.delete("/students/:id", StudentDelete);
+router.get("/colleges/:code/students", verified, StudentGet);
+router.get("/students/:id", verified, StudentGetById);
+router.put("/students/:id", verified, StudentPut);
+router.delete("/students/:id", verified, StudentDelete);
 
-//Tpo Register
+//Tpo Register API
 router.post("/register/tpos", TpoRegister);
-router.post("/tpos", TpoGet)
-router.get("/tpos/:id", TpoGetBtId);
-router.put("/tpos/:id", TpoPut);
-router.delete("/tpos/:id", TpoDelete);
+router.get("/tpos", verified, TpoGet);
+router.get("/tpos/:id", verified, TpoGetBtId);
+router.put("/tpos/:id", verified, TpoPut);
+router.delete("/tpos/:id", verified, TpoDelete);
 
-//Login
+//Login API
 router.post("/login/admins", AdminLogin);
 router.post("/login/students", StudentLogin);
 router.post("/login/tpos", TpoLogin);
 
-// College Apis
-router.post("/colleges", collegeAdd);
-router.get("/colleges/:id", collegeGetById);
-router.get("/colleges", collegeGet);
-router.put("/colleges/:id", collegePut);
-router.delete("/colleges/:id", collegeDelete);
+// College API
+router.post("/colleges", verified, CollegeAdd);
+router.get("/colleges/:code", verified, CollegeGetByCode);
+router.get("/colleges", CollegeGet);
+router.put("/colleges/:code", verified, CollegePut);
+router.delete("/colleges/:id", verified, CollegeDelete);
 
-// Instructions api
-router.post("/instructions", instructionAdd)
-router.get("/instructions", instructionGet)
-router.get("/instructions/:id", instructionGetById);
-router.put("/instructions/:id", instructionPut);
-router.delete("/instructions/:id", instructionDelete);
+// Instructions API
+router.post("/instructions", verified, InstructionAdd);
+router.get("/instructions", verified, InstructionGet);
+router.get("/instructions/:id", verified, InstructionGetById);
+router.put("/instructions/:id", verified, InstructionPut);
+router.delete("/instructions/:id", verified, InstructionDelete);
+router.delete("/instructions", verified, InstructionDeleteAtOnce);
 
-// //Question Collection
-// router.post("/questioncollection", examController.QuestionCollectionCont);
-// router.get("/questionCollection/:id", examController.QuestionCollectionContGet);
-// router.put("/questioncCollection/:id", examController.QuestionCollectionContPut);
-// router.delete("/questionCollection/:id",examController.QuestionCollectionContDelete);
+//Question Collection API
+router.post("/questions", verified, QuestionAdd);
+router.get("/questions", verified, QuestionGet);
+router.get("/questions/:id", verified, QuestionGetById);
+router.put("/questions/:id", verified, QuestionPut);
+router.delete("/questions/:id", verified, QuestionDelete);
 
-// //Question Paper
-// router.post("/questionPaper", examController.QuestionPaperCont);
-// router.get("/questionPaper/:college_code",examController.QuestionPaperContGet);
-// router.put("/questionPaper/:college_code",examController.QuestionPaperContPut);
-// router.delete("/questionPaper/:college_code",examController.QuestionPaperContDelete);
+//Question Paper API
+router.post("/question-papers", verified, QuestionPaperAdd);
+router.get("/colleges/:code/question-papers/:year", verified, QuestionPaperGet);
+router.get("/question-papers/:code", verified, QuestionPaperIdGetByTpo);
+router.get("/question-papers/:id/questions", verified, QuestionPaperGetById);
+router.put("/question-papers/:id", verified, QuestionPaperPut);
+router.delete("/question-papers/:id", verified, QuestionPaperDelete);
 
-// //Result
-// router.post("/results", resultController.ResultCont);
-// router.get("/colleges/:code/results/:question-paper-id",resultController.ResultContGet);
+//HTTP Patch
+router.patch("/question-papers/:id", QuestionPaperPatch);
 
-// //Instruction
-// router.post("/instructions", instructionController.InstructionCont);
-// router.get("/instruction/:id", instructionController.InstructionContGet);
-// router.put("/instruction/:id",instructionController.InstructionContPut);
-// router.delete("/instruction/:id", instructionController.InstructionContDelete);
+//Student Answer Sheet API
+router.post("/student-answers", verified, AnswerSheetAdd);
+router.get(
+  "/student-answers/:student_id/:question_paper_id",
+  verified,
+  AnswerSheetGetById
+);
+router.put("/student-answers/:id", verified, AnswerSheetPut);
+router.delete("/student-answers/:id", verified, AnswerSheetDeleteById);
+router.delete(
+  "/student-answer/:student_id/:question_paper_id",
+  verified,
+  AnswerSheetDeleteByStudentId
+);
 
+//Result API
+router.post("/results", verified, ResultAdd);
+router.get(
+  "/colleges/:code/results/:question_paper_id",
+  verified,
+  ResultGetByPaperIdAndCode
+);
+router.get(
+  "/colleges/:code/results/:roll/question-papers/:question_paper_id",
+  verified,
+  ResultGetByPaperIdRollAndCode
+);
+
+// Forgot and Reset Password API
+router.post("/forgot-password/admins", AdminForgotPassword);
+router.post("/reset-password/admins", AdminResetPassword);
+router.post("/forgot-password/tpos", TpoForgotPassword);
+router.post("/reset-password/tpos", TpoResetPassword);
+router.post("/forgot-password/students", StudentForgotPassword);
+router.post("/reset-password/students", StudentResetPassword);
+
+// Final Submission API
+router.post("/final-submission", verified, FinalSubmissionPost);
 
 module.exports = router;

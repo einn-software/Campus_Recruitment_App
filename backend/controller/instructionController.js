@@ -1,147 +1,211 @@
-const Instructions = require('../model/instruction');
+const Instructions = require('../model/Instruction');
 const errHandler = require("./errorHandling");
-const verify = require('../config/verifyToken');
 const Constants = require('../config/constant');
+const {
+  logger
+} = require("../config/logger");
 // import validations
 const {
   instructionValidation,
   instructionPutValidation
 } = require("../config/validation");
 
-//testinstructions
-const instructionAdd = (verify, async (req, res) => {
-  //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
-  const {
-    error
-  } = instructionValidation(req.body);
-  if (error) return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
+//instructions
+const InstructionAdd = (async (req, res) => {
+  if (req.session.user_type == Constants.admin) {
+    //LETS VALIDATE THE DATA BEFORE WE ADD A INSTRUCTION
+    const {
+      error
+    } = instructionValidation(req.body);
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+    }
+    //Checking if the instruction is already in the database
+    const instructionExist = await Instructions.findOne({
+      code: req.body.code,
+    });
+    if (instructionExist) {
+      logger.error(`If (instructionExist: ${instructionExist}) - `, errHandler.codeExistErrorHandler());
+      return res.status(Constants.er_failure).json(errHandler.codeExistErrorHandler());
+    }
 
-  //Checking if the college is already in the database
-  const collegeExist = await Instructions.findOne({
-    code: req.body.code,
-  });
-  if (collegeExist) return res.status(`${Constants.er_failure}`).json(errHandler.emailExistErrorHandler());
-
-  // Create a new instruction
-  const instructions = new Instructions({
-    code: req.body.code,
-    message: req.body.message,
-    year: req.body.year,
-    month: req.body.month,
-    day: req.body.day,
-  });
-  try {
-    const instructions = await Instructions.save();
-    res.status(`${Constants.success}`).json(instructions);
-  } catch (err) {
-    res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
+    // Create a new instruction
+    const instructions = new Instructions({
+      code: req.body.code,
+      message: req.body.message,
+      year: req.body.year,
+      month: req.body.month,
+      day: req.body.day,
+    });
+    try {
+      const instruction = await instructions.save();
+      logger.info(instruction);
+      return res.status(Constants.success).json(instruction);
+    } catch (err) {
+      logger.error(`Error in saving instruction - `, errHandler.errorHandler(err))
+      return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+    }
+  } else {
+    logger.error(`logIf user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
   }
 });
 
+
 //To Get all the instructions data
-const instructionGet = (verify, function (req, res) {
-  if (req.session.user_type == Constants[1]) {
+const InstructionGet = (function (req, res) {
+  if (req.session.user_type == Constants.admin) {
     Instructions.find({}, (err, results) => {
-      if (err) {
+      if (err || !results) {
+        logger.error(`Fuction Instructions.find({}}, callback) - `, errHandler.errorHandler(err));
         return res
-          .status(`${Constants.er_failure}`)
+          .status(Constants.er_failure)
           .json(errHandler.errorHandler(err));
       }
-      return res.status(`${Constants.success}`).json(results);
+      logger.info(results);
+      return res.status(Constants.success).json(results);
     });
   } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
     return res
-      .status(`${Constants.er_authorizationFailed}`)
+      .status(Constants.er_authorization_failed)
       .json(errHandler.unauthorizedErrorHandler());
   }
 });
 
 // To get single instruction data using id
-const instructionGetById = (verify, function (req, res) {
-  if (req.session.user_type == 1) { //Todo
+const InstructionGetById = (function (req, res) {
+  if (req.session.user_type == Constants.admin || Constants.student) {
     Instructions.findOne({
-        _id: req.params.id,
+        _id: req.params.id
       },
       (err, results) => {
-        if (err) {
-          return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
+        if (err || !results) {
+          logger.error(`Fuction Instructions.findOne({ _id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('instruction id'));
+          return res.status(Constants.er_not_found).json(errHandler.idNotFoundErrorHandler('instruction id'));
         }
-        return res.status(`${Constants.success}`).json(results);
+        logger.info(results);
+        return res.status(Constants.success).json(results);
       }
     );
   } else {
+    logger.error(`If user is neither an admin nor a student - `, errHandler.unauthorizedErrorHandler());
     return res
-      .status(`${Constants.er_authorizationFailed}`)
+      .status(Constants.er_authorization_failed)
       .json(errHandler.unauthorizedErrorHandler());
   }
 });
 
 //To change or update the instruction's data by using their id
-const instructionPut =
-  (verify,
-    function (req, res) {
-      const body = req.body;
-      //VALIDATE THE DATA BEFORE WE MAKE A Admin
-      const {
-        error
-      } = instructionPutValidation(body);
-      if (error) {
-        return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
-      }
-      if (req.session.user_type == Constants[1]) {
-        Instructions.findOneAndUpdate({
-              _id: req.params.id,
-            },
-            body
-          )
-          .then((results) => {
-            if (!results) {
-              return res
-                .status(`${Constants.er_notFound}`)
-                .json(errHandler.idNotFoundErrorHandler());
-            } else {
-              res.status(`${Constants.success}`).json(results);
-            }
-          })
-          .catch((err) => {
-            return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-          });
-      } else {
-        return res
-          .status(`${Constants.er_authorizationFailed}`)
-          .json(errHandler.unauthorizedErrorHandler());
-      }
-    });
-
-//To delete the instruction's data by using their id
-const instructionDelete =
-  (verify,
-    function (req, res) {
-      if (req.session.user_type == Constants[1]) {
-        Instructions.findByIdAndRemove({
+const InstructionPut =
+  (function (req, res) {
+    const body = req.body;
+    //VALIDATE THE DATA
+    const {
+      error
+    } = instructionPutValidation(body);
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return res.status(Constants.er_failure).json(errHandler.validationErrorHandler(error));
+    }
+    if (req.session.user_type == Constants.admin) {
+      Instructions.findOneAndUpdate({
             _id: req.params.id,
           },
-          (err, results) => {
+          body, {
+            new: true
+          }, async (err, result) => {
             if (err) {
-              return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
+              logger.error(`Fuction Instructions.findOneAndUpdate({ _id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+              return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
             }
-            if (!results) {
+            if (!result) {
+              logger.error(`Fuction Instructions.findOneAndUpdate({ _id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('instruction id'));
               return res
-                .status(`${Constants.er_notFound}`)
-                .json(errHandler.idNotFoundErrorHandler());
+                .status(Constants.er_not_found)
+                .json(errHandler.idNotFoundErrorHandler('instruction id'));
+            } else {
+              res.status(Constants.success).json(result);
             }
-            return res.status(`${Constants.success}`);
-          }
-        );
-      } else {
-        return res
-          .status(`${Constants.er_authorizationFailed}`)
-          .json(errHandler.unauthorizedErrorHandler());
-      }
-    });
+          })
+        .catch((err) => {
+          logger.error('Error in Updating instruction - ', errHandler.errorHandler(err));
+          return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+        });
+    } else {
+      logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+      return res
+        .status(Constants.er_authorization_failed)
+        .json(errHandler.unauthorizedErrorHandler());
+    }
+  });
 
-module.exports.instructionAdd = instructionAdd
-module.exports.instructionDelete = instructionDelete
-module.exports.instructionPut = instructionPut
-module.exports.instructionGetById = instructionGetById
-module.exports.instructionGet = instructionGet
+// To Delete all the instructions at once
+const InstructionDeleteAtOnce =
+  (function (req, res) {
+    if (req.session.user_type == Constants.admin) {
+      Instructions.deleteMany({},
+        (err, results) => {
+          if (err || !results) {
+            logger.error(`Fuction Instructions.deleteMany({}, callback) - `, errHandler.errorHandler(err));
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          logger.info({
+            message: "Data deleted successfully"
+          })
+          return res.status(Constants.success).json({
+            message: "Data deleted successfully"
+          });
+        }
+      );
+    } else {
+      logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+      return res
+        .status(Constants.er_authorization_failed)
+        .json(errHandler.unauthorizedErrorHandler());
+    }
+  });
+
+//To delete the instruction's data by using their id
+const InstructionDelete =
+  (function (req, res) {
+    printLogsWithBody(req);
+    if (req.session.user_type == Constants.admin) {
+      Instructions.findByIdAndRemove({
+          _id: req.params.id,
+        },
+        (err, results) => {
+          if (err) {
+            logger.error(`Fuction Instructions.findByIdAndRemove({ _id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!results) {
+            logger.error(`Fuction Instructions.findByIdAndRemove({ _id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('instruction id'));
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler('instruction id'));
+          }
+          return res.status(Constants.success).json({
+            message: "Data deleted successfully"
+          });
+        }
+      );
+    } else {
+      logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+      return res
+        .status(Constants.er_authorization_failed)
+        .json(errHandler.unauthorizedErrorHandler());
+    }
+  });
+
+module.exports = {
+  InstructionAdd,
+  InstructionDelete,
+  InstructionPut,
+  InstructionGetById,
+  InstructionGet,
+  InstructionDeleteAtOnce,
+}

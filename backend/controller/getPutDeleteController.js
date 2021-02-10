@@ -1,8 +1,9 @@
 const errHandler = require("./errorHandling");
-const verify = require('../config/verifyToken');
-const Constants = require('../config/constant');
-const bcrypt = require('bcrypt');
-
+const Constants = require("../config/constant");
+const bcrypt = require("bcryptjs");
+const {
+  logger
+} = require("../config/logger");
 //import models
 const Admin = require("../model/Admin");
 const Tpo = require("../model/Tpo");
@@ -10,328 +11,418 @@ const Student = require("../model/Student");
 
 // import validations
 const {
-    adminPutValidation,
-    studentPutValidation,
-    tpoPutValidation,
+  adminPutValidation,
+  studentPutValidation,
+  tpoPutValidation,
 } = require("../config/validation");
 
 //To Get all the admins data
-const AdminGet = (verify, function (req, res) {
-    if (req.session.user_type == Constants[1]) {
-        Admin.find({}, (err, results) => {
-            if (err) {
-                return res
-                    .status(`${Constants.er_failure}`)
-                    .json(errHandler.errorHandler(err));
-            }
-            return res.status(`${Constants.success}`).json(results);
-        });
-    } else {
+const AdminGet = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    Admin.find({}, (err, results) => {
+      if (err || !results) {
+        logger.error(`Fuction Admin.find({}, callback) - `, errHandler.errorHandler(err));
         return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      }
+      logger.info(results);
+      return res.status(Constants.success).json(results);
+    });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 // To get single Admin data using id
-const AdminGetById = (verify, function (req, res) {
-    if (req.session.user_type == 1) {
-        Admin.findOne({
-                _id: req.params.id,
-            },
-            (err, results) => {
-                if (err) {
-                    return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-                }
-                return res.status(`${Constants.success}`).json(results);
-            }
-        );
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+const AdminGetById = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    Admin.findOne({
+        _id: req.params.id
+      },
+      (err, results) => {
+        if (err || !results) {
+          logger.error(`Fuction Admin.findOne({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('admin id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('admin id'));
+        }
+        logger.info(results);
+        return res.status(Constants.success).json(results);
+      }
+    );
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 //To change or update the admin's data by using their id
-const AdminPut =
-    (verify,
-        function (req, res) {
-            const body = req.body;
-            if (req.session.user_type == Constants[1]) {
-                //VALIDATE THE DATA BEFORE WE MAKE A Admin
-                const {
-                    error
-                } = adminPutValidation(body);
-                if (error) {
-                    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
-                }
-                const salt = bcrypt.genSaltSync(10);
-                const hashedPassword = bcrypt.hashSync(body.password, salt);
-                body.password = hashedPassword;
-                Admin.findOneAndUpdate({
-                            _id: req.params.id,
-                        },
-                        body
-                    )
-                    .then((results) => {
-                        if (!results) {
-                            return res
-                                .status(`${Constants.er_notFound}`)
-                                .json(errHandler.idNotFoundErrorHandler());
-                        } else {
-                            res.status(`${Constants.success}`).json(results);
-                        }
-                    })
-                    .catch((err) => {
-                        return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-                    });
-            } else {
-                return res
-                    .status(`${Constants.er_authorizationFailed}`)
-                    .json(errHandler.unauthorizedErrorHandler());
-            }
-        });
+const AdminPut = async function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    //VALIDATE THE DATA BEFORE WE MAKE A Admin
+    const {
+      error
+    } = adminPutValidation(body);
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.validationErrorHandler(error));
+    }
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
+    await Admin.findOneAndUpdate({
+          _id: req.params.id,
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
+            logger.error(`Fuction Admin.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!result) {
+            logger.error(`Fuction Admin.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('admin id'));
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler('admin id'));
+          } else {
+            logger.info(result)
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        logger.error(`Updating Admin's data`, errHandler.errorHandler(err));
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 //To delete the admin's data by using their id
-const AdminDelete =
-    (verify,
-        function (req, res) {
-            if (req.session.user_type == Constants[1]) {
-                Admin.findByIdAndRemove({
-                        _id: req.params.id,
-                    },
-                    (err, results) => {
-                        if (err) {
-                            return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-                        }
-                        if (!results) {
-                            return res
-                                .status(`${Constants.er_notFound}`)
-                                .json(errHandler.idNotFoundErrorHandler());
-                        }
-                        return res.status(`${Constants.success}`);
-                    }
-                );
-            } else {
-                return res
-                    .status(`${Constants.er_authorizationFailed}`)
-                    .json(errHandler.unauthorizedErrorHandler());
-            }
+const AdminDelete = function (req, res) {
+  if (req.session.user_type == Constants.admin) {
+    Admin.findByIdAndRemove({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err) {
+          logger.error(`Fuction Admin.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+          return res
+            .status(Constants.er_failure)
+            .json(errHandler.errorHandler(err));
+        }
+        if (!results) {
+          logger.error(`Fuction Admin.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('admin id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('admin id'));
+        }
+        return res.status(Constants.success).json({
+          message: "Data deleted successfully",
         });
-
+      }
+    );
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 // To get single Tpo data using id
-const TpoGetBtId = (verify, function (req, res) {
-    if (req.session.user_type == 2) {
-        Tpo.findOne({
-                _id: req.params.id,
-            },
-            (err, results) => {
-                if (err) {
-                    return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-                }
-                return res.status(`${Constants.success}`).json(results);
-            }
-        );
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+const TpoGetBtId = function (req, res) {
+  if (req.session.user_type == Constants.admin || Constants.admin) {
+    Tpo.findOne({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err || !results) {
+          logger.error(`Fuction Tpo.findOne({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('tpo id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('tpo id'));
+        }
+        logger.info(results);
+        return res.status(Constants.success).json(results);
+      }
+    );
+  } else {
+    logger.error(`If user is neither an admin nor a tpo - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
-//To get all the tpo's data 
-const TpoGet = (verify, function (req, res) {
-    if (req.session.user_type == Constants[2]) {
-        Tpo.find({}, (err, results) => {
-            if (err) {
-                return res
-                    .status(`${Constants.er_failure}`)
-                    .json(errHandler.errorHandler(err));
-            }
-            return res.status(`${Constants.success}`).json(results);
-        });
-    } else {
+//To get all the tpo's data
+const TpoGet = function (req, res) {
+  if (req.session.user_type == Constants.admin || Constants.tpo) {
+    Tpo.find({}, (err, results) => {
+      if (err || !results) {
+        logger.error(`Fuction Tpo.find({}, callback) - `, errHandler.errorHandler(err));
         return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+          .status(Constants.er_failure)
+          .json(errHandler.errorHandler(err));
+      }
+      logger.info(results);
+      return res.status(Constants.success).json(results);
+    });
+  } else {
+    logger.error(`If user is neither an admin nor a tpo - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 //To change or update the tpo's data by using their id
-const TpoPut =
-    (verify,
-        function (req, res) {
-            const body = req.body;
-
-            if (req.session.user_type == Constants[2]) {
-                //VALIDATE THE DATA BEFORE WE MAKE A Admin
-                const {
-                    error
-                } = tpoPutValidation(body);
-                if (error) {
-                    return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
-                }
-                const salt = bcrypt.genSaltSync(10);
-                const hashedPassword = bcrypt.hashSync(body.password, salt);
-                body.password = hashedPassword;
-                Tpo.findOneAndUpdate({
-                            _id: req.params.id,
-                        },
-                        body
-                    )
-                    .then((results) => {
-                        if (!results) {
-                            return res
-                                .status(`${Constants.er_notFound}`)
-                                .json(errHandler.idNotFoundErrorHandler());
-                        } else {
-                            res.status(`${Constants.success}`).json(results);
-                        }
-                    })
-                    .catch((err) => {
-                        return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-                    });
-            } else {
-                return res
-                    .status(`${Constants.er_authorizationFailed}`)
-                    .json(errHandler.unauthorizedErrorHandler());
-            }
-        });
+const TpoPut = function (req, res) {
+  if (req.session.user_type == Constants.tpo) {
+    //VALIDATE THE DATA
+    const {
+      error
+    } = tpoPutValidation(body);
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.validationErrorHandler(error));
+    }
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
+    Tpo.findOneAndUpdate({
+          _id: req.params.id
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
+            logger.error(`Fuction Tpo.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!result) {
+            logger.error(`Fuction Tpo.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('tpo id'));
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler('tpo id'));
+          } else {
+            logger.info(result);
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        logger.error(`Error in updating Tpo's data - `, errHandler.errorHandler(err));
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
+  } else {
+    logger.error(`If user is not an admin - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 //To delete the tpo's data by using their id
-const TpoDelete =
-    (verify,
-        function (req, res) {
-            if (req.session.user_type == Constants[2]) {
-                Tpo.findByIdAndRemove({
-                        _id: req.params.id,
-                    },
-                    (err, results) => {
-                        if (err) {
-                            return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-                        }
-                        if (!results) {
-                            return res
-                                .status(`${Constants.er_notFound}`)
-                                .json(errHandler.idNotFoundErrorHandler());
-                        }
-                        return res.status(`${Constants.success}`);
-                    }
-                );
-            } else {
-                return res
-                    .status(`${Constants.er_authorizationFailed}`)
-                    .json(errHandler.unauthorizedErrorHandler());
-            }
+const TpoDelete = function (req, res) {
+  if (req.session.user_type == Constants.tpo) {
+    Tpo.findByIdAndRemove({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err) {
+          logger.error(`Fuction Tpo.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+          return res
+            .status(Constants.er_failure)
+            .json(errHandler.errorHandler(err));
+        }
+        if (!results) {
+          logger.error(`Fuction Tpo.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('tpo id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('tpo id'));
+        }
+        logger.info({
+          message: "Data deleted successfully",
+        })
+        return res.status(Constants.success).json({
+          message: "Data deleted successfully",
         });
+      }
+    );
+  } else {
+    logger.error(`If user is not a tpo - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 // To get single student data using id
-const StudentGetById = (verify, function (req, res) {
-    if (req.session.user_type == 1 || 2 || 3) {
-        Student.findOne({
-                _id: req.params.id,
-            },
-            (err, results) => {
-                if (err) {
-                    return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-                }
-                return res.status(`${Constants.success}`).json(results);
-            }
-        );
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+const StudentGetById = function (req, res) {
+  if (
+    req.session.user_type == Constants.admin ||
+    Constants.tpo ||
+    Constants.student
+  ) {
+    Student.findOne({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err || !results) {
+          logger.error(`Fuction Student.findOne({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('student id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('student id'));
+        }
+        logger.info(results);
+        return res.status(Constants.success).json(results);
+      }
+    );
+  } else {
+    logger.error(`If user is not an admin or a student or tpo - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 // To get all student's data
-const StudentGet = (verify, function (req, res) {
-    if (req.session.user_type == 3) {
-        Student.find({}, (err, results) => {
-            if (err) {
-                return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-            }
-            return res.status(`${Constants.success}`).json(results);
-        });
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+const StudentGet = function (req, res) {
+  if (req.session.user_type == Constants.admin || Constants.tpo) {
+    Student.find({
+        code: req.params.code,
+      },
+      (err, results) => {
+        if (err || !results) {
+          logger.error(`Fuction Student.find({code: ${req.params.code}}, callback) - `, errHandler.codeNotFoundErrorHandler());
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.codeNotFoundErrorHandler());
+        }
+        logger.info(results);
+        return res.status(Constants.success).json(results);
+      }
+    );
+  } else {
+    logger.error(`If user is neither an admin nor a tpo - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 //Update student's info
-const StudentPut = (verify, function (req, res) {
-    const body = req.body;
-
-    if (req.session.user_type == 3) {
-        //VALIDATE THE DATA BEFORE WE MAKE A Admin
-        const {
-            error
-        } = studentPutValidation(body);
-        if (error) {
-            return res.status(`${Constants.er_failure}`).json(errHandler.validationErrorHandler(error));
-        }
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(body.password, salt);
-        body.password = hashedPassword;
-        Student.findOneAndUpdate({
-                    _id: req.params.id,
-                },
-                body
-            )
-            .then((results) => {
-                if (!results) {
-                    return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-                } else {
-                    res.status(`${Constants.success}`).json(results);
-                }
-            })
-            .catch((err) => {
-                return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-            });
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
+const StudentPut = async function (req, res) {
+  if (req.session.user_type == Constants.student) {
+    //VALIDATE THE DATA
+    const {
+      error
+    } = studentPutValidation(body);
+    if (error) {
+      logger.error(errHandler.validationErrorHandler(error));
+      return res
+        .status(Constants.er_failure)
+        .json(errHandler.validationErrorHandler(error));
     }
-});
+    if (body.password) {
+      const salt = bcrypt.genSaltSync(Constants.saltRound);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
+    await Student.findOneAndUpdate({
+          _id: req.params.id
+        },
+        body, {
+          new: true
+        }, async (err, result) => {
+          if (err) {
+            logger.error(`Fuction Student.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+            return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+          }
+          if (!result) {
+            logger.error(`Fuction Student.findOneAndUpdate({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('student id'));
+            return res
+              .status(Constants.er_not_found)
+              .json(errHandler.idNotFoundErrorHandler('student id'));
+          } else {
+            logger.info(result);
+            res.status(Constants.success).json(result);
+          }
+        })
+      .catch((err) => {
+        logger.error(`Error in updating student's data - `, errHandler.errorHandler(err))
+        return res.status(Constants.er_failure).json(errHandler.errorHandler(err));
+      });
+  } else {
+    logger.error(`If user is not a student - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
 // delete a student from the db
-const StudentDelete = (verify, function (req, res) {
-    if (req.session.user_type == 3) {
-        Student.findByIdAndRemove({
-                _id: req.params.id,
-            },
-            (err, results) => {
-                if (err) {
-                    return res.status(`${Constants.er_failure}`).json(errHandler.errorHandler(err));
-                }
-                if (!results) {
-                    return res.status(`${Constants.er_notFound}`).json(errHandler.idNotFoundErrorHandler());
-                }
-                return res.status(`${Constants.success}`);
-            }
-        );
-    } else {
-        return res
-            .status(`${Constants.er_authorizationFailed}`)
-            .json(errHandler.unauthorizedErrorHandler());
-    }
-});
+const StudentDelete = function (req, res) {
+  if (req.session.user_type == Constants.student) {
+    Student.findByIdAndRemove({
+        _id: req.params.id,
+      },
+      (err, results) => {
+        if (err) {
+          logger.error(`Fuction Student.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.errorHandler(err));
+          return res
+            .status(Constants.er_failure)
+            .json(errHandler.errorHandler(err));
+        }
+        if (!results) {
+          logger.error(`Fuction Student.findByIdAndRemove({_id: ${req.params.id}}, callback) - `, errHandler.idNotFoundErrorHandler('student id'));
+          return res
+            .status(Constants.er_not_found)
+            .json(errHandler.idNotFoundErrorHandler('student id'));
+        }
+        logger.info({
+          message: "Data deleted successfully",
+        })
+        return res.status(Constants.success).json({
+          message: "Data deleted successfully",
+        });
+      }
+    );
+  } else {
+    logger.error(`If user is not a student - `, errHandler.unauthorizedErrorHandler());
+    return res
+      .status(Constants.er_authorization_failed)
+      .json(errHandler.unauthorizedErrorHandler());
+  }
+};
 
-module.exports.AdminGetById = AdminGetById
-module.exports.AdminGet = AdminGet
-module.exports.AdminPut = AdminPut
-module.exports.AdminDelete = AdminDelete
-module.exports.TpoGetBtId = TpoGetBtId
-module.exports.TpoGet = TpoGet
-module.exports.TpoPut = TpoPut
-module.exports.TpoDelete = TpoDelete
-module.exports.StudentGetById = StudentGetById
-module.exports.StudentGet = StudentGet
-module.exports.StudentPut = StudentPut
-module.exports.StudentDelete = StudentDelete
+module.exports.AdminGetById = AdminGetById;
+module.exports.AdminGet = AdminGet;
+module.exports.AdminPut = AdminPut;
+module.exports.AdminDelete = AdminDelete;
+module.exports.TpoGetBtId = TpoGetBtId;
+module.exports.TpoGet = TpoGet;
+module.exports.TpoPut = TpoPut;
+module.exports.TpoDelete = TpoDelete;
+module.exports.StudentGetById = StudentGetById;
+module.exports.StudentGet = StudentGet;
+module.exports.StudentPut = StudentPut;
+module.exports.StudentDelete = StudentDelete;

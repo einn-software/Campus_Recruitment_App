@@ -1,137 +1,183 @@
-/*const request = require('supertest');
-const { expect } = require('chai');
-const app = require('../index');
-const mongoose = require('mongoose');
-const Tpo = require('../model/Tpo');
-const assert = require('assert');
-mongoose.Promise = global.Promise;
-const Registration = new Tpo({name:"Shikha" ,email:"gshikha@gmail.com", password:"ssssss44", phone:7878787878, designation:"CCCccc"  , college:"nitra tech"});
+"use strict";
+require("should");
+const request = require("supertest");
+const app = require("../index");
+const agent = request.agent(app);
+const logger = require("../config/logger");
+const Constants = require("../config/constant");
 
-before((done) =>{
-    mongoose.connect("mongodb://localhost/TestingAPIs", {useNewUrlParser: true, useUnifiedTopology: true });
-    mongoose.connection
-       .once('open', () => {
-         console.log("started");
-          done();  
-       })    
-       .on('error', (error) => {
+var loggedInToken = '';
+var id = '';
 
-           console.log("your error" ,error);
-       });
+describe("Tpo Registration Testing:", () => {
+    it("should return a registered tpo:", (done) => {
+        const tpo = {
+            name: "Riya Singhal",
+            email: "riya@gmail.com",
+            password: "YeahcoolItIs",
+            phone: "7586958412",
+            designation: "Director and Teacher",
+            college: "Nitra Technical Campus",
+            code: "5473",
+        };
+        agent
+            .post("/register/tpos")
+            .send(tpo)
+            .expect(Constants.success)
+            .end((err, results) => {
+                id = results.body._id;
+                results.body.should.have.property("_id");
+                done();
+            });
+    });
+    it("should return email already registered:", (done) => {
+        const tpo = {
+            name: "Riya Singhal",
+            email: "riya@gmail.com",
+            password: "YeahcoolItIs",
+            phone: "7586958412",
+            designation: "Director and Teacher",
+            college: "Nitra Technical Campus",
+            code: "5473",
+        };
+        agent
+            .post("/register/tpos")
+            .send(tpo)
+            .expect(400)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
 });
-before((done)=>{
-  mongoose.connection.collections.tpos.drop(()=>{
-  done();
-})
+describe("Tpo Login Testing:", () => {
+    it("should return a session having field token:", (done) => {
+        const tpo = {
+            email: "riya@gmail.com",
+            password: "YeahcoolItIs",
+        };
+        agent
+            .post("/login/tpos")
+            .send(tpo)
+            .expect(Constants.success)
+            .end((err, results) => {
+                loggedInToken = results.body.token;
+                results.body.should.have.property("token");
+                done();
+            });
+    });
+    it("should return a error - email is not registered:", (done) => {
+        const tpo = {
+            email: "riyasinghal@gmail.com",
+            password: "YeahcoolItIs",
+        };
+        agent
+            .post("/login/tpos")
+            .send(tpo)
+            .expect(Constants.er_failure)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
 });
-describe("Create Tests", () => {
-    it('It should not require extra path code', async () => {
-  
-        const response = await request(app)
-        .post('/register/tpo')
-        .send({ 
-            name:"Shikha" ,
-            email:"gshikha@gmail.com", 
-            password:"ssssss44", 
-            phone:7878787878, 
-            designation:"CCCccc" , 
-            college:"nitra tech",
-            code: '56464'
+
+describe("GET Tpo Testing:", () => {
+    it("should return a list of tpos:", (done) => {
+        agent
+            .set('auth-token', loggedInToken)
+            .get("/tpos")
+            .expect(Constants.success)
+            .end((err, results) => {
+                if (err) logger.log('error', err);
+                results.body.should.be.an.Array();
+                done();
             })
-        .expect(400);
-        expect(response.text).to.equal('"code" is not allowed');
     });
-
-    it("Register a new Tpo", () => {
-       const response = request(app)
-       
-        request(app)
-                .post('/register/tpo')
-                .send(Registration)
-                .expect(200)
-              Registration.save();
+    it("should return a error: Path not defined:", (done) => {
+        agent
+            .set('auth-token', '')
+            .get("/tposs")
+            .expect(Constants.er_not_found)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
     });
-})
+});
 
-
-describe('POST /login/tpo', () => {
-    it('should require a email', async () => {
-      const response = await request(app)
-        .post('/login/tpo')
-        .send({
-          email:"l@gmail.com",
-          password:"testtesttest"
-        })
-        .expect(400);
-      expect(response.text).to.equal('Email not found');
-    });
-    it('should require a valid email', async () => {
-      const response = await request(app)
-        .post('/login/tpo')
-        .send({ email: 'testuser' })
-        .expect(400);
-      expect(response.text).to.equal('Unable to login - the email must be a valid email');
-    });
-    it('should not allow the user having wrong password', async () => {
-      const response = await request(app)
-        .post('/login/tpo')
-        .send({ email: 'gshikha@gmail.com', password: 'rgsfdgr' })
-        .expect(400);
-      expect(response.text).to.equal('Invalid password');
-    });
-    // it('should only allow valid users to login', async () => {
-    //   const newUser = {
-    //     email:"singhsuchi@gmail.com",
-    //     password:"ssssss44"
-    //   }
-    //   const response = await request(app)
-    //     .post('/login/admin')
-    //     .send(newUser)
-    //     .expect(200);
-    // expect(response.text).to.contain.keys('token');
-    // });
-  }); 
-
-  describe('The GET method', ()=>{
-    it('should get the user', () => {
-      Registration.save().then(()=>{
-          const id = Registration._id
-          const response = request(app)
-          .get(`/tpo/${id}`)
-          .send()
-          Tpo.findByIdAndDelete({_id:id}).then(()=>{
-            expect(200)
-          })
-      })
-    })
-  });
-
-    describe('The DELETE method', ()=>{
-      it('should delete the user', () => {
-        Registration.save().then(()=>{
-            const id = Registration._id
-            const response = request(app)
-            .delete(`/tpo/${id}`)
-            .send()
-            Tpo.findByIdAndDelete({_id:id}).then(()=>{
-              expect(200)
-            }).catch(()=>{ console.log("err");})
-        })
-      })
-    });
-
-    describe('The Update method', ()=>{
-      it('should update the user', () => {
-        Registration.save().then((user)=>{
-            const id = Registration._id
-            const response = request(app)
-            .put(`/tpo/${id}`)
-            .send({name:"Shikha"})
-              Registration.set({name:"riyay"})
-              Registration.save()
-              expect(200)
+describe("GET Tpo by Id Testing:", () => {
+    it("should return a tpo:", (done) => {
+        agent
+            .get(`/tpos/${id}`)
+            .set('auth-token', loggedInToken)
+            .expect(Constants.success)
+            .end((err, results) => {
+                if (err) logger.log('error', err);
+                results.body.should.have.property("designation");
+                done();
             })
-        })
-      })
-      
-*/
+    });
+    it("should return a error: Id not found:", (done) => {
+        agent
+            .get(`/tpos/58465464613545`)
+            .set('auth-token', loggedInToken)
+            .expect(Constants.er_not_found)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
+});
+
+describe("Change(PUT) Tpo's data by Id Testing:", () => {
+    const body = {
+        name: "Shikha Gputa"
+    }
+    it("should return a Tpo after changing it's data:", (done) => {
+        agent
+            .set('auth-token', loggedInToken)
+            .put(`/tpos/${id}`)
+            .send(body)
+            .expect(Constants.success)
+            .end((err, results) => {
+                if (err) logger.log('error', err);
+                results.body.should.have.property("name").which.is.equal('Shikha Gputa');
+                done();
+            })
+    });
+    it("should return a error: access denied:", (done) => {
+        agent
+            .set('auth-token', '')
+            .put(`/tpos/${id}`)
+            .send(body)
+            .expect(Constants.success)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
+});
+describe("DELETE Tpo by Id Testing:", () => {
+    it("should return a message about deleted Tpo:", (done) => {
+        agent
+            .delete(`/tpos/${id}`)
+            .set('auth-token', loggedInToken)
+            .expect(Constants.success)
+            .end((err, results) => {
+                if (err) logger.log('error', err);
+                results.body.should.have.property("message");
+                done();
+            })
+    });
+    it("should return a error: no user found in databse:", (done) => {
+        agent
+            .delete(`/tpos/${id}`)
+            .set('auth-token', loggedInToken)
+            .expect(Constants.success)
+            .end((err, results) => {
+                results.body.should.have.property("error_info");
+                done();
+            });
+    });
+});

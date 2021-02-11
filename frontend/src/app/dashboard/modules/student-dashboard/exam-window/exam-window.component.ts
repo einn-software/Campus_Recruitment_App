@@ -7,11 +7,12 @@ import { ApiService } from 'src/app/core';
   styleUrls: ['./exam-window.component.css']
 })
 export class ExamWindowComponent implements OnInit {
-public paperId = window.localStorage['paperID'];
-  constructor(private apiService: ApiService) {
+  public paperId = window.localStorage['paperID'];
+  constructor() {
    }
 
   ngOnInit(): void {
+
   }
 
 }

@@ -9,7 +9,7 @@ import { StudentService } from '../students/student.service';
   styleUrls: ['./student-dashboard.component.css'],
 })
 export class StudentDashboardComponent implements OnInit {
-public code;
+  public code;
   public today = new Date();
   public id: string;
   public date = this.today.getDate();
@@ -36,6 +36,7 @@ public code;
       window.localStorage['instructionID'] = res.instructions_id;
       window.localStorage['paperID'] = res._id;
       if(res._id){
+        window.localStorage['questionPaperId'] = res._id;
         window.localStorage['ins'] = res.instructions_id;
         this.isExam = true;
         // console.log(this.isExam);

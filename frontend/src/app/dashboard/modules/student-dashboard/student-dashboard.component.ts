@@ -33,7 +33,8 @@ public code;
     this.code = data.code;
     this.questionPaper.getQuestionPaperByCode(this.code, this.year, this.month, this.date).subscribe((res) => {
       // console.log("questionpapercomponent", res);
-      window.localStorage['instructionID'] = res.instructions_id
+      window.localStorage['instructionID'] = res.instructions_id;
+      window.localStorage['paperID'] = res._id;
       if(res._id){
         window.localStorage['ins'] = res.instructions_id;
         this.isExam = true;

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { InstructionService } from '../../instructions/instructions.service';
 
 @Component({
@@ -11,7 +12,7 @@ public check: boolean = false;
 public insid : string = window.localStorage['ins'];
 
 public message;
-constructor(private instructionService: InstructionService){
+constructor(private instructionService: InstructionService, private router: Router){
 
 }
   checked(){
@@ -22,6 +23,9 @@ constructor(private instructionService: InstructionService){
     this.instructionService.getInstruction(`${this.insid}`).subscribe((res)=>{
       this.message= res.message;
     })
+  }
+  startTest(){
+    this.router.navigateByUrl('/instructions/exam');
   }
 
 }

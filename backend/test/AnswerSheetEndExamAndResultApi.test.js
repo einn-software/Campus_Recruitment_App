@@ -307,7 +307,7 @@ describe("DELETE student answer sheet by Id Testing:", () => {
             .set("auth-token", studentToken)
             .expect(Constants.er_not_found)
             .end((err, results) => {
-                // console.log(results.body)
+                console.log(results.body)
                 results.body.should.have.property("error_info");
                 done();
             });

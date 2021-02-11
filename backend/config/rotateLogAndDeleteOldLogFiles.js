@@ -3,7 +3,7 @@ const errHandler = require("../controller/errorHandling");
 const Constants = require("./constant");
 const path = require("path");
 const moment = require("moment");
-const logger = require("./logger");
+const {logger} = require('./logger');
 var dirPath = ["./logs/", "./androidLogs/"];
 
 function deleteOldLogFiles() {

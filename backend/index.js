@@ -3,7 +3,6 @@ const volleyball = require("volleyball");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const {
   logger
 } = require("./config/logger");
@@ -33,11 +32,7 @@ mongoose.connection
   });
 
 //Middleware
-app.use(cors({
-  origin: [
-    "http://localhost:4200"
-  ],credentials: true}));
- 
+app.use(cors({origin: true, credentials: true}));
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 // app.use(express.json());
 
@@ -53,15 +48,6 @@ app.use("*", function (req, res) {
 });
 //Error hadling middleware
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
-  );
   next(error);
 });
 app.use((error, req, res, next) => {

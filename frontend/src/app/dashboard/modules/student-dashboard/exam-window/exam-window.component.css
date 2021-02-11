@@ -1,0 +1,26 @@
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.pre-btn {
+  float: left;
+  padding-left: 0px;
+  padding-bottom: 10px;
+  color: #000;
+}
+.middle-btn {
+  float: left;
+  position: relative;
+  left: 25%;
+  color: #000;
+}
+
+.nxt-btn {
+  float: right;
+  padding-left: 0px;
+  padding-bottom: 10px;
+  color: #000;
+}

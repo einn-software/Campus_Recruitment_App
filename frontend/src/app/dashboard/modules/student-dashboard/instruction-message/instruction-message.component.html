@@ -9,6 +9,11 @@
   <input type="checkbox" (click)="checked()" /> I have read all of the above and
   I agree with the terms of use and the privacy policy.
 </p>
-<button [disabled]="!check" type="submit" class="btn btn-success">
+<button
+  [disabled]="!check"
+  type="submit"
+  class="btn btn-success"
+  (click)="startTest()"
+>
   Start Test
 </button>

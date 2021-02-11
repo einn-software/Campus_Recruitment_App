@@ -38,6 +38,7 @@ import { StudentDashboardComponent } from './modules/student-dashboard/student-d
 import { ShowResultComponent } from './modules/show-result/show-result.component';
 import { UploadStudentListComponent } from './modules/upload-student-list/upload-student-list.component';
 import { InstructionMessageComponent } from './modules/student-dashboard/instruction-message/instruction-message.component';
+import { ExamWindowComponent } from './modules/student-dashboard/exam-window/exam-window.component';
 
 
 const routes: Routes = [
@@ -96,6 +97,10 @@ const routes: Routes = [
     {
       path: 'instructions',
       component: InstructionsComponent
+    },
+    {
+      path: 'instructions/exam',
+      component: ExamWindowComponent
     },
     {
       path: 'create-instruction',

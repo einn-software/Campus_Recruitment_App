@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
+import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,8 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
 
   sideBarOpen = true;
+  showSideNav : boolean = true;
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+    router.events
+  .pipe(filter(event => event instanceof NavigationEnd))
+  .subscribe((event: NavigationEnd) => {
+    if(event.url === '/instructions/exam'){
+      this.showSideNav = false;
+    };
+  });
+   }
 
   ngOnInit(): void {
 

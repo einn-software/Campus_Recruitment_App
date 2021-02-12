@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionPapersService } from '../question-papers/question-papers.service';
 import { StudentService } from '../students/student.service';
+import { saveData } from "./student-dash";
 
 @Component({
   selector: 'app-student-dashboard',
@@ -33,6 +34,7 @@ export class StudentDashboardComponent implements OnInit {
     this.code = data.code;
     this.questionPaper.getQuestionPaperByCode(this.code, this.year, this.month, this.date).subscribe((res) => {
       // console.log("questionpapercomponent", res);
+      saveData(res);
       window.localStorage['instructionID'] = res.instructions_id;
       window.localStorage['paperID'] = res._id;
       if(res._id){

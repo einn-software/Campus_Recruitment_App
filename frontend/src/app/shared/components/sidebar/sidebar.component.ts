@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { ApiService } from "../../../core/services/api.service";
 import { User, UserService } from '../../../core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -26,6 +25,7 @@ export class SidebarComponent implements OnInit {
 
     const data = window.location.pathname;
     this.role = data.slice(6, );
+
    }
    saveCode(){
     this.id = window.localStorage['id']

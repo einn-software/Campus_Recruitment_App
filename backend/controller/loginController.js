@@ -148,7 +148,7 @@ const TpoLogin = (async (req, res) => {
   const token = await createToken(user);
   const finalResponse = await createAndSendSession(req, res, user, token, role);
   logger.info(finalResponse)
-  return res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).header("auth-token", token).json(finalResponse);
+  return res.status(Constants.success).cookie("SESSIONID", token, {httpOnly:true, secure:true}).header({"auth-token": token}).json(finalResponse);
 });
 
 module.exports.StudentLogin = StudentLogin

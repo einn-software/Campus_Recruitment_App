@@ -32,14 +32,14 @@ mongoose.connection
   });
 
 //Middleware
-app.use(cors({origin: true, credentials: true}));
+app.use(cors());
 app.use(volleyball); //function which logs incoming requests and outgoing responses as separate events
 // app.use(express.json());
 
 deleteOldLogFiles();
 
 //Route Middlewares
-app.use("/", authRoute);
+app.use("/",authRoute);
 app.use("*", function (req, res) {
   logger.error(errHandler.noRouteErrorHandler());
   return res
@@ -51,6 +51,7 @@ app.use((req, res, next) => {
   next(error);
 });
 app.use((error, req, res, next) => {
+  
   logger.error(req.url);
   logger.error(
     error.status + "\n" + error.stack + "\n" + error.body + "\n" + error.type

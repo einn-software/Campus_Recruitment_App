@@ -12,7 +12,7 @@ export class UploadStudentListComponent {
     public file : File = null;
 
     public httpOption = new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       });
 
 

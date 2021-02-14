@@ -9,12 +9,13 @@
   <hr />
   <br />
   <h2 *ngIf="isExam">
-    You have exam today<br /><br />
+    You have exam right now<br /><br />
     <button type="submit" class="btn btn-success" (click)="joinTest()">
       Join Test
     </button>
   </h2>
   <h2 *ngIf="!isExam">
-    You have no exam today, please come and check another day
+    You have no exam right now, please come and check later or wait for
+    sometime.
   </h2>
 </div>

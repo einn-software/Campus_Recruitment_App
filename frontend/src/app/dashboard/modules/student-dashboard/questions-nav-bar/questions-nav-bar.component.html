@@ -1,0 +1,14 @@
+<div class="row text-center">
+  <div
+    class="col-4 cursor-pointer"
+    *ngFor="let section of sections; let i = index"
+  >
+    {{ section.section_name }}
+    <div
+      class="col-1"
+      *ngFor="let ques of section.question_list; let j = index"
+    >
+      {{ j + 1 }}
+    </div>
+  </div>
+</div>

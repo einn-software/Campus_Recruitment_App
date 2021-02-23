@@ -1,26 +1,58 @@
-.example-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.col-sm-2 {
+  float: left;
+  height: 100%;
+}
+.sec {
+  background-color: rgb(134, 131, 127);
+}
+.col-md-8 {
+  margin-left: 5px;
+}
+.fine {
+  border: 1px solid black;
+  margin: 2px;
+  text-align: center;
+  background-color: white;
+}
+.btn2 {
+  border-radius: 50%;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .pre-btn {
   float: left;
-  padding-left: 0px;
-  padding-bottom: 10px;
+  text-align: center;
   color: #000;
 }
 .middle-btn {
   float: left;
-  position: relative;
-  left: 25%;
+  margin: auto;
+  text-align: center;
   color: #000;
+}
+.ques {
+  border: 1px solid black;
+}
+.col {
+  background-color: lightblue;
+  width: 50px;
+  float: left;
 }
 
 .nxt-btn {
   float: right;
-  padding-left: 0px;
-  padding-bottom: 10px;
+  text-align: center;
   color: #000;
+}
+.option,
+h3 {
+  background-color: #cadaee;
+  font-size: 20px;
+  padding: 10px;
+  margin: 3px;
+}
+#quiz .options input[type="checkbox"] {
+  height: 22px;
+  width: 22px;
 }

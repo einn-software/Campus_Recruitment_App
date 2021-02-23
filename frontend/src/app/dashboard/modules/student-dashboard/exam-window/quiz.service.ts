@@ -4,8 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../../../../core/services/api.service';
-import { AnswerSheet } from './answersheet.model';
-
+import { AnswerSheet } from '../models/answersheet.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +17,12 @@ export class QuizService{
 
   //Create Answer Sheet
     createAnswerSheet(data): Observable<AnswerSheet>{
-      return this.apiService.post('/student-answers', data)
-      .pipe(map(
-        data => {
+      return this.apiService.post('/student-answers', data).pipe(
+        map((data) => {
           return data;
-        })
-      );
+        }),
+        catchError(this.errorMgmt)
+      )
     }
 
     //Get Answer Sheet
@@ -46,6 +45,25 @@ export class QuizService{
       )
     }
 
+    //Final submission
+    finalSubmission(data): Observable<any>{
+      return this.apiService.post('/final-submission', data).pipe(map((res)=>{
+        return res;
+      }),
+      catchError(this.errorMgmt)
+      )
+    }
+
+    //Get Result
+    getResult(code, roll, question_paper_id): Observable<any>{
+      let url = `/colleges/${code}/results/${roll}/question-papers/${question_paper_id}`
+      return this.apiService.get(url).pipe(map((res)=>{
+        return res;
+      }),
+      catchError(this.errorMgmt)
+      )
+    }
+
      // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -57,7 +75,7 @@ export class QuizService{
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     // console.log(errorMessage);
-    return throwError(errorMessage);
+    return errorMessage;
   }
 
 }

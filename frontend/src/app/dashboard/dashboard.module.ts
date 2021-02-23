@@ -35,7 +35,6 @@ import { StudentCreateComponent } from './modules/students/student-create/studen
 import { StudentDashboardComponent } from './modules/student-dashboard/student-dashboard.component';
 import { InstructionMessageComponent } from './modules/student-dashboard/instruction-message/instruction-message.component';
 import { ExamWindowComponent } from './modules/student-dashboard/exam-window/exam-window.component';
-import { QuestionsNavBarComponent } from './modules/student-dashboard/questions-nav-bar/questions-nav-bar.component';
 
 
 
@@ -76,7 +75,6 @@ import { QuestionsNavBarComponent } from './modules/student-dashboard/questions-
     StudentDashboardComponent,
     InstructionMessageComponent,
     ExamWindowComponent,
-    QuestionsNavBarComponent,
   ],
 
 })
